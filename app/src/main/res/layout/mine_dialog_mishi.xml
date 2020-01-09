@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/color_white"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#EAE9F0"
+        >
+
+        <TextView
+            android:id="@+id/mTvCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/dilaog_btn_color"
+            android:layout_marginLeft="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/cancel"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="#6371A0"
+            android:layout_centerHorizontal="true"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Binance"
+            />
+
+        <TextView
+            android:id="@+id/mTvConfirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="15sp"
+            android:textColor="@color/dilaog_btn_color"
+            android:layout_marginRight="14dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="@string/confirm"
+            />
+    </RelativeLayout>
+
+
+    <TextView
+        android:layout_marginTop="23dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:textColor="#6371A0"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/bind_miyao_desc"
+        />
+    <EditText
+        android:id="@+id/et1"
+        android:layout_margin="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="left|top"
+        android:background="@drawable/et_coin_house_bg"
+        android:hint="@string/input_apikey"
+        android:padding="10dp"
+        />
+    <EditText
+        android:id="@+id/et2"
+        android:layout_margin="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="left|top"
+        android:background="@drawable/et_coin_house_bg"
+        android:hint="@string/input_secretKey"
+        android:padding="10dp"
+        />
+    <EditText
+        android:id="@+id/et3"
+        android:layout_margin="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:gravity="left|top"
+        android:background="@drawable/et_coin_house_bg"
+        android:hint="@string/input_passphrase"
+        android:padding="10dp"
+        />
+
+
+</LinearLayout>

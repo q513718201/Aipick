@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f9f9f9"
+        android:orientation="vertical">
+        <!--==============top=================-->
+        <RelativeLayout
+            android:paddingTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="75dp">
+
+            <ImageView
+                android:id="@+id/iv_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:layout_marginLeft="10dp"
+                android:padding="5dp"
+                android:src="@mipmap/ic_pay_close"
+                />
+
+            <TextView
+                android:id="@+id/tv_passText"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textSize="18sp"
+                android:textColor="@color/color_black"
+                android:text="请输入资金密码"/>
+
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/tv_passText"
+                android:id="@+id/tv_tips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="18sp"
+                android:textColor="#7E7D7D"
+                android:text="请输入资金密码,以确保账号安全"/>
+
+
+        </RelativeLayout>
+        <!--==============pass=================-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/payview_stroke_gray_shape"
+            android:orientation="horizontal"
+            android:weightSum="6">
+            <!--======1======-->
+            <TextView
+                android:id="@+id/tv_pass1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="42sp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#c4c4c4"/>
+            <!--=====2=====-->
+            <TextView
+                android:id="@+id/tv_pass2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberPassword"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="42sp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#c4c4c4"/>
+
+            <!--=====3=====-->
+            <TextView
+                android:id="@+id/tv_pass3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberPassword"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="42sp"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#c4c4c4"/>
+            <!--=====4=======-->
+            <TextView
+                android:id="@+id/tv_pass4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberPassword"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="42sp"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#c4c4c4"/>
+            <!--=======5==========-->
+            <TextView
+                android:id="@+id/tv_pass5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberPassword"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="42sp"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#c4c4c4"/>
+            <!--=========6=======-->
+            <TextView
+                android:id="@+id/tv_pass6"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:inputType="numberPassword"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center"
+                android:textColor="@color/color_black"
+                android:textSize="42sp"
+                android:gravity="center"/>
+        </LinearLayout>
+
+
+        <!--==============输入键盘=================-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/color_white">
+            <GridView
+                android:id="@+id/gv_pass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:horizontalSpacing="1dp"
+                android:verticalSpacing="1dp"
+                android:numColumns="3"
+                android:listSelector="@color/color_gray"/>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

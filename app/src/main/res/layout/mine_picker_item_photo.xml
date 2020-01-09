@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.hazz.aipick.widget.SquareItemLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <ImageView
+        android:padding="1dip"
+        android:layout_gravity="center"
+        android:id="@+id/iv_photo"
+        android:scaleType="centerCrop"
+        android:layout_width="match_parent"
+        android:background="@drawable/picker_photo_bg"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        />
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="8dp"
+        android:src="@mipmap/shanchu"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        />
+
+
+</com.hazz.aipick.widget.SquareItemLayout>

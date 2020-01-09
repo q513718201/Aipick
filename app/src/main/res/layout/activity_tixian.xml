@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1E2742">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="20dp">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_finish"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_marginTop="100dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cardciew"
+                android:text="@string/tixian_apply"
+                android:textColor="@color/color_home"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:id="@+id/tv2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv1"
+                android:text="@string/tixian_amount"
+                android:textColor="@color/color_home"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
+                android:id="@+id/tv_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv1"
+                android:text="￥000"
+                android:textColor="@color/color_home"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/tv2"
+                />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/tv3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv2"
+                android:text="@string/tixian_amount"
+                android:textColor="@color/color_home"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/tv_bank"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv2"
+                android:text="招商"
+                android:textColor="@color/color_home"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/tv3"
+                />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/tv4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv3"
+                android:text="@string/tixian_fuwufei"
+                android:textColor="@color/color_home"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                />
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:id="@+id/tv_fuwu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tv3"
+                android:text="￥000"
+                android:textColor="@color/color_home"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toRightOf="@+id/tv4"
+                />
+        </android.support.constraint.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_tiqu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+         >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#141623"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tixian_title"
+                    android:textColor="@color/color_home"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+            <TextView
+
+                android:id="@+id/mine_incoming"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/cardciew"
+                android:drawableRight="@mipmap/ic_right"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/not_bind_card"
+                android:textColor="@color/color_home"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/cardciew"
+                android:gravity="center_vertical"
+                android:padding="15dp"
+                android:text="@string/tixian_amount"
+                android:textColor="@color/color_home"
+                android:textSize="16sp"
+
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:padding="15dp"
+                    android:text="$"
+                    android:textColor="@color/color_home"
+                    android:textSize="16sp"
+
+                    />
+
+                <EditText
+                    android:textColor="@color/color_white"
+                    android:id="@+id/et_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/tv"
+                    android:background="@null" />
+
+                <TextView
+                    android:id="@+id/tv_all"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="15dp"
+                    android:text="@string/all_tixian"
+                    android:textColor="@color/dilaog_btn_color"
+                    android:textSize="14sp"
+
+                    />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/shouxufei"
+                    android:textColor="@color/color_home"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="0.1%"
+                    android:textColor="@color/color_home"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/robot_bt_bg"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/confirm"
+        android:textColor="@color/color_white"
+        android:textSize="15sp" />
+
+</RelativeLayout>
