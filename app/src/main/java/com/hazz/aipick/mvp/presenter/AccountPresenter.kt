@@ -115,4 +115,46 @@ class AccountPresenter(view: WaletContract.myaccountView) : BasePresenter<WaletC
         }, true)
 
     }
+
+
+    fun attention(objUserId:String) {
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("objUserId", objUserId)
+        )
+
+        val login = RetrofitManager.service.attention(body)
+
+        doRequest(login, object : Callback<Any>(view) {
+            override fun failed(tBaseResult: BaseResult<Any>): Boolean {
+
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<Any>) {
+                view.setFollow(tBaseResult.msg)
+            }
+
+        }, true)
+
+    }
+    fun attentionCancle(objUserId:String) {
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("objUserId", objUserId)
+        )
+
+        val login = RetrofitManager.service.attentionCancle(body)
+
+        doRequest(login, object : Callback<Any>(view) {
+            override fun failed(tBaseResult: BaseResult<Any>): Boolean {
+
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<Any>) {
+                view.setFollow(tBaseResult.msg)
+            }
+
+        }, true)
+
+    }
 }

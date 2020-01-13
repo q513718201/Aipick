@@ -94,6 +94,32 @@
 
 
             </android.support.constraint.ConstraintLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/color_white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/email"
+                android:textColor="@color/text_color_edit_hint"
+                android:textSize="14sp"></TextView>
+
+            <EditText
+                android:textColor="@android:color/white"
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:background="@null"
+                android:hint="@string/please_input_email"
+                android:textColorHint="@color/text_color_edit_hint"
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -103,6 +129,7 @@
                 android:background="@color/color_white" />
 
             <RelativeLayout
+                android:id="@+id/rl_getcode"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
@@ -134,32 +161,7 @@
                     />
             </RelativeLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:background="@color/color_white" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/email"
-                android:textColor="@color/text_color_edit_hint"
-                android:textSize="14sp"></TextView>
-
-            <EditText
-                android:textColor="@android:color/white"
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginLeft="30dp"
-                android:background="@null"
-                android:hint="@string/please_input_email"
-                android:textColorHint="@color/text_color_edit_hint"
-                android:textSize="14sp" />
 
             <View
                 android:layout_width="match_parent"
@@ -305,7 +307,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="20dp"
                 android:background="@mipmap/login_bg"
-                android:text="@string/confirm"
+                android:text="@string/next_step"
                 android:layout_marginBottom="30dp"
                 android:textColor="@color/color_white"
                 android:textSize="17sp" />

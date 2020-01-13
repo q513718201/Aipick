@@ -65,5 +65,7 @@
     <color name="bg_common">#1E2742</color>
     <color name="text_color_hint">#a5b1c8</color>
     <color name="color_transparent">#00ffffff</color>
+    <color name="color_home_an">#6371A0</color>
+    <color name="scan_color">#90000000</color>
 
 </resources>

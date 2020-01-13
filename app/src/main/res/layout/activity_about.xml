@@ -12,7 +12,7 @@
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        android:src="@mipmap/web_hi_res_512" />
+        android:src="@mipmap/aipick" />
 
     <TextView
         android:id="@+id/tv_app_name"
@@ -51,7 +51,7 @@
                 android:layout_centerVertical="true"
                 android:paddingBottom="@dimen/padding_common"
                 android:paddingTop="@dimen/padding_common"
-                android:text="@string/feedback"
+                android:text="@string/fuwuxieyi"
                 android:textColor="@color/color_home" />
 
             <ImageView

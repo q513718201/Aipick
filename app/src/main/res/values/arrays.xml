@@ -3,9 +3,8 @@
 
     <string-array name="coin_list">
         <item>自选</item>
-        <item>AUC</item>
-        <item>USDT</item>
-        <item>BTC</item>
+        <item>Huobi</item>
+
     </string-array>
 
     <string-array name="mine_country_code_list_en" translatable="false">

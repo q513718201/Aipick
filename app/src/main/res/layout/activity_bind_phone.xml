@@ -47,8 +47,9 @@
             android:padding="5dp"
             tools:ignore="MissingConstraints">
             <TextView
+
                 android:id="@+id/tv_quhao"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@mipmap/arrow_bottom"
                 android:textSize="14sp"
@@ -56,6 +57,15 @@
                 android:drawablePadding="8dp"
                 android:textColor="@color/text_color_edit_hint"
                 android:text="+86">
+            </TextView>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_email"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_edit_hint"
+                android:text="@string/email">
             </TextView>
 
             <EditText
@@ -68,6 +78,7 @@
                 android:textColorHint="@color/text_color_edit_hint"
                 android:singleLine="true"
                 android:maxLines="1"
+
                 android:hint="@string/please_input_phone"
                 android:background="@null"/>
 
@@ -88,6 +99,8 @@
         android:layout_height="50dp">
 
         <EditText
+            android:textColor="@android:color/white"
+            android:id="@+id/et_verfycode"
             android:textColorHint="@color/text_color_edit_hint"
             android:hint="@string/please_input_verfycode"
             android:layout_width="match_parent"
@@ -97,7 +110,7 @@
             android:background="@null" />
 
         <TextView
-            android:id="@+id/tv_all"
+            android:id="@+id/tv_get_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

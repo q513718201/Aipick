@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.os.CountDownTimer
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.LoginContract
@@ -22,6 +23,7 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
 
     override fun updateSuccess(msg: String) {
         ToastUtils.showToast(this,  msg)
+        finish()
     }
 
     override fun onRegistSuccess(msg: String) {
@@ -38,7 +40,19 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
 
 
     override fun initData() {
-
+        tv_login_type.setOnClickListener {
+            if(currentType==0){
+                currentType=1
+                tv_quhao.visibility= View.GONE
+                tv_email.visibility= View.VISIBLE
+                edit_phone.hint=getString(R.string.please_input_email)
+            }else{
+                currentType=0
+                tv_quhao.visibility= View.VISIBLE
+                tv_email.visibility= View.GONE
+                edit_phone.hint=getString(R.string.please_input_phone)
+            }
+        }
     }
 
     /**
@@ -65,6 +79,7 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
     private var mRegistPresenter: RegistPresenter = RegistPresenter(this)
     private var mUserInfoPresenter: UserInfoPresenter =UserInfoPresenter(this)
 
+    private var currentType=0
     private val REQUEST_AREACODE_CODE = 10005
 
     @SuppressLint("SetTextI18n")
@@ -91,9 +106,17 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
         }
 
         bt_login.setOnClickListener {
-            mUserInfoPresenter.update("add_trade","","",""
-                    ,"",tv_quhao.text.toString(),edit_phone.text.toString(),"","",
-                    "","",et_trade_pwd_again.text.toString())
+            if(currentType==0){
+                mUserInfoPresenter.update("add_trade","",tv_verfycode.text.toString(),""
+                        ,"",tv_quhao.text.toString(),edit_phone.text.toString(),"phone","",
+                        "",et_trade_pwd_again.text.toString(),"")
+            }else{
+
+            mUserInfoPresenter.update("add_trade","",tv_verfycode.text.toString(),""
+                    ,"","",edit_phone.text.toString(),"email","",
+                    "",et_trade_pwd_again.text.toString(),"")
+
+            }
         }
 
 

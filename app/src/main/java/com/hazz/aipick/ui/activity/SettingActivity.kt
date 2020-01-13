@@ -186,7 +186,7 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
 
         if (requestCode == PickConfig.PICK_PHOTO_DATA) {
             val paths = data.getSerializableExtra(PickConfig.INTENT_IMG_LIST_SELECT) as ArrayList<String>
-            mUserInfoPresenter.update("avatar","","",RsaUtils.imageToBase64(PicUtil.compressImage(paths[0], ".png"))!!,"","","","","","","","")
+         //   mUserInfoPresenter.update("avatar","","",RsaUtils.imageToBase64(PicUtil.compressImage(paths[0], ".png"))!!,"","","","","","","","")
 
             Glide.with(this).load(paths[0])
                     .apply(RequestOptions.bitmapTransform(CircleCrop()))

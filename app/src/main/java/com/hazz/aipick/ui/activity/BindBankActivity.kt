@@ -21,7 +21,8 @@ class BindBankActivity : BaseActivity(), LoginContract.bindCarView {
 
 
     override fun bindSuccess(msg: String) {
-
+        ToastUtils.showToast(this,  msg)
+        finish()
     }
 
 

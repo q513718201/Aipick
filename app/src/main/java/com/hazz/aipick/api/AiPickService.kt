@@ -40,6 +40,11 @@ interface AiPickService{
     @POST("user/login ")
     fun login(@Body request: RequestBody): Observable<BaseResult<LoginBean>>
 
+    /**
+     * 粉丝列表
+     */
+    @POST("user/fans")
+    fun fansList(@Body request: RequestBody): Observable<BaseResult<Fans>>
 
     /**
      * 用户信息
@@ -120,6 +125,22 @@ interface AiPickService{
     @POST("broker/apply")
     fun traderAuth(@Body request: RequestBody): Observable<BaseResult<Any>>
 
+    /**
+     * 交易员支持的币种
+     */
+    @POST("broker/symbols")
+    fun getCoin(): Observable<BaseResult<List<String>>>
+
+
+    /**交易员设置
+     */
+    @POST("broker/setting")
+    fun traderSet(@Body request: RequestBody): Observable<BaseResult<Any>>
+
+    /**交易员设置查询
+     */
+    @POST("broker/setting")
+    fun traderSetQuery(): Observable<BaseResult<TraderSet>>
 
     /**
      * 我的交易所列表
@@ -182,6 +203,19 @@ interface AiPickService{
     @POST("sub/modify")
     fun setFollow(@Body request: RequestBody): Observable<BaseResult<Any>>
     /**
+     * 关注用户
+     */
+    @POST("user/follow")
+    fun attention(@Body request: RequestBody): Observable<BaseResult<Any>>
+
+
+    /**
+     * 取消关注用户
+     */
+    @POST("user/unfollow")
+    fun attentionCancle(@Body request: RequestBody): Observable<BaseResult<Any>>
+
+    /**
      * 订阅记录
      */
     @POST("sub/list")
@@ -198,4 +232,11 @@ interface AiPickService{
      */
     @POST("sub/switch")
     fun mySubscribeSwitch(@Body request: RequestBody): Observable<BaseResult<Any>>
+
+    /**
+     * 获取币种
+     */
+    @GET("v2/assets/united-states-dollar/markets")
+    fun getCoinDesc(): Observable<Coin>
+
 }

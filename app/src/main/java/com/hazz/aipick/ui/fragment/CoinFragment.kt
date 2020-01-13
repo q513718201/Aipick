@@ -11,7 +11,10 @@ import android.view.View
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
+import com.hazz.aipick.mvp.contract.LoginContract
+import com.hazz.aipick.mvp.model.bean.Coin
 import com.hazz.aipick.mvp.model.bean.MarketItem
+import com.hazz.aipick.mvp.presenter.CoinPresenter
 import com.hazz.aipick.socket.WebSocket
 import com.hazz.aipick.ui.activity.CoinDescActivity
 import com.hazz.aipick.ui.activity.SearchHistoryActivity
@@ -23,7 +26,13 @@ import kotlinx.android.synthetic.main.fragment_coin.*
  * Created by xuhao on 2017/11/9.
  * 热门
  */
-class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener {
+class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener, LoginContract.CoinView {
+
+
+    override fun coinList(msg: Coin) {
+        val adapter = mViewPagerAdapter!!.getItem(1).adapter as MarketsPagerItemAdapter
+        adapter.setNewData(msg.data)
+    }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
         startActivity(Intent(activity, CoinDescActivity::class.java))
@@ -39,7 +48,7 @@ class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener {
 
     private val mFragmentList = ArrayList<Fragment>()
     private var mViewPagerAdapter: MarketsViewPagerAdapter? = null
-
+    private var mCoinPresenter:CoinPresenter?= CoinPresenter(this)
     companion object {
         fun getInstance(title: String): CoinFragment {
             val fragment = CoinFragment()
@@ -55,7 +64,7 @@ class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener {
 
 
     override fun lazyLoad() {
-
+        mCoinPresenter?.coinList()
     }
 
     override fun initView() {
@@ -66,7 +75,7 @@ class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener {
             startActivity(Intent(activity, SearchHistoryActivity::class.java))
         }
 
-        WebSocket.getInstance().tryToConnect()
+       // WebSocket.getInstance().tryToConnect()
     }
 
     private fun initTab() {
@@ -92,18 +101,17 @@ class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener {
                 }
                 var adapter:MarketsPagerItemAdapter = mViewPagerAdapter!!.getItem(position).adapter as MarketsPagerItemAdapter
                  var list:MutableList<MarketItem>?= mutableListOf()
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
-                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
+//                list!!.add(MarketItem())
 
-                adapter.setNewData(list)
             }
 
         })

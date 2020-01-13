@@ -1,136 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/bg_common"
-        android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_common"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-        <RelativeLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:background="#141623">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="74dp"
-            android:background="#141623">
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="6dp"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="32dp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="6dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:background="@drawable/shape_oval_common_5dp"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="13dp"
+                    android:src="@mipmap/h_search" />
+
+                <EditText
+                    android:id="@+id/edit_token"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="12dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_oval_common_5dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="13dp"
-                        android:src="@mipmap/h_search" />
-
-                    <EditText
-                        android:id="@+id/edit_token"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="8dp"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="@string/search_token"
-                        android:maxLength="10"
-                        android:singleLine="true"
-                        android:textColor="@color/color_white"
-                        android:textColorHint="@color/text_color_hint"
-                        android:textCursorDrawable="@null"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tv_cancel"
-                    android:layout_width="60dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="@string/cancel"
+                    android:background="@null"
+                    android:hint="@string/search_token"
+                    android:maxLength="10"
+                    android:singleLine="true"
                     android:textColor="@color/color_white"
-                    android:textSize="13dp" />
+                    android:textColorHint="@color/text_color_hint"
+                    android:textCursorDrawable="@null"
+                    android:textSize="14sp" />
+
             </LinearLayout>
-        </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_cancel"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/cancel"
+                android:textColor="@color/color_white"
+                android:textSize="13dp" />
+        </LinearLayout>
+    </RelativeLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/layout_search_history"
+    <RelativeLayout
+        android:id="@+id/layout_search_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone">
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="20dp"
-            android:visibility="gone">
+            android:layout_marginLeft="16dp"
+            android:text="@string/search_history"
+            android:textColor="@color/color_white"
+            android:textSize="13sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:text="@string/search_history"
-                android:textColor="@color/color_white"
-                android:textSize="13sp" />
+        <TextView
+            android:id="@+id/tv_clean_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:text="@string/clean_history"
+            android:textColor="@color/blue"
+            android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/tv_clean_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="16dp"
-                android:text="@string/clean_history"
-                android:textColor="@color/blue"
-                android:textSize="13sp" />
+    </RelativeLayout>
 
-        </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/layout_clear"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:visibility="gone">
 
-        <RelativeLayout
-            android:visibility="gone"
-            android:id="@+id/layout_clear"
-            android:gravity="center_vertical"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="@string/search_history"
+            android:textColor="@color/text_color_hint" />
+
+
+        <TextView
+            android:id="@+id/tv_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:text="@string/clear_history"
+            android:textColor="@color/blue" />
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleview"
             android:layout_width="match_parent"
-            android:layout_height="40dp">
-
-            <TextView
-                android:layout_marginLeft="15dp"
-                android:textColor="@color/text_color_hint"
-                android:text="@string/search_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:layout_height="match_parent" />
 
 
-            <TextView
-                android:id="@+id/tv_clear"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="15dp"
-                android:textColor="@color/blue"
-                android:text="@string/clear_history"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </RelativeLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycleview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
-            <ImageView
-                android:id="@+id/iv_empty"
-                android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/h_none" />
-        </FrameLayout>
-    </LinearLayout>
+        <!--<ImageView-->
+        <!--android:id="@+id/iv_empty"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@mipmap/h_none" />-->
+    </FrameLayout>
+</LinearLayout>

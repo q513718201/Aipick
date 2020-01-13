@@ -60,7 +60,7 @@ public class WebSocket extends WebSocketClient {
             synchronized (WebSocketClient.class) {
                 if (sWebSocket == null) {
                     try {
-                        sWebSocket = new WebSocket(new URI("wss://api.huobi.pro/ws"));
+                        sWebSocket = new WebSocket(new URI("wss://ws.coincap.io/trades/binance"));
                     } catch (URISyntaxException e) {
                         Log.d("junjun",e.getMessage());
                         e.printStackTrace();

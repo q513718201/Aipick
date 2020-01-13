@@ -2,8 +2,8 @@ package com.hazz.aipick.mvp.model.bean;
 
 public class UserInfo {
 
-
         /**
+         * uid : 1
          * avatar : https://www.baidu.com/1.jpg
          * check_status : none
          * fans : 0
@@ -15,6 +15,7 @@ public class UserInfo {
          * type : 1
          */
 
+        public String uid;
         public String avatar;
         public String check_status;
         public int fans;

@@ -35,6 +35,7 @@ class SafeCenterActivity : BaseActivity(), LoginContract.LoginView {
 
         if(!TextUtils.isEmpty(security.email)){
             tv_email_satate.text=getString(R.string.has_bind)
+            isBindEmail=true
         }
         if(security.has_trade_password){
             tv_trader_satate.text=getString(R.string.has_set)
@@ -44,6 +45,7 @@ class SafeCenterActivity : BaseActivity(), LoginContract.LoginView {
         }else{
             tv_phone.text=msg.security.phone
             phone=msg.security.phone
+            isBindPhone=true
         }
 
         if(TextUtils.isEmpty(msg.security.email)){
@@ -63,8 +65,8 @@ class SafeCenterActivity : BaseActivity(), LoginContract.LoginView {
 
     }
     private var mLoginPresenter: LoginPresenter = LoginPresenter(this)
-    private var isBindPhone=true
-    private var isBindEmail=true
+    private var isBindPhone=false
+    private var isBindEmail=false
     private var phone=""
     private var email=""
     @SuppressLint("SetTextI18n")
@@ -80,12 +82,12 @@ class SafeCenterActivity : BaseActivity(), LoginContract.LoginView {
 
     override fun start() {
         rl1.setOnClickListener {
-            startActivity(Intent(this,PhoneModifyActivity::class.java).putExtra("type","phone").putExtra("isbind",isBindPhone)
+            startActivity(Intent(this,PhoneModifyActivity::class.java).putExtra("type","phone").putExtra("isBind",isBindPhone)
                     .putExtra("num",phone)
             )
         }
         rl2.setOnClickListener {
-            startActivity(Intent(this,PhoneModifyActivity::class.java).putExtra("type","email").putExtra("isbind",isBindEmail)
+            startActivity(Intent(this,PhoneModifyActivity::class.java).putExtra("type","email").putExtra("isBind",isBindEmail)
                     .putExtra("num",email)
             )
         }

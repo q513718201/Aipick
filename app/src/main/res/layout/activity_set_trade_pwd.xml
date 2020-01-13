@@ -64,7 +64,7 @@
             tools:ignore="MissingConstraints">
             <TextView
                 android:id="@+id/tv_quhao"
-                android:layout_width="wrap_content"
+                android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@mipmap/arrow_bottom"
                 android:textSize="14sp"
@@ -72,6 +72,15 @@
                 android:drawablePadding="8dp"
                 android:textColor="@color/text_color_edit_hint"
                 android:text="+86">
+            </TextView>
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/tv_email"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:textColor="@color/text_color_edit_hint"
+                android:text="@string/email">
             </TextView>
 
             <EditText
@@ -104,6 +113,7 @@
         android:layout_height="50dp">
 
         <EditText
+            android:textColor="@android:color/white"
             android:id="@+id/tv_verfycode"
             android:textColorHint="@color/text_color_edit_hint"
             android:hint="@string/please_input_verfycode"
@@ -130,6 +140,17 @@
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
         android:background="@color/color_white" />
+
+    <TextView
+        android:layout_margin="30dp"
+        android:id="@+id/tv_login_type"
+        android:padding="5dp"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/mail_auth"
+        android:textColor="@color/color_white"
+        android:textSize="12sp" />
 
     <Button
 

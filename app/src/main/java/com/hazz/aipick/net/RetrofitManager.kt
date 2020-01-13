@@ -22,6 +22,10 @@ object RetrofitManager{
         getRetrofit().create(AiPickService::class.java)
     }
 
+    val serviceCoin: AiPickService by lazy (LazyThreadSafetyMode.SYNCHRONIZED){
+        getRetrofitCoin().create(AiPickService::class.java)
+    }
+
     private var token:String = SPUtil.getString("token")
 
     /**
@@ -91,6 +95,16 @@ object RetrofitManager{
         // 获取retrofit的实例
         return Retrofit.Builder()
                 .baseUrl(UrlPaths.URL_BASE)  //自己配置
+                .client(getOkHttpClient())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+    }
+    private fun getRetrofitCoin(): Retrofit {
+        // 获取retrofit的实例
+        return Retrofit.Builder()
+                .baseUrl(UrlPaths.COIN_BASE)  //自己配置
                 .client(getOkHttpClient())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

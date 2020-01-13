@@ -6,31 +6,69 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.CountDownTimer
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
+import android.text.TextUtils
+import android.view.View
 import com.bumptech.glide.Glide
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.LoginContract
+import com.hazz.aipick.mvp.model.bean.LoginBean
+import com.hazz.aipick.mvp.model.bean.SetTrade
+import com.hazz.aipick.mvp.model.bean.TraderSet
+import com.hazz.aipick.mvp.model.bean.UserInfo
+import com.hazz.aipick.mvp.presenter.LoginPresenter
 import com.hazz.aipick.mvp.presenter.RegistPresenter
 import com.hazz.aipick.mvp.presenter.TraderAuthPresenter
-import com.hazz.aipick.utils.PicUtil
 import com.hazz.aipick.utils.RsaUtils
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
 import com.werb.pickphotoview.PickPhotoView
 import com.werb.pickphotoview.util.PickConfig
 import kotlinx.android.synthetic.main.activity_apply_trader.*
-import kotlinx.android.synthetic.main.activity_apply_trader.bt_login
-import kotlinx.android.synthetic.main.activity_apply_trader.edit_phone
-import kotlinx.android.synthetic.main.activity_apply_trader.toolbar
-import kotlinx.android.synthetic.main.activity_apply_trader.tv_getCode
-import kotlinx.android.synthetic.main.activity_apply_trader.tv_quhao
-import kotlinx.android.synthetic.main.activity_set_trade_pwd.*
-import java.util.ArrayList
+import java.util.*
 
 
-class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContract.tradeView {
+class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContract.tradeView, LoginContract.updateView, LoginContract.LoginView {
+
+    override fun traderSetSucceed(msg: String) {
+
+    }
+
+    override fun traderSetQuery(msg: TraderSet) {
+    }
+
+    override fun getCoin(msg: List<String>) {
+
+    }
+
+
+    override fun loginSuccess(msg: LoginBean) {
+
+    }
+
+    override fun getUserInfo(msg: UserInfo) {
+        val security = msg.security
+        if(!TextUtils.isEmpty(security.email)&&!TextUtils.isEmpty(security.phone)){
+            et_email.setText(security.email)
+            edit_phone.setText(security.phone)
+            rl_getcode.visibility= View.GONE
+        }
+
+        if(TextUtils.isEmpty(security.phone)&&!TextUtils.isEmpty(security.email)){//有邮箱无手机
+            et_email.setText(security.email)
+            currentCode=0
+        }
+
+        if(!TextUtils.isEmpty(security.phone)&&TextUtils.isEmpty(security.email)){//有手机无邮箱
+            edit_phone.setText(security.phone)
+            currentCode=1
+        }
+    }
+
+    override fun updateSuccess(msg: String) {
+
+    }
 
 
     override fun traderAuthSuccess(msg: String) {
@@ -73,7 +111,7 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
 
 
     override fun initData() {
-
+        mLoginPresenter.userInfo()
     }
 
     private var iv1_base64: String? = ""
@@ -82,8 +120,9 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
     private var countDownTimer: CountDownTimer? = null
     private var mRegistPresenter: RegistPresenter = RegistPresenter(this)
     private var mTraderAuthPresenter: TraderAuthPresenter = TraderAuthPresenter(this)
+    private var mLoginPresenter: LoginPresenter = LoginPresenter(this)
     private val REQUEST_AREACODE_CODE = 10005
-
+    private var currentCode=0
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
@@ -94,15 +133,25 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
                 .setToolBarBg(Color.parseColor("#1E2742"))
                 .setOnLeftIconClickListener { view -> finish() }
         tv_get_code.setOnClickListener {
-            mRegistPresenter.sendCodeLogin("phone",tv_quhao.text.toString(),edit_phone.text.toString(),
-                    "bind_phone"
-            )
+            if(currentCode==0){
+                mRegistPresenter.sendCodeLogin("phone",tv_quhao.text.toString(),edit_phone.text.toString(),
+                        "bind_phone"
+                )
+            }else{
+                mRegistPresenter.sendCodeLogin("email","",et_email.text.toString(),
+                        "bind_email"
+                )
+            }
         }
 
         bt_login.setOnClickListener {
-            mTraderAuthPresenter.traderAuth(tv_quhao.text.toString(),tv_getCode.text.toString(),et_email.text.toString(),
-                    edit_phone.text.toString(),et_card.text.toString(),et_name.text.toString(),"idcard ",iv1_base64!!,iv2_base64!!,"")
-        }
+          val setTrade = SetTrade(tv_quhao.text.toString(), tv_getCode.text.toString(), et_email.text.toString(),
+                  edit_phone.text.toString(), et_card.text.toString(), et_name.text.toString(), "idcard", iv1_base64!!, iv2_base64!!)
+            startActivity(Intent(this,ApplyTraderActivity::class.java).putExtra("setTrade",setTrade))
+//            mTraderAuthPresenter.traderAuth(tv_quhao.text.toString(),tv_getCode.text.toString(),et_email.text.toString(),
+//                    edit_phone.text.toString(),et_card.text.toString(),et_name.text.toString(),"idcard",iv1_base64!!,iv2_base64!!,"")
+    }
+
 
         tv_quhao.setOnClickListener {
             startActivityForResult(Intent(this, CountryActivity::class.java), REQUEST_AREACODE_CODE)
@@ -199,6 +248,11 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
 
 
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        countDownTimer?.cancel()
     }
 
 }

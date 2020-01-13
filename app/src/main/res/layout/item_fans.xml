@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+
+    >
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:src="@mipmap/default_avatar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/cb"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+
+        />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="BTC/USDT"
+        android:textColor="@color/color_home"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toRightOf="@+id/iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/tv_yiguanzhu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/robot_bt_bg"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp"
+        android:text="@string/yiguanzhu"
+        android:textColor="@color/color_white"
+        android:textSize="17sp"
+        android:visibility="gone"
+        />
+
+
+    <TextView
+        android:visibility="gone"
+        android:layout_marginRight="20dp"
+        android:id="@+id/tv_guanzhu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_centerVertical="true"
+        android:background="@drawable/btn_solid_zi_bg"
+        android:paddingLeft="20dp"
+        android:paddingTop="5dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="5dp"
+        android:text="@string/guanzhu"
+        android:drawableLeft="@mipmap/add"
+        android:drawablePadding="5dp"
+        android:textColor="@color/dilaog_btn_color"
+        android:textSize="17sp" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_num"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="20dp"
+        android:background="#293559"
+        />
+</android.support.constraint.ConstraintLayout>

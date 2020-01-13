@@ -17,8 +17,7 @@
 
                 android:layout_marginTop="30dp"
                 android:paddingLeft="20dp"
-
-                android:id="@+id/edit_text"
+                android:id="@+id/et_old_pwd"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:textColor="@android:color/white"
@@ -36,6 +35,8 @@
 
 
         <EditText
+            android:textColor="@android:color/white"
+            android:id="@+id/et_new_pwd"
             android:paddingLeft="20dp"
             android:textColorHint="@color/text_color_edit_hint"
             android:hint="@string/please_input_new_pwd"
@@ -50,6 +51,8 @@
         android:background="@color/color_white" />
 
     <EditText
+        android:textColor="@android:color/white"
+        android:id="@+id/et_again_pwd"
         android:paddingLeft="20dp"
         android:textColorHint="@color/text_color_edit_hint"
         android:hint="@string/please_input_pwd_again"

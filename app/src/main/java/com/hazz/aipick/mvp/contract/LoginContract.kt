@@ -1,7 +1,6 @@
 package com.hazz.aipick.mvp.contract
 
-import com.hazz.aipick.mvp.model.bean.LoginBean
-import com.hazz.aipick.mvp.model.bean.UserInfo
+import com.hazz.aipick.mvp.model.bean.*
 import com.hazz.aipick.net.BaseView
 import com.hazz.aipick.net.IBaseView
 
@@ -37,6 +36,17 @@ interface LoginContract {
     }
     interface tradeView: BaseView {
         fun traderAuthSuccess(msg:String)
+        fun getCoin(msg:List<String>)
+        fun traderSetSucceed(msg:String)
+        fun traderSetQuery(msg:TraderSet)
+    }
+    interface FansView: BaseView {
+        fun funsList(msg:Fans)
 
     }
+    interface CoinView: BaseView {
+        fun coinList(msg: Coin)
+
+    }
+
 }

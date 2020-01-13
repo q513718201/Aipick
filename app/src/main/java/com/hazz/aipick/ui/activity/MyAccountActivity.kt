@@ -20,6 +20,7 @@ import com.hazz.aipick.mvp.model.bean.ChooseTime
 import com.hazz.aipick.mvp.model.bean.MyAccount
 import com.hazz.aipick.mvp.presenter.AccountPresenter
 import com.hazz.aipick.ui.adapter.CoinAdapter
+import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
 import kotlinx.android.synthetic.main.activity_mine_set.*
 import kotlinx.android.synthetic.main.activity_my_account.*
@@ -29,7 +30,14 @@ import kotlinx.android.synthetic.main.dialog_coin.view.*
 
 class MyAccountActivity : BaseActivity(), WaletContract.myaccountView {
     override fun setFollow(msg: String) {
-
+        if (!mMyAccount!!.is_following) {
+            tv_yiguanzhu.visibility = View.VISIBLE
+            tv_guanzhu.visibility = View.GONE
+        }else{
+            tv_yiguanzhu.visibility = View.GONE
+            tv_guanzhu.visibility = View.VISIBLE
+        }
+        ToastUtils.showToast(this,msg)
     }
 
     override fun getPrice(msg: ChooseTime) {
@@ -48,7 +56,8 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView {
                     .apply(RequestOptions.bitmapTransform(CircleCrop()))
                     .into(iv_avatar)
         }
-        currentName=msg.nickname
+        mMyAccount = msg
+        currentName = msg.nickname
         username.text = msg.nickname
         if (msg.is_following) {
             tv_yiguanzhu.visibility = View.VISIBLE
@@ -69,8 +78,10 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView {
 
     override fun initData() {
         id = intent.getStringExtra("id")
-        role= intent.getStringExtra("role")
-        Log.d("junjun",role)
+       if(intent.getStringExtra("role")!=null){
+           role=intent.getStringExtra("role")
+       }
+        Log.d("junjun", role)
         mAccountPresenter.myAccount(id)
     }
 
@@ -79,8 +90,10 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView {
     private var mAccountPresenter: AccountPresenter = AccountPresenter(this)
     private var id = ""
     private var mCoinAdapter: CoinAdapter? = null
-    private var currentName=""
-    private var role=""
+    private var currentName = ""
+    private var role = ""
+    private var mMyAccount: MyAccount? = null
+
     @SuppressLint("SetTextI18n")
     override fun initView() {
 
@@ -111,7 +124,12 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView {
             finish()
         }
 
-
+        tv_yiguanzhu.setOnClickListener {
+            mAccountPresenter.attentionCancle(id)
+        }
+        tv_guanzhu.setOnClickListener {
+            mAccountPresenter.attention(id)
+        }
     }
 
 
@@ -140,9 +158,9 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView {
 
             view.tv_sure.setOnClickListener {
                 val current = mCoinAdapter!!.getCurrent()
-                startActivity(Intent(this,SettingFollowedActivity::class.java).putExtra("id",id).putExtra("price","0.01")
-                        .putExtra("bean",current).putExtra("name",currentName)
-                        .putExtra("role",role)
+                startActivity(Intent(this, SettingFollowedActivity::class.java).putExtra("id", id).putExtra("price", "0.01")
+                        .putExtra("bean", current).putExtra("name", currentName)
+                        .putExtra("role", role)
                 )
             }
 

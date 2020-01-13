@@ -7,14 +7,9 @@ import android.support.v7.widget.Toolbar
 import android.widget.TextView
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
-import com.hazz.aipick.ui.adapter.TixianAdapter
 import com.hazz.aipick.utils.ToolBarCustom
 import com.hazz.aipick.widget.paydialog.PayPassDialog
-import com.hazz.aipick.widget.paydialog.PayPassView
-import kotlinx.android.synthetic.main.activity_tixian.*
-import kotlinx.android.synthetic.main.activity_tixian_record.*
-import kotlinx.android.synthetic.main.activity_tixian_record.toolbar
-import java.util.*
+import kotlinx.android.synthetic.main.invite_friend.*
 
 
 class InviteFriendsActivity : BaseActivity() {
@@ -43,28 +38,11 @@ class InviteFriendsActivity : BaseActivity() {
     }
 
     override fun start() {
-        tv_confirm.setOnClickListener {
-            payDialog()
+        copy_invitation_btn.setOnClickListener {
+
         }
     }
 
 
-    private fun payDialog() {
-        dialog.init(this)
-        dialog.payViewPass.setPayClickListener(object : PayPassView.OnPayClickListener {
-            override fun onPassFinish(passContent: String?) {
-
-            }
-
-            override fun onPayClose() {
-                dialog.dismiss()
-            }
-
-
-        })
-        dialog.show()
-        tips = dialog.payTips
-
-    }
 
 }

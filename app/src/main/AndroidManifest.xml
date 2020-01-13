@@ -115,6 +115,12 @@
         <activity android:name="com.hazz.aipick.ui.activity.ForgetResetPwdActivity"
             />
         <activity android:name="com.hazz.aipick.ui.activity.ChooseTimeActivity"
+        />
+        <activity android:name="com.hazz.aipick.ui.activity.InviteFriendsActivity"
+            />
+        <activity android:name="com.hazz.aipick.ui.activity.ApplyTraderActivity"
+            />
+        <activity android:name="com.hazz.aipick.ui.activity.ExchangeOrderActivity"
             />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

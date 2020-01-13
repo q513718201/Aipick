@@ -271,5 +271,17 @@
     <string name="current_bind_phone">当前绑定手机号:%1$s</string>
     <string name="current_bind_email">当前绑定邮箱:%1$s</string>
     <string name="shichanghangqing">市场行情</string>
+    <string name="weishenqing">未申请</string>
+    <string name="wait">待审核</string>
+    <string name="pass">审核通过</string>
+    <string name="fail">审核失败</string>
+    <string name="mail_auth">邮箱验证</string>
+    <string name="fuwuxieyi">服务协议和隐私条款</string>
+    <string name="apply_desc">选择您常用的交易币对，绑定交易所越多，支持的币对越多</string>
+    <string name="please_huizhe">请输入回折率</string>
+    <string name="please_choose_coin">请选择币对</string>
+    <string name="jiaoyisuo_order">交易所买卖单</string>
+    <string name="exchange_order">交易所买卖单</string>
+    <string name="exchange_desc">交易员需确认买卖订单方向，跟随者们将更准确的跟随您的信号</string>
 
 </resources>
