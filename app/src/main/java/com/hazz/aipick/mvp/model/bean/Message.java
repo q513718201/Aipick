@@ -1,8 +1,9 @@
 package com.hazz.aipick.mvp.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Message {
+public class Message implements Serializable {
 
         /**
          * message_id : 1

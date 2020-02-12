@@ -1,14 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+
+    android:background="#1E2742">
+    <RelativeLayout
+
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:background="#000000"
+        android:paddingTop="40dp"
+        android:id="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back_white" />
+
+        <ImageView
+            android:id="@+id/iv_collection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_collect" />
+
+    </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
-
+        android:layout_below="@+id/rl_head"
+        android:layout_above="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="#1E2742">
+>
 
 
         <RelativeLayout
@@ -23,35 +50,34 @@
                 android:background="#000000"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
-                android:paddingTop="30dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="10dp">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--<RelativeLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
-                    <ImageView
-                        android:id="@+id/iv_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/back_white" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/iv_back"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:src="@mipmap/back_white" />-->
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:text="模拟账户(跟随者)"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="14sp" />
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_alignParentRight="true"-->
+                        <!--android:layout_centerVertical="true"-->
+                        <!--android:text="模拟账户(跟随者)"-->
+                        <!--android:textColor="@color/color_bottom"-->
+                        <!--android:textSize="14sp" />-->
 
-                </RelativeLayout>
+                <!--</RelativeLayout>-->
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="10dp">
 
                     <ImageView
                         android:id="@+id/iv_avatar"
@@ -415,9 +441,9 @@
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
+        android:id="@+id/rl"
         android:padding="10dp"
         android:background="#1E2742"
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

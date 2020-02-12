@@ -55,11 +55,11 @@ class RebotCategryActivity : BaseActivity() {
         }
 
         tv_desc.setOnClickListener {
-            startActivity(Intent(this, SettingFollowedActivity::class.java))
+            startActivity(Intent(this, CategryDescActivity::class.java))
         }
 
         tv_suscribe.setOnClickListener {
-            startActivity(Intent(this, SubscribeDescActivity::class.java))
+//            startActivity(Intent(this, SubscribeDescActivity::class.java))
         }
 
     }

@@ -13,38 +13,34 @@ public class Coin {
     public List<DataBean> data;
 
     public static class DataBean {
+
         /**
-         * exchangeId : Open Exchange Rates
-         * baseId : euro
-         * quoteId : united-states-dollar
-         * baseSymbol : EUR
-         * quoteSymbol : USD
-         * volumeUsd24Hr : null
-         * priceUsd : 0.9686928974827893
-         * volumePercent : null
+         * exchangeId : bibox
+         * rank : 39
+         * baseSymbol : GRIN
+         * baseId : grin
+         * quoteSymbol : ETH
+         * quoteId : ethereum
+         * priceQuote : 0.0068515700000000
+         * priceUsd : 1.0293625663446666
+         * volumeUsd24Hr : 161650.8567537984321925
+         * percentExchangeVolume : 0.0172257446053962
+         * tradesCount24Hr : 2016
+         * updated : 1578995420135
          */
 
         public String exchangeId;
-        public String baseId;
-        public String quoteId;
+        public String rank;
         public String baseSymbol;
+        public String baseId;
         public String quoteSymbol;
-        public String volumeUsd24Hr;
+        public String quoteId;
+        public String priceQuote;
         public String priceUsd;
-        public String volumePercent;
-
-        @Override
-        public String toString() {
-            return "DataBean{" +
-                    "exchangeId='" + exchangeId + '\'' +
-                    ", baseId='" + baseId + '\'' +
-                    ", quoteId='" + quoteId + '\'' +
-                    ", baseSymbol='" + baseSymbol + '\'' +
-                    ", quoteSymbol='" + quoteSymbol + '\'' +
-                    ", volumeUsd24Hr='" + volumeUsd24Hr + '\'' +
-                    ", priceUsd='" + priceUsd + '\'' +
-                    ", volumePercent='" + volumePercent + '\'' +
-                    '}';
-        }
+        public String volumeUsd24Hr;
+        public String percentExchangeVolume;
+        public String tradesCount24Hr;
+        public long updated;
     }
+
 }

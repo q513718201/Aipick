@@ -24,6 +24,7 @@ import com.hazz.aipick.mvp.presenter.LoginPresenter
 import com.hazz.aipick.ui.adapter.FansAdapter
 import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.utils.StatusBarUtil
+import com.hazz.aipick.utils.ToastUtils
 import kotlinx.android.synthetic.main.dialog_fans.view.*
 import kotlinx.android.synthetic.main.fragment_mine.*
 import kotlinx.android.synthetic.main.fragment_mine.iv_avatar
@@ -59,7 +60,7 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
             2 -> tv_role.text = getString(R.string.jiaoyiyuan)
             3 -> tv_role.text = getString(R.string.jiqiren)
         }
-
+        currentType=msg.check_status
         when (msg.check_status) {
             "none" ->tv_trader_state.text=getString(R.string.weishenqing)
             "wait" ->tv_trader_state.text=getString(R.string.wait)
@@ -77,6 +78,8 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
     private var bottomSheet: BottomSheetDialog? = null
     private var mOrderAdapter: FansAdapter? = null
     private var uid=""
+    private var currentType=""
+
     companion object {
         fun getInstance(title: String): MineFragment {
             val fragment = MineFragment()
@@ -139,11 +142,21 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
             }
             v?.id == R.id.coin_house_order -> startActivity(Intent(activity, ExchangeOrderActivity::class.java))
             v?.id == R.id.tv_caopan -> RxBus.get().send(ChangeIndex())
-            v?.id == R.id.tv_moni -> showToast("模拟跟随")
+            v?.id == R.id.tv_moni ->  startActivity(Intent(activity, RebotCategryActivity::class.java))
             v?.id == R.id.tv_wallet -> startActivity(Intent(activity, WaletActivity::class.java))
             v?.id == R.id.tv_account -> startActivity(Intent(activity, MyAccountActivity::class.java).putExtra("id",uid))
             v?.id == R.id.invite_friend -> startActivity(Intent(activity, InviteFriendsActivity::class.java))
-            v?.id == R.id.mine_trader -> startActivity(Intent(activity, SetTraderActivity::class.java))
+            v?.id == R.id.mine_trader ->{
+                when (currentType) {
+                    "none" -> startActivity(Intent(activity, SetTraderActivity::class.java))
+                    "wait" ->ToastUtils.showToast(activity,getString(R.string.wait))
+                    "pass" -> startActivity(Intent(activity, TraderSetActivity::class.java))
+                    "fail" ->startActivity(Intent(activity, SetTraderActivity::class.java))
+
+                }
+
+
+            }
 
             v?.id == R.id.mine_subsiber -> startActivity(Intent(activity, MineSubscribeActivity::class.java))
             v?.id == R.id.mine_collector -> startActivity(Intent(activity, CollectionActivity::class.java))

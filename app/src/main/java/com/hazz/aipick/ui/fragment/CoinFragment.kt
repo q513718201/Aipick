@@ -22,14 +22,11 @@ import com.hazz.aipick.ui.adapter.MarketsPagerItemAdapter
 import com.hazz.aipick.ui.adapter.MarketsViewPagerAdapter
 import kotlinx.android.synthetic.main.fragment_coin.*
 
-/**
- * Created by xuhao on 2017/11/9.
- * 热门
- */
+
 class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener, LoginContract.CoinView {
 
 
-    override fun coinList(msg: Coin) {
+    override fun coinList(msg:Coin) {
         val adapter = mViewPagerAdapter!!.getItem(1).adapter as MarketsPagerItemAdapter
         adapter.setNewData(msg.data)
     }
@@ -64,7 +61,7 @@ class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener, Login
 
 
     override fun lazyLoad() {
-        mCoinPresenter?.coinList()
+       mCoinPresenter?.coinList()
     }
 
     override fun initView() {
@@ -75,7 +72,8 @@ class CoinFragment : BaseFragment(), BaseQuickAdapter.OnItemClickListener, Login
             startActivity(Intent(activity, SearchHistoryActivity::class.java))
         }
 
-       // WebSocket.getInstance().tryToConnect()
+//      WebSocket.getInstance().tryToConnect()
+//        WebSocket.getInstance().requestK("rtebtc","1min")
     }
 
     private fun initTab() {

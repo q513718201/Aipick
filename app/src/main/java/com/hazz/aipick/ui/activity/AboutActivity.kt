@@ -37,6 +37,8 @@ class AboutActivity : BaseActivity() {
     }
 
     override fun start() {
-
+        rl_tiaokuan.setOnClickListener {
+            startActivity(Intent(this,TiaokuanActivity::class.java))
+        }
     }
 }

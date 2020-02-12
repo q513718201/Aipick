@@ -122,6 +122,15 @@
             />
         <activity android:name="com.hazz.aipick.ui.activity.ExchangeOrderActivity"
             />
+        <activity android:name="com.hazz.aipick.ui.activity.TiaokuanActivity"
+            />
+
+        <activity android:name="com.hazz.aipick.ui.activity.MsgDescActivity"
+            />
+        <activity android:name="com.hazz.aipick.ui.activity.CategryDescActivity"
+            />
+        <activity android:name="com.hazz.aipick.ui.activity.GuideActivity"
+            />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"

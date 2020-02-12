@@ -1,1 +1,1 @@
-include ':app', ':multiple-status-view', ':MPChartLib'
+include ':app', ':multiple-status-view', ':MPChartLib', ':KLineChartLib'

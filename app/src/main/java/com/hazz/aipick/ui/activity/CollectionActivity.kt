@@ -22,6 +22,9 @@ import java.util.ArrayList
 
 
 class CollectionActivity : BaseActivity(), TabLayout.OnTabSelectedListener, CollectionContract.collectionView {
+    override fun addCollectionSucceed(msg: String) {
+
+    }
 
     override fun getCollection(msg: List<Collection>) {
 

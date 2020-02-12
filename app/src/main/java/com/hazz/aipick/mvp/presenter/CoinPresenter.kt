@@ -13,13 +13,11 @@ import com.hazz.aipick.net.*
 import com.hazz.aipick.utils.RsaUtils
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
-import java.nio.charset.Charset
 
 
 class CoinPresenter(view: LoginContract.CoinView) : BasePresenter<LoginContract.CoinView>(view) {
 
     fun coinList() {
-
 
 
 //        val body = RequestUtils.getBody(
@@ -32,26 +30,25 @@ class CoinPresenter(view: LoginContract.CoinView) : BasePresenter<LoginContract.
 
         val login = RetrofitManager.serviceCoin.getCoinDesc()
 
-        doRequest1(login, object : Observer<Coin>{
+        doRequest1(login, object : Observer<Coin> {
             override fun onComplete() {
-
+               view.hideLoading()
             }
 
             override fun onSubscribe(d: Disposable) {
             }
 
             override fun onNext(t: Coin) {
-                Log.d("junjun",t.data.toString())
+                Log.d("junjun", "请求数据")
                 view.coinList(t)
             }
 
             override fun onError(e: Throwable) {
+                Log.d("junjun",e.message)
             }
 
-        },false)
+        }, true)
     }
-
-
 
 
 }

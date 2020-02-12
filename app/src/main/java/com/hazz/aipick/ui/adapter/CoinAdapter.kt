@@ -16,16 +16,18 @@ import kotlinx.android.synthetic.main.item_home.view.*
 
 class CoinAdapter(layoutResId: Int, data: List<BindCoinHouse.ExchangesBean>?) : BaseQuickAdapter<BindCoinHouse.ExchangesBean, BaseViewHolder>(layoutResId, data) {
 
-    private var currentTitle: BindCoinHouse.ExchangesBean?=BindCoinHouse.ExchangesBean()
+    private var currentTitle: BindCoinHouse.ExchangesBean? =null
+    private var symbolsBean: BindCoinHouse.SymbolsBean? = null
     private var isfirst: Boolean = false
     private var curr: Int = 0
 
     override fun convert(helper: BaseViewHolder, item: BindCoinHouse.ExchangesBean) {
-      //  helper.setText(R.id.tv_name, "")
+        //  helper.setText(R.id.tv_name, "")
 
         helper.setText(R.id.tv_name, item.exchange_code)
 
-        if (curr == helper.adapterPosition && isfirst) {
+        if (curr == helper.adapterPosition) {
+            currentTitle=item
             helper.getView<RelativeLayout>(R.id.rl_tv).setBackgroundResource(R.drawable.bg_blue_solid_5dp_coner)
         } else {
             helper.getView<RelativeLayout>(R.id.rl_tv).setBackgroundResource(R.drawable.bg_shaixuan_coner)
@@ -42,6 +44,11 @@ class CoinAdapter(layoutResId: Int, data: List<BindCoinHouse.ExchangesBean>?) : 
 
     fun getCurrent(): BindCoinHouse.ExchangesBean {
         return currentTitle!!
+
+    }
+
+    fun getCurr(): Int {
+        return curr
 
     }
 }

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/radio_group"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/pop_bg_light"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RadioButton
+        android:id="@+id/one_minute"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/one_min"
+        android:textColor="@color/text_highlight_selector"
+        android:button="@null" />
+
+
+    <RadioButton
+        android:id="@+id/five_minute"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/five_min"
+        android:textColor="@color/text_highlight_selector"
+        android:button="@null"/>
+
+
+    <RadioButton
+        android:id="@+id/thirty_minute"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/thirty_min"
+        android:textColor="@color/text_highlight_selector"
+        android:button="@null"/>
+
+
+    <RadioButton
+        android:id="@+id/week"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/week_line"
+        android:textColor="@color/text_highlight_selector"
+        android:button="@null"/>
+
+
+
+
+</RadioGroup>

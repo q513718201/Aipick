@@ -6,13 +6,9 @@ import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.android.synthetic.main.fragment_chart.*
-import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.components.Legend.LegendForm
@@ -25,6 +21,7 @@ import android.graphics.Color
 import android.support.design.widget.BottomSheetDialog
 import android.view.View
 import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.*
 import kotlinx.android.synthetic.main.dialog_choose.view.*
 import kotlinx.android.synthetic.main.dialog_choose.view.tv_cancle
 import kotlinx.android.synthetic.main.dialog_choose_day.view.*
@@ -32,6 +29,8 @@ import kotlinx.android.synthetic.main.dialog_choose_year.view.*
 
 
 class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener {
+
+
     override fun onNothingSelected() {
 
     }
@@ -122,44 +121,136 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
     }
 
     private fun initLineChart() {
-        lineChart.setDrawGridBackground(false);
-        //是否显示边界
-        lineChart.setDrawBorders(true);
-        //是否可以拖动
-        lineChart.setDragEnabled(false);
-        //是否有触摸事件
-        lineChart.setTouchEnabled(true);
-        //设置XY轴动画效果
-        lineChart.animateY(2500);
-        lineChart.animateX(1500);
 
-        /***XY轴的设置***/
-         var xAxis = lineChart.getXAxis();
-        var leftYAxis = lineChart.getAxisLeft();
-        var rightYaxis = lineChart.getAxisRight();
-        //X轴设置显示位置在底部
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setAxisMinimum(0f);
-        xAxis.setGranularity(1f);
-        //保证Y轴从0开始，不然会上移一点
-        leftYAxis.setAxisMinimum(0f);
-        rightYaxis.setAxisMinimum(0f);
+        chart.setOnChartValueSelectedListener(this)
 
-        /***折线图例 标签 设置***/
-        var legend = lineChart.getLegend();
-        //设置显示类型，LINE CIRCLE SQUARE EMPTY 等等 多种方式，查看LegendForm 即可
-         legend.setForm(Legend.LegendForm.LINE);
-        legend.setTextSize(12f);
-        //显示位置 左下方
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        //是否绘制在图表里面
-        legend.setDrawInside(false)
+        // no description text
+        chart.description.isEnabled = false
 
+        // enable touch gestures
+        chart.setTouchEnabled(true)
+
+        chart.dragDecelerationFrictionCoef = 0.9f
+
+        // enable scaling and dragging
+        chart.isDragEnabled = true
+        chart.setScaleEnabled(true)
+        chart.setDrawGridBackground(false)
+        chart.isHighlightPerDragEnabled = true
+
+        // if disabled, scaling can be done on x- and y-axis separately
+        chart.setPinchZoom(true)
+
+        // set an alternative background color
+        chart.setBackgroundColor(Color.LTGRAY)
+        val l = chart.legend
+        l.setForm(LegendForm.LINE)
+
+        l.setTextSize(11f)
+        l.setTextColor(Color.WHITE)
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM)
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT)
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL)
+        l.setDrawInside(false)
+//        l.setYOffset(11f);
+
+        val xAxis = chart.xAxis
+        xAxis.textSize = 11f
+        xAxis.textColor = Color.WHITE
+        xAxis.setDrawGridLines(false)
+        xAxis.setDrawAxisLine(false)
+
+        val leftAxis = chart.axisLeft
+        leftAxis.textColor = ColorTemplate.getHoloBlue()
+        leftAxis.axisMaximum = 200f
+        leftAxis.axisMinimum = 0f
+        leftAxis.setDrawGridLines(true)
+        leftAxis.isGranularityEnabled = true
+
+        setData(10, 30F)
     }
 
+    private fun setData(count: Int, range: Float) {
 
+        val values1 = java.util.ArrayList<Entry>()
+
+        for (i in 0 until count) {
+            val `val` = (Math.random() * (range / 2f)).toFloat() + 50
+            values1.add(Entry(i.toFloat(), `val`))
+        }
+
+        val values2 = java.util.ArrayList<Entry>()
+
+        for (i in 0 until count) {
+            val `val` = (Math.random() * range).toFloat() + 450
+            values2.add(Entry(i.toFloat(), `val`))
+        }
+
+        val values3 = java.util.ArrayList<Entry>()
+
+        for (i in 0 until count) {
+            val `val` = (Math.random() * range).toFloat() + 500
+            values3.add(Entry(i.toFloat(), `val`))
+        }
+
+        val set1: LineDataSet
+        val set2: LineDataSet
+        val set3: LineDataSet
+
+        if (chart.data != null && chart.data.dataSetCount > 0) {
+            set1 = chart.data.getDataSetByIndex(0) as LineDataSet
+            set2 = chart.data.getDataSetByIndex(1) as LineDataSet
+            set3 = chart.data.getDataSetByIndex(2) as LineDataSet
+            set1.values = values1
+            set2.values = values2
+            set3.values = values3
+            chart.data.notifyDataChanged()
+            chart.notifyDataSetChanged()
+        } else {
+            // create a dataset and give it a type
+            set1 = LineDataSet(values1, "DataSet 1")
+
+            set1.axisDependency = YAxis.AxisDependency.LEFT
+            set1.color = ColorTemplate.getHoloBlue()
+            set1.setCircleColor(Color.WHITE)
+            set1.lineWidth = 2f
+            set1.circleRadius = 3f
+            set1.fillAlpha = 65
+            set1.setDrawCircles(false)
+            set1.mode=LineDataSet.Mode.CUBIC_BEZIER
+            set1.fillColor = ColorTemplate.getHoloBlue()
+            set1.highLightColor = Color.rgb(244, 117, 117)
+            set1.setDrawCircleHole(false)
+            //set1.setFillFormatter(new MyFillFormatter(0f));
+            //set1.setDrawHorizontalHighlightIndicator(false);
+            //set1.setVisible(false);
+            //set1.setCircleHoleColor(Color.WHITE);
+
+            // create a dataset and give it a type
+            set2 = LineDataSet(values2, "DataSet 2")
+            set2.axisDependency = YAxis.AxisDependency.RIGHT
+            set2.color = Color.RED
+            set2.setCircleColor(Color.WHITE)
+            set2.lineWidth = 2f
+            set2.mode=LineDataSet.Mode.CUBIC_BEZIER
+            set2.setDrawCircles(false)
+            set2.circleRadius = 3f
+            set2.fillAlpha = 65
+            set2.fillColor = Color.RED
+            set2.setDrawCircleHole(false)
+            set2.highLightColor = Color.rgb(244, 117, 117)
+            //set2.setFillFormatter(new MyFillFormatter(900f));
+
+
+            // create a data object with the data sets
+            val data = LineData(set1, set2)
+            data.setValueTextColor(Color.WHITE)
+            data.setValueTextSize(9f)
+
+            // set data
+            chart.data = data
+        }
+    }
 
     private fun initBarChart() {
         mChart.setOnChartValueSelectedListener(this)
@@ -237,8 +328,8 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
         yVals1.add(BarEntry(1f, 2f))
         yVals1.add(BarEntry(2f, 6f))
         yVals1.add(BarEntry(3f, 1f))
-
-
+        yVals1.add(BarEntry(4f, 3f))
+        yVals1.add(BarEntry(5f, 5f))
         val set1: BarDataSet
 
         if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {

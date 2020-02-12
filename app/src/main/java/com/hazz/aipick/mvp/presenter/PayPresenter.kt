@@ -59,4 +59,53 @@ class PayPresenter(view: HomeContract.payView) : BasePresenter< HomeContract.pay
         }, true)
 
     }
+    fun orderCancle(subId: String) {
+
+
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("subId", subId)
+
+        )
+
+        val login = RetrofitManager.service.orderCancle(body)
+
+        doRequest(login, object : Callback<Any>(view) {
+            override fun failed(tBaseResult: BaseResult<Any>): Boolean {
+
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<Any>) {
+                view.payCancle(tBaseResult.msg)
+            }
+
+        }, true)
+
+    }
+
+    fun payCheck(subId: String,payResponse: String,sign: String,signType: String,statusCode: String) {
+
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("subId", subId),
+                Pair.create<Any, Any>("payResponse", payResponse),
+                Pair.create<Any, Any>("sign", sign),
+                Pair.create<Any, Any>("signType", signType),
+                Pair.create<Any, Any>("statusCode", statusCode)
+        )
+
+        val login = RetrofitManager.service.PayCheck(body)
+
+        doRequest(login, object : Callback<PaySucceed>(view) {
+            override fun failed(tBaseResult: BaseResult<PaySucceed>): Boolean {
+
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<PaySucceed>) {
+                view.paySucceed(tBaseResult.data!!)
+            }
+
+        }, true)
+
+    }
 }

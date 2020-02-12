@@ -38,7 +38,7 @@
             android:textColor="@color/color_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/one_year"
+            android:text="@string/all"
             android:gravity="center"
             android:drawableRight="@mipmap/arrow_bottom"
             android:textSize="14sp"

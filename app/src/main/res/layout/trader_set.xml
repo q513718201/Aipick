@@ -55,6 +55,7 @@
                     />
 
                 <EditText
+                    android:id="@+id/et1"
                     android:textSize="14sp"
                     android:hint="@string/input_amount"
                     android:textColorHint="@color/color_home"
@@ -96,6 +97,7 @@
                     />
 
                 <EditText
+                    android:id="@+id/et2"
                     android:textSize="14sp"
                     android:textColorHint="@color/color_home"
                     android:hint="@string/input_amount"
@@ -135,6 +137,7 @@
                     />
 
                 <EditText
+                    android:id="@+id/et3"
                     android:textSize="14sp"
                     android:textColorHint="@color/color_home"
                     android:hint="@string/input_amount"
@@ -159,10 +162,11 @@
             </RelativeLayout>
 
             <EditText
+                android:id="@+id/et4"
                 android:layout_marginTop="50dp"
                 android:textSize="14sp"
                 android:textColorHint="@color/color_home"
-                android:hint="@string/input_amount"
+                android:hint="@string/trader_sesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"

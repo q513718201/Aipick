@@ -12,6 +12,7 @@
         android:paddingRight="15dp">
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -60,7 +61,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:gravity="center"
-            android:text="确认"
+            android:text="@string/next_step"
             android:textColor="@color/dilaog_btn_color"
             android:textSize="14sp" />
 

@@ -10,7 +10,9 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public class WebSocket extends WebSocketClient {
@@ -44,9 +46,9 @@ public class WebSocket extends WebSocketClient {
 
     private boolean mConnecting = false;
 
-//    private Map<String, ArrayList<SocketListener>> mListeners = new HashMap<>();
+    //    private Map<String, ArrayList<SocketListener>> mListeners = new HashMap<>();
 //    private Map<String, ArrayList<SocketTickListener>> mListenerTick = new HashMap<>();
-
+    private LinkedBlockingQueue<Request> mRequestQueue = new LinkedBlockingQueue<>();
     private String mMarket;
 
     private WebSocket(URI serverUri) {
@@ -60,9 +62,9 @@ public class WebSocket extends WebSocketClient {
             synchronized (WebSocketClient.class) {
                 if (sWebSocket == null) {
                     try {
-                        sWebSocket = new WebSocket(new URI("wss://ws.coincap.io/trades/binance"));
+                        sWebSocket = new WebSocket(new URI("ws://p_hb_ws.ratafee.nl/"));
                     } catch (URISyntaxException e) {
-                        Log.d("junjun",e.getMessage());
+                        Log.d("junjun", e.getMessage());
                         e.printStackTrace();
                     }
                 }
@@ -74,9 +76,8 @@ public class WebSocket extends WebSocketClient {
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
-        Log.d("junjun","onOpen");
+        Log.d("junjun", "onOpen");
         if (mConnecting) {
-
             mConnecting = false;
         }
     }
@@ -84,14 +85,14 @@ public class WebSocket extends WebSocketClient {
 
     @Override
     public void onMessage(String message) {
-        Log.d("junjun",message);
+        Log.d("junjun", message);
     }
 
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
         Logger.d("onClose " + code + " " + reason + " " + remote);
-        sWebSocket = null;
+       // sWebSocket = null;
     }
 
     @Override
@@ -104,6 +105,45 @@ public class WebSocket extends WebSocketClient {
         if (getReadyState() == READYSTATE.NOT_YET_CONNECTED && !mConnecting) {
             mConnecting = true;
             connect();
+        }
+    }
+
+    public void requestK(String symbol, String period) {
+        if (isOpen()) {
+            Kbody kBody = new Kbody();
+            kBody.sub = symbol;
+            kBody.id =period;
+            String s = mGson.toJson(kBody);
+            Logger.d(s);
+            send(s);
+        } else {
+            queue(new Request(symbol, period));
+        }
+    }
+
+    private void queue(Request top) {
+        try {
+            mRequestQueue.put(top);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public class Request {
+        String topic;
+        List<String> params = new ArrayList<>();
+
+        public Request(String topic) {
+            this.topic = topic;
+        }
+
+        public Request(String topic, String... params) {
+            this.topic = topic;
+            for (int i = 0; i < params.length; i++) {
+                this.params.add(params[0]);
+            }
+
         }
     }
 }

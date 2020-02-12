@@ -96,7 +96,7 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
     private  var bottomSheet:BottomSheetDialog?=null
     private  var  mSubscribePresenter: SubscribePresenter =SubscribePresenter(this)
     private  var page=1
-    private  var currentDay="dayall"
+    private  var currentDay="days0"
     private  var currentCategry="bot"
     private  var currentDirect="out"
 
@@ -148,12 +148,14 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
         view.tv_rebot.setOnClickListener {
             bottomSheet!!.dismiss()
             currentCategry="bot"
+            tv_month.text=getString(R.string.robot_caty)
             requestData()
         }
 
         view.tv_trader.setOnClickListener {
             bottomSheet!!.dismiss()
-            currentCategry="bot"
+            currentCategry="broker"
+            tv_month.text=getString(R.string.jiaoyiyuan)
             requestData()
         }
         val viewById = bottomSheet!!.delegate.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
@@ -174,20 +176,28 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
         }
         view.tv_one_month.setOnClickListener {
             bottomSheet.dismiss()
-            currentDay="1month"
+            currentDay="days30"
+            tv_year.text=getString(R.string.jinyiyue)
+            requestData()
         }
         view.tv_three_month.setOnClickListener {
             bottomSheet.dismiss()
-            currentDay="3month"
+            currentDay="days90"
+            tv_year.text=getString(R.string.jin_sanyue)
+            requestData()
         }
         view.tv_one_year.setOnClickListener {
             bottomSheet.dismiss()
-            currentDay="7day"
+            currentDay="days7"
+            tv_year.text=getString(R.string.jin_seven_day)
+            requestData()
         }
 
         view.tv_all.setOnClickListener {
             bottomSheet.dismiss()
-            currentDay="dayall"
+            currentDay="daya0"
+            tv_year.text=getString(R.string.all)
+            requestData()
         }
 
 

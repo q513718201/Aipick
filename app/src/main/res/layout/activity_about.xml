@@ -41,6 +41,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/rl_tiaokuan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingEnd="@dimen/padding_common_h"

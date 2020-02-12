@@ -5,8 +5,10 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.support.v7.widget.Toolbar
+import android.util.Log
 import android.widget.CompoundButton
 import android.widget.RadioGroup
+import com.google.gson.Gson
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.WaletContract
@@ -66,8 +68,9 @@ class SettingFollowedActivity : BaseActivity(), WaletContract.myaccountView, Rad
     private var price = ""
     private var mAccountPresenter: AccountPresenter = AccountPresenter(this)
     private var bean: BindCoinHouse.ExchangesBean? = null
+    private var beanSymbl: BindCoinHouse.SymbolsBean? = null
     private var currentNmae = ""
-    private var currentSwitch="off"
+    private var currentSwitch="on"
     private var followType="amount"
     private var role = ""
 
@@ -85,14 +88,21 @@ class SettingFollowedActivity : BaseActivity(), WaletContract.myaccountView, Rad
         id = intent.getStringExtra("id")
         price = intent.getStringExtra("price")
         bean = intent.getSerializableExtra("bean") as BindCoinHouse.ExchangesBean
+        beanSymbl = intent.getSerializableExtra("SymbolsBean") as BindCoinHouse.SymbolsBean
         currentNmae = intent.getStringExtra("name")
         role= intent.getStringExtra("role")
+
         tv_suscribe.setOnClickListener {
-            mAccountPresenter.setFollow(id,currentSwitch,followType,tv_num.text.toString())
+            Log.d("junjun",Gson().toJson(beanSymbl))
+           // mAccountPresenter.setFollow(id,currentSwitch,followType,tv_num.text.toString())
             startActivity(Intent(this,ChooseTimeActivity::class.java).putExtra("id",id).putExtra("price","0.01")
-                    .putExtra("bean",bean).putExtra("name",currentNmae).putExtra("switch",currentSwitch)
+                    .putExtra("bean",bean).putExtra("name",currentNmae)
+                    .putExtra("SymbolsBean",beanSymbl)
+                    .putExtra("switch",currentSwitch)
                     .putExtra("followType",followType) .putExtra("followFactor",tv_num.text.toString())
                     .putExtra("role",role))
+
+            finish()
 
         }
         rg.setOnCheckedChangeListener(this)

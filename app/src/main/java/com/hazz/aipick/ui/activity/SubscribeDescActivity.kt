@@ -37,6 +37,8 @@ class SubscribeDescActivity : BaseActivity(), CompoundButton.OnCheckedChangeList
             "alipay"->tv_pay_type.text = getString(R.string.pay_type,getString(R.string.alipay_pay))
         }
         tv_pay_price.text=msg.price
+
+        isfirst=true
     }
 
     override fun switchSucceed(msg: String) {
@@ -56,6 +58,7 @@ class SubscribeDescActivity : BaseActivity(), CompoundButton.OnCheckedChangeList
     private  var  mSubscribePresenter: SubscribePresenter = SubscribePresenter(this)
     private  var page=1
     private  var subId=""
+    private  var isfirst=false
     @SuppressLint("SetTextI18n")
     override fun initView() {
         ToolBarCustom.newBuilder(toolbar as Toolbar)
@@ -71,7 +74,7 @@ class SubscribeDescActivity : BaseActivity(), CompoundButton.OnCheckedChangeList
         titleList.add("历史持仓")
 
         recycleview.layoutManager = LinearLayoutManager(this)
-        mOrderAdapter= OrderAdapter(R.layout.item_order,titleList)
+        mOrderAdapter= OrderAdapter(R.layout.item_order,null)
         recycleview.adapter = mOrderAdapter
         mOrderAdapter!!.bindToRecyclerView(recycleview)
         mOrderAdapter!!.setEmptyView(R.layout.empty_view)
@@ -83,19 +86,20 @@ class SubscribeDescActivity : BaseActivity(), CompoundButton.OnCheckedChangeList
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
-        if(isChecked){
+
+        if(isChecked&&isfirst){
             val tipsDialog = TipsDialog(this)
             tipsDialog.setContent(resources.getString(R.string.tips_subscribe) )
 
                     .setConfirmListener {
-                        mSubscribePresenter.mySubscribeSwitch(subId)
+                        mSubscribePresenter.mySubscribeSwitch(subId,"on")
                     }
                     .show()
         }else{
             val tipsDialog = TipsDialog(this)
             tipsDialog.setContent(resources.getString(R.string.tips_subscribe_close) )
                     .setConfirmListener {
-                        mSubscribePresenter.mySubscribeSwitch(subId)
+                        mSubscribePresenter.mySubscribeSwitch(subId,"off")
                     }
                     .show()
         }

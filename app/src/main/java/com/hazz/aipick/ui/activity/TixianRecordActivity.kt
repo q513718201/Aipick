@@ -81,7 +81,7 @@ class TixianRecordActivity : BaseActivity(), WaletContract.waletView, OnRefreshL
 
 
         recycleview.layoutManager = LinearLayoutManager(this)
-        mOrderAdapter= TixianAdapter(R.layout.item_msg,null)
+        mOrderAdapter= TixianAdapter(R.layout.item_tixian,null)
         recycleview.adapter = mOrderAdapter
         mOrderAdapter!!.bindToRecyclerView(recycleview)
         mOrderAdapter!!.setEmptyView(R.layout.empty_view)

@@ -69,6 +69,7 @@ class ChooseTimeActivity : BaseActivity(),  WaletContract.myaccountView {
     private var followType = ""
     private var followFactor = ""
     private var role = ""
+    private var beanSymbl: BindCoinHouse.SymbolsBean? = null
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
@@ -78,6 +79,7 @@ class ChooseTimeActivity : BaseActivity(),  WaletContract.myaccountView {
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
                 .setOnLeftIconClickListener { view -> finish() }
+        rl1.setBackgroundResource(R.drawable.pay_select_bg)
     }
 
     @SuppressLint("SetTextI18n")
@@ -90,15 +92,17 @@ class ChooseTimeActivity : BaseActivity(),  WaletContract.myaccountView {
         followType = intent.getStringExtra("followType")
         followFactor = intent.getStringExtra("followFactor")
         role = intent.getStringExtra("role")
-
+        beanSymbl = intent.getSerializableExtra("SymbolsBean") as BindCoinHouse.SymbolsBean
         tv_price.text = "$$price"
         tv_name.text = currentNmae
         mAccountPresenter.getPrice(id)
 
         tv_suscribe.setOnClickListener {
-            val payBean = PayBean(id, bean?.exchange_id, switch, followType, followFactor, currentDays)
+            val payBean = PayBean(id, bean?.exchange_id, switch, followType, followFactor, currentDays,beanSymbl!!.base_coin,beanSymbl!!.quote_coin)
             startActivity(Intent(this, PayActivity::class.java).putExtra("payBean", payBean)
                     .putExtra("role", role) .putExtra("price", price))
+
+            finish()
 
         }
     }

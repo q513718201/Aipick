@@ -41,7 +41,7 @@
         android:textColor="@color/color_home"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_trade_a"
-        app:layout_constraintLeft_toRightOf="@id/tv_divide" />
+        app:layout_constraintLeft_toRightOf="@+id/tv_divide" />
 
 
     <com.hazz.aipick.widget.AutofitTextView

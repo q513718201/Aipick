@@ -15,5 +15,7 @@ interface HomeContract {
     interface payView: BaseView {
         fun payResult(msg: PayResultMine)
         fun createId(msg:CreateId)
+        fun payCancle(msg:String)
+        fun paySucceed(msg:PaySucceed)
     }
 }

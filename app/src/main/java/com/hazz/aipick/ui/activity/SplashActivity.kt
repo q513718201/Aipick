@@ -69,14 +69,22 @@ class SplashActivity : BaseActivity() {
 
     fun redirectTo() {
         val string = SPUtil.getString("token")
-        if(TextUtils.isEmpty(string)){
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }else{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-
+        val boolean = SPUtil.getBoolean("isGuide")
+           //   if(boolean){
+//            if(TextUtils.isEmpty(string)){
+//                val intent = Intent(this, LoginActivity::class.java)
+//                startActivity(intent)
+//            }else{
+//                val intent = Intent(this, MainActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }else{
+//            val intent = Intent(this, GuideActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+        val intent = Intent(this, CoinDescActivity::class.java)
+        startActivity(intent)
         finish()
     }
 

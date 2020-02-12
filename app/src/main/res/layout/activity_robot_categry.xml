@@ -1,14 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#1E2742"
+    >
+    <RelativeLayout
+
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:background="#000000"
+        android:paddingTop="50dp"
+        android:id="@+id/rl_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back_white" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/ic_collect" />
+
+    </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
-
+        android:layout_below="@+id/rl_head"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:background="#1E2742">
+        android:layout_above="@+id/rl"
+      >
 
 
         <RelativeLayout
@@ -17,33 +43,16 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="10dp"
                 android:id="@+id/ll_top"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#000000"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingTop="30dp"
-                android:paddingRight="10dp"
-                android:paddingBottom="10dp">
+             >
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/iv_back"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/back_white" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:src="@mipmap/ic_collect" />
-
-                </RelativeLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -310,12 +319,12 @@
     </android.support.v4.widget.NestedScrollView>
 
     <RelativeLayout
-        android:padding="10dp"
-        android:background="#1E2742"
-        android:layout_marginBottom="10dp"
+        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="#1E2742"
+        android:padding="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -324,18 +333,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:text="$000"
+            android:text="免费"
             android:textColor="#F0BC33"
             android:textSize="19sp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/tv_price"
-            android:text="/月"
-            android:textColor="#90ffffff"
-            android:textSize="12sp" />
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_toRightOf="@+id/tv_price"-->
+        <!--android:text="/月"-->
+        <!--android:textColor="#90ffffff"-->
+        <!--android:textSize="12sp" />-->
 
         <TextView
 
@@ -343,14 +352,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:background="@drawable/robot_bt_bg"
             android:paddingLeft="20dp"
             android:paddingTop="5dp"
             android:paddingRight="20dp"
             android:paddingBottom="5dp"
-            android:layout_centerVertical="true"
             android:text="@string/subsciber"
-            android:layout_marginRight="10dp"
             android:textColor="@color/color_white"
             android:textSize="15sp" />
 

@@ -28,9 +28,9 @@ public class MarketsPagerItemAdapter extends BaseQuickAdapter<Coin.DataBean, Bas
         if (marketItem == null) {
             return;
         }
-      Log.d("ceshi",marketItem.priceUsd);
-//
-      String changeString = marketItem.volumePercent;
+
+       Log.d("junjun",marketItem.baseSymbol);
+      //String changeString = marketItem.volumePercent;
         String close = marketItem.priceUsd;
         String volume = marketItem.volumeUsd24Hr;
 //        String cnyPrice = marketItem.cnyPrice;
@@ -40,7 +40,7 @@ public class MarketsPagerItemAdapter extends BaseQuickAdapter<Coin.DataBean, Bas
                 .setText(R.id.tv_trade_b, marketItem.quoteSymbol)
                 .setText(R.id.tv_price, close == null ? "--" : close)
                 .setText(R.id.tv_volume, (volume == null || volume.equals("--")) ? "--" : new BigDecimal(volume).setScale(0, RoundingMode.HALF_UP).toPlainString())
-                .setText(R.id.up_down, changeString == null ? "0.00%" : changeString)
+               // .setText(R.id.up_down, changeString == null ? "0.00%" : changeString)
                 .setText(R.id.tv_price_legal, "¥ " + (cyn.equals("0") ? "--" : cyn));
 //                .setBackgroundRes(R.id.up_down, marketItem.isUp ? R.drawable.shape_oval_green_3 : R.drawable.shape_oval_red_3);
 ////        if("USDT".equals(marketItem.tradeB) && !TextUtils.isEmpty(close)){

@@ -20,7 +20,7 @@ class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter
                       pageNumber:Int,pageSize:Int) {
 
         val body = RequestUtils.getBody(
-                Pair.create<Any, Any>("objType", objType),
+                Pair.create<Any, Any>("subType", objType),
                 Pair.create<Any, Any>("subDirect", subDirect),
                 Pair.create<Any, Any>("timeRange", timeRange),
                 Pair.create<Any, Any>("pageNumber", pageNumber),
@@ -73,11 +73,11 @@ class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter
         }, true)
 
     }
-    fun mySubscribeSwitch(subId:String) {
+    fun mySubscribeSwitch(subId:String,switch:String) {
 
         val body = RequestUtils.getBody(
-                Pair.create<Any, Any>("subId", subId)
-
+                Pair.create<Any, Any>("subId", subId),
+                Pair.create<Any, Any>("switch", switch)
         )
 
         val login = RetrofitManager.service.mySubscribeSwitch(body)

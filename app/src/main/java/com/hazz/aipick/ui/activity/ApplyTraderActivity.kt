@@ -94,10 +94,10 @@ class ApplyTraderActivity : BaseActivity(), LoginContract.tradeView {
                ToastUtils.showToast(this,getString(R.string.please_huizhe))
                 return@setOnClickListener
             }
-            if(selectedCoins.isEmpty()){
-                ToastUtils.showToast(this,getString(R.string.please_choose_coin))
-                return@setOnClickListener
-            }
+//            if(selectedCoins.isEmpty()){
+//                ToastUtils.showToast(this,getString(R.string.please_choose_coin))
+//                return@setOnClickListener
+//            }
 
             mTraderAuthPresenter.traderAuth(setTrade!!.countryCode,setTrade!!.code,setTrade!!.email,
                     setTrade!!.phone,setTrade!!.cardNumber,setTrade!!.name,

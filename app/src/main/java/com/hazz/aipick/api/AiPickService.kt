@@ -72,6 +72,18 @@ interface AiPickService{
     fun createId(@Body request: RequestBody): Observable<BaseResult<CreateId>>
 
     /**
+     * 取消订阅支付
+     */
+    @POST("sub/cancel")
+    fun orderCancle(@Body request: RequestBody): Observable<BaseResult<Any>>
+
+    /**
+     * 支付成功同步
+     */
+    @POST("sub/alipay/sync_notify")
+    fun PayCheck(@Body request: RequestBody): Observable<BaseResult<PaySucceed>>
+
+    /**
      * 订阅支付
      */
     @POST("sub/pay")
@@ -112,6 +124,11 @@ interface AiPickService{
     @POST("collection/delete")
     fun deleteCollection(@Body request: RequestBody): Observable<BaseResult<Any>>
 
+    /**
+     * 加入收藏
+     */
+    @POST("collection/add")
+    fun addCollection(@Body request: RequestBody): Observable<BaseResult<Any>>
 
     /**
      * 绑定银行卡
@@ -236,7 +253,28 @@ interface AiPickService{
     /**
      * 获取币种
      */
-    @GET("v2/assets/united-states-dollar/markets")
+    @GET("v2/markets")
     fun getCoinDesc(): Observable<Coin>
+
+    /**
+     * 订单
+     */
+    @POST("user/orders")
+    fun getOrder(@Body request: RequestBody): Observable<BaseResult<Order>>
+
+
+    /**
+     * 银行卡详情
+     */
+    @POST("pay/bankcard/detail")
+    fun bankDesc(@Body request: RequestBody): Observable<BaseResult<BankDesc>>
+
+
+
+    /**
+     *模拟操盘买卖
+     */
+    @POST("simulate/trade")
+    fun monicaopan(@Body request: RequestBody): Observable<BaseResult<Any>>
 
 }

@@ -44,4 +44,9 @@ interface WaletContract {
         fun getPrice(msg:ChooseTime)
         fun setFollow(msg:String)
     }
+
+    interface orderView: BaseView {
+
+        fun getOrder(msg:Order)
+    }
 }

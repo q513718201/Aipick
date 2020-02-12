@@ -45,4 +45,30 @@ class CollectionPresenter(view: CollectionContract.collectionView) : BasePresent
 
     }
 
+    fun addCollection(objType:String,objId:String,baseCoin:String,quoteCoin:String) {
+
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("objType", objType),
+                Pair.create<Any, Any>("objId", objId),
+                Pair.create<Any, Any>("baseCoin", baseCoin),
+                Pair.create<Any, Any>("quoteCoin", quoteCoin)
+
+
+        )
+
+        val login = RetrofitManager.service.addCollection(body)
+
+        doRequest(login, object : Callback<Any>(view) {
+            override fun failed(tBaseResult: BaseResult<Any>): Boolean {
+
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<Any>) {
+                view.addCollectionSucceed(tBaseResult.msg)
+            }
+
+        }, true)
+
+    }
 }
