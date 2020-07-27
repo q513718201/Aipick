@@ -51,18 +51,39 @@ public class TimeOptionPopupWindow extends PopupWindow {
     private void parseOption(int checkedId) {
         switch (checkedId) {
             case R.id.one_minute:
+                if(onMyClick!=null){
+                    onMyClick.onClick("1fen");
+                }
                 mOption = Option.ONE_MINUTE;
                 break;
             case R.id.five_minute:
+                if(onMyClick!=null){
+                    onMyClick.onClick("5fen");
+                }
                 mOption = Option.FIVE_MINUTE;
                 break;
             case R.id.thirty_minute:
+                if(onMyClick!=null){
+                    onMyClick.onClick("30fen");
+                }
                 mOption = Option.THIRTY_MINUTE;
                 break;
             case R.id.week:
+                if(onMyClick!=null){
+                    onMyClick.onClick("1week");
+                }
                 mOption = Option.WEEK;
                 break;
         }
+    }
+    public interface onMyClick {
+        void onClick(String type);
+    }
+
+    public onMyClick onMyClick;
+
+    public void setOnMyClick(onMyClick onMyClick) {
+        this.onMyClick = onMyClick;
     }
 
     public Option getOption() {

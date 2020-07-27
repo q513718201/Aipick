@@ -16,6 +16,7 @@ import com.hazz.aipick.R;
 import com.hazz.aipick.events.KineType;
 import com.hazz.aipick.events.RxBus;
 import com.hazz.aipick.socket.Index;
+import com.hazz.aipick.ui.adapter.PhotoAdapter;
 
 import io.reactivex.disposables.Disposable;
 
@@ -56,7 +57,6 @@ public class ChartView extends RelativeLayout {
     private static final int CHART_WEEK = 7;
 
 
-
     public ChartView(Context context) {
         this(context, null);
     }
@@ -66,7 +66,7 @@ public class ChartView extends RelativeLayout {
         LayoutInflater.from(context).inflate(R.layout.view_chart, this);
         mRadioGroup = findViewById(R.id.radio_group);
         mRadioGroup.setOnCheckedChangeListener(mOnCheckedChangeListener);
-      //  mFrameLayout = findViewById(R.id.frame);
+        //  mFrameLayout = findViewById(R.id.frame);
         mProgressBar = findViewById(R.id.progressBar);
         mMore = findViewById(R.id.more);
         mIndex = findViewById(R.id.index);
@@ -79,14 +79,22 @@ public class ChartView extends RelativeLayout {
 
     }
 
+    public interface onMyClick {
+        void onClick(String type);
+    }
 
+    public onMyClick onMyClick;
+
+    public void setOnMyClick(onMyClick onMyClick) {
+        this.onMyClick = onMyClick;
+    }
 
     private RadioGroup.OnCheckedChangeListener mOnCheckedChangeListener = new RadioGroup.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(RadioGroup group, int checkedId) {
 
             RadioButton radioButton = group.findViewById(checkedId);
-            if (radioButton == null ||  !radioButton.isChecked()) {
+            if (radioButton == null || !radioButton.isChecked()) {
                 return;
             }
             mLastOptionId = mCurrentOptionId;
@@ -104,20 +112,25 @@ public class ChartView extends RelativeLayout {
             }
             switch (checkedId) {
                 case R.id.time:
-                    RxBus.get().send(new KineType("1fen"));
+                    if (onMyClick != null) {
+                        onMyClick.onClick("1fen");
+                    }
 
                     break;
                 case R.id.fifteen:
-                    RxBus.get().send(new KineType("5fen"));
-
+                    if (onMyClick != null) {
+                        onMyClick.onClick("15fen");
+                    }
                     break;
                 case R.id.hour:
-                    RxBus.get().send(new KineType("1hour"));
-
+                    if (onMyClick != null) {
+                        onMyClick.onClick("1hour");
+                    }
                     break;
                 case R.id.k_day:
-                    RxBus.get().send(new KineType("1day"));
-
+                    if (onMyClick != null) {
+                        onMyClick.onClick("1day");
+                    }
                     break;
                 case R.id.more:
                     showOptionPop();
@@ -132,6 +145,41 @@ public class ChartView extends RelativeLayout {
     private void showOptionPop() {
         if (mTimeOptionPopupWindow == null) {
             mTimeOptionPopupWindow = new TimeOptionPopupWindow(getContext());
+            mTimeOptionPopupWindow.setOnMyClick(new TimeOptionPopupWindow.onMyClick() {
+                @Override
+                public void onClick(String type) {
+                    switch (type) {
+                        case "1fen": {
+                            if (onMyClick != null) {
+                                onMyClick.onClick("1fenk");
+                            }
+
+                            break;
+                        }
+                        case "5fen": {
+                            if (onMyClick != null) {
+                                onMyClick.onClick("5fen");
+                            }
+
+                            break;
+                        }
+                        case "30fen": {
+                            if (onMyClick != null) {
+                                onMyClick.onClick("30fen");
+                            }
+
+                            break;
+                        }
+                        case "1week": {
+                            if (onMyClick != null) {
+                                onMyClick.onClick("1week");
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            });
             mTimeOptionPopupWindow.setOnDismissListener(() -> {
                 TimeOptionPopupWindow.Option option = mTimeOptionPopupWindow.getOption();
                 if (option == null) {
@@ -139,7 +187,6 @@ public class ChartView extends RelativeLayout {
                 } else {
                     if (mMore.getOption() != option) {
                         mMore.setSelectedOption(option);
-
                     }
                     mRadioGroup.clearCheck();
                 }
@@ -154,39 +201,35 @@ public class ChartView extends RelativeLayout {
             mIndexOptionPopupWindow.setOnIndexChangeListener(new IndexOptionPopupWindow.OnIndexChangeListener() {
                 @Override
                 public void onSecondIndexChange(Index index) {
-
+                    if (index.toString().equals("VOL")) {
+                        if (onMyClick != null) {
+                            onMyClick.onClick("vol");
+                        }
+                    }
+                    if (index.toString().equals("MACD")) {
+                        if (onMyClick != null) {
+                            onMyClick.onClick("macd");
+                        }
+                    }
+                    if (index.toString().equals("KDJ")) {
+                        if (onMyClick != null) {
+                            onMyClick.onClick("kdj");
+                        }
+                    }
                 }
 
                 @Override
                 public void onMainIndexChange(Index index) {
-
+                    if (onMyClick != null) {
+                        onMyClick.onClick("main");
+                    }
                 }
             });
-            mIndexOptionPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-                @Override
-                public void onDismiss() {
-                    checkLastRadioButton();
-                }
-            });
+            mIndexOptionPopupWindow.setOnDismissListener(() -> checkLastRadioButton());
         }
         mIndexOptionPopupWindow.showAsDropDown(mRadioGroup);
     }
 
-
-
-    private int getIdByOption(TimeOptionPopupWindow.Option option) {
-        switch (option) {
-            case ONE_MINUTE:
-                return CHART_MINUTE;
-            case FIVE_MINUTE:
-                return CHART_FIFTEEN;
-            case THIRTY_MINUTE:
-                return CHART_THRITY;
-            case WEEK:
-                return CHART_WEEK;
-        }
-        return -1;
-    }
 
     private void checkLastRadioButton() {
         RadioButton radioButton = mRadioGroup.findViewById(mLastOptionId);
@@ -195,20 +238,6 @@ public class ChartView extends RelativeLayout {
         }
         mUseLastSelected = true;
         radioButton.setChecked(true);
-    }
-
-
-    Disposable disposable;  //   全局变量
-
-//    void testCount() {
-//        disposable = Observable.interval(20, 20, TimeUnit.SECONDS)
-//                .subscribe(count ->);
-//    }
-
-    void stop() {
-        if (disposable != null) {
-            disposable.dispose();
-        }
     }
 
 

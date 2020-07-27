@@ -55,12 +55,15 @@ public class OptionRadioButton extends AppCompatRadioButton {
                 break;
             case FIVE_MINUTE:
                 setText(getResources().getString(R.string.five_min));
+
                 break;
             case THIRTY_MINUTE:
                 setText(getResources().getString(R.string.thirty_min));
+
                 break;
         }
     }
+
 
     public void resetOption() {
         setTextColor(getResources().getColor(R.color.text_hint));

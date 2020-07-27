@@ -131,7 +131,6 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
 //
 //        iv_search.setOnClickListener { openSearchActivity() }
 
-        mLayoutStatusView = multipleStatusView
 
         val pointList = ArrayList<Point>()
         pointList.add(Point(0, 50))

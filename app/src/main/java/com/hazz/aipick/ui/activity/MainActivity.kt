@@ -12,6 +12,7 @@ import com.hazz.aipick.events.ChangeIndex
 import com.hazz.aipick.events.RxBus
 import com.hazz.aipick.mvp.model.bean.TabEntity
 import com.hazz.aipick.showToast
+import com.hazz.aipick.socket.WsManager
 import com.hazz.aipick.ui.fragment.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -57,7 +58,7 @@ class MainActivity : BaseActivity() {
             switchFragment(2)
 
         }
-
+        WsManager.getInstance().init()
 
     }
 

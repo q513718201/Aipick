@@ -75,7 +75,7 @@ class CoinHouseActivity : BaseActivity(), WaletContract.coinHouseView {
         recycleview.addItemDecoration(RecyclerViewSpacesItemDecoration(stringIntegerHashMap))
         recycleview.adapter = mOrderAdapter
         mOrderAdapter!!.bindToRecyclerView(recycleview)
-        mOrderAdapter!!.setEmptyView(R.layout.empty_view)
+        mOrderAdapter!!.setEmptyView(R.layout.empty_view_coin)
         mOrderAdapter!!.onConfirm={ view: View, i: Int ->
             val dialogInsertCoinHouse = DialogMishiCoinHouse(this)
             dialogInsertCoinHouse.onConfirm={ s: String, s1: String, s2: String ->

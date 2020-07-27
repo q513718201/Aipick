@@ -5,10 +5,9 @@ import android.app.Application
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import com.hazz.aipick.utils.DensityUtils
-import com.hazz.aipick.utils.DisplayManager
-import com.hazz.aipick.utils.SPUtil
-import com.hazz.aipick.utils.SToast
+import com.hazz.aipick.socket.ForegroundCallbacks
+import com.hazz.aipick.socket.WsManager
+import com.hazz.aipick.utils.*
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
@@ -47,6 +46,7 @@ class MyApplication : Application(){
         DensityUtils.setDensity(this)
         SPUtil.init(this)
         SToast.initToast(this)
+        initAppStatusListener()
     }
 
     private fun setupLeakCanary(): RefWatcher {
@@ -78,6 +78,8 @@ class MyApplication : Application(){
     private val mActivityLifecycleCallbacks = object : Application.ActivityLifecycleCallbacks {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
             Log.d(TAG, "onCreated: " + activity.componentName.className)
+            DensityUtils.setDefault(activity)
+            ActivityManager.getInstance().addActivity(activity)
         }
 
         override fun onActivityStarted(activity: Activity) {
@@ -102,8 +104,25 @@ class MyApplication : Application(){
 
         override fun onActivityDestroyed(activity: Activity) {
             Log.d(TAG, "onDestroy: " + activity.componentName.className)
+            ActivityManager.getInstance().finishActivity(activity)
+            RxBus.get().unSubscribe(activity)
         }
     }
 
+    /**
+     * 初始化应用前后台状态监听
+     */
+    private fun initAppStatusListener() {
+        ForegroundCallbacks.init(this).addListener(object : ForegroundCallbacks.Listener {
+            override fun onBecameForeground() {
+                Logger.t("WsManager").d("应用回到前台调用重连方法")
+                WsManager.getInstance().reconnect()
+            }
+
+            override fun onBecameBackground() {
+
+            }
+        })
+    }
 
 }

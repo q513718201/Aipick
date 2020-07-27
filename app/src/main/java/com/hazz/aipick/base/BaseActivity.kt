@@ -12,7 +12,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-import com.classic.common.MultipleStatusView
+
 import com.hazz.aipick.MyApplication
 import com.hazz.aipick.R
 import com.hazz.aipick.net.BaseView
@@ -28,29 +28,23 @@ import pub.devrel.easypermissions.EasyPermissions
 
 
 abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks, BaseView {
-    /**
-     * 多种状态的 View 的切换
-     */
-    protected var mLayoutStatusView: MultipleStatusView? = null
+
      var  permissionsnew: RxPermissions?=null
-    private var mDialog: ProgressDialog? = null
+     var mDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
         StatusBarUtil.darkMode(this)
+        mDialog=ProgressDialog(this)
         initView()
         start()
         initData()
-        initListener()
-        mDialog=ProgressDialog(this)
+
         permissionsnew = RxPermissions(this)
 
     }
 
-    private fun initListener() {
-        mLayoutStatusView?.setOnClickListener(mRetryClickListener)
-    }
 
     open val mRetryClickListener: View.OnClickListener = View.OnClickListener {
         start()

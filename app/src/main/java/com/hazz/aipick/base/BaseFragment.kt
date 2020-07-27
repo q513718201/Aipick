@@ -1,5 +1,6 @@
 package com.hazz.aipick.base
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v4.app.Fragment
@@ -8,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.classic.common.MultipleStatusView
+
 import com.hazz.aipick.MyApplication
 import com.hazz.aipick.net.BaseView
 import com.hazz.aipick.net.ExceptionHandle
+import com.hazz.aipick.ui.activity.LoginActivity
+import com.hazz.aipick.utils.ActivityManager
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.ProgressDialog
 import io.reactivex.annotations.NonNull
@@ -30,13 +33,9 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
      * 数据是否加载过了
      */
     private var hasLoadData = false
-    /**
-     * 多种状态的 View 的切换
-     */
-    protected var mLayoutStatusView: MultipleStatusView? = null
 
 
-    private var mDialog: ProgressDialog? = null
+     var mDialog: ProgressDialog? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         return inflater.inflate(getLayoutId(), null)
@@ -53,11 +52,11 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         isViewPrepare = true
-        initView()
+
         mDialog = ProgressDialog(activity)
+        initView()
         lazyLoadDataIfPrepared()
-        //多种状态切换的view 重试点击事件
-        mLayoutStatusView?.setOnClickListener(mRetryClickListener)
+
     }
 
     private fun lazyLoadDataIfPrepared() {
@@ -148,6 +147,8 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
     }
 
     override fun login() {
+        activity!!.startActivity(Intent(activity,LoginActivity::class.java))
+        ActivityManager.getInstance().finishOthers(LoginActivity::class.java)
     }
 
     override fun hideLoading() {
