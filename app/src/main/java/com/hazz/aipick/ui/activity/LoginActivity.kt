@@ -23,7 +23,7 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView {
 
     override fun loginSuccess(msg: LoginBean) {
         SPUtil.putString("token",msg.token)
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivityNew::class.java)
         startActivity(intent)
         finish()
     }
