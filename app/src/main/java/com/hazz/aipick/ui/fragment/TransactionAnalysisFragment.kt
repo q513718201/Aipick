@@ -140,9 +140,6 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
 
         // if disabled, scaling can be done on x- and y-axis separately
         chart.setPinchZoom(true)
-
-        // set an alternative background color
-        chart.setBackgroundColor(Color.LTGRAY)
         val l = chart.legend
         l.setForm(LegendForm.LINE)
 
@@ -164,7 +161,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
         leftAxis.textColor = ColorTemplate.getHoloBlue()
         leftAxis.axisMaximum = 200f
         leftAxis.axisMinimum = 0f
-        leftAxis.setDrawGridLines(true)
+        leftAxis.setDrawGridLines(false)
         leftAxis.isGranularityEnabled = true
 
         setData(10, 30F)
@@ -253,103 +250,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
     }
 
     private fun initBarChart() {
-        mChart.setOnChartValueSelectedListener(this)
-        mChart.setDrawBarShadow(false)
-        mChart.setDrawValueAboveBar(true)
-        mChart.getDescription().setEnabled(false)
-        // if more than 60 entries are displayed in the chart, no values will be
-        // drawn
-        mChart.setMaxVisibleValueCount(60)
-        // scaling can now only be done on x- and y-axis separately
-        mChart.setPinchZoom(false)
-        mChart.setDrawGridBackground(false)
 
-        //        IAxisValueFormatter xAxisFormatter = new DayAxisValueFormatter(mChart);
-
-        //自定义坐标轴适配器，配置在X轴，xAxis.setValueFormatter(xAxisFormatter);
-        //   val xAxisFormatter = XAxisValueFormatter()
-
-        val xAxis = mChart.getXAxis()
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM)
-        // xAxis.setTypeface(mTfLight)//可以去掉，没什么用
-        xAxis.setDrawAxisLine(false)
-        xAxis.setGranularity(1f)
-        //  xAxis.setValueFormatter(xAxisFormatter)
-
-
-        //自定义坐标轴适配器，配置在Y轴。leftAxis.setValueFormatter(custom);
-        // val custom = MyAxisValueFormatter()
-
-        //设置限制临界线
-        val limitLine = LimitLine(3f, "临界点")
-        limitLine.lineColor = Color.GREEN
-        limitLine.lineWidth = 1f
-        limitLine.textColor = Color.GREEN
-
-        //获取到图形左边的Y轴
-        val leftAxis = mChart.getAxisLeft()
-        leftAxis.addLimitLine(limitLine)
-
-        leftAxis.setLabelCount(8, false)
-        //  leftAxis.setValueFormatter(custom)
-        leftAxis.setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART)
-        leftAxis.setSpaceTop(15f)
-        leftAxis.setAxisMinimum(0f)
-
-        //获取到图形右边的Y轴，并设置为不显示
-        mChart.getAxisRight().setEnabled(false)
-
-        //图例设置
-        val legend = mChart.getLegend()
-        legend.setVerticalAlignment(LegendVerticalAlignment.BOTTOM)
-        legend.setHorizontalAlignment(LegendHorizontalAlignment.LEFT)
-        legend.setOrientation(LegendOrientation.HORIZONTAL)
-        legend.setDrawInside(false)
-        legend.setForm(LegendForm.SQUARE)
-        legend.setFormSize(9f)
-        legend.setTextSize(11f)
-        legend.setXEntrySpace(4f)
-
-        //如果点击柱形图，会弹出pop提示框.XYMarkerView为自定义弹出框
-        //        val mv = XYMarkerView(this, xAxisFormatter)
-        //        mv.setChartView(mChart)
-        //        mChart.setMarker(mv)
-        setBarChartData()
-    }
-
-    private fun setBarChartData() {
-
-        val yVals1 = ArrayList<BarEntry>()
-
-
-        //在这里设置自己的数据源,BarEntry 只接收float的参数，
-        //图形横纵坐标默认为float形式，如果想展示文字形式，需要自定义适配器，
-        yVals1.add(BarEntry(0f, 4f))
-        yVals1.add(BarEntry(1f, 2f))
-        yVals1.add(BarEntry(2f, 6f))
-        yVals1.add(BarEntry(3f, 1f))
-        yVals1.add(BarEntry(4f, 3f))
-        yVals1.add(BarEntry(5f, 5f))
-        val set1: BarDataSet
-
-        if (mChart.getData() != null && mChart.getData().getDataSetCount() > 0) {
-            set1 = mChart.getData().getDataSetByIndex(0) as BarDataSet
-            set1.values = yVals1
-            mChart.getData().notifyDataChanged()
-            mChart.notifyDataSetChanged()
-        } else {
-            set1 = BarDataSet(yVals1, "The year 2017")
-            set1.setDrawIcons(false)
-
-            val dataSets = ArrayList<IBarDataSet>()
-            dataSets.add(set1)
-
-            val data = BarData(dataSets)
-            data.setValueTextSize(10f)
-            data.barWidth = 0.9f
-
-            mChart.setData(data)
-        }
     }
 
     override fun lazyLoad() {
