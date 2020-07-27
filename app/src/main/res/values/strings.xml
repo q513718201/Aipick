@@ -322,5 +322,13 @@
     <string name="lishijiaoyi">历史交易数量</string>
     <string name="lishibishu">历史交易笔数</string>
     <string name="num_num">数量:%1$s</string>
+    <string name="no_data">暂无数据</string>
+    <string name="monicp">模拟操盘</string>
+
+    <string name="high_24">24H最高</string>
+    <string name="lowest_24">24H最低</string>
+    <string name="trade_amount">成交量</string>
+    <string name="market_yuan">≈ ¥%s</string>
+    <string name="mncp">模拟操盘</string>
 
 </resources>

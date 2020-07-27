@@ -141,7 +141,7 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
                 startActivity(Intent(activity, SettingActivity::class.java))
             }
             v?.id == R.id.coin_house_order -> startActivity(Intent(activity, ExchangeOrderActivity::class.java))
-            v?.id == R.id.tv_caopan -> RxBus.get().send(ChangeIndex())
+            v?.id == R.id.tv_caopan -> startActivity(Intent(activity, MonicpActivity::class.java))
             v?.id == R.id.tv_moni ->  startActivity(Intent(activity, RebotCategryActivity::class.java))
             v?.id == R.id.tv_wallet -> startActivity(Intent(activity, WaletActivity::class.java))
             v?.id == R.id.tv_account -> startActivity(Intent(activity, MyAccountActivity::class.java).putExtra("id",uid))

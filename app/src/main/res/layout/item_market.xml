@@ -36,7 +36,7 @@
         android:id="@+id/tv_trade_b"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BTC"
+        android:text="USDT"
         android:layout_marginLeft="4dp"
         android:textColor="@color/color_home"
         android:textSize="11sp"
@@ -67,10 +67,10 @@
         android:id="@+id/tv_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="37dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="90dp"
         android:text="--"
+
         android:textColor="@color/color_home"
         android:textSize="15sp"
         android:textStyle="bold"
@@ -87,6 +87,7 @@
         android:textSize="12sp"
         android:textColor="@color/color_home"
         app:layout_constraintEnd_toStartOf="@id/up_down"
+        android:layout_marginEnd="90dp"
         app:layout_constraintBottom_toBottomOf="@id/tv_volume" />
 
 

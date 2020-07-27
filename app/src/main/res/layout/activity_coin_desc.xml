@@ -23,6 +23,7 @@
             android:src="@mipmap/back_white" />
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -40,9 +41,7 @@
 
     </RelativeLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,7 +56,7 @@
 
 
                 <TextView
-                    android:id="@+id/tv_price"
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -69,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/tv_price"
+                    android:layout_toRightOf="@+id/tv_name"
                     android:padding="5dp"
                     android:src="@mipmap/up" />
 
@@ -81,19 +80,20 @@
                     android:orientation="vertical">
 
                     <TextView
-
+                      android:id="@+id/tv_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="100%"
+                        android:text="00%"
                         android:textColor="#15F8D3"
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/tv_zj"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="+100"
+                        android:text="+00"
                         android:textColor="#15F8D3"
                         android:textSize="12sp" />
 
@@ -128,6 +128,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -137,6 +138,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/tv_hight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -155,6 +157,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/tv_vol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -199,6 +202,7 @@
                     android:textSize="10sp" />
 
                 <TextView
+                    android:id="@+id/tv_low"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
@@ -209,21 +213,42 @@
 
             </LinearLayout>
 
-            <com.hazz.aipick.widget.ChartView
+            <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:tabSelectedTextColor="#AA4AFF"
-                app:tabTextColor="@color/color_bottom">
+                android:layout_height="350dp">
+                <com.hazz.aipick.widget.ChartView
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabSelectedTextColor="#AA4AFF"
+                    app:tabTextColor="@color/color_bottom">
 
-            </com.hazz.aipick.widget.ChartView>
+                </com.hazz.aipick.widget.ChartView>
 
 
-            <com.github.fujianlian.klinechart.KLineChartView
-                android:id="@+id/kLineChartView"
-                android:layout_width="match_parent"
-                android:layout_height="400dp">
+                <FrameLayout
+                    android:id="@+id/mFrameLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chart"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    >
+                </FrameLayout>
 
-            </com.github.fujianlian.klinechart.KLineChartView>
+                <ProgressBar
+                    android:id="@+id/mProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chart"
+                    android:visibility="gone"/>
+            </android.support.constraint.ConstraintLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
@@ -303,7 +328,7 @@
         </LinearLayout>
 
 
-    </android.support.v4.widget.NestedScrollView>
+
 
 
 </LinearLayout>
