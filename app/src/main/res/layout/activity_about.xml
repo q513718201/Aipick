@@ -67,19 +67,6 @@
 
 
 
-    <TextView
-        android:id="@+id/tv_since"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="@string/since"
-        android:textColor="@color/color_gray"
-        android:textSize="@dimen/textSize_small_10" />
-
-
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -97,6 +84,7 @@
                     android:text="@string/about"
                     android:textColor="@color/color_white"
                     android:textSize="18sp"
+
                     />
         </android.support.v7.widget.Toolbar>
 
