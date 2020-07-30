@@ -74,15 +74,17 @@ class SplashActivity : BaseActivity() {
             }else{
                 val intent = Intent(this, MainActivityNew::class.java)
                 startActivity(intent)
+
             }
         }else{
             val intent = Intent(this, GuideActivity::class.java)
             startActivity(intent)
+
         }
 
 //        val intent = Intent(this, MainActivityNew::class.java)
 //        startActivity(intent)
-//        finish()
+       finish()
     }
 
 

@@ -143,11 +143,11 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
         val l = chart.legend
         l.setForm(LegendForm.LINE)
 
-        l.setTextSize(11f)
-        l.setTextColor(Color.WHITE)
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM)
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT)
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL)
+        l.textSize = 11f
+        l.textColor = Color.WHITE
+        l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
+        l.orientation = Legend.LegendOrientation.HORIZONTAL
         l.setDrawInside(false)
 //        l.setYOffset(11f);
 
@@ -155,7 +155,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
         xAxis.textSize = 11f
         xAxis.textColor = Color.WHITE
         xAxis.setDrawGridLines(false)
-        xAxis.setDrawAxisLine(false)
+        xAxis.setDrawAxisLine(true)
 
         val leftAxis = chart.axisLeft
         leftAxis.textColor = ColorTemplate.getHoloBlue()
@@ -163,7 +163,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
         leftAxis.axisMinimum = 0f
         leftAxis.setDrawGridLines(false)
         leftAxis.isGranularityEnabled = true
-
+        chart.axisRight.isEnabled=false
         setData(10, 30F)
     }
 
@@ -205,7 +205,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
             chart.notifyDataSetChanged()
         } else {
             // create a dataset and give it a type
-            set1 = LineDataSet(values1, "DataSet 1")
+            set1 = LineDataSet(values1, "")
 
             set1.axisDependency = YAxis.AxisDependency.LEFT
             set1.color = ColorTemplate.getHoloBlue()
@@ -224,17 +224,17 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
             //set1.setCircleHoleColor(Color.WHITE);
 
             // create a dataset and give it a type
-            set2 = LineDataSet(values2, "DataSet 2")
+            set2 = LineDataSet(values2, "")
             set2.axisDependency = YAxis.AxisDependency.RIGHT
             set2.color = Color.RED
             set2.setCircleColor(Color.WHITE)
             set2.lineWidth = 2f
             set2.mode=LineDataSet.Mode.CUBIC_BEZIER
-            set2.setDrawCircles(false)
+            set2.setDrawCircles(true)
             set2.circleRadius = 3f
             set2.fillAlpha = 65
             set2.fillColor = Color.RED
-            set2.setDrawCircleHole(false)
+            set2.setDrawCircleHole(true)
             set2.highLightColor = Color.rgb(244, 117, 117)
             //set2.setFillFormatter(new MyFillFormatter(900f));
 
