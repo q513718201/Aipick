@@ -1,34 +1,26 @@
 package com.hazz.aipick.ui.fragment
 
 
-import android.os.Bundle
-import com.hazz.aipick.R
-import com.hazz.aipick.base.BaseFragment
-import com.github.mikephil.charting.components.YAxis
-import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
-import com.github.mikephil.charting.utils.ColorTemplate
-import kotlinx.android.synthetic.main.fragment_chart.*
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener
-import com.github.mikephil.charting.components.Legend.LegendForm
-import com.github.mikephil.charting.components.Legend.LegendOrientation
-import com.github.mikephil.charting.components.Legend.LegendHorizontalAlignment
-import com.github.mikephil.charting.components.Legend.LegendVerticalAlignment
-import com.github.mikephil.charting.components.LimitLine
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import android.graphics.Color
+import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
 import android.view.View
-import com.github.mikephil.charting.components.Legend
-import com.github.mikephil.charting.data.*
-import kotlinx.android.synthetic.main.dialog_choose.view.*
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
+import com.hazz.aipick.R
+import com.hazz.aipick.base.BaseFragment
+import com.hazz.aipick.mvp.contract.InComingContract
+import com.hazz.aipick.mvp.model.InComing
+import com.hazz.aipick.mvp.presenter.InComingPresenter
+import com.hazz.aipick.utils.DynamicLineChartManager
 import kotlinx.android.synthetic.main.dialog_choose.view.tv_cancle
 import kotlinx.android.synthetic.main.dialog_choose_day.view.*
 import kotlinx.android.synthetic.main.dialog_choose_year.view.*
+import kotlinx.android.synthetic.main.fragment_chart.*
 
 
-class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener {
+class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener, InComingContract.incomingView {
 
 
     override fun onNothingSelected() {
@@ -40,6 +32,15 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
 
 
     private var mTitle:String? =null
+    private var mInComingPresenter: InComingPresenter =InComingPresenter(this)
+
+    private var dynamicLineChartManager: DynamicLineChartManager? = null
+    private val colour: MutableList<Int> = mutableListOf() //折线颜色集合
+
+    private val xValue: MutableList<String> = mutableListOf() //X轴坐标
+
+    private val yValue: MutableList<Float> = mutableListOf() //y轴坐标
+
 
     companion object {
         fun getInstance(title:String): TransactionAnalysisFragment {
@@ -56,7 +57,15 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
 
     override fun initView() {
 
-        initBarChart()
+
+        //折线颜色
+        colour.add(Color.parseColor("#15F8D3"))
+        colour.add(Color.parseColor("#FF7C95"))
+        dynamicLineChartManager = DynamicLineChartManager(activity, line_chart)
+
+
+        mInComingPresenter.getIncoming("1month")
+
         initLineChart()
         tv_year.setOnClickListener {
             showBottomYear("shouyi")
@@ -126,15 +135,20 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
 
 
 
-    private fun initBarChart() {
-
-    }
 
     override fun lazyLoad() {
 
     }
 
-
+    override fun getIncoming(msg: List<InComing>) {
+        for(a in msg){
+            xValue.add(a.day_label)
+            yValue.add(a.buy.toFloat())
+            yValue.add(a.sell.toFloat())
+        }
+        dynamicLineChartManager!!.setXValue(xValue)
+        dynamicLineChartManager!!.setDoubleLineData(yValue,colour, msg)
+    }
 
 
 }

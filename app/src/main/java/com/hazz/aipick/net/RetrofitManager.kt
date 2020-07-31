@@ -2,10 +2,8 @@ package com.hazz.aipick.net
 
 import com.hazz.aipick.MyApplication
 import com.hazz.aipick.api.AiPickService
-import com.hazz.aipick.api.ApiService
 import com.hazz.aipick.utils.AppUtils
 import com.hazz.aipick.utils.NetworkUtil
-import com.hazz.aipick.utils.Preference
 import com.hazz.aipick.utils.SPUtil
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor

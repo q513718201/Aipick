@@ -1,5 +1,6 @@
 package com.hazz.aipick.api
 
+import com.hazz.aipick.mvp.model.InComing
 import com.hazz.aipick.mvp.model.bean.*
 import com.hazz.aipick.mvp.model.bean.Collection
 import com.hazz.aipick.net.BaseResult
@@ -276,5 +277,13 @@ interface AiPickService{
      */
     @POST("simulate/trade")
     fun monicaopan(@Body request: RequestBody): Observable<BaseResult<Any>>
+
+
+
+    /**
+     *模拟跟随-交易分析收益
+     */
+    @POST("fake/buy_sell")
+    fun incoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
 
 }

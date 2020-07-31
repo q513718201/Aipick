@@ -17,7 +17,10 @@ import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.MPPointD;
+import com.hazz.aipick.mvp.model.InComing;
 import com.hazz.aipick.widget.XYMarkerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +39,7 @@ public class DynamicLineChartManager {
     private LineDataSet mDataSetB;
     private LineDataSet mDataSetA;
     private Context mContext;
-    //List<Suanli.ListBean> list;
+    List<InComing> list;
 
     //多条曲线
     public DynamicLineChartManager(Context context, LineChart mLineChart) {
@@ -59,7 +62,7 @@ public class DynamicLineChartManager {
         lineChart.setDrawBorders(false);
         lineChart.setScaleYEnabled(false);
         lineChart.setNoDataText("暂无收益记录");
-
+        lineChart.setAutoScaleMinMaxEnabled(true);
 
         //折线图例 标签 设置
         Legend legend = lineChart.getLegend();
@@ -107,9 +110,9 @@ public class DynamicLineChartManager {
                 double xValuePos = p.x;
                 double yValuePos = p.y;
                 Log.i("xinxin", "xValuePos = " + xValuePos + "     yValuePos = " + yValuePos);
-//                XYMarkerView mv = new XYMarkerView(mContext, lineChart, iEntry, list);
-//                mv.setChartView(lineChart);
-//                lineChart.setMarker(mv);
+                XYMarkerView mv = new XYMarkerView(mContext, lineChart, iEntry, list);
+                mv.setChartView(lineChart);
+                lineChart.setMarker(mv);
 
             }
 
@@ -159,21 +162,21 @@ public class DynamicLineChartManager {
      */
     public void setXValue(List<String> xValue) {
         timeList = xValue;
-        xAxis.setLabelCount(timeList.size() , false);
+        xAxis.setLabelCount(timeList.size(), false);
         xAxis.setAxisMinimum(-0.5f);
         xAxis.setAxisMaximum((float) (timeList.size() - 0.5));
         lineChart.invalidate();
     }
 
 
-    public void setDoubleLineData(List<Integer> colour, List<String> list) {
+    public void setDoubleLineData(List<Float> yValue,List<Integer> colour, List<InComing> list) {
 
-       // this.list = list;
+        this.list = list;
 
         //设置折线图横跨距离
         ArrayList<Entry> yValue1 = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            //yValue1.add(new Entry(i, Float.valueOf(list.get(i));
+        for (int i = 0; i < yValue.size(); i++) {
+            yValue1.add(new Entry(i, yValue.get(i)));
         }
 
 
@@ -203,7 +206,7 @@ public class DynamicLineChartManager {
         //设置折线图横跨距离
         ArrayList<Entry> yValue2 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-           // yValue2.add(new Entry(i, Float.valueOf(list.get(i).invite)));
+            // yValue2.add(new Entry(i, Float.valueOf(list.get(i).invite)));
         }
 
         mDataSetB = new LineDataSet(yValue2, "");
@@ -302,5 +305,6 @@ public class DynamicLineChartManager {
         lineChart.setDescription(description);
         lineChart.invalidate();
     }
+
 
 }
