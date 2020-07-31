@@ -141,13 +141,14 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
     }
 
     override fun getIncoming(msg: List<InComing>) {
-        for(a in msg){
-            xValue.add(a.day_label)
-            yValue.add(a.buy.toFloat())
-            yValue.add(a.sell.toFloat())
+        if(!msg.isNullOrEmpty()){
+            for(a in msg){
+                xValue.add(a.day_label)
+            }
+            dynamicLineChartManager!!.setXValue(xValue)
+            dynamicLineChartManager!!.setDoubleLineData(colour, msg)
         }
-        dynamicLineChartManager!!.setXValue(xValue)
-        dynamicLineChartManager!!.setDoubleLineData(yValue,colour, msg)
+
     }
 
 

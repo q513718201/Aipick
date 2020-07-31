@@ -42,9 +42,9 @@ public class XYMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         tvData.setText(list.get(iEntry).day_label);
-        tv1.setText(list.get(iEntry).buy);
-        tv2.setText(list.get(iEntry).sell);
-        tv3.setText(list.get(iEntry).gain);
+        tv1.setText("买入"+list.get(iEntry).buy);
+        tv2.setText("卖出"+list.get(iEntry).sell);
+        tv3.setText("盈亏"+list.get(iEntry).gain);
         super.refreshContent(e, highlight);
     }
 

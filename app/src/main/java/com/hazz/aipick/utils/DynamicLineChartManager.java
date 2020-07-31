@@ -63,7 +63,7 @@ public class DynamicLineChartManager {
         lineChart.setScaleYEnabled(false);
         lineChart.setNoDataText("暂无收益记录");
         lineChart.setAutoScaleMinMaxEnabled(true);
-
+        setDescription("");
         //折线图例 标签 设置
         Legend legend = lineChart.getLegend();
         legend.setTextSize(11f);
@@ -76,22 +76,23 @@ public class DynamicLineChartManager {
         legend.setForm(Legend.LegendForm.NONE);
 
         leftAxis.setLabelCount(6, false);
-        leftAxis.setDrawGridLines(true);
+        leftAxis.setDrawGridLines(false);
         leftAxis.setGridColor(Color.parseColor("#E4EEF9"));
-        leftAxis.setAxisLineColor(Color.parseColor("#AEB9CE"));
+        leftAxis.setAxisLineColor(Color.parseColor("#293559"));
         leftAxis.setDrawZeroLine(true);
         leftAxis.setGranularity(1);
         leftAxis.setAxisMinimum(0f);
+        leftAxis.setTextColor(Color.parseColor("#6371A0"));
         rightAxis.setEnabled(false);
 
         //X轴设置显示位置在底部
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1);
 
-        xAxis.setDrawGridLines(true);
+        xAxis.setDrawGridLines(false);
         xAxis.setGridColor(Color.parseColor("#E4EEF9"));
-        xAxis.setAxisLineColor(Color.parseColor("#AEB9CE"));
-
+        xAxis.setAxisLineColor(Color.parseColor("#293559"));
+        xAxis.setTextColor(Color.parseColor("#6371A0"));
         xAxis.setValueFormatter((value, axis) -> timeList.get((int) value % timeList.size()));
 
 
@@ -104,12 +105,11 @@ public class DynamicLineChartManager {
                 int iEntry = (int) e.getX();
                 float valEntry = e.getY();
 
-                Log.i("xinxin", "e.getX() = " + iEntry + "     e.getY() = " + valEntry);
                 // 获取选中value的坐标
                 MPPointD p = lineChart.getPixelForValues(e.getX(), e.getY(), YAxis.AxisDependency.LEFT);
                 double xValuePos = p.x;
                 double yValuePos = p.y;
-                Log.i("xinxin", "xValuePos = " + xValuePos + "     yValuePos = " + yValuePos);
+
                 XYMarkerView mv = new XYMarkerView(mContext, lineChart, iEntry, list);
                 mv.setChartView(lineChart);
                 lineChart.setMarker(mv);
@@ -169,14 +169,15 @@ public class DynamicLineChartManager {
     }
 
 
-    public void setDoubleLineData(List<Float> yValue,List<Integer> colour, List<InComing> list) {
+    public void setDoubleLineData(List<Integer> colour, List<InComing> list) {
 
         this.list = list;
 
         //设置折线图横跨距离
         ArrayList<Entry> yValue1 = new ArrayList<>();
-        for (int i = 0; i < yValue.size(); i++) {
-            yValue1.add(new Entry(i, yValue.get(i)));
+
+        for (int i = 0; i < list.size(); i++) {
+            yValue1.add(new Entry(i, Float.valueOf(list.get(i).buy)));
         }
 
 
@@ -206,7 +207,7 @@ public class DynamicLineChartManager {
         //设置折线图横跨距离
         ArrayList<Entry> yValue2 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            // yValue2.add(new Entry(i, Float.valueOf(list.get(i).invite)));
+             yValue2.add(new Entry(i, Float.valueOf(list.get(i).sell)));
         }
 
         mDataSetB = new LineDataSet(yValue2, "");
