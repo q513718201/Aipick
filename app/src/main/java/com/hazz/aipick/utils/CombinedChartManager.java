@@ -56,19 +56,19 @@ public class CombinedChartManager {
                 CombinedChart.DrawOrder.LINE
         });
 
-        mCombinedChart.setBackgroundColor(Color.WHITE);
+//        mCombinedChart.setBackgroundColor(Color.WHITE);
         mCombinedChart.setDrawGridBackground(false);
         mCombinedChart.setDrawBarShadow(false);
         mCombinedChart.setHighlightFullBarEnabled(false);
         //显示边界
         mCombinedChart.setDrawBorders(false);
         mCombinedChart.setScaleYEnabled(false);
-
+        mCombinedChart.setAutoScaleMinMaxEnabled(true);
 
         //Y轴设置
         rightAxis.setDrawGridLines(false);
         rightAxis.setAxisMinimum(0f);
-
+        rightAxis.setEnabled(false);
          // 不从y轴发出横向直线
         leftAxis.setDrawGridLines(false);
         leftAxis.setAxisMinimum(0f);
@@ -92,14 +92,14 @@ public class CombinedChartManager {
         legend.setDrawInside(false);
         legend.setForm(Legend.LegendForm.NONE);
 
-
-        Matrix matrix = new Matrix();
-        // 根据数据量来确定 x轴缩放大倍
-
-        matrix.postScale(4.0f, 1.0f);
-
-        // 在图表动画显示之前进行缩放
-        mCombinedChart.getViewPortHandler().refresh(matrix, mCombinedChart, false);
+//
+//        Matrix matrix = new Matrix();
+//        // 根据数据量来确定 x轴缩放大倍
+//
+//        matrix.postScale(4.0f, 1.0f);
+//
+//        // 在图表动画显示之前进行缩放
+//        mCombinedChart.getViewPortHandler().refresh(matrix, mCombinedChart, false);
         // x轴执行动画
         mCombinedChart.animateX(500);
     }

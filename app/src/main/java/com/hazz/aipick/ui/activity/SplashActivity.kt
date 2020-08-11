@@ -11,6 +11,7 @@ import android.view.animation.Animation.AnimationListener
 import com.hazz.aipick.MyApplication
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
+import com.hazz.aipick.socket.WsManager
 import com.hazz.aipick.utils.SPUtil
 import kotlinx.android.synthetic.main.activity_splash.*
 import pub.devrel.easypermissions.EasyPermissions
@@ -39,7 +40,7 @@ class SplashActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
-
+        WsManager.getInstance().init()
         //渐变展示启动屏
         alphaAnimation= AlphaAnimation(0.3f, 1.0f)
         alphaAnimation?.duration = 2000

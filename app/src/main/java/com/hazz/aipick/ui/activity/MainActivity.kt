@@ -58,7 +58,7 @@ class MainActivity : BaseActivity() {
             switchFragment(2)
 
         }
-        WsManager.getInstance().init()
+
 
     }
 

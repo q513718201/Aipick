@@ -4,6 +4,7 @@ package com.hazz.aipick.ui.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
+import android.util.Log
 import android.view.View
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
@@ -13,6 +14,7 @@ import com.hazz.aipick.base.BaseFragment
 import com.hazz.aipick.mvp.contract.InComingContract
 import com.hazz.aipick.mvp.model.InComing
 import com.hazz.aipick.mvp.presenter.InComingPresenter
+import com.hazz.aipick.utils.CombinedChartManager
 import com.hazz.aipick.utils.DynamicLineChartManager
 import kotlinx.android.synthetic.main.dialog_choose.view.tv_cancle
 import kotlinx.android.synthetic.main.dialog_choose_day.view.*
@@ -31,19 +33,21 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
     }
 
 
-    private var mTitle:String? =null
-    private var mInComingPresenter: InComingPresenter =InComingPresenter(this)
+    private var mTitle: String? = null
+    private var mInComingPresenter: InComingPresenter = InComingPresenter(this)
 
     private var dynamicLineChartManager: DynamicLineChartManager? = null
     private val colour: MutableList<Int> = mutableListOf() //折线颜色集合
 
+    private val xValueTrade: MutableList<String> = mutableListOf() //X轴坐标
     private val xValue: MutableList<String> = mutableListOf() //X轴坐标
 
-    private val yValue: MutableList<Float> = mutableListOf() //y轴坐标
 
+    var barChartY: MutableList<Float> = mutableListOf()
+    var lineChartY: MutableList<Float> = mutableListOf()
 
     companion object {
-        fun getInstance(title:String): TransactionAnalysisFragment {
+        fun getInstance(title: String): TransactionAnalysisFragment {
             val fragment = TransactionAnalysisFragment()
             val bundle = Bundle()
             fragment.arguments = bundle
@@ -53,7 +57,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
     }
 
 
-    override fun getLayoutId(): Int= R.layout.fragment_chart
+    override fun getLayoutId(): Int = R.layout.fragment_chart
 
     override fun initView() {
 
@@ -65,6 +69,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
 
 
         mInComingPresenter.getIncoming("1month")
+        mInComingPresenter.getTradeIncoming("1month")
 
         initLineChart()
         tv_year.setOnClickListener {
@@ -82,7 +87,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
     }
 
     private fun showBottomDay(s: String) {
-        var bottomSheet= BottomSheetDialog(activity!!)
+        var bottomSheet = BottomSheetDialog(activity!!)
         val view = layoutInflater.inflate(R.layout.dialog_choose_day, null)
         bottomSheet.setContentView(view)
         view.tv_cancle.setOnClickListener {
@@ -104,8 +109,8 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
     }
 
 
-    private fun showBottomYear(type:String) {
-       var bottomSheet= BottomSheetDialog(activity!!)
+    private fun showBottomYear(type: String) {
+        var bottomSheet = BottomSheetDialog(activity!!)
         val view = layoutInflater.inflate(R.layout.dialog_choose_year, null)
         bottomSheet.setContentView(view)
         view.tv_cancle.setOnClickListener {
@@ -134,21 +139,34 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
     }
 
 
-
-
     override fun lazyLoad() {
 
     }
 
     override fun getIncoming(msg: List<InComing>) {
-        if(!msg.isNullOrEmpty()){
-            for(a in msg){
+        if (!msg.isNullOrEmpty()) {
+            for (a in msg) {
                 xValue.add(a.day_label)
             }
             dynamicLineChartManager!!.setXValue(xValue)
             dynamicLineChartManager!!.setDoubleLineData(colour, msg)
         }
 
+    }
+
+    override fun getTradeIncoming(msg: List<InComing>) {
+
+        for (a in msg) {
+            xValue.add(a.day_label)
+            barChartY.add(a.self.toFloat())
+           lineChartY.add(a.follow.toFloat())
+
+        }
+
+        val combinedChartManager = CombinedChartManager(mChart)
+        combinedChartManager.initChart()
+        combinedChartManager.showCombinedChart(xValue, barChartY, lineChartY, "", "",
+                Color.parseColor("#1BAC8F"), Color.parseColor("#F0BC33"))
     }
 
 

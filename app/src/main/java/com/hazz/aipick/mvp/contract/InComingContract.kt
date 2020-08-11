@@ -10,7 +10,7 @@ interface InComingContract {
 
     interface incomingView: BaseView {
         fun getIncoming(msg:List<InComing>)
-
+        fun getTradeIncoming(msg:List<InComing>)
     }
 
 

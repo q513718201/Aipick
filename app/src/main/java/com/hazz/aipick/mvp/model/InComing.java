@@ -17,6 +17,8 @@ public class InComing {
         public String month_label;
         public String gain;
         public String sell;
+        public String self;
         public String buy;
-
+        public String total ;
+        public String follow;
 }

@@ -281,9 +281,16 @@ interface AiPickService{
 
 
     /**
-     *模拟跟随-交易分析收益
+     *模拟跟随-交易分析盈亏买卖
      */
     @POST("fake/buy_sell")
     fun incoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
+
+    /**
+     *模拟跟随-交易分析收益
+     */
+
+    @POST("fake/trade/analysis")
+    fun tradeIncoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
 
 }
