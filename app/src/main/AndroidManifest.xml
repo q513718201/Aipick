@@ -141,6 +141,7 @@
             />
         <activity android:name="com.hazz.aipick.ui.activity.CoinDescBuyOrSellActivity"
             />
+        <activity android:name=".ui.activity.TraderSetActivity"/>
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
