@@ -1,14 +1,10 @@
 package com.hazz.aipick.mvp.presenter
 
 
-import android.util.Base64
 import android.util.Pair
 import com.hazz.aipick.mvp.contract.LoginContract
-import com.hazz.aipick.mvp.model.bean.LoginBean
-import com.hazz.aipick.mvp.model.bean.UserInfo
 import com.hazz.aipick.net.*
 import com.hazz.aipick.utils.RsaUtils
-import java.nio.charset.Charset
 
 
 class BindCarPresenter(view: LoginContract.bindCarView) : BasePresenter<LoginContract.bindCarView>(view) {

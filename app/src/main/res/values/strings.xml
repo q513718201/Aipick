@@ -20,7 +20,7 @@
 
     <string name="nickname">Xiho</string>
     <string name="view_homepage">查看个人主页 ></string>
-    
+
     <string name="collection">收藏</string>
     <string name="comment">评论</string>
     <string name="mine_message">我的消息</string>
@@ -30,14 +30,13 @@
     <string name="feedback">意见反馈</string>
 
 
-
     <string name="loading_text">加载中&#8230;</string>
     <string name="no_network">请检查网络后点击重新加载</string>
     <string name="data_error">数据获取失败(ㄒoㄒ)~~</string>
     <string name="empty_view_hint">暂时木有内容呀~~</string>
     <string name="splash_text">每日精选视频，让你大开眼界</string>
-    
-    
+
+
     <string name="copy_right_notice">内容部分数据归原公司《开眼Eyepetizer》版权所有</string>
     <string name="not_use_commercial">本APP只供学习交流和研究之用，\n请勿用作商业用途！</string>
     <string name="since">copyright ©2017 Xiho.</string>
@@ -270,7 +269,7 @@
     <string name="modify_email">修改邮箱</string>
     <string name="current_bind_phone">当前绑定手机号:%1$s</string>
     <string name="current_bind_email">当前绑定邮箱:%1$s</string>
-    <string name="shichanghangqing">市场行情</string>
+    <string name="zhonghehangqing">综合行情</string>
     <string name="weishenqing">未申请</string>
     <string name="wait">待审核</string>
     <string name="pass">审核通过</string>
@@ -330,5 +329,6 @@
     <string name="trade_amount">成交量</string>
     <string name="market_yuan">≈ ¥%s</string>
     <string name="mncp">模拟操盘</string>
+    <string name="text_description">比特币（Bitcoin，简称BTC）是目前使用最为广泛的一种数字货币，它诞生于2009年1月3日，是一种点对点（P2P）传输的数字加密货币，总量2100万枚。比特币网络每10分钟释放出一定数量币，预计在2140年达到极限。比特币被投资者称为“数字黄金”。比特币依据特定算法，通过大量的计算产生，不依靠特定货币机构发行，其使用整个P2P网络中众多节点构成的分布式数据库来确认并记录所有的交易行为，并使用密码学设计确保货币流通各个环节安全性，可确保无法通过大量制造比特币来人为操控币值。基于密码学的设计可以使比特币只能被真实拥有者转移、支付及兑现。同样确保了货币所有权与流通交易的匿名性。</string>
 
 </resources>

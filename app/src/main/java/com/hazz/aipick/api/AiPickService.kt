@@ -6,11 +6,12 @@ import com.hazz.aipick.mvp.model.bean.Collection
 import com.hazz.aipick.net.BaseResult
 import io.reactivex.Observable
 import okhttp3.RequestBody
-import retrofit2.http.*
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.POST
 
 
-
-interface AiPickService{
+interface AiPickService {
 
     /**
      * 注册
@@ -35,6 +36,7 @@ interface AiPickService{
      */
     @POST("user/reset/login_password")
     fun resetPwd(@Body request: RequestBody): Observable<BaseResult<Any>>
+
     /**
      * 登陆
      */
@@ -89,11 +91,13 @@ interface AiPickService{
      */
     @POST("sub/pay")
     fun pay(@Body request: RequestBody): Observable<BaseResult<PayResultMine>>
+
     /**
      * 钱包信息
      */
     @POST("wallet/info")
     fun walet(): Observable<BaseResult<Walet>>
+
     /**
      * 提现
      */
@@ -119,6 +123,7 @@ interface AiPickService{
      */
     @POST("collection/list")
     fun getCollection(@Body request: RequestBody): Observable<BaseResult<List<Collection>>>
+
     /**
      * 删除收藏
      */
@@ -183,6 +188,7 @@ interface AiPickService{
      */
     @POST("exchange/detail")
     fun coinHouseDesc(@Body request: RequestBody): Observable<BaseResult<CoinHouseDesc>>
+
     /**
      * 消息列表
      */
@@ -220,6 +226,7 @@ interface AiPickService{
      */
     @POST("sub/modify")
     fun setFollow(@Body request: RequestBody): Observable<BaseResult<Any>>
+
     /**
      * 关注用户
      */
@@ -238,6 +245,9 @@ interface AiPickService{
      */
     @POST("sub/list")
     fun mySubscribe(@Body request: RequestBody): Observable<BaseResult<List<MySubscribe>>>
+
+    @POST("user/subfollows")
+    fun userFollows(@Body request: RequestBody): Observable<BaseResult<List<UserSubscribeBean>>>
 
     /**
      * 订阅详情
@@ -271,13 +281,11 @@ interface AiPickService{
     fun bankDesc(@Body request: RequestBody): Observable<BaseResult<BankDesc>>
 
 
-
     /**
      *模拟操盘买卖
      */
     @POST("simulate/trade")
     fun monicaopan(@Body request: RequestBody): Observable<BaseResult<Any>>
-
 
 
     /**
@@ -293,4 +301,9 @@ interface AiPickService{
     @POST("fake/trade/analysis")
     fun tradeIncoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
 
+    /**
+     * 获取汇率
+     */
+    @GET(" /base/data")
+    fun getRate(): Observable<BaseResult<RateBean>>
 }

@@ -13,9 +13,12 @@ class HomeAdapter(layoutResId: Int, data: List<Home>?) : BaseQuickAdapter<Home, 
 
     private var subeeType="bot"
     override fun convert(helper: BaseViewHolder, item: Home) {
+
+
         helper.setText(R.id.tv_name, item.nickname)
         helper.setText(R.id.tv_rate,mContext.getString(R.string.ten_rate,item.pullback))
         helper.setText(R.id.tv_price,mContext.getString(R.string.home_price,item.price))
+        helper.setText(R.id.totalRate,item.rate)
 
         helper.itemView.setOnClickListener {
 

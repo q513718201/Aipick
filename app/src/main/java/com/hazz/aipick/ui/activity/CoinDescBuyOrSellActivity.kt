@@ -1,15 +1,19 @@
 package com.hazz.aipick.ui.activity
 
+
 import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Color
+import android.support.v4.app.Fragment
 import android.util.Log
 import android.view.View
-
-
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.socket.KlineBean
 import com.hazz.aipick.socket.WsManager
-import com.hazz.aipick.utils.BigDecimalUtil
+import com.hazz.aipick.ui.adapter.FragmentAdapter
+import com.hazz.aipick.ui.fragment.HomeFragment
+import com.hazz.aipick.ui.fragment.OrderFragment
 import com.hazz.aipick.utils.RxBus
 import com.vinsonguo.klinelib.chart.KLineView
 import com.vinsonguo.klinelib.model.HisData
@@ -19,6 +23,14 @@ import kotlinx.android.synthetic.main.activity_coin_desc_buy.*
 import kotlinx.android.synthetic.main.activity_coin_desc_buy.chart
 import kotlinx.android.synthetic.main.activity_coin_desc_buy.iv_back
 import kotlinx.android.synthetic.main.activity_coin_desc_buy.tv_title
+import net.lucode.hackware.magicindicator.ViewPagerHelper
+import net.lucode.hackware.magicindicator.buildins.UIUtil
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.CommonNavigatorAdapter
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.indicators.LinePagerIndicator
+import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.ClipPagerTitleView
 
 
 class CoinDescBuyOrSellActivity : BaseActivity() {
@@ -39,6 +51,7 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
     private var name = ""
     private var coinName = ""
     private var nameKine = ""
+
     @SuppressLint("SetTextI18n", "ResourceType")
     override fun initView() {
         coinName = intent.getStringExtra("name")
@@ -46,6 +59,7 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
         nameKine = split[0] + "." + split[1] + "."
         name = split[1].substring(0, split[1].length - 4).toUpperCase()
         tv_title.text = "$name/USDT"
+        initBottom()
 
         switchFrame()
         WsManager.getInstance().requestK(nameKine + "kline.1min")
@@ -57,7 +71,7 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
         WsManager.getInstance().setOnPing {
 
             if (it.ch == coinName) {
-                Log.d("junjun","执行"+it.toString())
+                Log.d("junjun", "执行$it")
                 market_info.bindView(it)
             }
 
@@ -151,14 +165,14 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
                     mProgressBar.visibility = View.GONE
                     timeLineView!!.setLastClose(calculateHisData!![0].close)
                     timeLineView!!.initData(calculateHisData)
-                    timeLineView!!.id=0
+                    timeLineView!!.id = 0
                     timeLineView!!.showIndex()
                     timeLineView!!.visibility = View.VISIBLE
                 } else {
                     val kLineView = getKLineView()
                     kLineView.setDateFormat("yyyy-MM-dd")
                     kLineView.initData(calculateHisData)
-                    kLineView.id=1
+                    kLineView.id = 1
                     kLineView.showIndex()
                     kLineView.visibility = View.VISIBLE
                 }
@@ -166,6 +180,46 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
             }
 
         }
+    }
+
+    private var mTitles: Array<String>? = null
+    private var fragments: MutableList<Fragment> = ArrayList()
+
+    private fun initBottom() {
+        mTitles = resources.getStringArray(R.array.titles_sell_tab)
+        fragments.add(HomeFragment())
+        fragments.add(Fragment())
+        fragments.add(OrderFragment())
+
+
+        view_pager.adapter = FragmentAdapter(supportFragmentManager, fragments, mTitles)
+        ViewPagerHelper.bind(tab_layout, view_pager)
+        val commonNavigator = CommonNavigator(this)
+        commonNavigator.isAdjustMode=true
+        commonNavigator.adapter = object : CommonNavigatorAdapter() {
+            override fun getCount(): Int {
+                return (mTitles as Array<String>).size
+            }
+
+            override fun getTitleView(context: Context, index: Int): IPagerTitleView {
+                val clipPagerTitleView = ClipPagerTitleView(context)
+                clipPagerTitleView.text = (mTitles as Array<String>)[index]
+                clipPagerTitleView.textSize = UIUtil.dip2px(context, 14.0).toFloat()
+                clipPagerTitleView.textColor = Color.parseColor("#a5b1c8")
+                clipPagerTitleView.clipColor = resources.getColor(R.color.text_color_highlight)
+                clipPagerTitleView.setOnClickListener { view_pager.currentItem = index }
+                return clipPagerTitleView
+            }
+
+            override fun getIndicator(context: Context): IPagerIndicator {
+                val linePagerIndicator = LinePagerIndicator(context)
+                linePagerIndicator.mode = LinePagerIndicator.MODE_WRAP_CONTENT
+                linePagerIndicator.setColors(resources.getColor(R.color.text_color_highlight))
+                return linePagerIndicator
+            }
+        }
+        tab_layout.navigator = commonNavigator
+
     }
 
     private fun switchFrame() {
@@ -195,5 +249,13 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
         }
         mKLineView!!.setMode(KLineView.Mode.LINE)
         return mKLineView!!
+    }
+
+    fun onBuy(view: View) {
+        CoinBuyAndSellActivity.start(this, coinName, 0)
+    }
+
+    fun onSell(view: View) {
+        CoinBuyAndSellActivity.start(this, coinName, 1)
     }
 }

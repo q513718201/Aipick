@@ -1,19 +1,16 @@
 package com.hazz.aipick.mvp.presenter
 
 
-import android.util.Base64
 import android.util.Pair
 import com.hazz.aipick.mvp.contract.HomeContract
-import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.model.bean.Home
-import com.hazz.aipick.mvp.model.bean.LoginBean
-import com.hazz.aipick.mvp.model.bean.UserInfo
+import com.hazz.aipick.mvp.model.bean.PayResultMine
+import com.hazz.aipick.mvp.model.bean.RateBean
 import com.hazz.aipick.net.*
-import com.hazz.aipick.utils.RsaUtils
-import java.nio.charset.Charset
+import com.hazz.aipick.utils.SPUtil
 
 
-class HomePresenter(view: HomeContract.homeView) : BasePresenter< HomeContract.homeView>(view) {
+class HomePresenter(view: HomeContract.homeView) : BasePresenter<HomeContract.homeView>(view) {
 
     fun getHomeMsg(subeeType: String, pageNumber: Int, pageSize: Int, rateStart: String,
 
@@ -32,7 +29,7 @@ class HomePresenter(view: HomeContract.homeView) : BasePresenter< HomeContract.h
                 Pair.create<Any, Any>("timesEnd", timesEnd),
                 Pair.create<Any, Any>("pullbackStart", pullbackStart),
                 Pair.create<Any, Any>("pullbackEnd", pullbackEnd)
-                )
+        )
 
         val login = RetrofitManager.service.homeList(body)
 
@@ -47,6 +44,23 @@ class HomePresenter(view: HomeContract.homeView) : BasePresenter< HomeContract.h
             }
 
         }, true)
+
+    }
+
+    fun getRate() {
+        val rate = RetrofitManager.service.getRate()
+
+        doRequest(rate, object : Callback<RateBean>(view) {
+
+            override fun failed(tBaseResult: BaseResult<RateBean>): Boolean {
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<RateBean>) {
+                tBaseResult.data?.let { view.setRate(it) }
+            }
+
+        }, false)
 
     }
 

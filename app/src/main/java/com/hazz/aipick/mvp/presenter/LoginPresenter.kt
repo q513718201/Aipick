@@ -1,14 +1,12 @@
 package com.hazz.aipick.mvp.presenter
 
 
-import android.util.Base64
 import android.util.Pair
 import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.model.bean.LoginBean
 import com.hazz.aipick.mvp.model.bean.UserInfo
 import com.hazz.aipick.net.*
 import com.hazz.aipick.utils.RsaUtils
-import java.nio.charset.Charset
 
 
 class LoginPresenter(view: LoginContract.LoginView) : BasePresenter<LoginContract.LoginView>(view) {
@@ -43,9 +41,6 @@ class LoginPresenter(view: LoginContract.LoginView) : BasePresenter<LoginContrac
     }
 
     fun userInfo() {
-
-
-
         val login = RetrofitManager.service.userInfo()
 
         doRequest(login, object : Callback<UserInfo>(view) {

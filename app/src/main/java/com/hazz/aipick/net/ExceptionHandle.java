@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.MalformedJsonException;
+import com.hazz.aipick.utils.SPUtil;
 
 import org.json.JSONException;
 

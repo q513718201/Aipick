@@ -19,10 +19,7 @@ import com.neovisionaries.ws.client.WebSocketFactory;
 import com.neovisionaries.ws.client.WebSocketFrame;
 import com.orhanobut.logger.Logger;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +94,7 @@ public class WsManager {
     public interface onPing {
         void onPing(CoinDetail coinDetails);
     }
+
     public onPing onPing;
 
     public void setOnPing(onPing onPing) {
@@ -122,33 +120,33 @@ public class WsManager {
             super.onBinaryMessage(websocket, binary);
             String s = GZipUtil.uncompressToString(binary);
             Log.d("daidai", s);
-                CoinDetail klineBean = gson.fromJson(s, CoinDetail.class);
+            CoinDetail klineBean = gson.fromJson(s, CoinDetail.class);
 
-                    if(klineBean.tick!=null){
-                        mCoinDetailList.put(klineBean.ch, klineBean);
-                    }
+            if (klineBean.tick != null) {
+                mCoinDetailList.put(klineBean.ch, klineBean);
+            }
 
-                if (mCoinDetailList.size() ==10) {
-                    if (onMyClick != null) {
-                        onMyClick.onClick(mCoinDetailList);
-                    }
+            if (mCoinDetailList.size() == 10) {
+                if (onMyClick != null) {
+                    onMyClick.onClick(mCoinDetailList);
                 }
+            }
 
-                KlineBean klineBean1 = gson.fromJson(s, KlineBean.class);
-                if(klineBean1!=null){
-                    RxBus.get().send(klineBean1);
-                }
+            KlineBean klineBean1 = gson.fromJson(s, KlineBean.class);
+            if (klineBean1 != null) {
+                RxBus.get().send(klineBean1);
+            }
 
-                if(onPing!=null){
-                    if(klineBean.tick!=null){
-                        onPing.onPing(klineBean);
-                    }
+            if (onPing != null) {
+                if (klineBean.tick != null) {
+                    onPing.onPing(klineBean);
                 }
+            }
 
-                Ping ping= gson.fromJson(s, Ping.class);
-                if (ping != null) {
-                    ws.sendText(s);
-                }
+            Ping ping = gson.fromJson(s, Ping.class);
+            if (ping != null) {
+                ws.sendText(s);
+            }
 
 
         }
@@ -157,6 +155,8 @@ public class WsManager {
         public void onConnected(WebSocket websocket, Map<String, List<String>> headers)
                 throws Exception {
             super.onConnected(websocket, headers);
+
+
             Logger.t(TAG).d("连接成功");
             setStatus(WsStatus.CONNECT_SUCCESS);
             cancelReconnect();//连接成功的时候取消重连,初始化连接次数
@@ -195,7 +195,7 @@ public class WsManager {
 
     public void requestPing(String ping) {
         currentType = "ping";
-        if (ws != null ) {
+        if (ws != null) {
             try {
                 ws.sendText(ping);
             } catch (Exception e) {
@@ -203,7 +203,6 @@ public class WsManager {
             }
         }
     }
-
 
 
     public void requestK(String req) {

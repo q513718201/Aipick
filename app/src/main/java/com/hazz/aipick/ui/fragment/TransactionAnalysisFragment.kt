@@ -26,7 +26,6 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
 
 
     override fun onNothingSelected() {
-
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
@@ -61,12 +60,10 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
 
     override fun initView() {
 
-
         //折线颜色
         colour.add(Color.parseColor("#15F8D3"))
         colour.add(Color.parseColor("#FF7C95"))
         dynamicLineChartManager = DynamicLineChartManager(activity, line_chart)
-
 
         mInComingPresenter.getIncoming("1month")
         mInComingPresenter.getTradeIncoming("1month")

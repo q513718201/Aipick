@@ -12,9 +12,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
-
 import com.hazz.aipick.MyApplication
-import com.hazz.aipick.R
 import com.hazz.aipick.net.BaseView
 import com.hazz.aipick.net.ExceptionHandle
 import com.hazz.aipick.utils.StatusBarUtil
@@ -27,16 +25,16 @@ import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
 
-abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks, BaseView {
+abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks, BaseView {
 
-     var  permissionsnew: RxPermissions?=null
-     var mDialog: ProgressDialog? = null
+    var permissionsnew: RxPermissions? = null
+    var mDialog: ProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
         StatusBarUtil.darkMode(this)
-        mDialog=ProgressDialog(this)
+        mDialog = ProgressDialog(this)
         initView()
         start()
         initData()
@@ -145,7 +143,7 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
         }
     }
 
-     fun showMissingPermissionDialog() {
+    fun showMissingPermissionDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("提示")
         builder.setMessage("当前应用缺少必要权限。请点击\"设置\"-\"权限\"-打开所需权限。")
@@ -162,7 +160,7 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
     /**
      * 启动应用的设置
      */
-     fun startAppSettings() {
+    fun startAppSettings() {
         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
         intent.data = Uri.parse("package:" + "com.hazz.aipick")
         startActivity(intent)
@@ -188,6 +186,11 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
 
     override fun onStartRequest() {
         mDialog?.show()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mDialog?.dismiss()
     }
 
     override fun onFailer(responeThrowable: ExceptionHandle.ResponeThrowable?) {

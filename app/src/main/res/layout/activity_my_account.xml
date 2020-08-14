@@ -4,16 +4,17 @@
     android:layout_height="match_parent"
 
     android:background="#1E2742">
+
     <RelativeLayout
 
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:background="#000000"
-        android:paddingTop="40dp"
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#000000"
+        android:paddingLeft="10dp"
+        android:paddingTop="40dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -31,11 +32,10 @@
     </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_below="@+id/rl_head"
-        android:layout_above="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
->
+        android:layout_above="@+id/rl"
+        android:layout_below="@+id/rl_head">
 
 
         <RelativeLayout
@@ -54,23 +54,23 @@
                 android:paddingBottom="10dp">
 
                 <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
 
-                    <!--<ImageView-->
-                        <!--android:id="@+id/iv_back"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:src="@mipmap/back_white" />-->
+                <!--<ImageView-->
+                <!--android:id="@+id/iv_back"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@mipmap/back_white" />-->
 
-                    <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentRight="true"-->
-                        <!--android:layout_centerVertical="true"-->
-                        <!--android:text="模拟账户(跟随者)"-->
-                        <!--android:textColor="@color/color_bottom"-->
-                        <!--android:textSize="14sp" />-->
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:text="模拟账户(跟随者)"-->
+                <!--android:textColor="@color/color_bottom"-->
+                <!--android:textSize="14sp" />-->
 
                 <!--</RelativeLayout>-->
 
@@ -303,16 +303,18 @@
                         android:textSize="12sp" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -333,13 +335,14 @@
 
 
                     </LinearLayout>
+
                     <LinearLayout
-                        android:gravity="center"
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        >
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -360,11 +363,11 @@
 
 
                     </LinearLayout>
+
                     <LinearLayout
-                        android:layout_weight="1"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        />
+                        android:layout_weight="1" />
                 </LinearLayout>
 
 
@@ -383,9 +386,9 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/categry_rg_bg"
-                    android:orientation="horizontal"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="5dp">
+                    android:clipChildren="false"
+                    android:padding="2dp"
+                    android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/rb1"
@@ -394,6 +397,7 @@
                         android:background="@drawable/categy_title_bg_selector"
                         android:button="@null"
                         android:checked="true"
+                        android:elevation="5dp"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
                         android:text="@string/jiaoyi_fenxi"
@@ -405,6 +409,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/categy_title_bg_selector"
                         android:button="@null"
+                        android:elevation="5dp"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
                         android:text="@string/dingdan"
@@ -416,6 +421,7 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/categy_title_bg_selector"
                         android:button="@null"
+                        android:elevation="5dp"
                         android:paddingLeft="20dp"
                         android:paddingRight="20dp"
                         android:text="@string/dingyuezhe"
@@ -442,11 +448,11 @@
 
     <RelativeLayout
         android:id="@+id/rl"
-        android:padding="10dp"
-        android:background="#1E2742"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="#1E2742"
+        android:padding="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -474,14 +480,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             android:background="@drawable/robot_bt_bg"
             android:paddingLeft="25dp"
             android:paddingTop="8dp"
             android:paddingRight="25dp"
             android:paddingBottom="8dp"
-            android:layout_centerVertical="true"
             android:text="@string/subsciber"
-            android:layout_marginRight="10dp"
             android:textColor="@color/color_white"
             android:textSize="15sp" />
 

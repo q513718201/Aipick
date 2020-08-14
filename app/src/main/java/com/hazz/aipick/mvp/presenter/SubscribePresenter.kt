@@ -1,23 +1,18 @@
 package com.hazz.aipick.mvp.presenter
 
 
-import android.util.Base64
 import android.util.Pair
 import com.hazz.aipick.mvp.contract.CollectionContract
-import com.hazz.aipick.mvp.contract.LoginContract
-import com.hazz.aipick.mvp.contract.WaletContract
-import com.hazz.aipick.mvp.model.bean.*
-import com.hazz.aipick.mvp.model.bean.Collection
+import com.hazz.aipick.mvp.model.bean.MySubscribe
+import com.hazz.aipick.mvp.model.bean.SubscribeDesc
 import com.hazz.aipick.net.*
-import com.hazz.aipick.utils.RsaUtils
-import java.nio.charset.Charset
 
 
 class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter<CollectionContract.subscribeView>(view) {
 
 
-    fun getCollection(objType:String,subDirect:String,timeRange:String,
-                      pageNumber:Int,pageSize:Int) {
+    fun getCollection(objType: String, subDirect: String, timeRange: String,
+                      pageNumber: Int, pageSize: Int) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("subType", objType),
@@ -25,10 +20,6 @@ class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter
                 Pair.create<Any, Any>("timeRange", timeRange),
                 Pair.create<Any, Any>("pageNumber", pageNumber),
                 Pair.create<Any, Any>("pageSize", pageSize)
-
-
-
-
         )
 
         val login = RetrofitManager.service.mySubscribe(body)
@@ -48,8 +39,8 @@ class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter
     }
 
 
-    fun mySubscribeDesc(subId:String,
-                      pageNumber:Int,pageSize:Int) {
+    fun mySubscribeDesc(subId: String,
+                        pageNumber: Int, pageSize: Int) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("subId", subId),
@@ -73,7 +64,8 @@ class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter
         }, true)
 
     }
-    fun mySubscribeSwitch(subId:String,switch:String) {
+
+    fun mySubscribeSwitch(subId: String, switch: String) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("subId", subId),

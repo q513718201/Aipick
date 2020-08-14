@@ -3,7 +3,6 @@ package com.hazz.aipick.ui.activity
 import android.annotation.SuppressLint
 import android.util.Log
 import android.view.View
-
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.socket.KlineBean
@@ -30,22 +29,28 @@ class CoinDescActivity : BaseActivity() {
 
     private var mKLineView: KLineView? = null
     private var timeLineView: KLineView? = null
+
     // 主图指标下标
     private var mainIndex = 0
+
     // 副图指标下标
     private var subIndex = -1
     private var isFen = true
     private var name = ""
     private var coinName = ""
+    private var market = ""
     private var nameKine = ""
+
     @SuppressLint("SetTextI18n", "ResourceType")
     override fun initView() {
         coinName = intent.getStringExtra("name")
+        market = intent.getStringExtra("market")
         val split = coinName.split(".")
         nameKine = split[0] + "." + split[1] + "."
         name = split[1].substring(0, split[1].length - 4).toUpperCase()
-        tv_name.text = name
-        tv_title.text = name
+
+        tv_title.text = "$name/USDT"
+        tv_sub_title.text = market
         switchFrame()
         WsManager.getInstance().requestK(nameKine + "kline.1min")
 
@@ -65,10 +70,12 @@ class CoinDescActivity : BaseActivity() {
                         tv_name.setTextColor(resources.getColor(R.color.redF4))
                         tv_rate.setTextColor(resources.getColor(R.color.redF4))
                         tv_zj.setTextColor(resources.getColor(R.color.redF4))
+
                         tv_zj.text = "-" + BigDecimalUtil.sub(tick.open, tick.close, 2)
                     } else {
                         tv_zj.text = "+" + BigDecimalUtil.sub(tick.close, tick.open, 2)
                     }
+                    tv_name.text = tick.close
                     tv_hight.text = tick.high
                     tv_low.text = tick.low
                     tv_vol.text = tick.vol
@@ -166,14 +173,14 @@ class CoinDescActivity : BaseActivity() {
                     mProgressBar.visibility = View.GONE
                     timeLineView!!.setLastClose(calculateHisData!![0].close)
                     timeLineView!!.initData(calculateHisData)
-                    timeLineView!!.id=0
+                    timeLineView!!.id = 0
                     timeLineView!!.showIndex()
                     timeLineView!!.visibility = View.VISIBLE
                 } else {
                     val kLineView = getKLineView()
                     kLineView.setDateFormat("yyyy-MM-dd")
                     kLineView.initData(calculateHisData)
-                    kLineView.id=1
+                    kLineView.id = 1
                     kLineView.showIndex()
                     kLineView.visibility = View.VISIBLE
                 }

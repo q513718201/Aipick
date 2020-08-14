@@ -9,26 +9,28 @@
 
     <LinearLayout
 
-        android:background="#2F3865"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#2F3865"
         android:gravity="center_vertical">
 
         <ImageView
-            android:layout_marginLeft="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:src="@mipmap/ic_btc" />
 
         <LinearLayout
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:paddingLeft="10dp"
-            android:background="#455184"
-            android:layout_marginLeft="10dp"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginLeft="10dp"
+            android:layout_weight="2"
+            android:background="#455184"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp">
 
             <TextView
                 android:id="@+id/tv_name"
@@ -36,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:text="币安ETH数字货币三角..."
                 android:textColor="@color/color_home"
-                android:textSize="15sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_rate"
@@ -44,18 +46,43 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/ten_rate"
-                android:textColor="@color/color_home"
+                android:textColor="#94A3D5"
                 android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_price"
-                android:layout_marginTop="20dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:text="@string/home_price"
                 android:textColor="@color/color_yellow"
                 android:textSize="12sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#455184"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp">
+
+            <ImageView
+                android:id="@+id/trade_wave"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <com.hazz.aipick.widget.ColorTextView
+                android:id="@+id/totalRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
 
 

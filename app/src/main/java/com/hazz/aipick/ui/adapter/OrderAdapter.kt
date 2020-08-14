@@ -21,6 +21,5 @@ class OrderAdapter(layoutResId: Int, data: List<Order.ListBean>?) : BaseQuickAda
         }
         helper.setText(R.id.tv_time, item.create_at)
         helper.setText(R.id.tv_num, mContext.getString(R.string.num_num,item.amount))
-
     }
 }

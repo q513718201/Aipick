@@ -12,6 +12,9 @@ import com.hazz.aipick.ui.adapter.MarketsMoniItemAdapter
 import com.hazz.aipick.ui.adapter.MarketsPagerItemAdapter
 import com.hazz.aipick.utils.ToolBarCustom
 import kotlinx.android.synthetic.main.activity_moni.*
+import kotlinx.android.synthetic.main.activity_moni.tv_change_btn
+import kotlinx.android.synthetic.main.activity_moni.tv_price_btn
+import kotlinx.android.synthetic.main.fragment_coin.*
 
 
 class MonicpActivity : BaseActivity()  {
@@ -88,10 +91,17 @@ class MonicpActivity : BaseActivity()  {
     override fun initView() {
         recycleview.layoutManager = LinearLayoutManager(this)
         adapter = MarketsMoniItemAdapter( R.layout.item_market, ArrayList())
-
+        adapter!!.setMarket("")// TODO: 2020/8/14
         recycleview.adapter = adapter
         recycleview.setHasFixedSize(true)//解决固定数目列表 单条目数据不刷新
         (recycleview.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false//去掉默认动画,解决闪烁
+
+        tv_price_btn.setOnClickListener {
+            adapter?.sortByPrice()
+        }
+        tv_change_btn.setOnClickListener {
+            adapter?.sortByUp()
+        }
     }
 
 

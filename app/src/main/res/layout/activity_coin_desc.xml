@@ -8,9 +8,9 @@
 
     <RelativeLayout
 
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:layout_marginTop="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -31,17 +31,31 @@
             android:textColor="@color/color_white"
             android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/tv_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:text="huobi"
+            android:textColor="@color/color_blue"
+            android:textSize="10sp" />
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:padding="5dp"
-            android:src="@mipmap/ic_collect" />
+            android:src="@mipmap/ic_collect"
+            android:visibility="gone" />
 
     </RelativeLayout>
 
 
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -80,7 +94,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                      android:id="@+id/tv_rate"
+                        android:id="@+id/tv_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -105,27 +119,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingTop="12dp"
+                android:paddingTop="10dp"
                 android:paddingRight="20dp">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/buy"
-                    android:textColor="@color/color_bottom"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="000"
-                    android:textColor="@color/color_home"
-                    android:textSize="10sp" />
 
                 <TextView
 
@@ -171,26 +167,9 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingRight="20dp"
+                android:paddingBottom="@dimen/dp_10">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="@string/sell"
-                    android:textColor="@color/color_bottom"
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:text="000"
-                    android:textColor="@color/color_home"
-                    android:textSize="10sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -216,37 +195,34 @@
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="350dp">
+
                 <com.hazz.aipick.widget.ChartView
-                    app:layout_constraintTop_toTopOf="parent"
                     android:id="@+id/chart"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:tabSelectedTextColor="#AA4AFF"
-                    app:tabTextColor="@color/color_bottom">
-
-                </com.hazz.aipick.widget.ChartView>
+                    app:tabTextColor="@color/color_bottom" />
 
 
                 <FrameLayout
                     android:id="@+id/mFrameLayout"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chart"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    >
-                </FrameLayout>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chart"></FrameLayout>
 
                 <ProgressBar
                     android:id="@+id/mProgressBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/chart"
-                    android:visibility="gone"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/chart" />
             </android.support.constraint.ConstraintLayout>
 
 
@@ -319,16 +295,13 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
-                android:text="比特币（Bitcoin，简称BTC）是目前使用最为广泛的一种数字货币，它诞生于2009年1月3日，是一种点对点（P2P）传输的数字加密货币，总量2100万枚。比特币网络每10分钟释放出一定数量币，预计在2140年达到极限。比特币被投资者称为“数字黄金”。比特币依据特定算法，通过大量的计算产生，不依靠特定货币机构发行，其使用整个P2P网络中众多节点构成的分布式数据库来确认并记录所有的交易行为，并使用密码学设计确保货币流通各个环节安全性，可确保无法通过大量制造比特币来人为操控币值。基于密码学的设计可以使比特币只能被真实拥有者转移、支付及兑现。同样确保了货币所有权与流通交易的匿名性。"
+                android:layout_marginBottom="10dp"
+                android:text="@string/text_description"
                 android:textColor="@color/color_home"
-                android:textSize="14sp"
-
-                />
+                android:textSize="14sp" />
 
         </LinearLayout>
-
-
-
+    </android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>

@@ -15,6 +15,14 @@ public class BigDecimalUtil {
     private BigDecimalUtil() {
     }
 
+    public static String formatMoney(String money) {
+        return format(money, 4);
+    }
+
+    public static String formatRaise(String rate) {
+        return format(rate, 2);
+    }
+
     /**
      * 提供精确的加法运算。
      *
@@ -218,6 +226,7 @@ public class BigDecimalUtil {
         return s;
     }
 
+
     public static String div(String v1, String v2, int scale, RoundingMode roundingMode) {
         if (scale < 0) {
             throw new IllegalArgumentException(
@@ -252,5 +261,14 @@ public class BigDecimalUtil {
         }
         BigDecimal bigDecimal = new BigDecimal(num);
         return bigDecimal.toPlainString();
+    }
+
+    public static String format(String num, int round) {
+        if (TextUtils.isEmpty(num)) {
+            num = "0";
+            return num;
+        }
+        BigDecimal bigDecimal = new BigDecimal(num);
+        return bigDecimal.setScale(round, RoundingMode.HALF_DOWN).toString();
     }
 }

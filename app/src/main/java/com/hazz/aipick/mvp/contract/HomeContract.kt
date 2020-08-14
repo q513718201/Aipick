@@ -7,15 +7,16 @@ import com.hazz.aipick.net.BaseView
 interface HomeContract {
 
 
-    interface homeView: BaseView {
-        fun getHomeMsg(msg:List<Home>)
+    interface homeView : BaseView {
+        fun getHomeMsg(msg: List<Home>)
+        fun setRate(bean: RateBean)
 
     }
 
-    interface payView: BaseView {
+    interface payView : BaseView {
         fun payResult(msg: PayResultMine)
-        fun createId(msg:CreateId)
-        fun payCancle(msg:String)
-        fun paySucceed(msg:PaySucceed)
+        fun createId(msg: CreateId)
+        fun payCancle(msg: String)
+        fun paySucceed(msg: PaySucceed)
     }
 }

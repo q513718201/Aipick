@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Aipick.iml" filepath="$PROJECT_DIR$/.idea/modules/Aipick.iml" group="Aipick" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Aipick-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Aipick-app.iml" group="Aipick/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/klinelib/Aipick-klinelib.iml" filepath="$PROJECT_DIR$/.idea/modules/klinelib/Aipick-klinelib.iml" group="Aipick/klinelib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/magicindicator/Aipick-magicindicator.iml" filepath="$PROJECT_DIR$/.idea/modules/magicindicator/Aipick-magicindicator.iml" group="Aipick/magicindicator" />
       <module fileurl="file://$PROJECT_DIR$/.idea/aipick.iml" filepath="$PROJECT_DIR$/.idea/aipick.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/klinelib/klinelib.iml" filepath="$PROJECT_DIR$/klinelib/klinelib.iml" />

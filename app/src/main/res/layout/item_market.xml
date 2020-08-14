@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="70dp">
+
+    <com.hazz.aipick.view.CircleImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_round_black"
+        android:src="@mipmap/ic_btc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_num_tip"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:rectRoundRadius="@dimen/dp_40" />
 
 
     <TextView
         android:id="@+id/tv_trade_a"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
         android:text="BTC"
         android:textColor="@color/color_home"
         android:textSize="15sp"
@@ -29,15 +40,15 @@
         android:textColor="@color/color_home"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toRightOf="@id/tv_trade_a"
-        app:layout_constraintBottom_toBottomOf="@id/tv_trade_a" />
+        app:layout_constraintBottom_toBottomOf="@id/tv_trade_a"
+        app:layout_constraintLeft_toRightOf="@id/tv_trade_a" />
 
     <TextView
         android:id="@+id/tv_trade_b"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="USDT"
         android:layout_marginLeft="4dp"
+        android:text="USDT"
         android:textColor="@color/color_home"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@id/tv_trade_a"
@@ -46,21 +57,28 @@
 
     <com.hazz.aipick.widget.AutofitTextView
         android:id="@+id/up_down"
-        android:layout_width="60dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginRight="15dp"
         android:gravity="center"
-        android:paddingBottom="4dp"
-        android:paddingLeft="8dp"
-        android:text="0.00%"
-        android:paddingRight="8dp"
-        android:paddingTop="4dp"
         android:singleLine="true"
-        android:textSize="12sp"
-        android:textColor="@color/color_white"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="0.00%"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.hazz.aipick.widget.AutofitTextView
+        android:id="@+id/trade_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="0.00%"
+        android:textColor="#94A4D6"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
 
     <TextView
@@ -70,11 +88,10 @@
         android:layout_marginTop="12dp"
         android:layout_marginEnd="90dp"
         android:text="--"
-
         android:textColor="@color/color_home"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@id/up_down"
+        app:layout_constraintStart_toStartOf="@+id/guideline5"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -82,43 +99,57 @@
         android:id="@+id/tv_price_legal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="37dp"
-        android:text="--"
-        android:textSize="12sp"
-        android:textColor="@color/color_home"
-        app:layout_constraintEnd_toStartOf="@id/up_down"
         android:layout_marginEnd="90dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_volume" />
+        android:text="--"
+        android:textColor="@color/color_home"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_volume"
+        app:layout_constraintStart_toStartOf="@+id/tv_price" />
 
 
     <TextView
         android:id="@+id/tv_num_tip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="4dp"
         android:text="@string/one_day_amount"
-        android:textSize="12sp"
         android:textColor="@color/color_home"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_trade_a" />
 
     <TextView
         android:id="@+id/tv_volume"
-        android:textSize="12sp"
-        android:text="--"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dp_4"
+        android:text=""
         android:textColor="@color/color_home"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@id/tv_num_tip"
         app:layout_constraintTop_toTopOf="@id/tv_num_tip" />
 
 
     <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:background="#071628"
         app:layout_constraintBottom_toBottomOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.45" />
 
 </android.support.constraint.ConstraintLayout>

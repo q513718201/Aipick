@@ -3,6 +3,7 @@ package com.hazz.aipick.net
 import android.app.Activity
 import android.content.Context
 import android.support.v4.app.Fragment
+import com.hazz.aipick.mvp.model.bean.Home
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers

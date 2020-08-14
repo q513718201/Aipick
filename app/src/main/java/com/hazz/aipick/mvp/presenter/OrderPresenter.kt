@@ -1,14 +1,10 @@
 package com.hazz.aipick.mvp.presenter
 
 
-import android.util.Base64
 import android.util.Pair
-import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.*
 import com.hazz.aipick.net.*
-import com.hazz.aipick.utils.RsaUtils
-import java.nio.charset.Charset
 
 
 class OrderPresenter(view: WaletContract.orderView) : BasePresenter<WaletContract.orderView>(view) {
@@ -23,7 +19,6 @@ class OrderPresenter(view: WaletContract.orderView) : BasePresenter<WaletContrac
                 Pair.create<Any, Any>("pageNumber", pageNumber),
                 Pair.create<Any, Any>("pageSize", pageSize),
                 Pair.create<Any, Any>("isDemo", isDemo)
-
         )
 
         val login = RetrofitManager.service.getOrder(body)

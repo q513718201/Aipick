@@ -6,30 +6,24 @@ import android.support.v4.view.ViewPager
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.View
-import com.chad.library.adapter.base.BaseQuickAdapter
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
-import com.hazz.aipick.mvp.contract.LoginContract
-import com.hazz.aipick.mvp.model.bean.Coin
-import com.hazz.aipick.mvp.model.bean.MarketItem
-import com.hazz.aipick.mvp.presenter.CoinPresenter
 import com.hazz.aipick.socket.CoinDetail
 import com.hazz.aipick.socket.WsManager
-import com.hazz.aipick.ui.activity.CoinDescActivity
 import com.hazz.aipick.ui.activity.SearchHistoryActivity
 import com.hazz.aipick.ui.adapter.MarketsPagerItemAdapter
 import com.hazz.aipick.ui.adapter.MarketsViewPagerAdapter
+import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_coin.*
 
 
-class CoinFragment : BaseFragment()  {
-
+class CoinFragment : BaseFragment() {
 
 
     private var mTitle: String? = null
     private var mTitles: Array<String>? = null
+
     /**
      * 存放 tab 标题
      */
@@ -73,18 +67,15 @@ class CoinFragment : BaseFragment()  {
                 while (entries.hasNext()) {
                     val entry = entries.next()
                     val value = entry.value
+                    Logger.d("test", value)
                     coinList!!.add(value)
-
                 }
                 adapter = mViewPagerAdapter!!.getItem(1).adapter as MarketsPagerItemAdapter
 
                 activity!!.runOnUiThread {
                     adapter!!.setNewData(coinList)
                 }
-
             }
-
-
         }
 
         WsManager.getInstance().setOnPing {
@@ -98,7 +89,7 @@ class CoinFragment : BaseFragment()  {
                 }
             }
 
-    }
+        }
 
     }
 
@@ -119,7 +110,14 @@ class CoinFragment : BaseFragment()  {
         tv_add.setOnClickListener {
             startActivity(Intent(activity, SearchHistoryActivity::class.java))
         }
-
+        tv_price_btn.setOnClickListener {
+            val marketsPagerItemAdapter = mViewPagerAdapter?.getItem(viewPager.currentItem)?.adapter as MarketsPagerItemAdapter
+            marketsPagerItemAdapter.sortByPrice()
+        }
+        tv_change_btn.setOnClickListener {
+            val marketsPagerItemAdapter = mViewPagerAdapter?.getItem(viewPager.currentItem)?.adapter as MarketsPagerItemAdapter
+            marketsPagerItemAdapter.sortByUp()
+        }
 
     }
 
@@ -137,14 +135,12 @@ class CoinFragment : BaseFragment()  {
             }
 
             override fun onPageSelected(position: Int) {
-
                 if (position == 0) {
                     tv_add.visibility = View.VISIBLE
                     mViewPagerAdapter!!.getItem(position).visibility = View.GONE
                 } else {
                     tv_add.visibility = View.GONE
                     mViewPagerAdapter!!.getItem(position).visibility = View.VISIBLE
-
                 }
 
             }
@@ -160,8 +156,8 @@ class CoinFragment : BaseFragment()  {
 
             val recyclerView = RecyclerView(activity!!)
             recyclerView.layoutManager = LinearLayoutManager(activity)
-            val adapter = MarketsPagerItemAdapter( R.layout.item_market, ArrayList())
-
+            val adapter = MarketsPagerItemAdapter(R.layout.item_market, ArrayList())
+            adapter.setMarket(mTitles!![i])
             recyclerView.adapter = adapter
             recyclerView.setHasFixedSize(true)//解决固定数目列表 单条目数据不刷新
             (recyclerView.itemAnimator as DefaultItemAnimator).supportsChangeAnimations = false//去掉默认动画,解决闪烁

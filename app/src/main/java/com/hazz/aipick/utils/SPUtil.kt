@@ -21,6 +21,14 @@ object SPUtil {
     private val gson = Gson()
     private val APP_CONFIG = "app_config"
     private lateinit var rootFile: File
+    private val DAYLY_RATE = "RATE"
+    fun setRate(rate: String) {
+        putString(DAYLY_RATE, rate)
+    }
+
+    fun getRate(): String {
+        return getString(DAYLY_RATE)
+    }
 
     fun init(context: Context) {
         sharedPreferences = context.getSharedPreferences("config", Context.MODE_PRIVATE)

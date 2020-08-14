@@ -1,19 +1,10 @@
 package com.hazz.aipick.mvp.presenter
 
 
-import android.util.Base64
 import android.util.Pair
 import com.hazz.aipick.mvp.contract.CollectionContract
-import com.hazz.aipick.mvp.contract.LoginContract
-import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.Collection
-import com.hazz.aipick.mvp.model.bean.LoginBean
-import com.hazz.aipick.mvp.model.bean.TixianRecord
-import com.hazz.aipick.mvp.model.bean.UserInfo
-import com.hazz.aipick.mvp.model.bean.Walet
 import com.hazz.aipick.net.*
-import com.hazz.aipick.utils.RsaUtils
-import java.nio.charset.Charset
 
 
 class CollectionPresenter(view: CollectionContract.collectionView) : BasePresenter<CollectionContract.collectionView>(view) {

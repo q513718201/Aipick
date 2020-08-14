@@ -1,9 +1,10 @@
 package com.hazz.aipick.mvp.contract
 
-import com.hazz.aipick.mvp.model.bean.*
 import com.hazz.aipick.mvp.model.bean.Collection
+import com.hazz.aipick.mvp.model.bean.MySubscribe
+import com.hazz.aipick.mvp.model.bean.SubscribeDesc
+import com.hazz.aipick.mvp.model.bean.UserSubscribeBean
 import com.hazz.aipick.net.BaseView
-import com.hazz.aipick.net.IBaseView
 
 
 /**
@@ -13,17 +14,22 @@ import com.hazz.aipick.net.IBaseView
  */
 interface CollectionContract {
 
-    interface collectionView: BaseView {
+    interface collectionView : BaseView {
 
         fun getCollection(msg: List<Collection>)
         fun addCollectionSucceed(msg: String)
     }
 
-    interface subscribeView: BaseView {
+    interface subscribeView : BaseView {
 
         fun mySubscribe(msg: List<MySubscribe>)
         fun mySubscribeDesc(msg: SubscribeDesc)
-        fun switchSucceed(msg:String)
+        fun switchSucceed(msg: String)
+    }
+
+    interface userSubscribeView : BaseView {
+
+        fun userSubscribe(msg: List<UserSubscribeBean>)
     }
 
 }

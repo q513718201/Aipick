@@ -3,9 +3,6 @@ package com.hazz.aipick.ui.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.support.design.widget.BottomSheetDialog
-import com.hazz.aipick.R
-import com.hazz.aipick.base.BaseActivity
-import com.hazz.aipick.ui.fragment.*
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
@@ -14,23 +11,23 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
+import com.hazz.aipick.R
+import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.contract.WaletContract
-import com.hazz.aipick.mvp.model.bean.BindCoinHouse
-import com.hazz.aipick.mvp.model.bean.ChooseTime
+import com.hazz.aipick.mvp.model.bean.*
 import com.hazz.aipick.mvp.model.bean.Collection
-import com.hazz.aipick.mvp.model.bean.MyAccount
-import com.hazz.aipick.mvp.model.bean.UserInfo
 import com.hazz.aipick.mvp.presenter.AccountPresenter
 import com.hazz.aipick.mvp.presenter.CollectionPresenter
 import com.hazz.aipick.ui.adapter.CoinAdapter
 import com.hazz.aipick.ui.adapter.CoinBiduiAdapter
+import com.hazz.aipick.ui.fragment.OrderFragment
+import com.hazz.aipick.ui.fragment.SubscribeFragment
+import com.hazz.aipick.ui.fragment.TransactionAnalysisFragment
 import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
-import kotlinx.android.synthetic.main.activity_mine_set.*
 import kotlinx.android.synthetic.main.activity_my_account.*
-import kotlinx.android.synthetic.main.activity_my_account.iv_avatar
 import kotlinx.android.synthetic.main.dialog_coin.view.*
 
 
@@ -42,18 +39,18 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
     }
 
     override fun addCollectionSucceed(msg: String) {
-        ToastUtils.showToast(this,msg)
+        ToastUtils.showToast(this, msg)
     }
 
     override fun setFollow(msg: String) {
         if (!mMyAccount!!.is_following) {
             tv_yiguanzhu.visibility = View.VISIBLE
             tv_guanzhu.visibility = View.GONE
-        }else{
+        } else {
             tv_yiguanzhu.visibility = View.GONE
             tv_guanzhu.visibility = View.VISIBLE
         }
-        ToastUtils.showToast(this,msg)
+        ToastUtils.showToast(this, msg)
     }
 
     override fun getPrice(msg: ChooseTime) {
@@ -62,7 +59,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
 
     override fun coinList(msg: BindCoinHouse) {
         mCoinAdapter!!.setNewData(msg.exchanges)
-        mBindCoinHouse=msg.symbols
+        mBindCoinHouse = msg.symbols
     }
 
 
@@ -72,7 +69,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
                     .apply(RequestOptions.bitmapTransform(CircleCrop()))
                     .into(iv_avatar)
         }
-        coin=msg.coins
+        coin = msg.coins
         mMyAccount = msg
         currentName = msg.nickname
         username.text = msg.nickname
@@ -95,13 +92,13 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
 
     override fun initData() {
         id = intent.getStringExtra("id")
-       if(intent.getStringExtra("role")!=null){
-           role=intent.getStringExtra("role")
-       }
+        if (intent.getStringExtra("role") != null) {
+            role = intent.getStringExtra("role")
+        }
         Log.d("junjun", role)
         val obj = SPUtil.getObj("userinfo", UserInfo::class.java)
-        if(obj.uid==id){
-            rl.visibility=View.GONE
+        if (obj?.uid == id) {
+            rl.visibility = View.GONE
         }
         mAccountPresenter.myAccount(id)
     }
@@ -115,11 +112,12 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
     private var mCoinBiduiAdapter: CoinBiduiAdapter? = null
     private var currentName = ""
     private var role = ""
-    private var coin=""
+    private var coin = ""
     private var mMyAccount: MyAccount? = null
-    private var mBindCoinHouse:MutableList<BindCoinHouse.SymbolsBean>?= mutableListOf()
-    private var current:BindCoinHouse.ExchangesBean?=null
-    private var baseCoin:BindCoinHouse.SymbolsBean?=null
+    private var mBindCoinHouse: MutableList<BindCoinHouse.SymbolsBean>? = mutableListOf()
+    private var current: BindCoinHouse.ExchangesBean? = null
+    private var baseCoin: BindCoinHouse.SymbolsBean? = null
+
     @SuppressLint("SetTextI18n")
     override fun initView() {
 
@@ -139,7 +137,8 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
 
                 }
                 R.id.rb3 -> {
-
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.fl, SubscribeFragment.getInstance(id)).commitAllowingStateLoss()
                 }
             }
 
@@ -158,8 +157,8 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         }
         iv_collection.setOnClickListener {
             val split = coin.split(",")
-            if(split!=null){
-                mCollectionPresenter.addCollection("sentiment",id,split[0],split[1])
+            if (split != null) {
+                mCollectionPresenter.addCollection("sentiment", id, split[0], split[1])
             }
 
         }
@@ -207,8 +206,8 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         val view = layoutInflater.inflate(R.layout.dialog_coin, null)
         mAccountPresenter.coinList(id)
         view.recycleview1.layoutManager = GridLayoutManager(this, 4)
-        view.tv_title.text=getString(R.string.choose_bidui)
-        view.tv_sure.text=getString(R.string.confirm)
+        view.tv_title.text = getString(R.string.choose_bidui)
+        view.tv_sure.text = getString(R.string.confirm)
         mCoinBiduiAdapter = CoinBiduiAdapter(R.layout.item_text, mBindCoinHouse)
         view.recycleview1.adapter = mCoinBiduiAdapter
         val stringIntegerHashMap: HashMap<String, Int>? = HashMap()
@@ -216,17 +215,17 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         view.recycleview1.addItemDecoration(RecyclerViewSpacesItemDecoration(stringIntegerHashMap))
         view.tv_sure.setOnClickListener {
 
-            if(mBindCoinHouse!=null){
+            if (mBindCoinHouse != null) {
                 baseCoin = mBindCoinHouse!![mCoinAdapter!!.getCurr()]
                 startActivity(Intent(this, SettingFollowedActivity::class.java).putExtra("id", id).putExtra("price", "0.01")
                         .putExtra("bean", current).putExtra("name", currentName)
-                        .putExtra("SymbolsBean",baseCoin)
+                        .putExtra("SymbolsBean", baseCoin)
                         .putExtra("role", role)
                 )
                 bottomSheetDialog.dismiss()
 
-            }else{
-                ToastUtils.showToast(this,"请选择投放平台")
+            } else {
+                ToastUtils.showToast(this, "请选择投放平台")
                 return@setOnClickListener
             }
 
@@ -235,7 +234,6 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         bottomSheetDialog!!.setContentView(view)
         bottomSheetDialog.show()
     }
-
 
 
 }
