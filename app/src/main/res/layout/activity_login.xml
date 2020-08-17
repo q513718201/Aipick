@@ -55,15 +55,15 @@
         </LinearLayout>
 
         <TextView
-            android:visibility="gone"
             android:id="@+id/tv_email"
-            android:layout_marginLeft="5dp"
-            android:gravity="center_vertical"
             android:layout_width="50dp"
             android:layout_height="30dp"
+            android:layout_marginLeft="5dp"
+            android:gravity="center_vertical"
             android:text="@string/email"
             android:textColor="@color/color_white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:visibility="gone" />
 
 
         <EditText
@@ -73,8 +73,8 @@
             android:layout_marginLeft="27dp"
             android:background="@null"
             android:hint="@string/please_input_phone"
-            android:textColor="@color/color_white"
-            android:textColorHint="@color/color_gray"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/text_color_edit_hint"
             android:textSize="15sp" />
 
 
@@ -97,7 +97,6 @@
         <TextView
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
             android:text="@string/pwd"
             android:textColor="@color/color_white"
             android:textSize="15sp" />
@@ -111,8 +110,8 @@
             android:background="@null"
             android:hint="@string/please_input_pwd"
             android:inputType="textPassword"
-            android:textColor="@color/color_white"
-            android:textColorHint="@color/color_gray"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/text_color_edit_hint"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -127,43 +126,46 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="40dp"
-        android:background="@mipmap/login_bg"
+        android:background="@drawable/btn_login"
         android:text="@string/login"
         android:textColor="@color/color_white"
         android:textSize="17sp" />
 
     <LinearLayout
 
-        android:layout_marginTop="25dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp">
+
         <TextView
-            android:padding="5dp"
             android:id="@+id/tv_regist"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
             android:text="@string/regist"
             android:textColor="@color/color_white"
             android:textSize="12sp" />
+
         <TextView
             android:id="@+id/tv_login_type"
-            android:padding="5dp"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
             android:text="@string/mail_login"
             android:textColor="@color/color_white"
             android:textSize="12sp" />
+
         <TextView
             android:id="@+id/tv_forget"
-            android:padding="5dp"
-            android:gravity="center"
-            android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
             android:text="@string/forget_pwd"
             android:textColor="@color/color_white"
             android:textSize="12sp" />

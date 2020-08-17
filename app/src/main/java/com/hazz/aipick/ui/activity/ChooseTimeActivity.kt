@@ -6,15 +6,17 @@ import android.graphics.Color
 import android.support.v7.widget.Toolbar
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
-import com.hazz.aipick.mvp.contract.HomeContract
 import com.hazz.aipick.mvp.contract.WaletContract
-import com.hazz.aipick.mvp.model.bean.*
+import com.hazz.aipick.mvp.model.bean.BindCoinHouse
+import com.hazz.aipick.mvp.model.bean.ChooseTime
+import com.hazz.aipick.mvp.model.bean.MyAccount
+import com.hazz.aipick.mvp.model.bean.PayBean
 import com.hazz.aipick.mvp.presenter.AccountPresenter
 import com.hazz.aipick.utils.ToolBarCustom
 import kotlinx.android.synthetic.main.activity_time_choose.*
 
 
-class ChooseTimeActivity : BaseActivity(),  WaletContract.myaccountView {
+class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView {
 
     override fun setFollow(msg: String) {
 
@@ -29,11 +31,10 @@ class ChooseTimeActivity : BaseActivity(),  WaletContract.myaccountView {
     }
 
     override fun getPrice(msg: ChooseTime) {
-        tv1.text = msg.days30
-        tv2.text = msg.days90
-        tv3.text = msg.days180
+        tv1.text = "$ " + msg.days30
+        tv2.text = "$ " + msg.days90
+        tv3.text = "$ " + msg.days180
     }
-
 
 
     override fun layoutId(): Int = R.layout.activity_time_choose
@@ -44,18 +45,21 @@ class ChooseTimeActivity : BaseActivity(),  WaletContract.myaccountView {
             rl1.setBackgroundResource(R.drawable.pay_select_bg)
             rl2.setBackgroundResource(R.drawable.pay_gradient_bg)
             rl3.setBackgroundResource(R.drawable.pay_gradient_bg)
+            tv_price.text = tv1.text
         }
         rl2.setOnClickListener {
             currentDays = "90days"
             rl2.setBackgroundResource(R.drawable.pay_select_bg)
             rl1.setBackgroundResource(R.drawable.pay_gradient_bg)
             rl3.setBackgroundResource(R.drawable.pay_gradient_bg)
+            tv_price.text = tv2.text
         }
         rl3.setOnClickListener {
             currentDays = "180days"
             rl3.setBackgroundResource(R.drawable.pay_select_bg)
             rl2.setBackgroundResource(R.drawable.pay_gradient_bg)
             rl1.setBackgroundResource(R.drawable.pay_gradient_bg)
+            tv_price.text = tv3.text
         }
     }
 
@@ -98,9 +102,9 @@ class ChooseTimeActivity : BaseActivity(),  WaletContract.myaccountView {
         mAccountPresenter.getPrice(id)
 
         tv_suscribe.setOnClickListener {
-            val payBean = PayBean(id, bean?.exchange_id, switch, followType, followFactor, currentDays,beanSymbl!!.base_coin,beanSymbl!!.quote_coin)
+            val payBean = PayBean(id, bean?.exchange_id, switch, followType, followFactor, currentDays, beanSymbl!!.base_coin, beanSymbl!!.quote_coin)
             startActivity(Intent(this, PayActivity::class.java).putExtra("payBean", payBean)
-                    .putExtra("role", role) .putExtra("price", price))
+                    .putExtra("role", role).putExtra("price", price))
 
             finish()
 

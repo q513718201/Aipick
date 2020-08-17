@@ -225,80 +225,84 @@
                     app:layout_constraintTop_toBottomOf="@id/chart" />
             </android.support.constraint.ConstraintLayout>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="@string/coin_jj"
-                android:textColor="@color/color_home"
-                android:textSize="14sp" />
-
-            <RelativeLayout
+            <FrameLayout
+                android:id="@+id/about_coin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content" />
 
-                <ImageView
-                    android:id="@+id/iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_btc" />
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_centerVertical="true"-->
+            <!--                android:layout_marginLeft="10dp"-->
+            <!--                android:text="@string/coin_jj"-->
+            <!--                android:textColor="@color/color_home"-->
+            <!--                android:textSize="14sp" />-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/iv"
-                    android:orientation="vertical">
+            <!--            <RelativeLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content">-->
 
-                    <TextView
+            <!--                <ImageView-->
+            <!--                    android:id="@+id/iv"-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:src="@mipmap/ic_btc" />-->
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="BTC"
-                        android:textColor="@color/color_home"
-                        android:textSize="14sp"
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:layout_marginLeft="10dp"-->
+            <!--                    android:layout_toRightOf="@+id/iv"-->
+            <!--                    android:orientation="vertical">-->
 
-                        />
+            <!--                    <TextView-->
 
-                    <TextView
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="BTC"-->
+            <!--                        android:textColor="@color/color_home"-->
+            <!--                        android:textSize="14sp"-->
 
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bitc"
-                        android:textColor="@color/color_home"
-                        android:textSize="14sp"
+            <!--                        />-->
 
-                        />
+            <!--                    <TextView-->
 
-                </LinearLayout>
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="Bitc"-->
+            <!--                        android:textColor="@color/color_home"-->
+            <!--                        android:textSize="14sp"-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="20dp"
-                    android:text="发行时间:2019.10.12"
-                    android:textColor="@color/color_home"
-                    android:textSize="14sp"
+            <!--                        />-->
 
-                    />
-            </RelativeLayout>
+            <!--                </LinearLayout>-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/text_description"
-                android:textColor="@color/color_home"
-                android:textSize="14sp" />
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_alignParentRight="true"-->
+            <!--                    android:layout_centerVertical="true"-->
+            <!--                    android:layout_marginRight="20dp"-->
+            <!--                    android:text="发行时间:2019.10.12"-->
+            <!--                    android:textColor="@color/color_home"-->
+            <!--                    android:textSize="14sp"-->
+
+            <!--                    />-->
+            <!--            </RelativeLayout>-->
+
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginLeft="20dp"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_marginRight="20dp"-->
+            <!--                android:layout_marginBottom="10dp"-->
+            <!--                android:text="@string/text_description"-->
+            <!--                android:textColor="@color/color_home"-->
+            <!--                android:textSize="14sp" />-->
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

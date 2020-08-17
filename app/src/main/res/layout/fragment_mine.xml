@@ -95,7 +95,7 @@
                     android:id="@+id/ll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
+                    android:layout_marginTop="10dp"
                     app:layout_constraintLeft_toRightOf="@+id/iv_avatar"
                     app:layout_constraintTop_toBottomOf="@+id/tv_role">
 
@@ -103,6 +103,7 @@
                         android:id="@+id/fans"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/dp_10"
                         android:text="@string/fans"
                         android:textColor="#90ffffff"
                         android:textSize="12sp" />
@@ -112,14 +113,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:paddingTop="@dimen/dp_10"
                         android:text="000"
                         android:textColor="#ffffff"
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/tv_guanzhu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
+                        android:paddingTop="@dimen/dp_10"
+                        android:paddingEnd="5dp"
                         android:text="@string/guanzhu"
                         android:textColor="#90ffffff"
                         android:textSize="12sp" />
@@ -128,7 +133,7 @@
                         android:id="@+id/tv_guanzhu_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
+                        android:paddingTop="@dimen/dp_10"
                         android:text="000"
                         android:textColor="#ffffff"
                         android:textSize="12sp" />
@@ -137,6 +142,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
+                        android:paddingTop="@dimen/dp_10"
                         android:text="@string/renqi"
                         android:textColor="#90ffffff"
                         android:textSize="12sp" />
@@ -146,6 +152,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
+                        android:paddingTop="@dimen/dp_10"
                         android:text="000"
                         android:textColor="#ffffff"
                         android:textSize="12sp" />

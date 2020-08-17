@@ -1,0 +1,102 @@
+[
+  {
+    "name": "BTC",
+    "nameen": "Bitcoin",
+    "time": "2019-08-31",
+    "desc": "比特币（Bitcoin，简称BTC）是目前使用最为广泛的一种数字货币，它诞生于2009年1月3日，是一种点对点（P2P）传输的数字加密货币，总量2100万枚。比特币网络每10分钟释放出一定数量币，预计在2140年达到极限。比特币被投资者称为“数字黄金”。比特币依据特定算法，通过大量的计算产生，不依靠特定货币机构发行，其使用整个P2P网络中众多节点构成的分布式数据库来确认并记录所有的交易行为，并使用密码学设计确保货币流通各个环节安全性，可确保无法通过大量制造比特币来人为操控币值。基于密码学的设计可以使比特币只能被真实拥有者转移、支付及兑现。同样确保了货币所有权与流通交易的匿名性。",
+    "circulation": "1673.82",
+    "issue": "2100万",
+    "cmplink": "https://bitcoin.org/en/",
+    "chainlink": "https://www.blockchain.com/explorer"
+  },
+  {
+    "name": "ETH",
+    "nameen": "Ethereum",
+    "time": "2014-07-24",
+    "desc": "以太坊（Ethereum）是下一代密码学账本，可以支持众多的高级功能，包括用户发行货币，智能协议，去中心化的交易和设立去中心化自治组织(DAOs)或去中心化自治公司（DACs）。以太坊并不是把每一单个类型的功能作为特性来特别支持，相反，以太坊包括一个内置的图灵完备的脚本语言，允许通过被称为“合同”的机制来为自己想实现的特性写代码。一个合同就像一个自动的代理，每当接收到一笔交易，合同就会运行特定的一段代码，这段代码能修改合同内部的数据存储或者发送交易。",
+    "circulation": "110,249,440",
+    "issue": "110,249,440",
+    "cmplink": "https://ethereum.org/en/",
+    "chainlink": "https://etherscan.io"
+  },
+  {
+    "name": "HT",
+    "nameen": "HT",
+    "time": "2018-1-24",
+    "desc": "HT（火币全球通用积分）是基于区块链发行和管理的积分系统，为火币官方发行的唯一积分。HT将支持火币全球业务、全线产品，如：VIP手续费折扣、认证商家保证金、火币积分专享活动、与热门币种交易、参与火币业务等。",
+    "circulation": "225,733,000",
+    "issue": "500,000,000",
+    "cmplink": "https://www.huobitoken.com/zh-cn/",
+    "chainlink": "https://etherscan.io/"
+  },
+  {
+    "name": "XRP",
+    "nameen": "Ripple",
+    "time": "2011-4-18",
+    "desc": "瑞波币（Ripple/XRP）提供一个无阻碍的利用区块链技术的全球支付网络，是世界上第一个开放的支付网络，通过加入Ripple正在成长的全球支付网络可以转账任意一种货币，包括美元、欧元、人民币、日元或者比特币，简便易行快捷，交易确认在几秒以内完成，交易费用几乎是零，没有所谓的跨行异地以及跨国支付费用。 Ripple是开放源码的点到点支付网络，它可以使任何机构或个人轻松、廉价并安全的把金钱转账到互联网上的任何机构或个人，无论在世界的哪个地方。Ripple是p2p软件，没有任何个人、公司，或政府操控，任何人可以创建一个ripple账户。",
+    "circulation": "43,906,191,900",
+    "issue": "99,991,030,755",
+    "cmplink": "https://ripple.com/",
+    "chainlink": "https://xrpcharts.ripple.com/#/graph"
+  },
+  {
+    "name": "LTC",
+    "nameen": "Litecoin",
+    "time": "2011-11-09",
+    "desc": "莱特币诞生于2011年11月9日，被称为是“数字白银”。莱特币在技术上和比特币具有相同的实现原理。它是第一个基于Scrypt算法的网络数字货币，与比特币相比，莱特币拥有更快的交易确认时间，更高的网络交易容量和效率。莱特币现在拥有完整的产业链，充分的流动性，足以证明其是成熟、安全、稳定的商用金融系统。",
+    "circulation": "64,364,381",
+    "issue": "84,000,000",
+    "cmplink": "https://litecoin.com/en/",
+    "chainlink": "http://explorer.litecoin.net/chain/Litecoin"
+  },
+  {
+    "name": "BCH",
+    "nameen": "BCH",
+    "time": "2017-07-24",
+    "desc": "Bitcoin ABC的目标是创造出人人都可以使用的可靠资金。",
+    "circulation": "18,405,018",
+    "issue": "21,000,000",
+    "cmplink": "https://www.bitcoinabc.org/",
+    "chainlink": "https://bch.tokenview.com/cn"
+  },
+  {
+    "name": "EOS",
+    "nameen": "EOS",
+    "time": "2017-7-2",
+    "desc": "EOS (Enterprise Operation System)是由 Block.one公司主导开发的一种全新的基于区块链智能合约平台，旨在为高性能分布式应用提供底层区块链平台服务。EOS 项目的目标是实现一个类似操作系统的支撑分布式应用程序的区块链架构。该架构可以提供账户，身份认证，数据库，异步通信以及可在数以万计的 CPU/GPU群集上进行程序调度和并行运算。EOS最终可以支持每秒执行数百万个交易，同时普通用户执行智能合约无需支付使用费用。",
+    "circulation": "921,239,639",
+    "issue": "1,017,939,651",
+    "cmplink": "https://eos.io/",
+    "chainlink": "https://eostracker.io/"
+  },
+  {
+    "name": "ETC",
+    "nameen": "ETC",
+    "time": "2015-11-1",
+    "desc": "ETC（Ethereum Classic）是以太坊在1,920,000个块后硬分叉出的分叉币种，功能和以太坊极为类似。ETC秉承去中心化理念，支持区块链保证的共识机制。ETC坚信，区块链一旦开始运行，它的发展方向就不被任何中心团队所左右，而是按照参与整个网络人员的共识和全网算力的共识所决定。",
+    "circulation": "116,313,299",
+    "issue": "210,000,000",
+    "cmplink": "https://ethereumclassic.github.io/",
+    "chainlink": "https://etc.tokenview.com/cn"
+  },
+  {
+    "name": "BSV",
+    "nameen": "BSV",
+    "time": "2018-11-15",
+    "desc": "比特币 SV 是比特币现金（BCH）的全节点实现。应比特币现金（BCH）矿业巨头 CoinGeek 及其他矿工的要求，团队创建了比特币 SV，旨在为矿工提供明确的比特币现金（BCH）实现选择，并允许企业在其稳固可靠的基础上构建应用程序和网站。",
+    "circulation": "18,403,615",
+    "issue": "21,000,000",
+    "cmplink": "https://bitcoinsv.io/zh/home-v2/",
+    "chainlink": "https://bsv.tokenview.com/cn"
+  },
+  {
+    "name": "TRX",
+    "nameen": "TRX",
+    "time": "2017-7-1",
+    "desc": "波场TRON以推动互联网去中心化为己任，致力于为去中心化互联网搭建基础设施。旗下的TRON协议是全球最大的基于区块链的去中心化应用操作系统协 议之一，为协议上的去中心化应用运行提供高吞吐，高扩展，高可靠性的底层公链支持。波场TRON还通过创新的可插拔智能合约平台为以太坊智能合约提供更好的兼容性。 自2018年7月24日起，TRON收购了位于旧金山的互联网技术公司BitTorrent Inc.。 BitTorrent Inc.设计的分布式技术能够有效扩展，保持智能化，并使创作者和消费者能够控制其内容和数据。 每个月有超过1.7亿人使用BitTorrent Inc.开发的产品。 BitTorrent Inc.的协议每天可以传输全球40％的互联网流量。",
+    "circulation": "66,682,072,191 TRX",
+    "issue": "99,214,764,539.60352",
+    "cmplink": "https://tron.network",
+    "chainlink": "https://www.trxplorer.io/"
+  }
+]

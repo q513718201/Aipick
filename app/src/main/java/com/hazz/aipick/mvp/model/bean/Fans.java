@@ -30,7 +30,7 @@ public class Fans {
             public int followee_id;
             public String followee_nickname;
             public String follower_avatar;
-            public int follower_id;
+            public String follower_id;
             public String follower_nickname;
             public boolean mutual;
         }

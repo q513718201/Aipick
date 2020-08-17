@@ -13,6 +13,8 @@ import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.socket.WsManager
 import com.hazz.aipick.utils.SPUtil
+import com.hazz.aipick.utils.UpdateAppHttpUtil
+import com.vector.update_app_kotlin.updateApp
 import kotlinx.android.synthetic.main.activity_splash.*
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -61,7 +63,7 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun start() {
-
+        updateApp("mUpdateUrl", UpdateAppHttpUtil()).update()
     }
 
 

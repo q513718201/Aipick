@@ -194,6 +194,9 @@ abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCal
     }
 
     override fun onFailer(responeThrowable: ExceptionHandle.ResponeThrowable?) {
+        if (responeThrowable is ExceptionHandle.TokeExpiredException) {//token过期重新登录
+            login()
+        }
 
     }
 

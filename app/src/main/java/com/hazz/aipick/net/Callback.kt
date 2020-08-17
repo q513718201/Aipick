@@ -24,18 +24,9 @@ abstract class Callback<T> : Observer<BaseResult<T>> {
         if (tBaseResult.code == 0) {
             success(tBaseResult)
         } else {
-        /*if (!failed(tBaseResult)) {
-                //baseView.onError(tBaseResult.code, tBaseResult.msg)
-                baseView.showShortToast(tBaseResult.msg)
-            }*/
             when {
-                tBaseResult.code==9998 -> {
-
+                tBaseResult.code == 9998 -> {
                     baseView.login()
-        //                val loginDialog = LoginDialog()
-        //                val loginPresenter = LoginPresenter(loginDialog)
-        //
-        //                loginDialog.show(loginDialog.fragmentManager,"Login")
                 }
 
                 else -> {
@@ -48,12 +39,11 @@ abstract class Callback<T> : Observer<BaseResult<T>> {
     }
 
     override fun onComplete() {
-
         baseView.hideLoading()
     }
 
     override fun onError(@NonNull e: Throwable) {
-         e.printStackTrace()
+        e.printStackTrace()
         ToastUtils.showToast(MyApplication.context, ExceptionHandle.handleException(e))
         baseView.hideLoading()
 

@@ -24,6 +24,7 @@ import com.hazz.aipick.ui.adapter.CoinBiduiAdapter
 import com.hazz.aipick.ui.fragment.OrderFragment
 import com.hazz.aipick.ui.fragment.SubscribeFragment
 import com.hazz.aipick.ui.fragment.TransactionAnalysisFragment
+import com.hazz.aipick.utils.GsonUtil
 import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
@@ -50,6 +51,8 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
             tv_yiguanzhu.visibility = View.GONE
             tv_guanzhu.visibility = View.VISIBLE
         }
+        mAccountPresenter.myAccount(id)
+
         ToastUtils.showToast(this, msg)
     }
 
@@ -97,7 +100,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         }
         Log.d("junjun", role)
         val obj = SPUtil.getObj("userinfo", UserInfo::class.java)
-        if (obj?.uid == id) {
+        if (obj.uid == id) {
             rl.visibility = View.GONE
         }
         mAccountPresenter.myAccount(id)
@@ -108,10 +111,10 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
     private var mAccountPresenter: AccountPresenter = AccountPresenter(this)
     private var mCollectionPresenter: CollectionPresenter = CollectionPresenter(this)
     private var id = ""
+    private var role = ""
     private var mCoinAdapter: CoinAdapter? = null
     private var mCoinBiduiAdapter: CoinBiduiAdapter? = null
     private var currentName = ""
-    private var role = ""
     private var coin = ""
     private var mMyAccount: MyAccount? = null
     private var mBindCoinHouse: MutableList<BindCoinHouse.SymbolsBean>? = mutableListOf()
@@ -167,37 +170,39 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
 
     override fun start() {
         tv_suscribe.setOnClickListener {
-
-            // startActivity(Intent(this,PayActivity::class.java).putExtra("id",id).putExtra("price","0.01"))
-            val bottomSheetDialog = BottomSheetDialog(this)
-            val view = layoutInflater.inflate(R.layout.dialog_coin, null)
             mAccountPresenter.coinList(id)
-            view.recycleview1.layoutManager = GridLayoutManager(this, 4)
+            showFirst()
+        }
+    }
 
+    private fun showFirst() {
+        // startActivity(Intent(this,PayActivity::class.java).putExtra("id",id).putExtra("price","0.01"))
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.dialog_coin, null)
 
-            mCoinAdapter = CoinAdapter(R.layout.item_text, null)
-            view.recycleview1.adapter = mCoinAdapter
-            val stringIntegerHashMap: HashMap<String, Int>? = HashMap()
-            stringIntegerHashMap?.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 15)//右间距
-            view.recycleview1.addItemDecoration(RecyclerViewSpacesItemDecoration(stringIntegerHashMap))
-            mCoinAdapter!!.bindToRecyclerView(view.recycleview1)
-            mCoinAdapter!!.setEmptyView(R.layout.empty_view_coin)
-            mCoinAdapter!!.emptyView.setOnClickListener {
+        view.recycleview1.layoutManager = GridLayoutManager(this, 4)
 
-                startActivity(Intent(this, CoinHouseActivity::class.java))
-                bottomSheetDialog!!.dismiss()
-            }
+        mCoinAdapter = CoinAdapter(R.layout.item_text, null)
+        view.recycleview1.adapter = mCoinAdapter
+        val stringIntegerHashMap: HashMap<String, Int>? = HashMap()
+        stringIntegerHashMap?.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 15)//右间距
+        view.recycleview1.addItemDecoration(RecyclerViewSpacesItemDecoration(stringIntegerHashMap))
+        mCoinAdapter!!.bindToRecyclerView(view.recycleview1)
+        mCoinAdapter!!.setEmptyView(R.layout.empty_view_coin)
+        mCoinAdapter!!.emptyView.setOnClickListener {
 
-            view.tv_sure.setOnClickListener {
-
-                showNextBottom()
-                bottomSheetDialog.dismiss()
-            }
-
-            bottomSheetDialog!!.setContentView(view)
-            bottomSheetDialog.show()
+            startActivity(Intent(this, CoinHouseActivity::class.java))
+            bottomSheetDialog.dismiss()
         }
 
+        view.tv_sure.setOnClickListener {
+
+            showNextBottom()
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.setContentView(view)
+        bottomSheetDialog.show()
     }
 
     private fun showNextBottom() {
@@ -217,9 +222,12 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
 
             if (mBindCoinHouse != null) {
                 baseCoin = mBindCoinHouse!![mCoinAdapter!!.getCurr()]
-                startActivity(Intent(this, SettingFollowedActivity::class.java).putExtra("id", id).putExtra("price", "0.01")
-                        .putExtra("bean", current).putExtra("name", currentName)
-                        .putExtra("SymbolsBean", baseCoin)
+                startActivity(Intent(this, SettingFollowedActivity::class.java)
+                        .putExtra("id", id)
+                        .putExtra("price", "0.01")
+                        .putExtra("bean", GsonUtil.toJson(current))
+                        .putExtra("name", currentName)
+                        .putExtra("SymbolsBean", GsonUtil.toJson(baseCoin))
                         .putExtra("role", role)
                 )
                 bottomSheetDialog.dismiss()
@@ -231,7 +239,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
 
         }
 
-        bottomSheetDialog!!.setContentView(view)
+        bottomSheetDialog.setContentView(view)
         bottomSheetDialog.show()
     }
 

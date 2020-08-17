@@ -7,6 +7,7 @@ import com.hazz.aipick.R
 import com.hazz.aipick.socket.CoinDetail
 import com.hazz.aipick.ui.activity.CoinDescActivity
 import com.hazz.aipick.utils.BigDecimalUtil
+import com.hazz.aipick.utils.CoinManager
 import com.hazz.aipick.utils.SPUtil
 import com.orhanobut.logger.Logger
 
@@ -77,6 +78,7 @@ class MarketsPagerItemAdapter//    private String formatPercent;
         val rate1 = SPUtil.getRate()
         val cny = BigDecimalUtil.mul(close, rate1, 4)
         helper
+                .setImageResource(R.id.ivIcon,CoinManager.getCoinIcon(coinName))
                 .setText(R.id.tv_trade_a, coinName.toUpperCase())
                 .setText(R.id.tv_price, if (cny == "0") "--" else cny)
                 .setText(R.id.tv_num_tip, market)

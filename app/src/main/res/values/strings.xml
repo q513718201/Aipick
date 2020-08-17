@@ -94,7 +94,8 @@
     <string name="subsciber_intro">开启按钮，即确认跟随该策略下单交易 关闭按钮，即停止跟随下单，仍跟随平仓</string>
     <string name="guding_num">固定数量</string>
     <string name="guding_rate">固定比例</string>
-    <string name="setting_follow_intro">您设置跟随手数为：0.01（标准手），交易员和机器人的手数不影响您的手数。</string>
+    <string name="setting_follow_rate">例如您设置为%s倍比例跟随，交易员/机器人下单1手，你的手数为%s手</string>
+    <string name="setting_follow_amount">您设置固定数量%s标准手，不论交易员/机器人下单多少标准手，您手数均为%s标准手</string>
     <string name="setting_num">您今日修改次数已用完</string>
     <string name="setting_tips">跟随可能存在点差、交易品种及开/休市时间的差异</string>
     <string name="zonghe_desc">综合详情</string>
@@ -117,6 +118,7 @@
     <string name="subsciber_desc">订阅详情</string>
     <string name="follow_record">跟随收益记录</string>
     <string name="guanzhu">关注</string>
+    <string name="hasguanzhu">互相关注</string>
     <string name="monigensui">模拟\n跟随器</string>
     <string name="monicaopan">模拟\n操盘器</string>
     <string name="my_walet">我的\n钱包</string>
@@ -187,7 +189,7 @@
     <string name="please_input_trade_pwd">请设置交易密码（6位数的数字密码）</string>
     <string name="apply_trader">申请交易员</string>
     <string name="apply_trader_tips">为了您的账户安全，请谨慎填写以下内容，资料提交后不可修改。</string>
-    <string name="please_input_email">请输入邮箱号码</string>
+    <string name="please_input_email">请输入邮箱地址</string>
     <string name="real_name">真实姓名</string>
     <string name="please_input_real_name">请输入真实姓名</string>
     <string name="please_input_id_card">请输入身份证号</string>
@@ -238,6 +240,13 @@
     <string name="follower_incoming">跟随者收益</string>
     <string name="leiji_suber_num">累计订阅次数</string>
     <string name="price">价格</string>
+    <string name="buy_amount">买量</string>
+    <string name="sell_amount">卖量</string>
+    <string name="text_time">时间</string>
+    <string name="text_direction">方向</string>
+    <string name="text_price">价格</string>
+    <string name="text_amount">数量</string>
+
     <string name="pwd_login">密码登录</string>
     <string name="choose_guoji">选择国际</string>
     <string name="chinese">中国</string>
@@ -251,9 +260,9 @@
     <string name="follow_num">跟随次数</string>
     <string name="robot">机器人策略</string>
     <string name="ten_rate">近十周最大回撤 %1$s</string>
-    <string name="home_price">价格 %1$s/月</string>
+    <string name="home_price">$%1$s/月.价格</string>
     <string name="choose_cate">选择策略投放平台</string>
-    <string name="no_coin">此策略只能在Bittrex平台交易，</string>
+    <string name="no_coin">此策略只能在Bittrex平台交易</string>
     <string name="go_bind">去绑定</string>
     <string name="one_month">1个月</string>
     <string name="three_month">3个月</string>
@@ -297,7 +306,7 @@
     <string name="fu_image">副图</string>
     <string name="fenshi">分时</string>
     <string name="fifteen">15分</string>
-    <string name="one_hour">1小时</string>
+    <string name="four_hour">4小时</string>
     <string name="one_day">1天</string>
     <string name="index">指标</string>
     <string name="suber_succeed">您已经订阅成功</string>
@@ -330,5 +339,27 @@
     <string name="market_yuan">≈ ¥%s</string>
     <string name="mncp">模拟操盘</string>
     <string name="text_description">比特币（Bitcoin，简称BTC）是目前使用最为广泛的一种数字货币，它诞生于2009年1月3日，是一种点对点（P2P）传输的数字加密货币，总量2100万枚。比特币网络每10分钟释放出一定数量币，预计在2140年达到极限。比特币被投资者称为“数字黄金”。比特币依据特定算法，通过大量的计算产生，不依靠特定货币机构发行，其使用整个P2P网络中众多节点构成的分布式数据库来确认并记录所有的交易行为，并使用密码学设计确保货币流通各个环节安全性，可确保无法通过大量制造比特币来人为操控币值。基于密码学的设计可以使比特币只能被真实拥有者转移、支付及兑现。同样确保了货币所有权与流通交易的匿名性。</string>
+
+    <string name="ws_bbo">market.%s.bbo</string>
+    <string name="ws_trade">market.%s.trade.detail</string>
+    <string name="text_publish_time">发行时间：%s</string>
+    <string name="text_liutong">流通总量：%s</string>
+    <string name="text_publish">发行总量：%s</string>
+    <string name="text_office_web">官方网站：%s</string>
+    <string name="text_web_view">区块链网站：%s</string>
+    <string name="text_ten_month_rollback">近十周最大回撤 %s%</string>
+
+    <!--提示信息-->
+    <string name="hint_register_checkbox">请阅读并同意《服务条款》</string>
+    <string name="hint_register_empty_phone">请输入手机号码</string>
+    <string name="hint_register_invalid_phone">请输入正确的手机号码</string>
+    <string name="hint_register_empty_checkcode">请输入验证码</string>
+    <string name="hint_register_invalid_checkcode">请输入正确的验证码</string>
+    <string name="hint_register_empty_password">请输入密码</string>
+    <string name="hint_register_invalid_password">请输入6-18位数字字母组成的密码</string>
+    <string name="hint_register_empty_email">请输入邮箱地址</string>
+    <string name="hint_register_invalid_email">请输入正确的邮箱地址</string>
+    <string name="hint_register_no_checkcode">请获取验证码</string>
+
 
 </resources>

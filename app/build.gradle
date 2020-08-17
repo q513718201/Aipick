@@ -97,6 +97,7 @@ repositories {
 }
 
 dependencies {
+    api project(path: ':update')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // 支付宝 SDK AAR 包所需的配置
 

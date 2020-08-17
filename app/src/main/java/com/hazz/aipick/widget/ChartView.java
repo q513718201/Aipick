@@ -124,7 +124,7 @@ public class ChartView extends RelativeLayout {
                     break;
                 case R.id.hour:
                     if (onMyClick != null) {
-                        onMyClick.onClick("1hour");
+                        onMyClick.onClick("4hour");
                     }
                     break;
                 case R.id.k_day:

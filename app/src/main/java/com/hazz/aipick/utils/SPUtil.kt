@@ -22,8 +22,13 @@ object SPUtil {
     private val APP_CONFIG = "app_config"
     private lateinit var rootFile: File
     private val DAYLY_RATE = "RATE"
+    private val TOKEN = "token"
     fun setRate(rate: String) {
         putString(DAYLY_RATE, rate)
+    }
+
+    fun setToken(token: String) {
+        putString(TOKEN, token)
     }
 
     fun getRate(): String {

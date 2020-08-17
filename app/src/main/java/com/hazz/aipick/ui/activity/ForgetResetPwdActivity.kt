@@ -1,9 +1,7 @@
 package com.hazz.aipick.ui.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
@@ -20,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_forget_reset_phone.*
 class ForgetResetPwdActivity : BaseActivity(), LoginContract.updateView {
 
     override fun updateSuccess(msg: String) {
-        ToastUtils.showToast(this,msg)
+        ToastUtils.showToast(this, msg)
         finish()
 
     }
@@ -33,11 +31,11 @@ class ForgetResetPwdActivity : BaseActivity(), LoginContract.updateView {
 
     }
 
-   private var mResetPwdPresenter:ResetPwdPresenter= ResetPwdPresenter(this)
-    private var type=""
-    private var account=""
-    private var countryCode=""
-    private var code=""
+    private var mResetPwdPresenter: ResetPwdPresenter = ResetPwdPresenter(this)
+    private var type = ""
+    private var account = ""
+    private var countryCode = ""
+    private var code = ""
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
@@ -46,22 +44,23 @@ class ForgetResetPwdActivity : BaseActivity(), LoginContract.updateView {
                 .setTitle(getString(R.string.set_new_pwd))
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
-                .setOnLeftIconClickListener { view -> finish() }
+                .setOnLeftIconClickListener { finish() }
 
     }
 
     override fun start() {
-       type = intent.getStringExtra("type")
-       account = intent.getStringExtra("account")
-       countryCode = intent.getStringExtra("countryCode")
-       code = intent.getStringExtra("code")
-        when(type){
-            "phone"-> tv1.text = getString(R.string.current_bind,getString(R.string.phone_num),account)
-            "email"-> tv1.text = getString(R.string.current_bind,getString(R.string.email),account)
+        type = intent.getStringExtra("type")
+        account = intent.getStringExtra("account")
+        if(type=="phone"){
+            countryCode = intent.getStringExtra("countryCode")
+        }
+        code = intent.getStringExtra("code")
+        when (type) {
+            "phone" -> tv1.text = getString(R.string.current_bind, getString(R.string.phone_num), account)
+            "email" -> tv1.text = getString(R.string.current_bind, getString(R.string.email), account)
         }
         bt_login.setOnClickListener {
-            mResetPwdPresenter.reset(type,countryCode,account,et_new_pwd.text.toString(),code)
-
+            mResetPwdPresenter.reset(type, countryCode, account, et_new_pwd.text.toString(), code)
         }
     }
 

@@ -1,30 +1,27 @@
 package com.hazz.aipick.widget;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hazz.aipick.R;
-import com.hazz.aipick.mvp.model.bean.MarketItem;
 import com.hazz.aipick.socket.CoinDetail;
-import com.hazz.aipick.socket.WsManager;
 import com.hazz.aipick.utils.BigDecimalUtil;
-import com.vinsonguo.klinelib.model.HisData;
+import com.hazz.aipick.utils.SPUtil;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class MarketInfoView extends RelativeLayout {
 
+    //当前价格
     private TextView mPrice;
-
+    //当前人民币价格
     private TextView mCurrencyPrice;
-
+    //涨幅百分比
     private TextView mChange;
-
+    //涨幅值
     private TextView mChangeValue;
 
     private TextView mVolume;
@@ -80,8 +77,13 @@ public class MarketInfoView extends RelativeLayout {
             BigDecimal open = new BigDecimal(market.open);
             BigDecimal close = new BigDecimal(market.close);
             changeAmount = close.subtract(open).stripTrailingZeros().toPlainString();
+            String upPercent = BigDecimalUtil.div(changeAmount, market.open, 2);
+            mChange.setText(String.format("%s%s", coinDetail.isUp ? "+" : "-", upPercent + "%"));
         }
+
+
         mChangeValue.setText(coinDetail.isUp ? "+" + changeAmount : changeAmount);
+
         mHighest.setText(market.high);
         mLowest.setText(market.low);
         String volume = market.vol;
@@ -90,8 +92,9 @@ public class MarketInfoView extends RelativeLayout {
 //                String s = new BigDecimal(volume).setScale(0, RoundingMode.HALF_UP).toPlainString();
 //                volumeString = s + " " + market.tradeA;
 //            }
-        mVolume.setText(volume);
-        String currency = String.format(getResources().getString(R.string.market_yuan), BigDecimalUtil.mul(market.close, "7.1", 2));
+        mVolume.setText(BigDecimalUtil.formatRaise(volume));
+        String rate = SPUtil.INSTANCE.getRate();
+        String currency = String.format(getResources().getString(R.string.market_yuan), BigDecimalUtil.mul(market.close, rate, 2));
         mCurrencyPrice.setText(currency);
     }
 

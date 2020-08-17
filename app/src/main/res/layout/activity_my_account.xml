@@ -224,6 +224,7 @@
                 android:layout_marginTop="0dp"
                 android:background="#141623"
                 android:orientation="vertical"
+                android:padding="@dimen/dp_10"
                 android:paddingTop="30dp"
                 android:paddingBottom="15dp">
 
@@ -235,9 +236,8 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:text="@string/shouyilv"
                         android:textColor="#90ffffff"
                         android:textSize="12sp" />
@@ -245,7 +245,6 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/follow_incoming"
@@ -255,7 +254,6 @@
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/all_incoming1"
@@ -273,9 +271,8 @@
                         android:id="@+id/tv_shouyi_rate"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="center_vertical"
                         android:text="000"
                         android:textColor="#15F8D3"
                         android:textSize="12sp" />
@@ -284,7 +281,6 @@
                         android:id="@+id/tv_follow_incoming"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="000"
@@ -295,7 +291,6 @@
                         android:id="@+id/tv_all_incoming"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="000"
@@ -312,23 +307,22 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
                             android:layout_marginTop="15dp"
                             android:text="@string/last_ten"
                             android:textColor="#90ffffff"
+                            android:gravity="center_vertical"
                             android:textSize="10sp" />
 
                         <TextView
                             android:id="@+id/tv_ten"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
+                            android:gravity="center_vertical"
                             android:text="000"
                             android:textColor="#90ffffff"
                             android:textSize="10sp" />
@@ -346,7 +340,6 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
                             android:layout_marginTop="15dp"
                             android:text="@string/zizhushouyi"
                             android:textColor="#90ffffff"
@@ -356,7 +349,6 @@
                             android:id="@+id/tv_shouyi"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="20dp"
                             android:text="000"
                             android:textColor="#90ffffff"
                             android:textSize="10sp" />
@@ -387,8 +379,8 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/categry_rg_bg"
                     android:clipChildren="false"
-                    android:padding="2dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="2dp">
 
                     <RadioButton
                         android:id="@+id/rb1"

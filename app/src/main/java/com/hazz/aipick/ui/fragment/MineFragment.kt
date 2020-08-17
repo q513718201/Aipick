@@ -11,30 +11,43 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
-import com.hazz.aipick.events.ChangeIndex
-import com.hazz.aipick.showToast
-import com.hazz.aipick.ui.activity.*
-import com.hazz.aipick.events.RxBus
 import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.model.bean.Fans
 import com.hazz.aipick.mvp.model.bean.LoginBean
 import com.hazz.aipick.mvp.model.bean.UserInfo
 import com.hazz.aipick.mvp.presenter.FansPresenter
 import com.hazz.aipick.mvp.presenter.LoginPresenter
+import com.hazz.aipick.ui.activity.*
 import com.hazz.aipick.ui.adapter.FansAdapter
+import com.hazz.aipick.utils.RxBus
 import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.utils.StatusBarUtil
 import com.hazz.aipick.utils.ToastUtils
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener
 import kotlinx.android.synthetic.main.dialog_fans.view.*
 import kotlinx.android.synthetic.main.fragment_mine.*
-import kotlinx.android.synthetic.main.fragment_mine.iv_avatar
-import kotlinx.android.synthetic.main.fragment_mine.toolbar
 
 
-class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginView, LoginContract.FansView {
+class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginView, LoginContract.FansView, OnRefreshLoadmoreListener {
 
     override fun funsList(msg: Fans) {
         mOrderAdapter!!.setNewData(msg.list)
+        //数据满的时候可以加载更多
+        refreshLayout.isEnableLoadmore = msg.list.size == 10
+        when (refreshType) {
+            1 -> refreshLayout.finishRefresh()
+            else ->
+                refreshLayout.finishRefresh()
+        }
+
+    }
+
+    override fun setFollow(msg: String) {
+        ToastUtils.showToast(activity, msg)
+        mLoginPresenter.userInfo()
+        mFansPresenter.fansList(type, uid, 1, 10)
     }
 
     override fun loginSuccess(msg: LoginBean) {
@@ -42,7 +55,7 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
     }
 
     override fun getUserInfo(msg: UserInfo) {
-        SPUtil.putObj("userinfo",msg)
+        SPUtil.putObj("userinfo", msg)
 
         uid = msg.uid
         if (!TextUtils.isEmpty(msg.avatar)) {
@@ -51,21 +64,21 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
                     .into(iv_avatar)
         }
 
-        tv_name.text = msg.nickname
-        tv_fans.text = msg.fans.toString()
-        tv_guanzhu_num.text = msg.follow.toString()
-        tv_renqi.text = msg.pageview.toString()
+        tv_name?.text = msg.nickname
+        tv_fans?.text = msg.fans.toString()
+        tv_guanzhu_num?.text = msg.follow.toString()
+        tv_renqi?.text = msg.pageview.toString()
         when (msg.type) {
-            1 -> tv_role.text = getString(R.string.putong_role)
-            2 -> tv_role.text = getString(R.string.jiaoyiyuan)
-            3 -> tv_role.text = getString(R.string.jiqiren)
+            1 -> tv_role?.text = getString(R.string.putong_role)
+            2 -> tv_role?.text = getString(R.string.jiaoyiyuan)
+            3 -> tv_role?.text = getString(R.string.jiqiren)
         }
-        currentType=msg.check_status
+        currentType = msg.check_status
         when (msg.check_status) {
-            "none" ->tv_trader_state.text=getString(R.string.weishenqing)
-            "wait" ->tv_trader_state.text=getString(R.string.wait)
-            "pass" ->tv_trader_state.text=getString(R.string.pass)
-            "fail" ->tv_trader_state.text=getString(R.string.fail)
+            "none" -> tv_trader_state?.text = getString(R.string.weishenqing)
+            "wait" -> tv_trader_state?.text = getString(R.string.wait)
+            "pass" -> tv_trader_state?.text = getString(R.string.pass)
+            "fail" -> tv_trader_state?.text = getString(R.string.fail)
 
         }
     }
@@ -73,12 +86,12 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
 
     private var mTitle: String? = null
     private var mLoginPresenter: LoginPresenter = LoginPresenter(this)
-    private var  mFansPresenter: FansPresenter =FansPresenter(this)
-    private var isfirstMine:Boolean=false
+    private var mFansPresenter: FansPresenter = FansPresenter(this)
+    private var isfirstMine: Boolean = false
     private var bottomSheet: BottomSheetDialog? = null
     private var mOrderAdapter: FansAdapter? = null
-    private var uid=""
-    private var currentType=""
+    private var uid = ""
+    private var currentType = ""
 
     companion object {
         fun getInstance(title: String): MineFragment {
@@ -113,20 +126,34 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
         mine_fade.setOnClickListener(this)
         coin_house_order.setOnClickListener(this)
         fans.setOnClickListener(this)
-        isfirstMine= SPUtil.getBoolean("isfirstMine")
-        if(!isfirstMine){
-            cl_guide.visibility=View.VISIBLE
+        tv_guanzhu.setOnClickListener(this)
+        isfirstMine = SPUtil.getBoolean("isfirstMine")
+        if (!isfirstMine) {
+            cl_guide.visibility = View.VISIBLE
 
         }
         cl_guide.setOnClickListener {
-            SPUtil.putBoolean("isfirstMine",true)
-            cl_guide.visibility=View.GONE
+            SPUtil.putBoolean("isfirstMine", true)
+            cl_guide.visibility = View.GONE
         }
-       // var user=SPUtil.getObj("userinfo",UserInfo::class.java)
+        // var user=SPUtil.getObj("userinfo",UserInfo::class.java)
 
+        RxBus.get().observerOnMain(this, Fans.ListBean::class.java) {
+            it?.let {
+                if (it.mutual) {// TODO: 2020/8/15 弹窗？
+                    mFansPresenter.attentionCancle(it.follower_id)
+                } else {
+                    mFansPresenter.attention(it.follower_id)
+                }
+            }
+        }
     }
 
     override fun lazyLoad() {
+    }
+
+    override fun onResume() {
+        super.onResume()
         mLoginPresenter.userInfo()
     }
 
@@ -142,16 +169,16 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
             }
             v?.id == R.id.coin_house_order -> startActivity(Intent(activity, ExchangeOrderActivity::class.java))
             v?.id == R.id.tv_caopan -> startActivity(Intent(activity, MonicpActivity::class.java))
-            v?.id == R.id.tv_moni ->  startActivity(Intent(activity, RebotCategryActivity::class.java))
+            v?.id == R.id.tv_moni -> startActivity(Intent(activity, RebotCategryActivity::class.java))
             v?.id == R.id.tv_wallet -> startActivity(Intent(activity, WaletActivity::class.java))
-            v?.id == R.id.tv_account -> startActivity(Intent(activity, MyAccountActivity::class.java).putExtra("id",uid))
+            v?.id == R.id.tv_account -> startActivity(Intent(activity, MyAccountActivity::class.java).putExtra("id", uid))
             v?.id == R.id.invite_friend -> startActivity(Intent(activity, InviteFriendsActivity::class.java))
-            v?.id == R.id.mine_trader ->{
+            v?.id == R.id.mine_trader -> {
                 when (currentType) {
                     "none" -> startActivity(Intent(activity, SetTraderActivity::class.java))
-                    "wait" ->ToastUtils.showToast(activity,getString(R.string.wait))
+                    "wait" -> ToastUtils.showToast(activity, getString(R.string.wait))
                     "pass" -> startActivity(Intent(activity, TraderSetActivity::class.java))
-                    "fail" ->startActivity(Intent(activity, SetTraderActivity::class.java))
+                    "fail" -> startActivity(Intent(activity, SetTraderActivity::class.java))
 
                 }
 
@@ -164,21 +191,52 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
 
             v?.id == R.id.mine_message -> startActivity(Intent(activity, MessageActivity::class.java))
             v?.id == R.id.mine_fade -> startActivity(Intent(activity, HelpAndFeedActivity::class.java))
-            v?.id == R.id.fans ->{
-                bottomSheet = BottomSheetDialog(activity!!)
-                val view = layoutInflater.inflate(R.layout.dialog_fans, null)
-                bottomSheet!!.setContentView(view)
-                mFansPresenter.fansList("fans",uid,1,10)
-                view.recycleview.layoutManager = LinearLayoutManager(activity)
-                mOrderAdapter= FansAdapter(R.layout.item_fans,null)
-                view.recycleview.adapter = mOrderAdapter
-                mOrderAdapter!!.bindToRecyclerView(view.recycleview)
-                mOrderAdapter!!.setEmptyView(R.layout.empty_view)
-                bottomSheet!!.show()
+            v?.id == R.id.fans -> {
+                type = "fans"
+                initBottom()
+            }
+            v?.id == R.id.tv_guanzhu -> {
+                type = "follow"
+                initBottom()
             }
 
         }
     }
 
+    lateinit var refreshLayout: SmartRefreshLayout
+    private fun initBottom() {
+        getFanData()
 
+        bottomSheet = BottomSheetDialog(activity!!)
+        val view = layoutInflater.inflate(R.layout.dialog_fans, null)
+        bottomSheet!!.setContentView(view)
+        refreshLayout = view.refreshLayout.setOnRefreshLoadmoreListener(this)
+
+        view.recycleview.layoutManager = LinearLayoutManager(activity)
+        mOrderAdapter = FansAdapter(R.layout.item_fans, null)
+        view.tv_title.text = if (type == "fan") "粉丝${tv_fans?.text}" else "关注${tv_guanzhu_num.text}"
+        view.recycleview.adapter = mOrderAdapter
+        mOrderAdapter!!.bindToRecyclerView(view.recycleview)
+        mOrderAdapter!!.setEmptyView(R.layout.empty_view)
+        bottomSheet!!.show()
+    }
+
+    private fun getFanData() {
+        mFansPresenter.fansList(type, uid, page, 10)
+    }
+
+    var page = 1
+    var type = "fan"
+    var refreshType = 0;
+    override fun onLoadmore(refreshlayout: RefreshLayout?) {
+        refreshType = 1
+        page++
+        getFanData()
+    }
+
+    override fun onRefresh(refreshlayout: RefreshLayout?) {
+        refreshType = 0
+        page = 1
+        getFanData()
+    }
 }

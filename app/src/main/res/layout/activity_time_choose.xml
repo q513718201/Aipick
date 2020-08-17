@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -141,27 +142,28 @@
 
 
     <LinearLayout
-        android:layout_marginBottom="20dp"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/rl_bo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rl_bo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time1"
             android:textColor="@color/color_home"
-            android:textSize="10sp"
-            />
+            android:textSize="10sp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/time2"
             android:textColor="@color/dilaog_btn_color"
-            android:textSize="10sp"
-            />
+            android:textSize="10sp" />
     </LinearLayout>
-    <RelativeLayout
+
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/rl_bo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -179,16 +181,21 @@
             android:layout_centerVertical="true"
             android:text="$1"
             android:textColor="#F0BC33"
-            android:textSize="19sp" />
+            android:textSize="19sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_alignBottom="@+id/tv_price"
             android:layout_toRightOf="@+id/tv_price"
             android:text="/月"
             android:textColor="#90ffffff"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_price"
+            app:layout_constraintStart_toEndOf="@+id/tv_price" />
 
         <TextView
 
@@ -197,7 +204,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
             android:background="@drawable/robot_bt_bg"
             android:paddingLeft="25dp"
             android:paddingTop="8dp"
@@ -205,8 +211,11 @@
             android:paddingBottom="8dp"
             android:text="@string/pay"
             android:textColor="@color/color_white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </RelativeLayout>

@@ -2,6 +2,7 @@ package com.hazz.aipick.net
 
 import com.hazz.aipick.MyApplication
 import com.hazz.aipick.api.AiPickService
+import com.hazz.aipick.api.ResetService
 import com.hazz.aipick.utils.AppUtils
 import com.hazz.aipick.utils.NetworkUtil
 import com.hazz.aipick.utils.SPUtil
@@ -14,17 +15,19 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 
-object RetrofitManager{
+object RetrofitManager {
 
-    val service: AiPickService by lazy (LazyThreadSafetyMode.SYNCHRONIZED){
+    val service: AiPickService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         getRetrofit().create(AiPickService::class.java)
     }
 
-    val serviceCoin: AiPickService by lazy (LazyThreadSafetyMode.SYNCHRONIZED){
+    val serviceCoin: AiPickService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         getRetrofitCoin().create(AiPickService::class.java)
     }
 
-    private var token:String = SPUtil.getString("token")
+    val resetService: ResetService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+        getRetrofit().create(ResetService::class.java)
+    }
 
     /**
      * 设置公共参数
@@ -51,7 +54,7 @@ object RetrofitManager{
             val originalRequest = chain.request()
             val requestBuilder = originalRequest.newBuilder()
                     // Provide your custom header here
-                    .header("token",SPUtil.getString("token"))
+                    .header("token", SPUtil.getString("token"))
                     .method(originalRequest.method(), originalRequest.body())
             val request = requestBuilder.build()
             chain.proceed(request)
@@ -74,14 +77,14 @@ object RetrofitManager{
                 val maxAge = 0
                 // 有网络时 设置缓存超时时间0个小时 ,意思就是不读取缓存数据,只对get有用,post没有缓冲
                 response.newBuilder()
-                        .header("Cache-Control", "public, max-age=" + maxAge)
+                        .header("Cache-Control", "public, max-age=$maxAge")
                         .removeHeader("Retrofit")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
                         .build()
             } else {
                 // 无网络时，设置超时为4周  只对get有用,post没有缓冲
                 val maxStale = 60 * 60 * 24 * 28
                 response.newBuilder()
-                        .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                        .header("Cache-Control", "public, only-if-cached, max-stale=$maxStale")
                         .removeHeader("nyn")
                         .build()
             }
@@ -99,6 +102,7 @@ object RetrofitManager{
                 .build()
 
     }
+
     private fun getRetrofitCoin(): Retrofit {
         // 获取retrofit的实例
         return Retrofit.Builder()
@@ -109,6 +113,7 @@ object RetrofitManager{
                 .build()
 
     }
+
 
     private fun getOkHttpClient(): OkHttpClient {
         //添加一个log拦截器,打印所有的log

@@ -12,8 +12,9 @@ import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.socket.KlineBean
 import com.hazz.aipick.socket.WsManager
 import com.hazz.aipick.ui.adapter.FragmentAdapter
-import com.hazz.aipick.ui.fragment.HomeFragment
-import com.hazz.aipick.ui.fragment.OrderFragment
+import com.hazz.aipick.ui.fragment.AboutCoinFragment
+import com.hazz.aipick.ui.fragment.OnOrderFragment
+import com.hazz.aipick.ui.fragment.OnSellFragment
 import com.hazz.aipick.utils.RxBus
 import com.vinsonguo.klinelib.chart.KLineView
 import com.vinsonguo.klinelib.model.HisData
@@ -107,7 +108,7 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
                     switchFrame()
                     WsManager.getInstance().requestK(nameKine + "kline.15min")
                 }
-                "1hour" -> {
+                "4hour" -> {
                     isFen = false
                     switchFrame()
                     WsManager.getInstance().requestK(nameKine + "kline.60min")
@@ -187,15 +188,15 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
 
     private fun initBottom() {
         mTitles = resources.getStringArray(R.array.titles_sell_tab)
-        fragments.add(HomeFragment())
-        fragments.add(Fragment())
-        fragments.add(OrderFragment())
+        fragments.add(OnOrderFragment.getInstance(coinName))
+        fragments.add(OnSellFragment.getInstance(coinName))
+        fragments.add(AboutCoinFragment.getInstance(coinName))
 
 
         view_pager.adapter = FragmentAdapter(supportFragmentManager, fragments, mTitles)
         ViewPagerHelper.bind(tab_layout, view_pager)
         val commonNavigator = CommonNavigator(this)
-        commonNavigator.isAdjustMode=true
+        commonNavigator.isAdjustMode = true
         commonNavigator.adapter = object : CommonNavigatorAdapter() {
             override fun getCount(): Int {
                 return (mTitles as Array<String>).size

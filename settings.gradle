@@ -1,1 +1,3 @@
+include ':update_core'
+include ':update'
 include ':app', ':klinelib', ':magicindicator'

@@ -9,7 +9,10 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hazz.aipick.MyApplication;
+import com.hazz.aipick.mvp.model.bean.BorSell;
+import com.hazz.aipick.mvp.model.bean.BuyOrSell;
 import com.hazz.aipick.mvp.model.bean.Ping;
+import com.hazz.aipick.mvp.model.bean.Trade;
 import com.hazz.aipick.utils.GZipUtil;
 import com.hazz.aipick.utils.RxBus;
 import com.neovisionaries.ws.client.WebSocket;
@@ -101,6 +104,40 @@ public class WsManager {
         this.onPing = onPing;
     }
 
+
+    public interface onBbo {
+        void onBbo(BuyOrSell coinDetails);
+    }
+
+    public onBbo onBbo;
+
+    public void setOnBbo(onBbo onPing) {
+        this.onBbo = onPing;
+    }
+
+
+    public interface onBs {
+        void onBs(BorSell borSell);
+    }
+
+    public onBs onBs;
+
+    public void setOnBs(onBs onBs) {
+        this.onBs = onBs;
+    }
+
+
+    public interface onTrade {
+        void onTradeBack(Trade trade);
+    }
+
+    public onTrade mOnTrade;
+
+    public void setOnTrade(onTrade mOnTrade) {
+        this.mOnTrade = mOnTrade;
+    }
+
+
     /**
      * 继承默认的监听空实现WebSocketAdapter,重写我们需要的方法
      * onTextMessage 收到文字信息
@@ -136,6 +173,43 @@ public class WsManager {
             if (klineBean1 != null) {
                 RxBus.get().send(klineBean1);
             }
+
+
+            BorSell borSell = gson.fromJson(s, BorSell.class);
+
+            if (borSell != null) {
+                if (borSell.tick != null) {
+                    if (onBs != null) {
+                        onBs.onBs(borSell);
+                    }
+                }
+
+            }
+
+            BuyOrSell buyOrSell = gson.fromJson(s, BuyOrSell.class);
+            if (buyOrSell != null) {
+                if (buyOrSell.tick != null) {
+                    if (onBbo != null) {
+                        onBbo.onBbo(buyOrSell);
+                    }
+                }
+
+            }
+
+
+            Trade trade = gson.fromJson(s, Trade.class);
+            if (trade != null) {
+                if (trade.tick != null) {
+                    if (trade.tick.data != null) {
+                        if (mOnTrade != null) {
+                            mOnTrade.onTradeBack(trade);
+                        }
+                    }
+
+                }
+
+            }
+
 
             if (onPing != null) {
                 if (klineBean.tick != null) {
@@ -198,6 +272,35 @@ public class WsManager {
         if (ws != null) {
             try {
                 ws.sendText(ping);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void requestBbo(String market) {
+        Gson mGson = new Gson();
+        KbodyDetail kBody = new KbodyDetail();
+        kBody.sub = market;
+        kBody.id = "id1";
+        String message = mGson.toJson(kBody);
+        if (ws != null && message != null) {
+            try {
+                ws.sendText(message);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public void requestTrade(String sub) {
+        Gson mGson = new Gson();
+        KbodyDetail kBody = new KbodyDetail();
+        kBody.sub = sub;
+        kBody.id = "id1";
+        String message = mGson.toJson(kBody);
+        if (ws != null && message != null) {
+            try {
+                ws.sendText(message);
             } catch (Exception e) {
                 e.printStackTrace();
             }

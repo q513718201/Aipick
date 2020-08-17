@@ -13,7 +13,7 @@ class ColorTextView : android.support.v7.widget.AppCompatTextView {
     @SuppressLint("ResourceAsColor")
     override fun setText(text: CharSequence?, type: BufferType?) {
         super.setText(text, type)
-        if (text == null || text.isEmpty() || text[0].isDigit()) return
+        if (text == null || text.isEmpty()) return
         var textColor = resources.getColor(R.color.green)
         var drawable = resources.getDrawable(R.mipmap.up)
         if (text.startsWith("-")) {

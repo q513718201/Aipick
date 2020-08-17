@@ -10,9 +10,7 @@ import com.hazz.aipick.net.*
 class FansPresenter(view: LoginContract.FansView) : BasePresenter<LoginContract.FansView>(view) {
 
     fun fansList(type: String, userId: String, pageNumber: Int, pageSize: Int
-                ) {
-
-
+    ) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("type", type),
@@ -38,7 +36,47 @@ class FansPresenter(view: LoginContract.FansView) : BasePresenter<LoginContract.
 
     }
 
+    fun attention(objUserId: String) {
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("objUserId", objUserId)
+        )
 
+        val login = RetrofitManager.service.attention(body)
+
+        doRequest(login, object : Callback<Any>(view) {
+            override fun failed(tBaseResult: BaseResult<Any>): Boolean {
+
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<Any>) {
+                view.setFollow(tBaseResult.msg)
+            }
+
+        }, true)
+
+    }
+
+    fun attentionCancle(objUserId: String) {
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("objUserId", objUserId)
+        )
+
+        val login = RetrofitManager.service.attentionCancle(body)
+
+        doRequest(login, object : Callback<Any>(view) {
+            override fun failed(tBaseResult: BaseResult<Any>): Boolean {
+
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<Any>) {
+                view.setFollow(tBaseResult.msg)
+            }
+
+        }, true)
+
+    }
 
 
 }

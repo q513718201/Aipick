@@ -1,38 +1,27 @@
 package com.hazz.aipick.ui.fragment
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.support.v4.app.Fragment
 import android.view.View
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
 import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.presenter.RegistPresenter
-import com.hazz.aipick.ui.activity.CountryActivity
 import com.hazz.aipick.ui.activity.ForgetResetPwdActivity
-import com.hazz.aipick.ui.activity.GorgetPwdActivity
+import com.hazz.aipick.utils.RegexUtils
 import com.hazz.aipick.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_regist_email.*
-import kotlinx.android.synthetic.main.fragment_regist_email.edit_text
-import kotlinx.android.synthetic.main.fragment_regist_email.pwd
-import kotlinx.android.synthetic.main.fragment_regist_email.tv_bt
-import kotlinx.android.synthetic.main.fragment_regist_email.tv_getCode
-import kotlinx.android.synthetic.main.fragment_regist_email.tv_nation
-import kotlinx.android.synthetic.main.fragment_regist_email.tv_quhao
-import kotlinx.android.synthetic.main.fragment_regist_email.verify_code_edit
-
 
 
 class RegisterEmailFragment : BaseFragment(), LoginContract.RegistView {
     override fun onSendMesSuccess(msg: String) {
-        ToastUtils.showToast(activity,  getString(R.string.mine_send_success))
+        ToastUtils.showToast(activity, getString(R.string.mine_send_success))
         showCountDownView()
     }
 
     override fun onRegistSuccess(msg: String) {
-        ToastUtils.showToast(activity,  getString(R.string.regist_success))
+        ToastUtils.showToast(activity, getString(R.string.regist_success))
         activity?.onBackPressed()
     }
 
@@ -69,13 +58,6 @@ class RegisterEmailFragment : BaseFragment(), LoginContract.RegistView {
     private var countDownTimer: CountDownTimer? = null
     private var mTitle: String? = null
     private var mRegistPresenter: RegistPresenter = RegistPresenter(this)
-    /**
-     * 存放 tab 标题
-     */
-    private val mTabTitleList = ArrayList<String>()
-
-    private val mFragmentList = ArrayList<Fragment>()
-    private val REQUEST_AREACODE_CODE = 10005
 
     override fun getLayoutId(): Int = R.layout.fragment_regist_email
 
@@ -85,40 +67,59 @@ class RegisterEmailFragment : BaseFragment(), LoginContract.RegistView {
     }
 
     override fun initView() {
-        if(mTitle!=null){
-            tv_bt.text=getString(R.string.next_step)
-            ll_xieyi.visibility= View.GONE
-            pwd.visibility= View.GONE
+        if (mTitle != null) {
+            tv_bt.text = getString(R.string.next_step)
+            ll_xieyi.visibility = View.GONE
+            llPwd.visibility = View.GONE
         }
 
-        tv_nation.setOnClickListener {
-            startActivityForResult(Intent(activity, CountryActivity::class.java), REQUEST_AREACODE_CODE)
-        }
 
         tv_bt.setOnClickListener {
-
-            if(mTitle!=null){
-                startActivity(Intent(activity, ForgetResetPwdActivity::class.java).putExtra("type","email").putExtra("account",edit_text.text.toString())
-                        .putExtra("countryCode",tv_nation.text.toString())
-                        .putExtra("code", verify_code_edit.text.toString())
+            if (edit_text.text.toString().isEmpty()) {
+                ToastUtils.showToast(activity, getString(R.string.hint_register_empty_email))
+                return@setOnClickListener
+            }
+            if (!RegexUtils.isEmail(edit_text.text)) {
+                ToastUtils.showToast(activity, getString(R.string.hint_register_empty_email))
+                return@setOnClickListener
+            }
+            //如果没有获取验证码，无法校验 可用的时候说明没有获取验证码
+            if (tv_getCode.isEnabled) {
+                ToastUtils.showToast(activity, getString(R.string.hint_register_no_checkcode))
+                return@setOnClickListener
+            }
+            var code = verify_code_edit.text.toString()
+            if (code.isEmpty()) {
+                ToastUtils.showToast(activity, getString(R.string.hint_register_empty_checkcode))
+                return@setOnClickListener
+            }
+            if (mTitle != null) {//忘记密码流程
+                startActivity(Intent(activity, ForgetResetPwdActivity::class.java).putExtra("type", "email").putExtra("account", edit_text.text.toString())
+                        .putExtra("code", code)
                 )
                 activity?.finish()
-            }else{
-                mRegistPresenter.regist("email", tv_nation.text.toString(), edit_text.text.toString(), pwd.text.toString(),
-                        verify_code_edit.text.toString()
-                )
+            } else {
+                mRegistPresenter.regist("email", "", edit_text.text.toString(), pwd.text.toString(), code)
             }
 
         }
         tv_getCode.setOnClickListener {
-            if(mTitle!=null){
-                mRegistPresenter.sendCode("email", tv_nation.text.toString(), edit_text.text.toString(), "reset_password"
+            if (edit_text.text.toString().isEmpty()) {
+                ToastUtils.showToast(activity, getString(R.string.hint_register_empty_email))
+                return@setOnClickListener
+            }
+            if (!RegexUtils.isEmail(edit_text.text)) {
+                ToastUtils.showToast(activity, getString(R.string.hint_register_empty_email))
+                return@setOnClickListener
+            }
+            if (mTitle != null) {
+                mRegistPresenter.sendCode("email", "", edit_text.text.toString(), "reset_password"
                 )
-            }else{
-                mRegistPresenter.sendCode("email", tv_nation.text.toString(), edit_text.text.toString(), "register"
+            } else {
+                mRegistPresenter.sendCode("email", "", edit_text.text.toString(), "register"
 
                 )
-           }
+            }
         }
 
     }
@@ -126,13 +127,5 @@ class RegisterEmailFragment : BaseFragment(), LoginContract.RegistView {
     override fun onDestroy() {
         super.onDestroy()
         countDownTimer?.cancel()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_AREACODE_CODE) {
-            val areaCode = data?.getStringExtra("countryName") ?: "中国"
-            tv_nation.text = areaCode
-        }
     }
 }

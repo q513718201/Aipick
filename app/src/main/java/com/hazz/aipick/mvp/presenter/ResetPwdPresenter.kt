@@ -9,7 +9,7 @@ import com.hazz.aipick.utils.RsaUtils
 
 class ResetPwdPresenter(view: LoginContract.updateView) : BasePresenter<LoginContract.updateView>(view) {
 
-    fun reset(codeType: String, countryCode: String
+    fun reset(codeType: String, countryCode: String?
                , credential: String , password: String , code: String) {
 
 
@@ -27,14 +27,11 @@ class ResetPwdPresenter(view: LoginContract.updateView) : BasePresenter<LoginCon
 
         doRequest(login, object : Callback<Any>(view) {
             override fun failed(tBaseResult: BaseResult<Any>): Boolean {
-
                 return false
             }
-
             override fun success(tBaseResult: BaseResult<Any>) {
                 view.updateSuccess(tBaseResult.msg)
             }
-
         }, true)
 
     }

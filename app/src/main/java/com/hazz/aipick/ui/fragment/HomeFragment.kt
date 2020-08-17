@@ -35,11 +35,28 @@ import kotlin.collections.HashMap
 class HomeFragment : BaseFragment(), HomeContract.homeView {
 
 
+    private var homeBean: Home? = null
     override fun getHomeMsg(msg: List<Home>) {
         if (msg.isEmpty()) return
-        msg[0].rate = "-135%"
+
         mHomeAdapter?.setNewData(msg)
         mHomeAdapter?.setRole(subeeType)
+        if (homeBean == null) {
+            homeBean = msg[0]
+            setHead()
+        }
+        if (isRefresh)
+            mRefreshLayout.finishRefresh()
+    }
+
+    private fun setHead() {
+        homeBean?.let {
+            tv_coin_name.text = if (it.coin_name == null) getString(R.string.app_name) else it.coin_name
+
+            tv_raise.text = "${it.rate}"
+            tv_pullback.text = getString(R.string.ten_rate, it.pullback)
+            price.text = getString(R.string.home_price, it.price)
+        }
     }
 
     override fun setRate(bean: RateBean) {
@@ -119,7 +136,7 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
         //设置下拉刷新主题颜色
         mRefreshLayout.setPrimaryColorsId(R.color.color_light_black, R.color.color_title_bg)
 
-
+        mRefreshLayout.autoLoadmore()
         mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -130,7 +147,7 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
                     if (firstVisibleItem + childCount == itemCount) {
                         if (!loadingMore) {
                             loadingMore = true
-                            // mPresenter.loadMoreData()
+//                             mPresenter.loadMoreData()
                         }
                     }
                 }
@@ -142,13 +159,13 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
 
 
         val pointList = ArrayList<Point>()
-        pointList.add(Point(0, 50))
+        pointList.add(Point(-1, 50))
         pointList.add(Point(210, 200))
         pointList.add(Point(410, 30))
         pointList.add(Point(510, 250))
         pointList.add(Point(610, 80))
         pointList.add(Point(810, 250))
-        pointList.add(Point(DpUtils.getDeviceWidthAndHeight(activity)[0], 60))
+        pointList.add(Point(DpUtils.getDeviceWidthAndHeight(activity)[0] - 150, 60))
 
         mBezierView.setPointList(pointList)
         mBezierView.visibility = View.VISIBLE
@@ -166,6 +183,7 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
                 bottomSheet!!.dismiss()
                 subeeType = "bot"
                 role.text = getString(R.string.robot_caty)
+                homeBean = null
                 getData()
             }
 
@@ -173,6 +191,7 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
                 bottomSheet!!.dismiss()
                 subeeType = "broker"
                 role.text = getString(R.string.robot_trader)
+                homeBean = null
                 getData()
             }
             val viewById = bottomSheet!!.delegate.findViewById<View>(android.support.design.R.id.design_bottom_sheet)

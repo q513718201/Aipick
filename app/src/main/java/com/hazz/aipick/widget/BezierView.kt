@@ -2,16 +2,10 @@ package com.hazz.aipick.widget
 
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.DashPathEffect
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.PathEffect
-import android.graphics.PathMeasure
-import android.graphics.Point
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import com.hazz.aipick.R
 
 
 class BezierView : View {
@@ -23,10 +17,17 @@ class BezierView : View {
     private var mPathMeasure: PathMeasure? = null
     private val defYAxis = 500f
     private val defXAxis = 0f
+    private val lineWidth = 30f
 
-    constructor(context: Context) : super(context) {}
+    constructor(context: Context) : super(context) {
+    }
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {}
+    private var line_color = 0
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        line_color = context.resources.getColor(R.color.color_blue_line)
+
+    }
 
     fun setPointList(pointList: List<Point>) {
         mPointList = pointList
@@ -58,12 +59,12 @@ class BezierView : View {
         //measurePath();
         val paint = Paint()
         paint.color = Color.RED
-        paint.strokeWidth = 10f
         paint.style = Paint.Style.STROKE
         //绘制辅助线
         //  canvas.drawPath(mAssistPath,paint);
 
-        paint.color = Color.YELLOW
+        paint.color = line_color
+        paint.strokeWidth = lineWidth
         val dst = Path()
         dst.rLineTo(0f, 0f)
         val distance = mPathMeasure!!.length * drawScale
@@ -76,7 +77,7 @@ class BezierView : View {
             drawShadowArea(canvas, dst, pos);
             //drawShadowAreaUp(canvas, dst, pos)
             //绘制点
-            drawPoint(canvas,pos)
+            drawPoint(canvas, pos)
         }
         /*greenPaint.setPathEffect(getPathEffect(mPathMeasure.getLength()));
         canvas.drawPath(mPath, greenPaint);*/
@@ -117,15 +118,14 @@ class BezierView : View {
      */
     private fun drawPoint(canvas: Canvas, pos: FloatArray) {
         val redPaint = Paint()
-        redPaint.color = Color.YELLOW
-        redPaint.strokeWidth = 3f
+        redPaint.color = line_color
         redPaint.style = Paint.Style.FILL
 //        for (point in mPointList!!) {
 //            if (point.x > pos[0]) {
 //                break
 //            }
-            canvas.drawCircle(mPointList!!.get(mPointList!!.size-1).x.toFloat(),
-                    mPointList!!.get(mPointList!!.size-1).y.toFloat(), 10f, redPaint)
+        canvas.drawCircle(mPointList!![mPointList!!.size - 1].x.toFloat(),
+                mPointList!![mPointList!!.size - 1].y.toFloat() - lineWidth / 2, lineWidth * 3 / 4, redPaint)
 //        }
     }
 

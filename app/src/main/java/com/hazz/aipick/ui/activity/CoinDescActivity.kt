@@ -7,6 +7,7 @@ import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.socket.KlineBean
 import com.hazz.aipick.socket.WsManager
+import com.hazz.aipick.ui.fragment.AboutCoinFragment
 import com.hazz.aipick.utils.BigDecimalUtil
 import com.hazz.aipick.utils.RxBus
 import com.vinsonguo.klinelib.chart.KLineView
@@ -52,6 +53,7 @@ class CoinDescActivity : BaseActivity() {
         tv_title.text = "$name/USDT"
         tv_sub_title.text = market
         switchFrame()
+        initAbout()
         WsManager.getInstance().requestK(nameKine + "kline.1min")
 
         iv_back.setOnClickListener {
@@ -115,7 +117,7 @@ class CoinDescActivity : BaseActivity() {
                     switchFrame()
                     WsManager.getInstance().requestK(nameKine + "kline.15min")
                 }
-                "1hour" -> {
+                "4hour" -> {
                     isFen = false
                     switchFrame()
                     WsManager.getInstance().requestK(nameKine + "kline.60min")
@@ -188,6 +190,10 @@ class CoinDescActivity : BaseActivity() {
             }
 
         }
+    }
+
+    private fun initAbout() {
+        supportFragmentManager.beginTransaction().add(R.id.about_coin, AboutCoinFragment.getInstance(coinName)).commit()
     }
 
     private fun switchFrame() {

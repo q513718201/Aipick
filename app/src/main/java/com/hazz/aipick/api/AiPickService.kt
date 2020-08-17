@@ -95,7 +95,7 @@ interface AiPickService {
     /**
      * 钱包信息
      */
-    @POST("wallet/info")
+    @GET("wallet/info")
     fun walet(): Observable<BaseResult<Walet>>
 
     /**
@@ -306,4 +306,5 @@ interface AiPickService {
      */
     @GET(" /base/data")
     fun getRate(): Observable<BaseResult<RateBean>>
+
 }

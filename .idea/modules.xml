@@ -10,6 +10,8 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/klinelib/klinelib.iml" filepath="$PROJECT_DIR$/klinelib/klinelib.iml" />
       <module fileurl="file://$PROJECT_DIR$/magicindicator/magicindicator.iml" filepath="$PROJECT_DIR$/magicindicator/magicindicator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/update/update.iml" filepath="$PROJECT_DIR$/.idea/modules/update/update.iml" group="Aipick/update" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/update_core/update_core.iml" filepath="$PROJECT_DIR$/.idea/modules/update_core/update_core.iml" group="Aipick/update_core" />
     </modules>
   </component>
 </project>

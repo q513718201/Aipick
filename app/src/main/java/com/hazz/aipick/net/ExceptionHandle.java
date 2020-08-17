@@ -1,9 +1,12 @@
 package com.hazz.aipick.net;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.MalformedJsonException;
+import com.hazz.aipick.MyApplication;
+import com.hazz.aipick.ui.activity.LoginActivity;
 import com.hazz.aipick.utils.SPUtil;
 
 import org.json.JSONException;
@@ -57,7 +60,7 @@ public class ExceptionHandle {
             ex = new ResponeThrowable(tokeExpiredException, ERROR.TOKEN_EXPIRED_EXCEPTION);
             ex.message = "Token过期";
             return ex;
-        }else if (e instanceof JsonParseException
+        } else if (e instanceof JsonParseException
                 || e instanceof JSONException ||
                 e instanceof MalformedJsonException
             /*|| e instanceof ParseException*/) {
@@ -81,7 +84,7 @@ public class ExceptionHandle {
             ex = new ResponeThrowable(e, ERROR.UNKONW_HOST_EXCEPTION);
             ex.message = "未知HOST";
             return ex;
-        }  else {
+        } else {
             ex = new ResponeThrowable(e, ERROR.UNKNOWN);
             ex.message = "未知错误";
             return ex;
