@@ -361,5 +361,10 @@
     <string name="hint_register_invalid_email">请输入正确的邮箱地址</string>
     <string name="hint_register_no_checkcode">请获取验证码</string>
 
+    <string name="hint_coin_no_market_bind">请选择投放策略平台</string>
+    <string name="text_buy_in">买入</string>
+    <string name="text_sell_out">卖出</string>
+    <string name="text_img_head">添加图片（%d/4）</string>
+
 
 </resources>

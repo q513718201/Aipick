@@ -24,10 +24,6 @@ class CoinHouseAdapter(layoutResId: Int, data: List<CoinHouse>?) : BaseQuickAdap
             helper.setImageResource(R.id.iv_bind, R.mipmap.bt_miyao)
         }
 
-        helper.getView<ImageView>(R.id.iv_bind).setOnClickListener {
-
-
-        }
         helper.itemView.setOnClickListener {
             if (item.bound) {
                 mContext.startActivity(Intent(mContext, CoinHouseDescActivity::class.java).putExtra("exchangeId", item.exchange_id))

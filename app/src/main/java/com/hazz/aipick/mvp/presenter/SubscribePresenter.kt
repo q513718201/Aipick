@@ -39,11 +39,12 @@ class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter
     }
 
 
-    fun mySubscribeDesc(subId: String,
+    fun mySubscribeDesc(subId: String, type: Int,
                         pageNumber: Int, pageSize: Int) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("subId", subId),
+                Pair.create<Any, Any>("subType", type),
                 Pair.create<Any, Any>("pageNumber", pageNumber),
                 Pair.create<Any, Any>("pageSize", pageSize)
 

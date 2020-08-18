@@ -16,38 +16,37 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import kotlinx.android.synthetic.main.activity_tixian_record.*
-import java.util.*
 
 
 class MessageActivity : BaseActivity(), WaletContract.messageView, OnRefreshListener, OnLoadmoreListener {
     override fun readAll(msg: String) {
-        ToastUtils.showToast(this,msg)
+        ToastUtils.showToast(this, msg)
     }
 
     override fun onLoadmore(refreshlayout: RefreshLayout?) {
         page++
-        mWaletPresenter.messageList(page,10)
+        mWaletPresenter.messageList(page, 10)
     }
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
-        page=1
+        page = 1
         refreshLayout.resetNoMoreData()
-        mWaletPresenter.messageList(page,10)
+        mWaletPresenter.messageList(page, 10)
     }
 
     override fun messageList(msg: List<Message>) {
         refreshLayout.finishRefresh()
         refreshLayout.finishLoadmore()
-        if(page==1){
+        if (page == 1) {
             currentList?.clear()
             currentList?.addAll(msg)
             mOrderAdapter!!.setNewData(currentList)
-        }else{
+        } else {
             currentList!!.addAll(msg)
             mOrderAdapter!!.notifyDataSetChanged()
         }
 
-        if(msg.size<10){
+        if (msg.size < 10) {
             refreshLayout.finishLoadmoreWithNoMoreData()
         }
     }
@@ -57,14 +56,13 @@ class MessageActivity : BaseActivity(), WaletContract.messageView, OnRefreshList
 
 
     override fun initData() {
-        mWaletPresenter.messageList(page,10)
+        mWaletPresenter.messageList(page, 10)
     }
 
     private var mOrderAdapter: MessageAdapter? = null
-    private val titleList = ArrayList<String>()
     private var mWaletPresenter: MessagePresenter = MessagePresenter(this)
-    private var page=1
-    private var currentList:MutableList<Message>?= mutableListOf()
+    private var page = 1
+    private var currentList: MutableList<Message>? = mutableListOf()
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
@@ -77,16 +75,12 @@ class MessageActivity : BaseActivity(), WaletContract.messageView, OnRefreshList
                 .setRightText(getString(R.string.mine_all_read))
                 .setRightTextIsShow(true)
                 .setOnRightClickListener {
-                    mWaletPresenter.readAll(0,"1")
+                    mWaletPresenter.readAll(0, "1")
 
                 }
 
-
-        titleList.add("正在持仓")
-        titleList.add("历史持仓")
-
         recycleview.layoutManager = LinearLayoutManager(this)
-        mOrderAdapter= MessageAdapter(R.layout.item_msg,null)
+        mOrderAdapter = MessageAdapter(R.layout.item_msg, null)
         recycleview.adapter = mOrderAdapter
         mOrderAdapter!!.bindToRecyclerView(recycleview)
         mOrderAdapter!!.setEmptyView(R.layout.empty_view)
@@ -97,7 +91,6 @@ class MessageActivity : BaseActivity(), WaletContract.messageView, OnRefreshList
         refreshLayout.setOnRefreshListener(this)
         refreshLayout.setOnLoadmoreListener(this)
     }
-
 
 
 }

@@ -94,10 +94,13 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
     override fun layoutId(): Int = R.layout.activity_my_account
 
     override fun initData() {
-        id = intent.getStringExtra("id")
-        if (intent.getStringExtra("role") != null) {
-            role = intent.getStringExtra("role")
+        id = intent.getBundleExtra("data").getString("id")
+        if (intent.getBundleExtra("data").getString("role") != null) {
+            role = intent.getBundleExtra("data").getString("role")
         }
+        price = intent.getBundleExtra("data").getString("price")
+
+        tv_price.text = "$$price"
         Log.d("junjun", role)
         val obj = SPUtil.getObj("userinfo", UserInfo::class.java)
         if (obj.uid == id) {
@@ -112,6 +115,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
     private var mCollectionPresenter: CollectionPresenter = CollectionPresenter(this)
     private var id = ""
     private var role = ""
+    private var price = ""
     private var mCoinAdapter: CoinAdapter? = null
     private var mCoinBiduiAdapter: CoinBiduiAdapter? = null
     private var currentName = ""
@@ -176,12 +180,15 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
     }
 
     private fun showFirst() {
+
         // startActivity(Intent(this,PayActivity::class.java).putExtra("id",id).putExtra("price","0.01"))
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.dialog_coin, null)
-
+        mAccountPresenter.coinList(id)
         view.recycleview1.layoutManager = GridLayoutManager(this, 4)
-
+        view.iv_close.setOnClickListener{
+            bottomSheetDialog.dismiss()
+        }
         mCoinAdapter = CoinAdapter(R.layout.item_text, null)
         view.recycleview1.adapter = mCoinAdapter
         val stringIntegerHashMap: HashMap<String, Int>? = HashMap()
@@ -192,16 +199,23 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         mCoinAdapter!!.emptyView.setOnClickListener {
 
             startActivity(Intent(this, CoinHouseActivity::class.java))
-            bottomSheetDialog.dismiss()
+            bottomSheetDialog!!.dismiss()
         }
 
         view.tv_sure.setOnClickListener {
 
-            showNextBottom()
+            if (mBindCoinHouse?.size == 0) {
+                ToastUtils.showToast(this, getString(R.string.hint_coin_no_market_bind))
+                return@setOnClickListener
+            }
+            current = mCoinAdapter?.getCurrent()
+            if (current != null) {
+                showNextBottom()
+            }
             bottomSheetDialog.dismiss()
         }
 
-        bottomSheetDialog.setContentView(view)
+        bottomSheetDialog!!.setContentView(view)
         bottomSheetDialog.show()
     }
 
@@ -209,7 +223,9 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         // startActivity(Intent(this,PayActivity::class.java).putExtra("id",id).putExtra("price","0.01"))
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.dialog_coin, null)
-        mAccountPresenter.coinList(id)
+        view.iv_close.setOnClickListener{
+            bottomSheetDialog.dismiss()
+        }
         view.recycleview1.layoutManager = GridLayoutManager(this, 4)
         view.tv_title.text = getString(R.string.choose_bidui)
         view.tv_sure.text = getString(R.string.confirm)
@@ -224,8 +240,8 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
                 baseCoin = mBindCoinHouse!![mCoinAdapter!!.getCurr()]
                 startActivity(Intent(this, SettingFollowedActivity::class.java)
                         .putExtra("id", id)
-                        .putExtra("price", "0.01")
-                        .putExtra("bean", GsonUtil.toJson(current))
+                        .putExtra("price", price)
+                        .putExtra("bean", GsonUtil.toJson(mBindCoinHouse))
                         .putExtra("name", currentName)
                         .putExtra("SymbolsBean", GsonUtil.toJson(baseCoin))
                         .putExtra("role", role)

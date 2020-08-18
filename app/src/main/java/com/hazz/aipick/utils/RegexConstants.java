@@ -55,7 +55,7 @@ public final class RegexConstants {
      */
     public static final String REGEX_USERNAME = "^[\\w\\u4e00-\\u9fa5]{6,20}(?<!_)$";
 
-    public static final String REGEX_USER_PASSWORD = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
+    public static final String REGEX_USER_PASSWORD = "^{6,18}$";
     /**
      * Regex of date which pattern is "yyyy-MM-dd".
      */

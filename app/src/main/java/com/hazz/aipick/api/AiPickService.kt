@@ -307,4 +307,9 @@ interface AiPickService {
     @GET(" /base/data")
     fun getRate(): Observable<BaseResult<RateBean>>
 
+    /**
+     * 模拟操盘资产概览
+     */
+    @GET(" /simulate/summary")
+    fun getSimulateSummary(): Observable<BaseResult<SimulateSummaryBean>>
 }

@@ -19,4 +19,5 @@ interface HomeContract {
         fun payCancle(msg: String)
         fun paySucceed(msg: PaySucceed)
     }
+
 }

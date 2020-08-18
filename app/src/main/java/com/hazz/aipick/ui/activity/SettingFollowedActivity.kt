@@ -25,7 +25,7 @@ class SettingFollowedActivity : BaseActivity(), WaletContract.myaccountView, Rad
         ToastUtils.showToast(this, msg)
         startActivity(Intent(this, ChooseTimeActivity::class.java)
                 .putExtra("id", id)
-                .putExtra("price", "0.01")
+                .putExtra("price", price)
                 .putExtra("bean", bean)
                 .putExtra("name", currentNmae)
                 .putExtra("switch", currentSwitch)
@@ -110,11 +110,12 @@ class SettingFollowedActivity : BaseActivity(), WaletContract.myaccountView, Rad
         tv_suscribe.setOnClickListener {
             Log.d("junjun", Gson().toJson(beanSymbl))
             // mAccountPresenter.setFollow(id,currentSwitch,followType,tv_num.text.toString())
-            startActivity(Intent(this, ChooseTimeActivity::class.java).putExtra("id", id).putExtra("price", default_str)
+            startActivity(Intent(this, ChooseTimeActivity::class.java).putExtra("id", id).putExtra("price", price)
                     .putExtra("bean", bean).putExtra("name", currentNmae)
                     .putExtra("SymbolsBean", beanSymbl)
                     .putExtra("switch", currentSwitch)
-                    .putExtra("followType", followType).putExtra("followFactor", tv_num.text.toString())
+                    .putExtra("followType", followType)
+                    .putExtra("followFactor", tv_num.text.toString())
                     .putExtra("role", role))
 
             finish()
@@ -137,7 +138,7 @@ class SettingFollowedActivity : BaseActivity(), WaletContract.myaccountView, Rad
             setIntroduce(tv_num.text.toString())
         }
 
-        sw.setOnCheckedChangeListener { _, isChecked ->
+        switchButton.setOnCheckedChangeListener { _, isChecked ->
             currentSwitch = if (isChecked) {
                 "on"
             } else {

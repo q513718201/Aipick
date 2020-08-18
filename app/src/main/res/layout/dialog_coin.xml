@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dp_40"
         android:paddingLeft="15dp"
         android:paddingRight="15dp">
 
@@ -20,51 +20,57 @@
             android:textColor="@color/color_home"
             android:textSize="17sp"
 
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/iv_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/bt_close" />
+            android:layout_marginEnd="@dimen/dp_16"
+            android:src="@mipmap/bt_close"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.384" />
 
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <View
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
-        android:background="#E3E4EA"
-        />
+        android:layout_marginTop="10dp"
+        android:background="#E3E4EA" />
 
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleview1"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginTop="10dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:minHeight="150dp">
 
     </android.support.v7.widget.RecyclerView>
-
 
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.01dp"
-        android:background="#E3E4EA"
-        />
+        android:background="#E3E4EA" />
 
 
-        <TextView
-            android:id="@+id/tv_sure"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:gravity="center"
-            android:text="@string/next_step"
-            android:textColor="@color/dilaog_btn_color"
-            android:textSize="14sp" />
-
+    <TextView
+        android:id="@+id/tv_sure"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:text="@string/next_step"
+        android:textColor="@color/dilaog_btn_color"
+        android:textSize="14sp" />
 
 
 </LinearLayout>

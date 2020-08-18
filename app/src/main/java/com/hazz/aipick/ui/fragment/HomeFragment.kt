@@ -51,11 +51,11 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
 
     private fun setHead() {
         homeBean?.let {
-            tv_coin_name.text = if (it.coin_name == null) getString(R.string.app_name) else it.coin_name
+            tv_coin_name?.text = if (it.coin_name == null) getString(R.string.app_name) else it.coin_name
 
-            tv_raise.text = "${it.rate}"
-            tv_pullback.text = getString(R.string.ten_rate, it.pullback)
-            price.text = getString(R.string.home_price, it.price)
+            tv_raise?.text = "${it.rate}"
+            tv_pullback?.text = getString(R.string.ten_rate, it.pullback)
+            price?.text = getString(R.string.home_price, it.price)
         }
     }
 

@@ -4,20 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.net.Uri
-import android.provider.Settings
-import android.support.v7.app.AlertDialog
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.OrientationHelper
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.support.v7.widget.Toolbar
-import android.util.Log
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.presenter.FeedBackresenter
 import com.hazz.aipick.ui.adapter.PhotoAdapter
-import com.hazz.aipick.ui.adapter.TixianAdapter
 import com.hazz.aipick.utils.PicUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
@@ -29,7 +23,7 @@ import java.util.*
 
 class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
     override fun completeResult(msg: String) {
-        ToastUtils.showToast(this,msg)
+        ToastUtils.showToast(this, msg)
         finish()
     }
 
@@ -50,6 +44,7 @@ class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
     private var iv4: String? = ""
     private var photoAdapter: PhotoAdapter? = null
     private val selectedPhotos = ArrayList<String>()
+
     @SuppressLint("SetTextI18n")
     override fun initView() {
         ToolBarCustom.newBuilder(mToolbar as Toolbar)
@@ -57,12 +52,12 @@ class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
                 .setTitle(getString(R.string.mine_help_feed))
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
-                .setOnLeftIconClickListener { view -> finish() }
+                .setOnLeftIconClickListener { finish() }
                 .setRightTextIsShow(true)
                 .setRightText(getString(R.string.send))
                 .setRightTextColor(resources.getColor(R.color.dilaog_btn_color))
                 .setOnRightClickListener {
-                    mFeedBackresenter.feedBack(et.text.toString(),et_phone.text.toString(),iv1!!,iv2!!,iv3!!,iv4!!)
+                    mFeedBackresenter.feedBack(et.text.toString(), et_phone.text.toString(), iv1!!, iv2!!, iv3!!, iv4!!)
                 }
 
 
@@ -107,8 +102,6 @@ class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
     }
 
 
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
@@ -118,19 +111,20 @@ class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
             val paths = data.getSerializableExtra(PickConfig.INTENT_IMG_LIST_SELECT) as ArrayList<String>
             selectedPhotos.addAll(paths)
             photoAdapter?.notifyDataSetChanged()
+            tv_img_head.text = getString(R.string.text_img_head, "${paths.size}")
             if (selectedPhotos.size != 0) {
                 for (i in selectedPhotos.indices) {
                     if (i == 0) {
-                        iv1 =  PicUtil.compressImage(selectedPhotos[0],"png")
+                        iv1 = PicUtil.compressImage(selectedPhotos[0], "png")
                     }
                     if (i == 1) {
-                        iv2 =  PicUtil.compressImage(selectedPhotos[1],"png")
+                        iv2 = PicUtil.compressImage(selectedPhotos[1], "png")
                     }
                     if (i == 2) {
-                        iv3 = PicUtil.compressImage(selectedPhotos[2],"png")
+                        iv3 = PicUtil.compressImage(selectedPhotos[2], "png")
                     }
                     if (i == 3) {
-                        iv3 = PicUtil.compressImage(selectedPhotos[2],"png")
+                        iv3 = PicUtil.compressImage(selectedPhotos[2], "png")
                     }
                 }
             }

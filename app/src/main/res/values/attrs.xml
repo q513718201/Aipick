@@ -52,6 +52,11 @@
         <attr name="strokeWidth" format="dimension|reference" />
     </declare-styleable>
 
-
+    <declare-styleable name="regulation">
+        <attr name="type_trade" format="enum">
+            <enum name="amount" value="0" />
+            <enum name="price" value="1" />
+        </attr>
+    </declare-styleable>
 
 </resources>

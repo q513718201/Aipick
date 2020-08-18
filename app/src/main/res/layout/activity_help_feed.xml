@@ -1,35 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:focusableInTouchMode="true"
-    android:focusable="true"
-    android:paddingTop="20dp"
     android:background="@color/bg_common"
-  >
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_16">
 
     <include
         android:id="@+id/mToolbar"
         layout="@layout/toolbar"
-        app:layout_constraintTop_toTopOf="parent"
-        />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:textColor="@color/color_white"
-        android:layout_marginTop="10dp"
         android:id="@+id/et"
-        android:hint="@string/mine_help"
         android:layout_width="match_parent"
         android:layout_height="207dp"
-        android:textSize="14sp"
-        android:textColorHint="@color/color_home"
+        android:layout_marginTop="10dp"
+        android:background="@null"
         android:gravity="top"
+        android:hint="@string/mine_help"
         android:padding="5dp"
-        />
+        android:textColor="@color/color_white"
+        android:textColorHint="@color/color_home"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/tv_img_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/text_img_head"
+        android:textColor="#ff94a4d6"
+        android:textSize="16sp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -41,24 +45,23 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
         android:text="@string/lianxifangshi"
         android:textColor="@color/color_home"
-        android:textSize="16sp"
-        />
+        android:textSize="16sp" />
 
     <EditText
 
-        android:textColor="@color/color_white"
-        android:layout_marginTop="20dp"
         android:id="@+id/et_phone"
-        android:hint="@string/mine_help_contact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:textColorHint="@color/color_home"
-        android:gravity="top"
-        android:padding="5dp"
+        android:layout_marginTop="20dp"
         android:background="@null"
-        />
+        android:gravity="top"
+        android:hint="@string/mine_help_contact"
+        android:padding="5dp"
+        android:textColor="@color/color_white"
+        android:textColorHint="@color/color_home"
+        android:textSize="14sp" />
 
 </LinearLayout>

@@ -1,7 +1,6 @@
 package com.hazz.aipick.ui.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.TabLayout
@@ -14,7 +13,6 @@ import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.model.bean.MySubscribe
 import com.hazz.aipick.mvp.model.bean.SubscribeDesc
 import com.hazz.aipick.mvp.presenter.SubscribePresenter
-import com.hazz.aipick.ui.adapter.OrderAdapter
 import com.hazz.aipick.ui.adapter.SubscribeAdapter
 import com.hazz.aipick.utils.ToolBarCustom
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -22,14 +20,11 @@ import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import kotlinx.android.synthetic.main.activity_mine_subscriber.*
 import kotlinx.android.synthetic.main.activity_mine_subscriber.recycleview
-import kotlinx.android.synthetic.main.activity_mine_subscriber.tabLayout
 import kotlinx.android.synthetic.main.activity_subscribe_desc.toolbar
 import kotlinx.android.synthetic.main.dialog_choose.view.*
 import kotlinx.android.synthetic.main.dialog_choose.view.tv_cancle
 import kotlinx.android.synthetic.main.dialog_choose_year.view.*
-import kotlinx.android.synthetic.main.fragment_order.*
-
-import java.util.ArrayList
+import java.util.*
 
 
 class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, OnRefreshListener, OnLoadmoreListener, TabLayout.OnTabSelectedListener {
@@ -49,17 +44,16 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
     }
 
     override fun onTabSelected(p0: TabLayout.Tab?) {
-        val position = p0!!.position
 
-        when(position){
-            0->{
-                tv_month.visibility=View.VISIBLE
-                currentDirect="out"
+        when (p0!!.position) {
+            0 -> {
+                tv_month.visibility = View.VISIBLE
+                currentDirect = "out"
                 requestData()
             }
-            1->{
-                tv_month.visibility=View.GONE
-                currentDirect="in"
+            1 -> {
+                tv_month.visibility = View.GONE
+                currentDirect = "in"
                 requestData()
             }
         }
@@ -67,15 +61,22 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
     }
 
     override fun onLoadmore(refreshlayout: RefreshLayout?) {
-        page=1
-        refreshLayout.resetNoMoreData()
+        page++
+        requestData()
     }
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
-        page++
+
+        page = 1
+        refreshLayout.resetNoMoreData()
+        requestData()
     }
 
     override fun mySubscribe(msg: List<MySubscribe>) {
+        refreshLayout.finishRefresh()
+        refreshLayout.finishLoadmore()
+        mOrderAdapter!!.setRole(currentCategry)
+        mOrderAdapter!!.setType(if (currentDirect == "out") 0 else 1)
         mOrderAdapter!!.setNewData(msg)
     }
 
@@ -87,18 +88,17 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
     }
 
     private fun requestData() {
-        page=1
         mSubscribePresenter.getCollection(currentCategry, currentDirect, currentDay, page, 10)
     }
 
     private var mOrderAdapter: SubscribeAdapter? = null
     private val titleList = ArrayList<String>()
-    private  var bottomSheet:BottomSheetDialog?=null
-    private  var  mSubscribePresenter: SubscribePresenter =SubscribePresenter(this)
-    private  var page=1
-    private  var currentDay="days0"
-    private  var currentCategry="bot"
-    private  var currentDirect="out"
+    private var bottomSheet: BottomSheetDialog? = null
+    private var mSubscribePresenter: SubscribePresenter = SubscribePresenter(this)
+    private var page = 1
+    private var currentDay = "days0"
+    private var currentCategry = "bot"
+    private var currentDirect = "out"
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
@@ -116,7 +116,7 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
             tabLayout!!.addTab(tabLayout!!.newTab().setText(titleList[i]))
         }
         recycleview.layoutManager = LinearLayoutManager(this)
-        mOrderAdapter= SubscribeAdapter(R.layout.item_mysubscribe,null)
+        mOrderAdapter = SubscribeAdapter(R.layout.item_mysubscribe, null)
 
         recycleview.adapter = mOrderAdapter
         mOrderAdapter!!.bindToRecyclerView(recycleview)
@@ -137,7 +137,7 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
     }
 
     private fun showBottomDay() {
-        bottomSheet= BottomSheetDialog(this)
+        bottomSheet = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.dialog_choose, null)
         bottomSheet!!.setContentView(view)
 
@@ -147,15 +147,15 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
 
         view.tv_rebot.setOnClickListener {
             bottomSheet!!.dismiss()
-            currentCategry="bot"
-            tv_month.text=getString(R.string.robot_caty)
+            currentCategry = "bot"
+            tv_month.text = getString(R.string.robot_caty)
             requestData()
         }
 
         view.tv_trader.setOnClickListener {
             bottomSheet!!.dismiss()
-            currentCategry="broker"
-            tv_month.text=getString(R.string.jiaoyiyuan)
+            currentCategry = "broker"
+            tv_month.text = getString(R.string.jiaoyiyuan)
             requestData()
         }
         val viewById = bottomSheet!!.delegate.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
@@ -168,7 +168,7 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
 
 
     private fun showBottomYear() {
-        var bottomSheet= BottomSheetDialog(this)
+        var bottomSheet = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.dialog_choose_year, null)
         bottomSheet.setContentView(view)
         view.tv_cancle.setOnClickListener {
@@ -176,27 +176,27 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
         }
         view.tv_one_month.setOnClickListener {
             bottomSheet.dismiss()
-            currentDay="days30"
-            tv_year.text=getString(R.string.jinyiyue)
+            currentDay = "days30"
+            tv_year.text = getString(R.string.jinyiyue)
             requestData()
         }
         view.tv_three_month.setOnClickListener {
             bottomSheet.dismiss()
-            currentDay="days90"
-            tv_year.text=getString(R.string.jin_sanyue)
+            currentDay = "days90"
+            tv_year.text = getString(R.string.jin_sanyue)
             requestData()
         }
         view.tv_one_year.setOnClickListener {
             bottomSheet.dismiss()
-            currentDay="days7"
-            tv_year.text=getString(R.string.jin_seven_day)
+            currentDay = "days7"
+            tv_year.text = getString(R.string.jin_seven_day)
             requestData()
         }
 
         view.tv_all.setOnClickListener {
             bottomSheet.dismiss()
-            currentDay="daya0"
-            tv_year.text=getString(R.string.all)
+            currentDay = "daya0"
+            tv_year.text = getString(R.string.all)
             requestData()
         }
 
@@ -207,7 +207,6 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
         bottomSheet.show()
 
     }
-
 
 
 }

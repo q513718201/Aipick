@@ -33,7 +33,7 @@ class PayActivity : BaseActivity(), HomeContract.payView {
     override fun paySucceed(msg: PaySucceed) {
         tv_succeed.visibility = View.VISIBLE
         ll_succeed.visibility = View.VISIBLE
-        ll_choose.visibility= View.GONE
+        ll_choose.visibility = View.GONE
         isPay = true
 
         tv1.text = msg.user_name
@@ -71,6 +71,7 @@ class PayActivity : BaseActivity(), HomeContract.payView {
             when (msg.what) {
                 SDK_PAY_FLAG -> {
                     val payResult = PayResult(msg.obj as Map<String, String>)
+
                     /**
                      * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
                      */
@@ -85,7 +86,7 @@ class PayActivity : BaseActivity(), HomeContract.payView {
                         mPayPresenter.payCheck(id, resultInfo, fromJson.sign, fromJson.sign_type,
                                 "9000"
                         )
-                       // SToast.showText("支付成功")
+                        // SToast.showText("支付成功")
 
 
                     } else {
@@ -133,7 +134,7 @@ class PayActivity : BaseActivity(), HomeContract.payView {
     private var price = ""
     private var mPayPresenter: PayPresenter = PayPresenter(this)
     private var role = ""
-    private var payBean: PayBean? = null
+    private var createBean: CreateId? = null
     private var subscribe: Disposable? = null//保存订阅者
     private val SDK_PAY_FLAG = 1
     private val SDK_AUTH_FLAG = 2
@@ -153,18 +154,31 @@ class PayActivity : BaseActivity(), HomeContract.payView {
 
     @SuppressLint("SetTextI18n")
     override fun start() {
-        //id=intent.getStringExtra("id")
-        price = intent.getStringExtra("price")!!
-        payBean = intent.getSerializableExtra("payBean") as PayBean
+        id = intent.getStringExtra("id")
+        price = intent.getStringExtra("price")
+        createBean = intent.getSerializableExtra("payBean") as CreateId
         role = intent.getStringExtra("role")
         tv_price.text = "$$price"
 
-        mPayPresenter.createId(role, payBean!!)
-
         tv_suscribe.setOnClickListener {
-            mPayPresenter.pay(id, "alipay")
+
+            mPayPresenter.pay(id, if(payType==0)"alipay" else "wechat")
         }
+        tv_alipay.setOnClickListener {
+            tv_alipay.isSelected = true
+            tv_wechat.isSelected = false
+            payType = 0
+        }
+        tv_wechat.setOnClickListener {
+            tv_alipay.isSelected = false
+            tv_wechat.isSelected = true
+            payType = 1
+        }
+        tv_alipay.isSelected = true
+
     }
+
+    private var payType: Int = 0;//默认是支付宝支付
 
 
     private fun secondToDate(second: Long, patten: String): String {
@@ -199,7 +213,7 @@ class PayActivity : BaseActivity(), HomeContract.payView {
             subscribe!!.dispose()
         }
         if (!isPay) {
-           mPayPresenter.orderCancle(id)
+            mPayPresenter.orderCancle(id)
         }
 
     }

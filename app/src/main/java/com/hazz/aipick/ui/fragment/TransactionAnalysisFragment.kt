@@ -4,7 +4,6 @@ package com.hazz.aipick.ui.fragment
 import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
-import android.util.Log
 import android.view.View
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
@@ -20,6 +19,7 @@ import kotlinx.android.synthetic.main.dialog_choose.view.tv_cancle
 import kotlinx.android.synthetic.main.dialog_choose_day.view.*
 import kotlinx.android.synthetic.main.dialog_choose_year.view.*
 import kotlinx.android.synthetic.main.fragment_chart.*
+import kotlin.random.Random
 
 
 class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener, InComingContract.incomingView {
@@ -156,7 +156,7 @@ class TransactionAnalysisFragment : BaseFragment(), OnChartValueSelectedListener
         for (a in msg) {
             xValue.add(a.day_label)
             barChartY.add(a.self.toFloat())
-           lineChartY.add(a.follow.toFloat())
+            lineChartY.add(a.follow.toFloat())
 
         }
 

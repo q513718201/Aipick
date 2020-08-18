@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
+import com.hazz.aipick.mvp.contract.SimulateContract
+import com.hazz.aipick.mvp.model.bean.SimulateSummaryBean
+import com.hazz.aipick.mvp.presenter.SimulatorPresenter
 import com.hazz.aipick.socket.CoinDetail
 import com.hazz.aipick.socket.WsManager
 import com.hazz.aipick.ui.adapter.MarketsMoniItemAdapter
@@ -13,7 +16,7 @@ import com.hazz.aipick.utils.ToolBarCustom
 import kotlinx.android.synthetic.main.activity_moni.*
 
 
-class MonicpActivity : BaseActivity() {
+class MonicpActivity : BaseActivity(), SimulateContract.SimulateView {
 
     override fun layoutId(): Int = R.layout.activity_moni
 
@@ -25,6 +28,7 @@ class MonicpActivity : BaseActivity() {
     private var coinList: MutableList<CoinDetail>? = mutableListOf()
     private var adapter: MarketsMoniItemAdapter? = null
     private var index = 0
+    private var simulatorPresenter = SimulatorPresenter(this)
 
     override fun initData() {
         WsManager.getInstance().reconnect()
@@ -42,13 +46,11 @@ class MonicpActivity : BaseActivity() {
                     val entry = entries.next()
                     val value = entry.value
                     coinList!!.add(value)
-
                 }
 
                 runOnUiThread {
                     adapter!!.setNewData(coinList)
                 }
-
             }
 
 
@@ -66,6 +68,7 @@ class MonicpActivity : BaseActivity() {
             }
 
         }
+        simulatorPresenter.getSummary()
     }
 
     override fun start() {
@@ -74,7 +77,8 @@ class MonicpActivity : BaseActivity() {
                 .setTitle(getString(R.string.mncp))
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
-                .setOnLeftIconClickListener { view -> finish() }
+                .setOnLeftIconClickListener { finish() }
+
 
     }
 
@@ -93,6 +97,12 @@ class MonicpActivity : BaseActivity() {
         tv_change_btn.setOnClickListener {
             adapter?.sortByUp()
         }
+    }
+
+    override fun setSummary(bean: SimulateSummaryBean) {
+        tv_amount.text = bean.current_value
+        tv_initial.text = "${bean.initial_value}USDT"
+        tv_total.text = "${bean.total_gain}USDT"
     }
 
 

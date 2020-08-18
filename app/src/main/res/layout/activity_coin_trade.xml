@@ -12,6 +12,7 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/def_height"
+        android:layout_marginTop="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -133,7 +134,7 @@
                     android:layout_marginTop="16dp"
                     android:background="@drawable/btn_solid_half_sell"
                     android:gravity="center"
-                    android:text="买入"
+                    android:text="@string/text_buy_in"
                     android:textColor="#ffffffff"
                     android:textSize="17sp"
                     app:layout_constraintEnd_toStartOf="@+id/btn_buy"
@@ -146,7 +147,7 @@
                     android:layout_height="30dp"
                     android:background="@drawable/btn_solid_half_buy"
                     android:gravity="center"
-                    android:text="卖出"
+                    android:text="@string/text_sell_out"
                     android:textColor="#ffffffff"
                     android:textSize="17sp"
                     app:layout_constraintBottom_toBottomOf="@+id/btn_sell"
@@ -180,14 +181,14 @@
                     app:layout_constraintStart_toStartOf="@+id/btn_buy"
                     app:layout_constraintTop_toBottomOf="@+id/btn_buy" />
 
+
                 <LinearLayout
                     android:id="@+id/linearLayout"
                     android:layout_width="0dp"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_16"
-                    android:background="@drawable/btn_bg_retangle"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -198,7 +199,7 @@
                         android:id="@+id/btn_price_sub"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/btn_bg_retangle"
+                        android:background="@drawable/boarder_left"
                         android:gravity="center"
                         android:text="—"
                         android:textColor="#94A4D6"
@@ -208,8 +209,15 @@
                         android:id="@+id/et_coin_price"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="-0.5dp"
+                        android:layout_marginEnd="-0.5dp"
                         android:layout_weight="1"
-                        android:background="@null"
+                        android:background="@drawable/boarder"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:lines="1"
+
+                        android:textSize="@dimen/sp_16"
                         app:layout_constraintBottom_toBottomOf="@+id/btn_price_sub"
                         app:layout_constraintEnd_toStartOf="@+id/btn_price_add"
                         app:layout_constraintStart_toEndOf="@+id/btn_price_sub"
@@ -219,7 +227,7 @@
                         android:id="@+id/btn_price_add"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/btn_bg_retangle"
+                        android:background="@drawable/boarder_right"
                         android:gravity="center"
                         android:text="+"
                         android:textColor="#94A4D6"
@@ -229,6 +237,7 @@
                         app:layout_constraintTop_toTopOf="@+id/btn_price_sub"
                         app:layout_constraintVertical_bias="0.0" />
                 </LinearLayout>
+
 
                 <TextView
                     android:id="@+id/tv_coin_exchange"
@@ -244,10 +253,9 @@
                 <LinearLayout
                     android:id="@+id/llAmount"
                     android:layout_width="0dp"
-                    android:layout_height="32dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginEnd="@dimen/dp_16"
-                    android:background="@drawable/btn_bg_retangle"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
@@ -258,7 +266,7 @@
                         android:id="@+id/btn_amount_sub"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/btn_bg_retangle"
+                        android:background="@drawable/boarder_left"
                         android:gravity="center"
                         android:text="—"
                         android:textColor="#94A4D6"
@@ -268,8 +276,14 @@
                         android:id="@+id/et_coin_amount"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
+                        android:layout_marginStart="-0.5dp"
+                        android:layout_marginEnd="-0.5dp"
                         android:layout_weight="1"
-                        android:background="@null"
+                        android:background="@drawable/boarder"
+                        android:gravity="center"
+                        android:inputType="numberDecimal"
+                        android:lines="1"
+                        android:textSize="@dimen/sp_16"
                         app:layout_constraintBottom_toBottomOf="@+id/btn_price_sub"
                         app:layout_constraintEnd_toStartOf="@+id/btn_price_add"
                         app:layout_constraintStart_toEndOf="@+id/btn_price_sub"
@@ -279,7 +293,7 @@
                         android:id="@+id/btn_amount_add"
                         android:layout_width="32dp"
                         android:layout_height="32dp"
-                        android:background="@drawable/btn_bg_retangle"
+                        android:background="@drawable/boarder_right"
                         android:gravity="center"
                         android:text="+"
                         android:textColor="#94A4D6"
@@ -297,9 +311,6 @@
                     android:layout_marginStart="@dimen/dp_16"
                     android:layout_marginTop="@dimen/dp_10"
                     android:layout_marginEnd="@dimen/dp_16"
-                    android:background="@drawable/btn_bg_retangle"
-                    android:divider="@drawable/divider"
-                    android:showDividers="middle"
                     app:layout_constraintEnd_toStartOf="@+id/guideline"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/llAmount">
@@ -308,6 +319,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/boarder_left"
                         android:gravity="center"
                         android:text="25%"
                         android:textColor="#ffffffff"
@@ -317,7 +329,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_bg_retangle"
+                        android:background="@drawable/boarder"
                         android:gravity="center"
                         android:text="50%"
                         android:textColor="#ffffffff"
@@ -327,6 +339,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:background="@drawable/boarder_right"
                         android:gravity="center"
                         android:text="75%"
                         android:textColor="#ffffffff"
@@ -336,7 +349,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:background="@drawable/btn_bg_retangle"
+                        android:background="@drawable/boarder_right"
                         android:gravity="center"
                         android:text="100%"
                         android:textColor="#ffffffff"
@@ -407,14 +420,44 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/sellRecyclerView"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:padding="@dimen/dp_16"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:layout_constraintBottom_toTopOf="@+id/guideline6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="@+id/guideline"
                     app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0.5dp"
+                    android:layout_marginStart="@dimen/dp_16"
+                    android:layout_marginEnd="@dimen/dp_16"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintEnd_toEndOf="@id/sellRecyclerView"
+                    app:layout_constraintStart_toStartOf="@id/sellRecyclerView"
+                    app:layout_constraintTop_toBottomOf="@id/sellRecyclerView" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/buyRecyclerView"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:paddingLeft="@dimen/dp_16"
+                    android:paddingRight="@dimen/dp_16"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/guideline"
+                    app:layout_constraintTop_toBottomOf="@+id/guideline6" />
+
+                <android.support.constraint.Guideline
+                    android:id="@+id/guideline6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintGuide_begin="193dp" />
+
 
             </android.support.constraint.ConstraintLayout>
 

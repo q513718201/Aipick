@@ -1,14 +1,16 @@
 package com.hazz.aipick.mvp.model.bean;
 
-public class CreateId {
+import java.io.Serializable;
 
-        /**
-         * sub_id : 1
-         * timer : 1800
-         */
+public class CreateId implements Serializable {
 
-        public String sub_id;
-        public String timer;
+    /**
+     * sub_id : 1
+     * timer : 1800
+     */
+
+    public String sub_id;
+    public String timer;
 
 
 }

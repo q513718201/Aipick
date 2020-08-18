@@ -82,9 +82,9 @@ class SubscribeFragment : BaseFragment(), CollectionContract.userSubscribeView {
         if (data.isEmpty()) {
             if (BuildConfig.DEBUG) {
                 var temp = ArrayList<UserSubscribeBean>()
-                temp.add(UserSubscribeBean.demo(0))
-                temp.add(UserSubscribeBean.demo(1))
-                temp.add(UserSubscribeBean.demo(2))
+//                temp.add(UserSubscribeBean.demo(0))
+//                temp.add(UserSubscribeBean.demo(1))
+//                temp.add(UserSubscribeBean.demo(2))
                 if (isRefresh)
                     subscribeAdapter?.setNewData(temp)
                 else {

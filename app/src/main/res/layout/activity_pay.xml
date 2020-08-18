@@ -11,7 +11,6 @@
         layout="@layout/toolbar" />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_succeed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,15 +21,16 @@
         android:gravity="center_horizontal"
         android:text="@string/suber_succeed"
         android:textColor="@color/color_home"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:visibility="gone" />
 
     <LinearLayout
-    android:visibility="gone"
-       android:id="@+id/ll_succeed"
-        android:layout_marginTop="40dp"
+        android:id="@+id/ll_succeed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_succeed">
+        android:layout_below="@+id/tv_succeed"
+        android:layout_marginTop="40dp"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="100dp"
@@ -44,48 +44,54 @@
                 android:text="@string/dingyuezhanghu"
                 android:textColor="@color/color_home"
                 android:textSize="12sp" />
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/wodezhanghu"
                 android:textColor="@color/color_home"
                 android:textSize="12sp" />
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/goumai"
                 android:textColor="@color/color_home"
                 android:textSize="12sp" />
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/xiadanshijian"
                 android:textColor="@color/color_home"
                 android:textSize="12sp" />
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/zhifufangshi"
                 android:textColor="@color/color_home"
                 android:textSize="12sp" />
+
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:text="@string/daoqishijian"
                 android:textColor="@color/color_home"
                 android:textSize="12sp" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="100dp"
             android:layout_height="wrap_content"
@@ -93,62 +99,62 @@
 
             <TextView
                 android:id="@+id/tv1"
-                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="@color/color_home"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv2"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/color_home"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv3"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/color_home"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv4"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/color_home"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv5"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/color_home"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv6"
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:gravity="center_horizontal"
                 android:textColor="@color/color_home"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -163,7 +169,6 @@
         android:orientation="vertical"
 
 
-
         >
 
         <TextView
@@ -172,7 +177,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:gravity="center_horizontal"
-            android:text="@string/pay_time"
             android:textColor="@color/color_home"
             android:textSize="12sp" />
 
@@ -181,7 +185,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:text="$00"
+            android:text="$0.00"
             android:textColor="@color/color_yellow"
             android:textSize="48sp" />
 
@@ -194,7 +198,6 @@
             android:background="@drawable/pay_gradient_bg">
 
             <TextView
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableLeft="@mipmap/ic_residual"
@@ -205,7 +208,8 @@
                 android:paddingBottom="12dp"
                 android:text="@string/yuepay"
                 android:textColor="@color/color_home"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:visibility="gone" />
             <!--<TextView-->
             <!--android:layout_width="wrap_content"-->
             <!--android:layout_height="wrap_content"-->
@@ -219,6 +223,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tv_alipay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -236,12 +241,13 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/tv_wechat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="20dp"
-            android:background="@drawable/pay_gradient_bg"
+            android:background="@drawable/pay_select_bg"
             android:drawableLeft="@mipmap/ic_wechat"
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
@@ -250,7 +256,8 @@
             android:paddingBottom="12dp"
             android:text="@string/wechat"
             android:textColor="@color/color_home"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:visibility="gone" />
 
 
     </LinearLayout>

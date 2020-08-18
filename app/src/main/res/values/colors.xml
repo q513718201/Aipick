@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#549cf8</color>
-    <color name="colorAccent">#EF5362</color>
+    <color name="colorAccent">#152a49</color>
 
     <color name="color_gray">#9a9a9a</color>
 
@@ -73,5 +73,11 @@
     <color name="green">#1baf6f</color>
     <color name="bg_dark">#091d34</color>
     <color name="bg_dark_90">#f2091d34</color>
+
+    <color name="selector_default">#FF828A9D</color>
+    <color name="selector_selected">#FF9A66FF</color>
+    <color name="home_text">#94A4D6</color>
+    <color name="divider">#ff2a365a</color>
+
 
 </resources>

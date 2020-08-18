@@ -10,19 +10,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.hazz.aipick.R
 import com.hazz.aipick.mvp.model.bean.MySubscribe
-import com.hazz.aipick.ui.activity.MineSubscribeActivity
 import com.hazz.aipick.ui.activity.SubscribeDescActivity
-import kotlinx.android.synthetic.main.item_mysubscribe.view.*
+import com.hazz.aipick.utils.CoinManager
 
 class SubscribeAdapter(layoutResId: Int, data: List<MySubscribe>?) : BaseQuickAdapter<MySubscribe, BaseViewHolder>(layoutResId, data) {
 
     override fun convert(helper: BaseViewHolder, item: MySubscribe) {
 
         helper.setText(R.id.tv_name, item.subee_nickname)
-        val view = helper.getView<ImageView>(R.id.iv)
-        Glide.with(mContext).load(item.subee_avatar)
-                .apply(RequestOptions.bitmapTransform(CircleCrop()))
-                .into(view)
+
 
         helper.setText(R.id.tv_time, item.create_at)
 
@@ -34,7 +30,31 @@ class SubscribeAdapter(layoutResId: Int, data: List<MySubscribe>?) : BaseQuickAd
             "cancel" -> helper.setText(R.id.tv_state, mContext.getString(R.string.cancel))
         }
         helper.itemView.setOnClickListener {
-            mContext.startActivity(Intent(mContext, SubscribeDescActivity::class.java).putExtra("subId", item.sub_id))
+            mContext.startActivity(Intent(mContext, SubscribeDescActivity::class.java).putExtra("subId", item.sub_id).putExtra("type", type))
         }
+
+        val view = helper.getView<ImageView>(R.id.iv)
+
+        when (role) {
+            "broker" -> {
+                Glide.with(mContext).load(item.subee_avatar)
+                        .apply(RequestOptions.bitmapTransform(CircleCrop()))
+                        .into(view)
+
+            }
+            else -> {
+                view.setImageResource(CoinManager.getCoinIcon(item.base_coin))
+            }
+        }
+    }
+
+    private var role = "bot"
+    private var type = 0
+    fun setRole(role: String) {
+        this.role = role
+    }
+
+    fun setType(type: Int) {
+        this.type = type
     }
 }

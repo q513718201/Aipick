@@ -2,6 +2,7 @@ package com.hazz.aipick.ui.adapter
 
 
 import android.content.Intent
+import android.os.Bundle
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.hazz.aipick.R
@@ -24,12 +25,16 @@ class HomeAdapter(layoutResId: Int, data: List<Home>?) : BaseQuickAdapter<Home, 
         helper.setImageResource(R.id.coinIcon, CoinManager.getCoinIcon(item.coin_name))
 
         helper.itemView.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("id", item.id)
+            bundle.putString("role", subeeType)
+            bundle.putString("price", item.price)
             when (subeeType) {
                 "bot" -> {
-                    mContext.startActivity(Intent(mContext, RebotCategryActivity::class.java).putExtra("id", item.id).putExtra("role", subeeType))
+                    RebotCategryActivity.start(mContext,item.id,subeeType,item.price)
                 }
                 "broker" -> {
-                    mContext.startActivity(Intent(mContext, MyAccountActivity::class.java).putExtra("id", item.id).putExtra("role", subeeType))
+                    mContext.startActivity(Intent(mContext, MyAccountActivity::class.java).putExtra("data", bundle))
                 }
             }
         }

@@ -6,17 +6,16 @@ import android.graphics.Color
 import android.support.v7.widget.Toolbar
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
+import com.hazz.aipick.mvp.contract.HomeContract
 import com.hazz.aipick.mvp.contract.WaletContract
-import com.hazz.aipick.mvp.model.bean.BindCoinHouse
-import com.hazz.aipick.mvp.model.bean.ChooseTime
-import com.hazz.aipick.mvp.model.bean.MyAccount
-import com.hazz.aipick.mvp.model.bean.PayBean
+import com.hazz.aipick.mvp.model.bean.*
 import com.hazz.aipick.mvp.presenter.AccountPresenter
+import com.hazz.aipick.mvp.presenter.PayPresenter
 import com.hazz.aipick.utils.ToolBarCustom
 import kotlinx.android.synthetic.main.activity_time_choose.*
 
 
-class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView {
+class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeContract.payView {
 
     override fun setFollow(msg: String) {
 
@@ -36,29 +35,31 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView {
         tv3.text = "$ " + msg.days180
     }
 
+    private var mPayPresenter: PayPresenter = PayPresenter(this)
 
     override fun layoutId(): Int = R.layout.activity_time_choose
 
     override fun initData() {
+        rl1.isSelected = true
         rl1.setOnClickListener {
             currentDays = "30days"
-            rl1.setBackgroundResource(R.drawable.pay_select_bg)
-            rl2.setBackgroundResource(R.drawable.pay_gradient_bg)
-            rl3.setBackgroundResource(R.drawable.pay_gradient_bg)
+            rl1.isSelected = true
+            rl2.isSelected = false
+            rl3.isSelected = false
             tv_price.text = tv1.text
         }
         rl2.setOnClickListener {
             currentDays = "90days"
-            rl2.setBackgroundResource(R.drawable.pay_select_bg)
-            rl1.setBackgroundResource(R.drawable.pay_gradient_bg)
-            rl3.setBackgroundResource(R.drawable.pay_gradient_bg)
+            rl2.isSelected = true
+            rl1.isSelected = false
+            rl3.isSelected = false
             tv_price.text = tv2.text
         }
         rl3.setOnClickListener {
             currentDays = "180days"
-            rl3.setBackgroundResource(R.drawable.pay_select_bg)
-            rl2.setBackgroundResource(R.drawable.pay_gradient_bg)
-            rl1.setBackgroundResource(R.drawable.pay_gradient_bg)
+            rl3.isSelected = true
+            rl2.isSelected = false
+            rl1.isSelected = false
             tv_price.text = tv3.text
         }
     }
@@ -98,17 +99,39 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView {
         role = intent.getStringExtra("role")
         beanSymbl = intent.getSerializableExtra("SymbolsBean") as BindCoinHouse.SymbolsBean
         tv_price.text = "$$price"
-        tv_name.text = currentNmae
+        tv_name.text = "${getString(R.string.subsciber)}/$currentNmae"
         mAccountPresenter.getPrice(id)
 
         tv_suscribe.setOnClickListener {
             val payBean = PayBean(id, bean?.exchange_id, switch, followType, followFactor, currentDays, beanSymbl!!.base_coin, beanSymbl!!.quote_coin)
-            startActivity(Intent(this, PayActivity::class.java).putExtra("payBean", payBean)
-                    .putExtra("role", role).putExtra("price", price))
-
-            finish()
+            mPayPresenter.createId(role, payBean)
 
         }
+
+        tv_agreement.setOnClickListener {
+            TiaokuanActivity.start(this)
+        }
+    }
+
+    override fun payResult(msg: PayResultMine) {
+        TODO("Not yet implemented")
+    }
+
+    override fun createId(msg: CreateId) {
+        msg?.let {
+            startActivity(Intent(this, PayActivity::class.java).putExtra("CreateIdBean", msg)
+                    .putExtra("id", id).putExtra("role", role).putExtra("price", price))
+
+            finish()
+        }
+
+    }
+
+    override fun payCancle(msg: String) {
+    }
+
+    override fun paySucceed(msg: PaySucceed) {
+        TODO("Not yet implemented")
     }
 
 

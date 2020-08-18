@@ -12,32 +12,33 @@ import com.hazz.aipick.mvp.presenter.OrderPresenter
 import com.hazz.aipick.ui.adapter.OrderAdapter
 import kotlinx.android.synthetic.main.dialog_buy_sell.view.*
 import kotlinx.android.synthetic.main.fragment_order.*
-import java.util.ArrayList
+import java.util.*
 
 
 @Suppress("DEPRECATION")
 class OrderFragment : BaseFragment(), WaletContract.orderView {
 
     override fun getOrder(msg: Order) {
+
         mOrderAdapter!!.setNewData(msg.list)
+        tv1.text = msg.total_amount
+        tv2.text = msg.total_times
+        tv3.text = msg.total_gain
     }
 
-
-//    private val mPresenter by lazy { HomePresenter() }
-
     private var id: String? = ""
-    private val titleList = ArrayList<String>()
     private var bottomSheet: BottomSheetDialog? = null
-    private var currentType=""
-    private var mOrderPresenter:OrderPresenter= OrderPresenter(this)
-    private var page=1
+    private var currentType = ""
+    private var mOrderPresenter: OrderPresenter = OrderPresenter(this)
+    private var page = 1
     private var mOrderAdapter: OrderAdapter? = null
+
     companion object {
-        fun getInstance(title: String): OrderFragment {
+        fun getInstance(id: String): OrderFragment {
             val fragment = OrderFragment()
             val bundle = Bundle()
             fragment.arguments = bundle
-            fragment.id = title
+            fragment.id = id
             return fragment
         }
     }
@@ -53,7 +54,7 @@ class OrderFragment : BaseFragment(), WaletContract.orderView {
 
 
         recycleview.layoutManager = LinearLayoutManager(activity)
-        mOrderAdapter= OrderAdapter(R.layout.item_order,null)
+        mOrderAdapter = OrderAdapter(R.layout.item_order, null)
         recycleview.adapter = mOrderAdapter
         mOrderAdapter!!.bindToRecyclerView(recycleview)
         mOrderAdapter!!.setEmptyView(R.layout.empty_view)
@@ -69,15 +70,15 @@ class OrderFragment : BaseFragment(), WaletContract.orderView {
 
             view.tv_buy.setOnClickListener {
                 bottomSheet!!.dismiss()
-                currentType="buy"
-                tv_choose.text=getString(R.string.buy)
+                currentType = "buy"
+                tv_choose.text = getString(R.string.buy)
                 getDataSource()
             }
 
             view.tv_sell.setOnClickListener {
                 bottomSheet!!.dismiss()
-                currentType="sell"
-                tv_choose.text=getString(R.string.sell)
+                currentType = "sell"
+                tv_choose.text = getString(R.string.sell)
                 getDataSource()
             }
             val viewById = bottomSheet!!.delegate.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
@@ -89,14 +90,12 @@ class OrderFragment : BaseFragment(), WaletContract.orderView {
 
 
     private fun getDataSource() {
-        mOrderPresenter.getOrder(id!!,currentType,page,10,"0")
+        mOrderPresenter.getOrder(id!!, currentType, page, 10, "0")
     }
 
     override fun lazyLoad() {
-
-        mOrderPresenter.getOrder(id!!,"",page,10,"0")
+        mOrderPresenter.getOrder(id!!, "", page, 10, "0")
     }
-
 
 
 }
