@@ -3,15 +3,17 @@ package com.hazz.aipick.mvp.presenter
 
 import android.util.Pair
 import com.hazz.aipick.mvp.contract.WaletContract
-import com.hazz.aipick.mvp.model.bean.*
+import com.hazz.aipick.mvp.model.bean.BindCoinHouse
+import com.hazz.aipick.mvp.model.bean.ChooseTime
+import com.hazz.aipick.mvp.model.bean.MoniAccount
+import com.hazz.aipick.mvp.model.bean.MyAccount
 import com.hazz.aipick.net.*
 
 
 class AccountPresenter(view: WaletContract.myaccountView) : BasePresenter<WaletContract.myaccountView>(view) {
 
 
-
-    fun myAccount(objUserId:String) {
+    fun myAccount(objUserId: String) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objUserId", objUserId)
@@ -35,8 +37,24 @@ class AccountPresenter(view: WaletContract.myaccountView) : BasePresenter<WaletC
 
     }
 
+    fun moniAccount() {
+        val login = RetrofitManager.service.moniAccount()
 
-    fun coinList(subee:String) {
+        doRequest(login, object : Callback<MoniAccount>(view) {
+            override fun failed(tBaseResult: BaseResult<MoniAccount>): Boolean {
+
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<MoniAccount>) {
+                view.moniaccount(tBaseResult.data!!)
+            }
+
+        }, true)
+    }
+
+
+    fun coinList(subee: String) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("subee", subee)
@@ -61,7 +79,7 @@ class AccountPresenter(view: WaletContract.myaccountView) : BasePresenter<WaletC
     }
 
 
-    fun getPrice(objUserId:String) {
+    fun getPrice(objUserId: String) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objUserId", objUserId)
@@ -86,7 +104,7 @@ class AccountPresenter(view: WaletContract.myaccountView) : BasePresenter<WaletC
     }
 
 
-    fun setFollow(subId:String,switch:String,followType:String,followFactor:String) {
+    fun setFollow(subId: String, switch: String, followType: String, followFactor: String) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("subId", subId),
@@ -113,7 +131,7 @@ class AccountPresenter(view: WaletContract.myaccountView) : BasePresenter<WaletC
     }
 
 
-    fun attention(objUserId:String) {
+    fun attention(objUserId: String) {
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objUserId", objUserId)
         )
@@ -133,7 +151,8 @@ class AccountPresenter(view: WaletContract.myaccountView) : BasePresenter<WaletC
         }, true)
 
     }
-    fun attentionCancle(objUserId:String) {
+
+    fun attentionCancle(objUserId: String) {
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objUserId", objUserId)
         )

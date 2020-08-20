@@ -9,7 +9,7 @@ import android.util.Log
 import android.view.View
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
-import com.hazz.aipick.socket.KlineBean
+import com.hazz.aipick.socket.KLineBean
 import com.hazz.aipick.socket.WsManager
 import com.hazz.aipick.ui.adapter.FragmentAdapter
 import com.hazz.aipick.ui.fragment.AboutCoinFragment
@@ -140,7 +140,7 @@ class CoinDescBuyOrSellActivity : BaseActivity() {
         }
 
 
-        RxBus.get().observerOnMain(this, KlineBean::class.java) {
+        RxBus.get().observerOnMain(this, KLineBean::class.java) {
 
             val data = it.data
             if (data != null) {

@@ -6,26 +6,29 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.GridLayoutManager
+import android.view.View
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.BindCoinHouse
-import com.hazz.aipick.mvp.model.bean.ChooseTime
-import com.hazz.aipick.mvp.model.bean.MyAccount
-import com.hazz.aipick.mvp.presenter.AccountPresenter
+import com.hazz.aipick.mvp.model.bean.UserInfo
+import com.hazz.aipick.mvp.presenter.CoinPresenter
 import com.hazz.aipick.ui.adapter.CoinAdapter
 import com.hazz.aipick.ui.adapter.CoinBiduiAdapter
 import com.hazz.aipick.utils.GsonUtil
+import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
+import com.vinsonguo.klinelib.util.DateUtils
 import kotlinx.android.synthetic.main.activity_categry_desc.*
+import kotlinx.android.synthetic.main.activity_categry_desc.iv_back
+import kotlinx.android.synthetic.main.activity_robot_categry.*
 import kotlinx.android.synthetic.main.dialog_coin.view.*
 import kotlinx.android.synthetic.main.view_subscibe.*
 
 
-class CategryDescActivity : BaseActivity(), WaletContract.myaccountView {
+class CategryDescActivity : BaseActivity(), WaletContract.CoinView {
     override fun initData() {
-        mAccountPresenter.myAccount(id)
     }
 
     companion object {
@@ -42,24 +45,53 @@ class CategryDescActivity : BaseActivity(), WaletContract.myaccountView {
     private var role: String = ""
     private var id = ""
     private var title = ""
+    private var price = ""
     private var mCoinAdapter: CoinAdapter? = null
     private var mCoinBiduiAdapter: CoinBiduiAdapter? = null
-    private var mAccountPresenter: AccountPresenter = AccountPresenter(this)
+    private var mCoinPresenter: CoinPresenter = CoinPresenter(this)
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
         if (intent != null) {
-            id = intent.getStringExtra("id")
-            role = intent.getStringExtra("role")
-            title = intent.getStringExtra("title")
+            id = intent.getBundleExtra("data").getString("id", "-1")
+            role = intent.getBundleExtra("data").getString("role", "")
+            title = intent.getBundleExtra("data").getString("title", "")
+            price = intent.getBundleExtra("data").getString("price", "")
         }
+        tv_subject_name.text = title
         iv_back.setOnClickListener {
             finish()
         }
         tv_suscribe.setOnClickListener {
-            mAccountPresenter.coinList(id)
-            showFirst()
+            if (id == "-1") {
+                val obj = SPUtil.getObj("userinfo", UserInfo::class.java)
+                SubscribeSuccessActivity.start(this, title, obj.nickname, DateUtils.getDay(30))
+            } else {
+                mCoinPresenter.coinList(id)
+                showFirst()
+            }
         }
+        initStage()
+    }
+
+    private fun initStage() {
+        when (id) {
+            "-1" -> {
+                tv_price_name.visibility = View.GONE
+                ll_agree.visibility = View.GONE
+                llFans.visibility = View.INVISIBLE
+                tv_price.text = getString(R.string.text_price_free)
+                iv_follow_status.visibility = View.GONE
+            }
+            else -> {
+                tv_price_name.visibility = View.VISIBLE
+                ll_agree.visibility = View.VISIBLE
+                llFans.visibility = View.VISIBLE
+                iv_follow_status.visibility = View.VISIBLE
+                tv_price.text = "$$price"
+            }
+        }
+
     }
 
     override fun start() {
@@ -136,20 +168,8 @@ class CategryDescActivity : BaseActivity(), WaletContract.myaccountView {
         bottomSheetDialog.show()
     }
 
-    override fun myaccount(msg: MyAccount) {
-        TODO("Not yet implemented")
-    }
-
     override fun coinList(msg: BindCoinHouse) {
         mCoinAdapter!!.setNewData(msg.exchanges)
         mBindCoinHouse = msg.symbols
-    }
-
-    override fun getPrice(msg: ChooseTime) {
-        TODO("Not yet implemented")
-    }
-
-    override fun setFollow(msg: String) {
-        TODO("Not yet implemented")
     }
 }

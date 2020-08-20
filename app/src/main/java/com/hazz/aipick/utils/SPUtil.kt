@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.util.ArrayMap
 import com.google.gson.Gson
 import com.hazz.aipick.LanguageType
+import com.hazz.aipick.mvp.model.bean.UserInfo
 import io.reactivex.schedulers.Schedulers
 import java.io.File
 
@@ -25,6 +26,10 @@ object SPUtil {
     private val TOKEN = "token"
     fun setRate(rate: String) {
         putString(DAYLY_RATE, rate)
+    }
+
+    fun getToken(): String {
+        return getString(TOKEN)
     }
 
     fun setToken(token: String) {
@@ -141,6 +146,10 @@ object SPUtil {
     fun getLanguage(context: Context): String? {
         val sharedPreferences = context.getSharedPreferences(APP_CONFIG, Context.MODE_PRIVATE)
         return sharedPreferences.getString("lang", LanguageType.LG_SIMPLIFIED_CHINESE.value)
+    }
+
+    fun getUser(): UserInfo {
+        return getObj("userinfo", UserInfo::class.java)
     }
 
 }

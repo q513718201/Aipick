@@ -27,6 +27,4 @@ public class UserSubscribeBean {
         bean.follow_at = "2020-01-10 12:00:00";
         return bean;
     }
-
-
 }

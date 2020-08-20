@@ -17,104 +17,101 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/cl_finish"
-            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/tv1"
-                android:layout_marginTop="100dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/cardciew"
+                android:layout_marginTop="100dp"
                 android:text="@string/tixian_apply"
                 android:textColor="@color/color_home"
                 android:textSize="16sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
                 android:id="@+id/tv2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
                 android:text="@string/tixian_amount"
                 android:textColor="@color/color_home"
                 android:textSize="12sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/tv1" />
+
             <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
                 android:id="@+id/tv_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv1"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="40dp"
                 android:text="￥000"
                 android:textColor="@color/color_home"
                 android:textSize="12sp"
                 app:layout_constraintLeft_toRightOf="@+id/tv2"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/tv1" />
+
             <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
                 android:id="@+id/tv3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/tixian_amount"
                 android:textColor="@color/color_home"
                 android:textSize="12sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/tv2" />
+
             <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
                 android:id="@+id/tv_bank"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv2"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:text="招商"
                 android:textColor="@color/color_home"
                 android:textSize="12sp"
                 app:layout_constraintLeft_toRightOf="@+id/tv3"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/tv2" />
+
             <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
                 android:id="@+id/tv4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/tixian_fuwufei"
                 android:textColor="@color/color_home"
                 android:textSize="12sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/tv3" />
+
             <TextView
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
                 android:id="@+id/tv_fuwu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tv3"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
                 android:text="￥000"
                 android:textColor="@color/color_home"
                 android:textSize="12sp"
                 app:layout_constraintLeft_toRightOf="@+id/tv4"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/tv3" />
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/ll_tiqu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-         >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -124,6 +121,7 @@
                 android:padding="20dp">
 
                 <TextView
+                    android:id="@+id/tv_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tixian_title"
@@ -134,7 +132,7 @@
 
             <TextView
 
-                android:id="@+id/mine_incoming"
+                android:id="@+id/tv_bank_card"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_below="@+id/cardciew"
@@ -144,6 +142,11 @@
                 android:text="@string/not_bind_card"
                 android:textColor="@color/color_home"
                 android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -168,19 +171,23 @@
                     android:layout_centerVertical="true"
                     android:padding="15dp"
                     android:text="$"
-                    android:textColor="@color/color_home"
+                    android:textColor="@color/white"
                     android:textSize="16sp"
 
                     />
 
                 <EditText
-                    android:textColor="@color/color_white"
                     android:id="@+id/et_amount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv"
-                    android:background="@null" />
+                    android:background="@null"
+                    android:hint="@string/hint_withdraw_input"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/color_white"
+                    android:textColorHint="@color/text_color" />
+
 
                 <TextView
                     android:id="@+id/tv_all"
@@ -196,6 +203,11 @@
                     />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/divider" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -205,16 +217,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="@string/shouxufei"
                     android:textColor="@color/color_home"
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/tv_fee"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
-                    android:text="0.1%"
                     android:textColor="@color/color_home"
+                    android:textSize="16sp" />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:id="@+id/tv_can_withdraw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/color_pink_money"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>

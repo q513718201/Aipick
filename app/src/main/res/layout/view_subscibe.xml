@@ -15,6 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/dp_10"
+        android:paddingBottom="@dimen/dp_10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -41,8 +42,7 @@
         android:id="@+id/line"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_marginTop="@dimen/dp_10"
-        android:background="@color/white"
+        android:background="@color/divider"
         app:layout_constraintTop_toBottomOf="@+id/ll_agree"
         tools:layout_editor_absoluteX="16dp" />
 
@@ -61,6 +61,7 @@
         app:layout_constraintVertical_bias="0.499" />
 
     <TextView
+        android:id="@+id/tv_price_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"

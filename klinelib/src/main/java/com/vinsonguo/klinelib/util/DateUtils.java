@@ -2,7 +2,7 @@ package com.vinsonguo.klinelib.util;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -45,6 +45,18 @@ public class DateUtils {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         dateFormat.setTimeZone(TimeZone.getTimeZone("gmt"));
         return dateFormat.format(time);
+    }
+
+    /**
+     * 获取当前时间days天的时间
+     *
+     * @param days
+     * @return
+     */
+    public static String getDay(int days) {
+        Calendar instance = Calendar.getInstance();
+        instance.add(Calendar.DAY_OF_MONTH, days);
+        return formatDate(instance.getTimeInMillis());
     }
 
 

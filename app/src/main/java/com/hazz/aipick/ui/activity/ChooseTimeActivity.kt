@@ -25,14 +25,18 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeCont
 
     }
 
+    override fun moniaccount(msg: MoniAccount) {
+    }
+
     override fun coinList(msg: BindCoinHouse) {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun getPrice(msg: ChooseTime) {
-        tv1.text = "$ " + msg.days30
-        tv2.text = "$ " + msg.days90
-        tv3.text = "$ " + msg.days180
+        tv1.text = "$ ${msg.days30}"
+        tv2.text = "$ ${msg.days90}"
+        tv3.text = "$ ${msg.days180}"
     }
 
     private var mPayPresenter: PayPresenter = PayPresenter(this)
@@ -114,7 +118,6 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeCont
     }
 
     override fun payResult(msg: PayResultMine) {
-        TODO("Not yet implemented")
     }
 
     override fun createId(msg: CreateId) {
@@ -131,7 +134,6 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeCont
     }
 
     override fun paySucceed(msg: PaySucceed) {
-        TODO("Not yet implemented")
     }
 
 

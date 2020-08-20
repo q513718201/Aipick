@@ -169,9 +169,9 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
             }
             v?.id == R.id.coin_house_order -> startActivity(Intent(activity, ExchangeOrderActivity::class.java))
             v?.id == R.id.tv_caopan -> startActivity(Intent(activity, MonicpActivity::class.java))
-            v?.id == R.id.tv_moni -> context?.let { RebotCategryActivity.start(it, "", "", "") }
+            v?.id == R.id.tv_moni -> context?.let { RebotCategryActivity.start(it, "-1", "bot", "0") }
             v?.id == R.id.tv_wallet -> startActivity(Intent(activity, WaletActivity::class.java))
-            v?.id == R.id.tv_account -> startActivity(Intent(activity, MyAccountActivity::class.java).putExtra("id", uid))
+            v?.id == R.id.tv_account -> MyAccountActivity.start(context!!, uid, "bot", "0", "mine")
             v?.id == R.id.invite_friend -> startActivity(Intent(activity, InviteFriendsActivity::class.java))
             v?.id == R.id.mine_trader -> {
                 when (currentType) {

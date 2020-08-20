@@ -93,6 +93,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/llFans"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="17dp">
@@ -325,11 +326,7 @@
                 android:text="@string/category_desc"
                 android:textColor="@color/color_white"
                 android:textSize="15sp" />
-
-
         </RelativeLayout>
-
-
     </android.support.v4.widget.NestedScrollView>
 
     <include

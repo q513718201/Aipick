@@ -3,36 +3,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.hazz.aipick">
 
+    <uses-sdk tools:overrideLibrary="io.crossbar.autobahn" />
     <!-- 获取GSM网络信息状态，如当前的网络连接是否有效 -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- 允许访问Wi-Fi网络状态信息 -->
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <!-- 允许获取Wi-Fi网络状态改变信息 -->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <!-- 访问网络 -->
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- 读取手机状态 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 允许访问Wi-Fi网络状态信息 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 允许获取Wi-Fi网络状态改变信息 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 访问网络 -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- 读取手机状态 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-    <!-- SD 卡读写权限 -->
+    <uses-permission android:name="android.permission.READ_LOGS" /> <!-- SD 卡读写权限 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-sdk tools:overrideLibrary="io.crossbar.autobahn"/>
+
     <application
-        android:name="com.hazz.aipick.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
+        android:appComponentFactory="11"
         android:icon="@mipmap/aipick"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/aipick"
-        android:supportsRtl="true"
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_config"
+        android:roundIcon="@mipmap/aipick"
+        android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
-        tools:ignore="GoogleAppIndexingWarning">
-
-
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:appComponentFactory">
+        <activity android:name=".ui.activity.SubscribeSuccessActivity"></activity>
         <activity
-            android:name="com.hazz.aipick.ui.activity.SplashActivity"
+            android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar.FullScreen">
             <intent-filter>
@@ -41,114 +38,70 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <receiver android:name=".socket.NetStatusReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
-        </receiver>
-
-        <!-- 主页面 -->
+        </receiver> <!-- 主页面 -->
         <activity
-            android:name="com.hazz.aipick.ui.activity.MainActivityNew"
-            android:screenOrientation="portrait" />
-
-        <!-- 关于 -->
+            android:name=".ui.activity.MainActivityNew"
+            android:screenOrientation="portrait" /> <!-- 关于 -->
         <activity
-            android:name="com.hazz.aipick.ui.activity.AboutActivity"
+            android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name="com.hazz.aipick.ui.activity.LoginActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.RegistActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.CountryActivity"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.RebotCategryActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.PayActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.SettingFollowedActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.SearchHistoryActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.CoinDescActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.SubscribeDescActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.MineSubscribeActivity"
-            />
-
-        <activity android:name="com.hazz.aipick.ui.activity.WaletActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.TixianRecordActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.MyIncomingActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.MessageActivity"
-            />
-
-        <activity android:name="com.hazz.aipick.ui.activity.HelpAndFeedActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.CoinHouseActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.CoinHouseDescActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.CollectionActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.SettingActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.TixianActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.SafeCenterActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.PhoneModifyActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.SetTradePwdActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.PwdModifyActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.BindBankActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.SetTraderActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.MyAccountActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.GorgetPwdActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.ForgetResetPwdActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.ChooseTimeActivity"
-        />
-        <activity android:name="com.hazz.aipick.ui.activity.InviteFriendsActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.ApplyTraderActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.ExchangeOrderActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.TiaokuanActivity"
-            />
-
-        <activity android:name="com.hazz.aipick.ui.activity.MsgDescActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.CategryDescActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.GuideActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.MonicpActivity"
-            />
-        <activity android:name="com.hazz.aipick.ui.activity.CoinDescBuyOrSellActivity"
-            />
-        <activity android:name=".ui.activity.TraderSetActivity"/>
-        <activity android:name=".ui.activity.CoinBuyAndSellActivity"/>
+        <activity
+            android:name=".ui.activity.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.RegistActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.CountryActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.RebotCategryActivity" />
+        <activity android:name=".ui.activity.PayActivity" />
+        <activity android:name=".ui.activity.SettingFollowedActivity" />
+        <activity android:name=".ui.activity.SearchHistoryActivity" />
+        <activity android:name=".ui.activity.CoinDescActivity" />
+        <activity android:name=".ui.activity.SubscribeDescActivity" />
+        <activity android:name=".ui.activity.MineSubscribeActivity" />
+        <activity android:name=".ui.activity.WaletActivity" />
+        <activity android:name=".ui.activity.TixianRecordActivity" />
+        <activity android:name=".ui.activity.MyIncomingActivity" />
+        <activity android:name=".ui.activity.MessageActivity" />
+        <activity android:name=".ui.activity.HelpAndFeedActivity" />
+        <activity android:name=".ui.activity.CoinHouseActivity" />
+        <activity android:name=".ui.activity.CoinHouseDescActivity" />
+        <activity android:name=".ui.activity.CollectionActivity" />
+        <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.TixianActivity" />
+        <activity android:name=".ui.activity.SafeCenterActivity" />
+        <activity android:name=".ui.activity.PhoneModifyActivity" />
+        <activity android:name=".ui.activity.SetTradePwdActivity" />
+        <activity android:name=".ui.activity.PwdModifyActivity" />
+        <activity android:name=".ui.activity.BindBankActivity" />
+        <activity android:name=".ui.activity.SetTraderActivity" />
+        <activity android:name=".ui.activity.MyAccountActivity" />
+        <activity android:name=".ui.activity.GorgetPwdActivity" />
+        <activity android:name=".ui.activity.ForgetResetPwdActivity" />
+        <activity android:name=".ui.activity.ChooseTimeActivity" />
+        <activity android:name=".ui.activity.InviteFriendsActivity" />
+        <activity android:name=".ui.activity.ApplyTraderActivity" />
+        <activity android:name=".ui.activity.ExchangeOrderActivity" />
+        <activity android:name=".ui.activity.TiaokuanActivity" />
+        <activity android:name=".ui.activity.MsgDescActivity" />
+        <activity android:name=".ui.activity.CategryDescActivity" />
+        <activity android:name=".ui.activity.GuideActivity" />
+        <activity android:name=".ui.activity.MonicpActivity" />
+        <activity android:name=".ui.activity.CoinDescBuyOrSellActivity" />
+        <activity android:name=".ui.activity.TraderSetActivity" />
+        <activity android:name=".ui.activity.CoinBuyAndSellActivity" />
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
             android:exported="false"
             android:screenOrientation="behind" />
-
     </application>
 
 </manifest>

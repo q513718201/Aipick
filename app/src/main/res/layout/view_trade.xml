@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_dark"
+    android:padding="15dp">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guid_middle_line"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.57" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toStartOf="@id/guid_middle_line"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioGroup
+            android:id="@+id/buy_sell_selector"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/buy_option"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="6dp"
+                android:layout_weight="1"
+                android:background="@drawable/buy_option_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/buy"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:theme="@style/Widget.AppCompat.Button.Borderless" />
+
+            <RadioButton
+                android:id="@+id/sell_option"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/sell_option_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/sell"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+        </RadioGroup>
+
+        <com.hazz.aipick.widget.ByexOptionSwitcher
+            android:id="@+id/buy_type"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal" />
+
+        <TextView
+            android:id="@+id/market_price_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/market_price_info"
+            android:textColor="@color/text_color_edit_hint"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+
+        <com.hazz.aipick.widget.TokenPriceNumberSelector
+            android:id="@+id/token_price_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:type_trade="price" />
+
+        <TextView
+            android:id="@+id/currency_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="≈¥--"
+            android:textColor="@color/text_color_edit_hint"
+            android:textSize="12sp" />
+
+        <com.hazz.aipick.widget.TokenPriceNumberSelector
+            android:id="@+id/token_num_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:type_trade="amount" />
+
+        <com.hazz.aipick.widget.SingleOptionSelector
+            android:id="@+id/percent_selector"
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal" />
+
+        <RelativeLayout
+            android:id="@+id/available_balance_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/can_use"
+                android:textColor="@color/text_color_edit_hint"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/available_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="385 USDT"
+                android:textColor="@color/text_color_edit_hint"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/available_buy_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/can_buy"
+                android:textColor="@color/text_color_edit_hint"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/available_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="385 BTC"
+                android:textColor="@color/text_color_edit_hint"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sum_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/sum_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="可买"
+                android:textColor="@color/text_color_edit_hint"
+                android:textSize="12sp" />
+
+
+            <TextView
+                android:id="@+id/sum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="385 BTC"
+                android:textColor="@color/text_color_edit_hint"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_buy_sell"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bg_green_corners"
+            android:gravity="center"
+            android:text="买入BTC"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/depth_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guid_middle_line"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="价格(WETH)"
+            android:textColor="@color/text_color_hint"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/quantity_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="数量(LRC)"
+            android:textColor="@color/text_color_hint"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+
+    <ListView
+        android:id="@+id/sell_list"
+        android:layout_width="0dp"
+        android:layout_height="128dp"
+        android:divider="@null"
+        android:scrollbars="none"
+        android:stackFromBottom="true"
+        android:transcriptMode="alwaysScroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guid_middle_line"
+        app:layout_constraintTop_toBottomOf="@id/depth_title" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guid_middle_line"
+        app:layout_constraintTop_toBottomOf="@id/sell_list" />
+
+    <ListView
+        android:id="@+id/buy_list"
+        android:layout_width="0dp"
+        android:layout_height="128dp"
+        android:layout_marginTop="8dp"
+        android:divider="@null"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guid_middle_line"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
+
+
+</android.support.constraint.ConstraintLayout>
+

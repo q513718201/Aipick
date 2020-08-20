@@ -40,9 +40,13 @@ interface WaletContract {
     interface myaccountView: BaseView {
 
         fun myaccount(msg:MyAccount)
+        fun moniaccount(msg:MoniAccount)
         fun coinList(msg:BindCoinHouse)
         fun getPrice(msg:ChooseTime)
         fun setFollow(msg:String)
+    }
+    interface CoinView:BaseView{
+        fun coinList(msg:BindCoinHouse)
     }
 
     interface orderView: BaseView {

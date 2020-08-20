@@ -91,4 +91,13 @@
         <item name="android:button">@null</item>
         <item name="android:gravity">center</item>
     </style>
+
+    <style name="CheckBoxTheme" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/text_color_hint</item>
+    </style>
+    <style name="PrimaryButton" parent="Theme.AppCompat">
+        <item name="colorButtonNormal">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorPrimary</item>
+    </style>
 </resources>

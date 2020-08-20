@@ -169,9 +169,9 @@ public class WsManager {
                 }
             }
 
-            KlineBean klineBean1 = gson.fromJson(s, KlineBean.class);
-            if (klineBean1 != null) {
-                RxBus.get().send(klineBean1);
+            KLineBean KLineBean1 = gson.fromJson(s, KLineBean.class);
+            if (KLineBean1 != null) {
+                RxBus.get().send(KLineBean1);
             }
 
 
@@ -280,7 +280,7 @@ public class WsManager {
 
     public void requestBbo(String market) {
         Gson mGson = new Gson();
-        KbodyDetail kBody = new KbodyDetail();
+        KLineBodyDetail kBody = new KLineBodyDetail();
         kBody.sub = market;
         kBody.id = "id1";
         String message = mGson.toJson(kBody);
@@ -294,7 +294,7 @@ public class WsManager {
     }
     public void requestTrade(String sub) {
         Gson mGson = new Gson();
-        KbodyDetail kBody = new KbodyDetail();
+        KLineBodyDetail kBody = new KLineBodyDetail();
         kBody.sub = sub;
         kBody.id = "id1";
         String message = mGson.toJson(kBody);
@@ -310,7 +310,7 @@ public class WsManager {
 
     public void requestK(String req) {
         Gson mGson = new Gson();
-        Kbody kBody = new Kbody();
+        KLineBody kBody = new KLineBody();
         kBody.req = req;
         kBody.id = "id10";
         String message = mGson.toJson(kBody);
@@ -325,7 +325,7 @@ public class WsManager {
 
     public void requestCoinDetail(String sub, String type) {
         currentType = type;
-        KbodyDetail kBody = new KbodyDetail();
+        KLineBodyDetail kBody = new KLineBodyDetail();
         kBody.sub = sub;
         kBody.id = "id1";
         String message = gson.toJson(kBody);

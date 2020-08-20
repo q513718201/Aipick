@@ -207,6 +207,12 @@ interface AiPickService {
     @POST("user/profile")
     fun myAccount(@Body request: RequestBody): Observable<BaseResult<MyAccount>>
 
+    /**
+     * 模拟跟随-数据概览
+     */
+    @GET("fake/profile")
+    fun moniAccount(): Observable<BaseResult<MoniAccount>>
+
 
     /**
      * 机器人策略支持的交易所列表
@@ -249,6 +255,9 @@ interface AiPickService {
     @POST("user/subfollows")
     fun userFollows(@Body request: RequestBody): Observable<BaseResult<List<UserSubscribeBean>>>
 
+    @POST("fake/subfollows")
+    fun fakeFollows(): Observable<BaseResult<List<UserSubscribeBean>>>
+
     /**
      * 订阅详情
      */
@@ -273,6 +282,8 @@ interface AiPickService {
     @POST("user/orders")
     fun getOrder(@Body request: RequestBody): Observable<BaseResult<Order>>
 
+    @POST("fake/orders")
+    fun getFakeOrder(@Body request: RequestBody): Observable<BaseResult<Order>>
 
     /**
      * 银行卡详情
@@ -287,19 +298,28 @@ interface AiPickService {
     @POST("simulate/trade")
     fun monicaopan(@Body request: RequestBody): Observable<BaseResult<Any>>
 
+    /**
+     *用户主页余额买卖
+     */
+    @POST("user/buy_sell")
+    fun userIncoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
 
     /**
      *模拟跟随-交易分析盈亏买卖
      */
     @POST("fake/buy_sell")
-    fun incoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
+    fun botIncoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
+    /**
+     *模拟跟随-交易分析收益
+     */
+    @POST("user/trade/analysis")
+    fun userTradeIncoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
 
     /**
      *模拟跟随-交易分析收益
      */
-
     @POST("fake/trade/analysis")
-    fun tradeIncoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
+    fun botTradeIncoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
 
     /**
      * 获取汇率

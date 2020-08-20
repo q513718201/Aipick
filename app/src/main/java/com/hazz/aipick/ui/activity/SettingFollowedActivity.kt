@@ -9,10 +9,7 @@ import android.widget.RadioGroup
 import com.google.gson.Gson
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
-import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.BindCoinHouse
-import com.hazz.aipick.mvp.model.bean.ChooseTime
-import com.hazz.aipick.mvp.model.bean.MyAccount
 import com.hazz.aipick.utils.BigDecimalUtil
 import com.hazz.aipick.utils.GsonUtil
 import com.hazz.aipick.utils.ToastUtils
@@ -20,21 +17,7 @@ import com.hazz.aipick.utils.ToolBarCustom
 import kotlinx.android.synthetic.main.activity_setting_follow.*
 
 
-class SettingFollowedActivity : BaseActivity(), WaletContract.myaccountView, RadioGroup.OnCheckedChangeListener {
-    override fun setFollow(msg: String) {
-        ToastUtils.showToast(this, msg)
-        startActivity(Intent(this, ChooseTimeActivity::class.java)
-                .putExtra("id", id)
-                .putExtra("price", price)
-                .putExtra("bean", bean)
-                .putExtra("name", currentNmae)
-                .putExtra("switch", currentSwitch)
-                .putExtra("followType", followType)
-                .putExtra("followFactor", tv_num.text.toString())
-                .putExtra("role", role)
-        )
-    }
-
+class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListener {
 
     override fun onCheckedChanged(group: RadioGroup?, checkedId: Int) {
         when (followType) {
@@ -61,17 +44,6 @@ class SettingFollowedActivity : BaseActivity(), WaletContract.myaccountView, Rad
             }
         }
     }
-
-    override fun myaccount(msg: MyAccount) {
-
-    }
-
-    override fun coinList(msg: BindCoinHouse) {
-    }
-
-    override fun getPrice(msg: ChooseTime) {
-    }
-
 
     override fun layoutId(): Int = R.layout.activity_setting_follow
 

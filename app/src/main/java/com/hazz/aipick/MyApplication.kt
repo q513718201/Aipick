@@ -3,6 +3,7 @@ package com.hazz.aipick
 import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import com.hazz.aipick.socket.ForegroundCallbacks
@@ -74,7 +75,6 @@ class MyApplication : Application(){
         })
     }
 
-
     private val mActivityLifecycleCallbacks = object : ActivityLifecycleCallbacks {
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
 
@@ -101,6 +101,7 @@ class MyApplication : Application(){
         override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
 
         }
+
 
         override fun onActivityDestroyed(activity: Activity) {
             Log.d(TAG, "onDestroy: " + activity.componentName.className)

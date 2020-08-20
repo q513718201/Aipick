@@ -38,4 +38,24 @@ class UserSubscribePresenter(view: CollectionContract.userSubscribeView) : BaseP
 
         }, true)
     }
+
+    /**
+     *首页用户订阅
+     */
+    fun fakeFollows() {
+
+
+        val login = RetrofitManager.service.fakeFollows()
+
+        doRequest(login, object : Callback<List<UserSubscribeBean>>(view) {
+            override fun failed(tBaseResult: BaseResult<List<UserSubscribeBean>>): Boolean {
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<List<UserSubscribeBean>>) {
+                view.userSubscribe(tBaseResult.data!!)
+            }
+
+        }, true)
+    }
 }

@@ -162,7 +162,7 @@
     <string name="about_us">关于我们</string>
     <string name="clear_huancun">清除缓存</string>
     <string name="logout">退出登录</string>
-    <string name="tixian_title">每日限提$1000，每单收取0.1%手续费。\n 提现申请时间：工作日，上午9点~下午6点。</string>
+    <string name="tixian_title">每日限提$%s，每单收取%s手续费。\n 提现申请时间：工作日，%s~%s。</string>
     <string name="not_bind_card">未绑定银行卡</string>
     <string name="tixian_amount">提现金额</string>
     <string name="all_tixian">全部提现</string>
@@ -360,11 +360,49 @@
     <string name="hint_register_empty_email">请输入邮箱地址</string>
     <string name="hint_register_invalid_email">请输入正确的邮箱地址</string>
     <string name="hint_register_no_checkcode">请获取验证码</string>
+    <string name="hint_withdraw_input">请输入提现金额</string>
 
     <string name="hint_coin_no_market_bind">请选择投放策略平台</string>
     <string name="text_buy_in">买入</string>
     <string name="text_sell_out">卖出</string>
     <string name="text_img_head">添加图片（%d/4）</string>
+    <string name="text_price_free">免费</string>
+    <string name="text_finish">完成</string>
+
+    <string name="market_price_info">参考市场价格 %s\n以市场成交价为准</string>
 
 
+    <string name="can_use">可用</string>
+    <string name="can_buy">可买入</string>
+
+    <string name="price_hint">价格(%s)</string>
+    <string name="num_hint">数量(%s)</string>
+
+    <string name="limit_buy">限价买入</string>
+    <string name="market_buy">市价买入</string>
+
+    <string name="limit_sell">限价卖出</string>
+    <string name="market_sell">市价卖出</string>
+
+
+    <string name="buy_token">买入%s</string>
+    <string name="sell_token">卖出%s</string>
+
+
+    <string name="sell_all">卖出总额</string>
+    <string name="buy_all">买入总额</string>
+
+    <string name="no_found_funds">未获取到余额</string>
+    <string name="not_sufficient_fund">余额不足</string>
+
+    <string name="limit_order_buy">限价单买入</string>
+    <string name="trade_fee">交易手续费</string>
+    <string name="do_not_tip">下次不再提示</string>
+    <string name="confirm_place_order">确认下单</string>
+    <string name="limit_order">限价单</string>
+    <string name="market_order">市价单</string>
+    <string name="buy_amounts">买入数量</string>
+    <string name="sell_amounts">卖出数量</string>
+    <string name="please_input_price">请输入价格</string>
+    <string name="please_input_amount">请输入数量</string>
 </resources>

@@ -15,24 +15,26 @@ import com.hazz.aipick.mvp.model.bean.Home
 import com.hazz.aipick.mvp.model.bean.RateBean
 import com.hazz.aipick.mvp.model.bean.ShaixuanBean
 import com.hazz.aipick.mvp.presenter.HomePresenter
+import com.hazz.aipick.ui.activity.RebotCategryActivity
 import com.hazz.aipick.ui.adapter.HomeAdapter
 import com.hazz.aipick.ui.adapter.ShaiXuanAdapter
 import com.hazz.aipick.ui.adapter.ShaiXuanAdapter2
 import com.hazz.aipick.ui.adapter.ShaiXuanAdapter3
+import com.hazz.aipick.ui.pop.HomePop
 import com.hazz.aipick.utils.DpUtils
 import com.hazz.aipick.utils.SPUtil
+import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
 import com.scwang.smartrefresh.header.MaterialHeader
 import kotlinx.android.synthetic.main.dialog_choose.view.*
 import kotlinx.android.synthetic.main.dialog_shaixuan.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
-import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
 
 
 @Suppress("DEPRECATION")
-class HomeFragment : BaseFragment(), HomeContract.homeView {
+class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListener {
 
 
     private var homeBean: Home? = null
@@ -54,7 +56,7 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
             tv_coin_name?.text = if (it.coin_name == null) getString(R.string.app_name) else it.coin_name
 
             tv_raise?.text = "${it.rate}"
-            tv_pullback?.text = getString(R.string.ten_rate, it.pullback)
+            tv_pullback?.text = "${getString(R.string.ten_rate, it.pullback)}%"
             price?.text = getString(R.string.home_price, it.price)
         }
     }
@@ -63,12 +65,8 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
         bean.us_rmb?.let { SPUtil.setRate(it) }
     }
 
-
-//    private val mPresenter by lazy { HomePresenter() }
-
     private var mTitle: String? = null
 
-    private var num: Int = 1
 
     private var mHomeAdapter: HomeAdapter? = null
     private var mShaiXuanAdapter: ShaiXuanAdapter? = null
@@ -109,12 +107,6 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
     private val linearLayoutManager by lazy {
         LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     }
-
-
-    private val simpleDateFormat by lazy {
-        SimpleDateFormat("- MMM. dd, 'Brunch' -", Locale.ENGLISH)
-    }
-
 
     override fun getLayoutId(): Int = R.layout.fragment_home
 
@@ -250,6 +242,27 @@ class HomeFragment : BaseFragment(), HomeContract.homeView {
 
 
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var isfirstMine = SPUtil.getBoolean("isfirstHome")
+        activity?.let {
+            if (isfirstMine) {
+                var pop = HomePop(it)
+                pop.setOutSideDismiss(false)
+                pop.setPopupWindowFullScreen(true)
+                pop.setBlurBackgroundEnable(true)
+                pop.mOnClickListener = this
+                pop.showPopupWindow()
+            }
+        }
+    }
+
+    //弹窗点击之后的事件
+    override fun onClick(v: View) {
+        RebotCategryActivity.start(context!!, "-1", "bot", "")
+        ToastUtils.showToast(activity, "ni xiang gansha!")
     }
 
     override fun lazyLoad() {

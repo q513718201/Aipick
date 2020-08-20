@@ -6,13 +6,16 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
+import com.hazz.aipick.events.ChangeEvent
 import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.Order
 import com.hazz.aipick.mvp.presenter.OrderPresenter
+import com.hazz.aipick.ui.activity.MyAccountActivity
 import com.hazz.aipick.ui.adapter.OrderAdapter
+import com.hazz.aipick.utils.BigDecimalUtil
+import com.hazz.aipick.utils.RxBus
 import kotlinx.android.synthetic.main.dialog_buy_sell.view.*
 import kotlinx.android.synthetic.main.fragment_order.*
-import java.util.*
 
 
 @Suppress("DEPRECATION")
@@ -21,12 +24,12 @@ class OrderFragment : BaseFragment(), WaletContract.orderView {
     override fun getOrder(msg: Order) {
 
         mOrderAdapter!!.setNewData(msg.list)
-        tv1.text = msg.total_amount
-        tv2.text = msg.total_times
-        tv3.text = msg.total_gain
+        tv1.text = BigDecimalUtil.format(msg.total_amount, 2)
+        tv2.text = BigDecimalUtil.format(msg.total_times, 0)
+        tv3.text = BigDecimalUtil.format(msg.total_gain, 2)
     }
 
-    private var id: String? = ""
+    private var id: String? = "-1"
     private var bottomSheet: BottomSheetDialog? = null
     private var currentType = ""
     private var mOrderPresenter: OrderPresenter = OrderPresenter(this)
@@ -85,16 +88,27 @@ class OrderFragment : BaseFragment(), WaletContract.orderView {
             //设置布局背景透明
             viewById?.setBackgroundColor(resources.getColor(android.R.color.transparent))
             bottomSheet!!.show()
+            RxBus.get().observerOnMain(this, ChangeEvent::class.java) {
+                mOrderPresenter.getOrder(id!!, currentType, page, 10, it.isDemo)
+            }
         }
     }
 
 
     private fun getDataSource() {
-        mOrderPresenter.getOrder(id!!, currentType, page, 10, "0")
+        if (id == "-1") {
+            mOrderPresenter.getFakeOrder(currentType, page, 10)
+        } else {
+            mOrderPresenter.getOrder(id!!, currentType, page, 10, (activity as MyAccountActivity).isDemo.toString())
+        }
     }
 
     override fun lazyLoad() {
-        mOrderPresenter.getOrder(id!!, "", page, 10, "0")
+        if (id == "-1") {
+            mOrderPresenter.getFakeOrder("", page, 10)
+        } else {
+            mOrderPresenter.getOrder(id!!, "", page, 10, (activity as MyAccountActivity).isDemo.toString())
+        }
     }
 
 

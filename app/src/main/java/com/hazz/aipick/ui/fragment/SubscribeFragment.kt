@@ -69,7 +69,12 @@ class SubscribeFragment : BaseFragment(), CollectionContract.userSubscribeView {
 
 
     private fun getData() {
-        mSubscribePresenter.userFollows(id!!, page, 10, 0)
+        if (id == "-1") {
+            mSubscribePresenter.fakeFollows()
+        } else {
+            mSubscribePresenter.userFollows(id!!, page, 10, 0)
+        }
+
     }
 
     override fun lazyLoad() {

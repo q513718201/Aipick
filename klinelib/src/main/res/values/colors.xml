@@ -3,6 +3,8 @@
     <color name="main_color_red">#ff3b30</color>
     <color name="main_color_green">#4cd964</color>
 
+    <color name="transparent_red">#33ef295b</color>
+    <color name="transparent_green">#33159d62</color>
 
     <!--图表-->
 

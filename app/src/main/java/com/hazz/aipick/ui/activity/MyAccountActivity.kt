@@ -1,6 +1,7 @@
 package com.hazz.aipick.ui.activity
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.support.design.widget.BottomSheetDialog
 import android.support.v4.app.Fragment
@@ -8,11 +9,14 @@ import android.support.v7.widget.GridLayoutManager
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import com.bigkoo.alertview.AlertView
+import com.bigkoo.alertview.OnItemClickListener
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
+import com.hazz.aipick.events.ChangeEvent
 import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.*
@@ -25,6 +29,7 @@ import com.hazz.aipick.ui.fragment.OrderFragment
 import com.hazz.aipick.ui.fragment.SubscribeFragment
 import com.hazz.aipick.ui.fragment.TransactionAnalysisFragment
 import com.hazz.aipick.utils.GsonUtil
+import com.hazz.aipick.utils.RxBus
 import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
@@ -32,8 +37,21 @@ import kotlinx.android.synthetic.main.activity_my_account.*
 import kotlinx.android.synthetic.main.dialog_coin.view.*
 
 
-class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, CollectionContract.collectionView {
+class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, CollectionContract.collectionView, OnItemClickListener {
 
+    companion object {
+        /**
+         * form 从哪里来 home 来自主页，mine 个人中心
+         */
+        fun start(context: Context, id: String, role: String, price: String, from: String) {
+            val intent = Intent(context, MyAccountActivity::class.java)
+            intent.putExtra("id", id)
+            intent.putExtra("role", role)
+            intent.putExtra("price", price)
+            intent.putExtra("from", from)
+            context.startActivity(intent)
+        }
+    }
 
     override fun getCollection(msg: List<Collection>) {
 
@@ -66,6 +84,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
     }
 
 
+    @SuppressLint("SetTextI18n")
     override fun myaccount(msg: MyAccount) {
         if (!TextUtils.isEmpty(msg.avatar)) {
             Glide.with(this).load(msg.avatar)
@@ -88,18 +107,22 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         tv_all_incoming.text = msg.total.toString()
         tv_ten.text = msg.pullback
         tv_shouyi.text = msg.self
+
+        tv_stage.text = "$currentName(跟随者)"
+    }
+
+    override fun moniaccount(msg: MoniAccount) {
     }
 
 
     override fun layoutId(): Int = R.layout.activity_my_account
-
+    private var from = ""
     override fun initData() {
-        id = intent.getBundleExtra("data").getString("id")
-        if (intent.getBundleExtra("data").getString("role") != null) {
-            role = intent.getBundleExtra("data").getString("role")
-        }
-        price = intent.getBundleExtra("data").getString("price")
-
+        if (intent.getStringExtra("id") != null)
+            id = intent.getStringExtra("id")
+        role = intent.getStringExtra("role")
+        price = intent.getStringExtra("price")
+        from = intent.getStringExtra("from")
         tv_price.text = "$$price"
         Log.d("junjun", role)
         val obj = SPUtil.getObj("userinfo", UserInfo::class.java)
@@ -107,13 +130,28 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
             rl.visibility = View.GONE
         }
         mAccountPresenter.myAccount(id)
+        initStage()
+    }
+
+    private fun initStage() {
+        when (from) {
+            "home" -> {
+                rl.visibility = View.VISIBLE
+                tv_guanzhu.visibility = View.VISIBLE
+            }
+            else -> {
+                rl.visibility = View.GONE
+                tv_guanzhu.visibility = View.GONE
+            }
+        }
+
     }
 
 
     private var mLastFragment: Fragment? = null
     private var mAccountPresenter: AccountPresenter = AccountPresenter(this)
     private var mCollectionPresenter: CollectionPresenter = CollectionPresenter(this)
-    private var id = ""
+    private var id = "-1"
     private var role = ""
     private var price = ""
     private var mCoinAdapter: CoinAdapter? = null
@@ -135,7 +173,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
             when (checkedId) {
                 R.id.rb1 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fl, TransactionAnalysisFragment()).commitAllowingStateLoss()
+                    transaction.replace(R.id.fl, TransactionAnalysisFragment.getInstance(id, role)).commitAllowingStateLoss()
                 }
                 R.id.rb2 -> {
                     val transaction = supportFragmentManager.beginTransaction()
@@ -162,13 +200,18 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         tv_guanzhu.setOnClickListener {
             mAccountPresenter.attention(id)
         }
-        iv_collection.setOnClickListener {
-            val split = coin.split(",")
-            if (split != null) {
-                mCollectionPresenter.addCollection("sentiment", id, split[0], split[1])
-            }
-
+        tv_stage.setOnClickListener {
+            AlertView.Builder()
+                    .setContext(this)
+                    .setStyle(AlertView.Style.ActionSheet)
+                    .setDestructive("模拟账户(跟随者)", "$currentName(跟随者)")
+                    .setCancelText(getString(R.string.cancel))
+                    .setOnItemClickListener(this)
+                    .build()
+                    .setCancelable(true)
+                    .show()
         }
+
     }
 
 
@@ -186,7 +229,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         val view = layoutInflater.inflate(R.layout.dialog_coin, null)
         mAccountPresenter.coinList(id)
         view.recycleview1.layoutManager = GridLayoutManager(this, 4)
-        view.iv_close.setOnClickListener{
+        view.iv_close.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
         mCoinAdapter = CoinAdapter(R.layout.item_text, null)
@@ -223,7 +266,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         // startActivity(Intent(this,PayActivity::class.java).putExtra("id",id).putExtra("price","0.01"))
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.dialog_coin, null)
-        view.iv_close.setOnClickListener{
+        view.iv_close.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
         view.recycleview1.layoutManager = GridLayoutManager(this, 4)
@@ -259,5 +302,22 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
         bottomSheetDialog.show()
     }
 
+    @SuppressLint("SetTextI18n")
+    override fun onItemClick(o: Any?, position: Int) {
+        when (position) {
+            1 -> {
+                isDemo = 0
+                tv_stage.text = "$currentName(跟随者)"
+                RxBus.get().send(ChangeEvent(isDemo))
+            }
+            0 -> {
+                isDemo = 1
+                tv_stage.text = "模拟账户(跟随者)"
+                RxBus.get().send(ChangeEvent(isDemo))
+            }
+        }
+    }
+
+    var isDemo = 0
 
 }

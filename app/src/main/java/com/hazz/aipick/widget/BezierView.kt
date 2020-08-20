@@ -17,7 +17,7 @@ class BezierView : View {
     private var mPathMeasure: PathMeasure? = null
     private val defYAxis = 500f
     private val defXAxis = 0f
-    private val lineWidth = 30f
+    private val lineWidth = 16f
 
     constructor(context: Context) : super(context) {
     }
@@ -97,7 +97,17 @@ class BezierView : View {
         path.close()
         val paint = Paint()
         paint.style = Paint.Style.FILL
-        paint.color = Color.parseColor("#1E2742")
+        paint.color = Color.parseColor("#FF0000")
+        var mLinearGradient = LinearGradient(
+                0f
+                , 0f
+                , defXAxis
+                , defYAxis
+                , intArrayOf(resources.getColor(R.color.colorPrimaryDarkTrans), resources.getColor(R.color.colorPrimaryDark))
+                , null
+                , Shader.TileMode.CLAMP
+        )
+        paint?.shader = mLinearGradient
         canvas.drawPath(path, paint)
     }
 
@@ -118,6 +128,7 @@ class BezierView : View {
      */
     private fun drawPoint(canvas: Canvas, pos: FloatArray) {
         val redPaint = Paint()
+        redPaint.strokeCap = Paint.Cap.ROUND
         redPaint.color = line_color
         redPaint.style = Paint.Style.FILL
 //        for (point in mPointList!!) {
@@ -125,7 +136,7 @@ class BezierView : View {
 //                break
 //            }
         canvas.drawCircle(mPointList!![mPointList!!.size - 1].x.toFloat(),
-                mPointList!![mPointList!!.size - 1].y.toFloat() - lineWidth / 2, lineWidth * 3 / 4, redPaint)
+                mPointList!![mPointList!!.size - 1].y.toFloat(), lineWidth * 3 / 4, redPaint)
 //        }
     }
 

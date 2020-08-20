@@ -2,7 +2,7 @@ package com.hazz.aipick.socket;
 
 import java.util.List;
 
-public class KlineBean {
+public class KLineBean {
 
     /**
      * id : id10

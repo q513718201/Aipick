@@ -1,6 +1,6 @@
 package com.hazz.aipick.socket;
 
-public class Kbody {
-    public String req;
+public class KLineBodyDetail {
+    public String sub;
     public String id;
 }

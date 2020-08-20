@@ -1,7 +1,6 @@
 package com.hazz.aipick.ui.adapter
 
 
-import android.content.Intent
 import android.os.Bundle
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -19,7 +18,7 @@ class HomeAdapter(layoutResId: Int, data: List<Home>?) : BaseQuickAdapter<Home, 
 
 
         helper.setText(R.id.tv_name, item.nickname)
-        helper.setText(R.id.tv_rate, mContext.getString(R.string.ten_rate, item.pullback))
+        helper.setText(R.id.tv_rate, "${mContext.getString(R.string.ten_rate, item.pullback)}%")
         helper.setText(R.id.tv_price, mContext.getString(R.string.home_price, item.price))
         helper.setText(R.id.totalRate, item.rate)
         helper.setImageResource(R.id.coinIcon, CoinManager.getCoinIcon(item.coin_name))
@@ -31,10 +30,10 @@ class HomeAdapter(layoutResId: Int, data: List<Home>?) : BaseQuickAdapter<Home, 
             bundle.putString("price", item.price)
             when (subeeType) {
                 "bot" -> {
-                    RebotCategryActivity.start(mContext,item.id,subeeType,item.price)
+                    RebotCategryActivity.start(mContext, item.id, subeeType, item.price)
                 }
                 "broker" -> {
-                    mContext.startActivity(Intent(mContext, MyAccountActivity::class.java).putExtra("data", bundle))
+                    MyAccountActivity.start(mContext, item.id, subeeType, item.price, "home")
                 }
             }
         }

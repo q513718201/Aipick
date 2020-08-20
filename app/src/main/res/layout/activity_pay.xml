@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#1E2742"
-    android:paddingTop="20dp">
+    android:paddingTop="25dp">
 
     <include
-
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 

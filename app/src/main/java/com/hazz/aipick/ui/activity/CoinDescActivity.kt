@@ -5,11 +5,13 @@ import android.util.Log
 import android.view.View
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
-import com.hazz.aipick.socket.KlineBean
+import com.hazz.aipick.socket.KLineBean
 import com.hazz.aipick.socket.WsManager
 import com.hazz.aipick.ui.fragment.AboutCoinFragment
 import com.hazz.aipick.utils.BigDecimalUtil
+import com.hazz.aipick.utils.GsonUtil
 import com.hazz.aipick.utils.RxBus
+import com.orhanobut.logger.Logger
 import com.vinsonguo.klinelib.chart.KLineView
 import com.vinsonguo.klinelib.model.HisData
 import com.vinsonguo.klinelib.util.DataUtils
@@ -69,18 +71,23 @@ class CoinDescActivity : BaseActivity() {
                 runOnUiThread {
                     tv_rate.text = if (it.isUp) "+$rate" else rate
                     if (!it.isUp) {
-                        tv_name.setTextColor(resources.getColor(R.color.redF4))
-                        tv_rate.setTextColor(resources.getColor(R.color.redF4))
-                        tv_zj.setTextColor(resources.getColor(R.color.redF4))
+                        tv_name.setTextColor(resources.getColor(R.color.main_color_red))
+                        tv_rate.setTextColor(resources.getColor(R.color.main_color_red))
+                        tv_zj.setTextColor(resources.getColor(R.color.main_color_red))
 
                         tv_zj.text = "-" + BigDecimalUtil.sub(tick.open, tick.close, 2)
+                        iv_up.setImageResource(R.mipmap.ic_down)
                     } else {
                         tv_zj.text = "+" + BigDecimalUtil.sub(tick.close, tick.open, 2)
+                        tv_name.setTextColor(resources.getColor(R.color.main_color_green))
+                        tv_rate.setTextColor(resources.getColor(R.color.main_color_green))
+                        tv_zj.setTextColor(resources.getColor(R.color.main_color_green))
+                        iv_up.setImageResource(R.mipmap.up)
                     }
                     tv_name.text = tick.close
                     tv_hight.text = tick.high
                     tv_low.text = tick.low
-                    tv_vol.text = tick.vol
+                    tv_vol.text = BigDecimalUtil.format(tick.vol, 2)
 
                 }
             }
@@ -136,25 +143,27 @@ class CoinDescActivity : BaseActivity() {
 //                    kLineChartView.changeMainDrawType(Status.MA)
                 }
                 "macd" -> {
-                    //  kLineChartView.setChildDraw(0)
+//                      kLineChartView.setChildDraw(0)
                 }
                 "kdj" -> {
-                    // kLineChartView.setChildDraw(1)
+//                     kLineChartView.setChildDraw(1)
                 }
                 "main" -> {
-                    // kLineChartView.hideChildDraw()
+//                     kLineChartView.hideChildDraw()
 
                 }
             }
         }
 
 
-        RxBus.get().observerOnMain(this, KlineBean::class.java) {
+        RxBus.get().observerOnMain(this, KLineBean::class.java) {
 
             val data = it.data
             if (data != null) {
                 mDialog!!.dismiss()
             }
+            val toJson = GsonUtil.toJson(data)
+            Logger.d(toJson)
             if (!data.isNullOrEmpty()) {
                 Log.d("junjun", data.toString())
                 datas?.clear()
