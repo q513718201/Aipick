@@ -54,7 +54,6 @@ class CoinHouseActivity : BaseActivity(), WaletContract.coinHouseView {
     }
 
     private var mOrderAdapter: CoinHouseAdapter? = null
-    private val titleList = ArrayList<String>(10)
     private var mCoinHousePresenter: CoinHousePresenter =CoinHousePresenter(this)
 
     @SuppressLint("SetTextI18n")
@@ -83,6 +82,8 @@ class CoinHouseActivity : BaseActivity(), WaletContract.coinHouseView {
             }
             dialogInsertCoinHouse.show()
         }
+        refreshLayout.isEnableLoadmore = false
+
 
     }
 

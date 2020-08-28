@@ -100,4 +100,8 @@
         <item name="colorButtonNormal">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorPrimary</item>
     </style>
+
+    <style name="switchStyle">
+
+    </style>
 </resources>

@@ -43,7 +43,7 @@ object CoinManager {
         return when (house.toUpperCase()) {
             "huobi" -> R.mipmap.ic_huobi
 // TODO: 2020/8/17
-            else -> R.mipmap.ic_allcoin
+            else -> R.mipmap.ic_aipick
         }
     }
 }

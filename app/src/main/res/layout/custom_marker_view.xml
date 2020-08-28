@@ -3,69 +3,65 @@
 
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:paddingRight="10dp"
     android:layout_height="45dp"
     android:background="@drawable/bg_mark_solid_5dp_coner"
-    >
+    android:paddingRight="10dp">
 
     <TextView
-        android:layout_marginLeft="5dp"
         android:id="@+id/tv_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2017/7/10"
-        android:textSize="8dp"
         android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:text="2017/7/10"
         android:textColor="@color/white"
-        />
+        android:textSize="8dp" />
 
     <View
         android:id="@+id/view"
-        android:layout_marginLeft="6dp"
-        android:layout_toRightOf="@+id/tv_data"
-        android:layout_centerHorizontal="true"
         android:layout_width="1dp"
         android:layout_height="14dp"
-        android:background="@color/white"
+        android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        />
+        android:layout_marginLeft="6dp"
+        android:layout_toRightOf="@+id/tv_data"
+        android:background="@color/white" />
+
     <LinearLayout
-        android:layout_toRightOf="@+id/view"
-        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        >
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/view"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_marginLeft="5dp"
             android:id="@+id/tv1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:text="买入:0"
-            android:textSize="8dp"
             android:textColor="@color/white"
-            />
+            android:textSize="8dp" />
+
         <TextView
 
-            android:layout_marginLeft="6dp"
             android:id="@+id/tv2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
             android:text="卖出:0"
-            android:textSize="8dp"
             android:textColor="@color/white"
-            />
+            android:textSize="8dp" />
+
         <TextView
 
-            android:layout_marginLeft="6dp"
             android:id="@+id/tv3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
             android:text="盈亏:0"
-            android:textSize="8dp"
             android:textColor="@color/white"
-            />
+            android:textSize="8dp" />
     </LinearLayout>
 
 </RelativeLayout>

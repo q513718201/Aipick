@@ -17,8 +17,6 @@ class AccountPresenter(view: WaletContract.myaccountView) : BasePresenter<WaletC
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objUserId", objUserId)
-
-
         )
 
         val login = RetrofitManager.service.myAccount(body)

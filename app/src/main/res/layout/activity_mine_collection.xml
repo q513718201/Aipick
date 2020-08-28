@@ -1,81 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:background="@color/bg_common"
-    android:paddingTop="20dp"
-    >
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
-
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tabLayout"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabSelectedTextColor="#AA4AFF"
-        android:layout_gravity="center"
-        app:tabTextColor="@color/color_bottom"
-        >
+        android:layout_height="match_parent"
+        android:background="@color/bg_common"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    </android.support.design.widget.TabLayout>
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
 
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refreshLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:tabIndicatorColor="@color/dilaog_btn_color"
+            app:tabIndicatorFullWidth="false"
+            app:tabSelectedTextColor="@color/dilaog_btn_color"
+            app:tabTextColor="@color/color_bottom">
 
-    <com.scwang.smartrefresh.layout.header.ClassicsHeader
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        </android.support.design.widget.TabLayout>
 
-    </com.scwang.smartrefresh.layout.header.ClassicsHeader>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycleview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/divider" />
 
-    </android.support.v7.widget.RecyclerView>
-    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
-    
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycleview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </LinearLayout>
+
     <RelativeLayout
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:id="@+id/rl_action"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/bg_common"
-        android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent">
+
         <TextView
+            android:id="@+id/tv_remove_all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textSize="14sp"
-            android:textColor="@color/color_home"
+            android:padding="@dimen/dp_10"
             android:text="@string/delete_all"
-            />
+            android:textColor="@color/color_home"
+            android:textSize="14sp" />
+
         <TextView
-            android:layout_alignParentRight="true"
+            android:id="@+id/tv_del"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textSize="14sp"
-            android:textColor="@color/dilaog_btn_color"
+            android:padding="@dimen/dp_10"
             android:text="@string/delete"
-            />
+            android:textColor="@color/dilaog_btn_color"
+            android:textSize="14sp" />
     </RelativeLayout>
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

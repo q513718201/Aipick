@@ -1,8 +1,6 @@
 package com.hazz.aipick.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,11 +14,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-
+import com.blankj.utilcode.util.BarUtils;
 import com.hazz.aipick.LanguageType;
 import com.hazz.aipick.R;
+import com.hazz.aipick.base.BaseActivity;
 import com.hazz.aipick.utils.SPUtil;
-import com.hazz.aipick.utils.StatusBarUtil;
 import com.hazz.aipick.utils.ToolBarCustom;
 import com.hazz.aipick.widget.Tools.CharacterParserUtil;
 import com.hazz.aipick.widget.Tools.CountryComparator;
@@ -37,7 +35,7 @@ import java.util.List;
 /**
  * 区号选择界面
  */
-public class CountryActivity extends AppCompatActivity {
+public class CountryActivity extends BaseActivity {
 
     String TAG = "CountryActivity";
 
@@ -64,42 +62,24 @@ public class CountryActivity extends AppCompatActivity {
 
     private CharacterParserUtil characterParserUtil;
 
-    public static final int CITY_CHOSE = 1001;
 
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.mine_coogame_country);
-
-        StatusBarUtil.Companion.darkMode(this);
-        initView();
-
-        setListener();
-
-        getCountryList();
-
-        initToolBarView();
-    }
-
-    private void initToolBarView() {
+    /**
+     * 初始化界面
+     */
+    public void initView() {
+        mToolBar = findViewById(R.id.toolbar);
         ToolBarCustom.newBuilder(mToolBar)
                 .setLeftIcon(R.mipmap.icon_black_back)
                 .setTitle(getString(R.string.mine_chose_area_code))
                 .setTitleColor(getResources().getColor(R.color.commonTextColor))
                 .setToolBarBg(getResources().getColor(R.color.color_white))
                 .setOnLeftIconClickListener(view -> finish());
-    }
+
+        BarUtils.setStatusBarLightMode(this,true);
 
 
-    /**
-     * 初始化界面
-     */
-    private void initView() {
-        mToolBar = findViewById(R.id.toolbar);
+
+
         country_edt_search = (EditText) findViewById(R.id.country_et_search);
         country_lv_countryList = (ListView) findViewById(R.id.country_lv_list);
         country_iv_clearText = (ImageView) findViewById(R.id.country_iv_cleartext);
@@ -117,7 +97,9 @@ public class CountryActivity extends AppCompatActivity {
         Collections.sort(mAllCountryList, pinyinComparator);
         adapter = new CountrySortAdapter(this, mAllCountryList);
         country_lv_countryList.setAdapter(adapter);
+        setListener();
 
+        getCountryList();
     }
 
     /****
@@ -218,7 +200,7 @@ public class CountryActivity extends AppCompatActivity {
      */
     private void getCountryList() {
         String[] countryList;
-        if (SPUtil.INSTANCE.getLanguage(this).equals(LanguageType.LG_SIMPLIFIED_CHINESE.getValue())) {
+        if (SPUtil.INSTANCE.getLanguage().equals(LanguageType.LG_SIMPLIFIED_CHINESE.getValue())) {
             countryList = getResources().getStringArray(R.array.mine_country_code_list_ch);
         } else {
             countryList = getResources().getStringArray(R.array.mine_country_code_list_en);
@@ -243,5 +225,20 @@ public class CountryActivity extends AppCompatActivity {
         Collections.sort(mAllCountryList, pinyinComparator);
         adapter.updateListView(mAllCountryList);
         Log.e(TAG, "changdu" + mAllCountryList.size());
+    }
+
+    @Override
+    public int layoutId() {
+        return R.layout.mine_coogame_country;
+    }
+
+    @Override
+    public void initData() {
+
+    }
+
+    @Override
+    public void start() {
+
     }
 }

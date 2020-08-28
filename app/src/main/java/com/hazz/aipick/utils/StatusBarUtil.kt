@@ -4,6 +4,7 @@ import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
 import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import android.support.annotation.FloatRange
 import android.support.annotation.RequiresApi
@@ -23,7 +24,7 @@ class StatusBarUtil {
 
 
     companion object {
-        private var DEFAULT_COLOR = 0
+        private var DEFAULT_COLOR = Color.WHITE
         private var DEFAULT_ALPHA = 0f//Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 0.2f : 0.3f;
         private val MIN_API = 19
 
@@ -79,10 +80,9 @@ class StatusBarUtil {
                 window.decorView.systemUiVisibility = systemUiVisibility
             }
         }
-        //</editor-fold>
 
+        //<editor-fold desc="DarkMode">
         @TargetApi(Build.VERSION_CODES.M)
-//<editor-fold desc="DarkMode">
         fun darkMode(activity: Activity, dark: Boolean) {
             when {
                 isFlyme4Later -> darkModeForFlyme4(activity.window, dark)
@@ -166,10 +166,10 @@ class StatusBarUtil {
                     meizuFlags.isAccessible = true
                     val bit = darkFlag.getInt(null)
                     var value = meizuFlags.getInt(e)
-                    if (dark) {
-                        value = value or bit
+                    value = if (dark) {
+                        value or bit
                     } else {
-                        value = value and bit.inv()
+                        value and bit.inv()
                     }
 
                     meizuFlags.setInt(e, value)
@@ -262,9 +262,7 @@ class StatusBarUtil {
                             ViewGroup.LayoutParams.MATCH_PARENT, getStatusBarHeight(container.context))
                     container.addView(translucentView, lp)
                 }
-                if (translucentView != null) {
-                    translucentView.setBackgroundColor(mixtureColor)
-                }
+                translucentView?.setBackgroundColor(mixtureColor)
             }
         }
 
@@ -286,5 +284,5 @@ class StatusBarUtil {
             return result
         }
     }
-
+    //</editor-fold>
 }

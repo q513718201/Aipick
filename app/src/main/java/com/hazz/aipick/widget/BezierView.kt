@@ -97,17 +97,18 @@ class BezierView : View {
         path.close()
         val paint = Paint()
         paint.style = Paint.Style.FILL
-        paint.color = Color.parseColor("#FF0000")
-        var mLinearGradient = LinearGradient(
-                0f
-                , 0f
-                , defXAxis
-                , defYAxis
-                , intArrayOf(resources.getColor(R.color.colorPrimaryDarkTrans), resources.getColor(R.color.colorPrimaryDark))
-                , null
-                , Shader.TileMode.CLAMP
-        )
-        paint?.shader = mLinearGradient
+        paint.color = Color.parseColor("#FF1E2742")
+//        渐变
+//        var mLinearGradient = LinearGradient(
+//                0f
+//                , 0f
+//                , defXAxis
+//                , defYAxis
+//                , intArrayOf(resources.getColor(R.color.colorPrimaryDarkTrans), resources.getColor(R.color.colorPrimaryDark))
+//                , null
+//                , Shader.TileMode.CLAMP
+//        )
+//        paint?.shader = mLinearGradient
         canvas.drawPath(path, paint)
     }
 

@@ -7,6 +7,7 @@ import com.hazz.aipick.net.BaseResult
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -195,6 +196,7 @@ interface AiPickService {
     @POST("message/list")
     fun messageList(@Body request: RequestBody): Observable<BaseResult<List<Message>>>
 
+
     /**
      * 标记阅读
      */
@@ -204,6 +206,7 @@ interface AiPickService {
     /**
      * 我的账户
      */
+    @FormUrlEncoded
     @POST("user/profile")
     fun myAccount(@Body request: RequestBody): Observable<BaseResult<MyAccount>>
 
@@ -309,6 +312,7 @@ interface AiPickService {
      */
     @POST("fake/buy_sell")
     fun botIncoming(@Body request: RequestBody): Observable<BaseResult<List<InComing>>>
+
     /**
      *模拟跟随-交易分析收益
      */
@@ -332,4 +336,15 @@ interface AiPickService {
      */
     @GET(" /simulate/summary")
     fun getSimulateSummary(): Observable<BaseResult<SimulateSummaryBean>>
+
+    //<editor-fold desc="新增接口">
+    /**
+     * 资讯列表接口
+     */
+    @POST(" /simulate/summary")// TODO: 2020/8/24
+    fun getInfoList(@Body request: RequestBody): Observable<BaseResult<List<InfoBean>>>
+    //</editor-fold>
+
+    @GET("/user/invite")
+    fun getInviteInfo(): Observable<BaseResult<InviteInfoBean>>
 }

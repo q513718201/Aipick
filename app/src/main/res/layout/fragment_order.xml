@@ -8,16 +8,13 @@
         android:id="@+id/ll_top2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_top"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="0dp"
         android:background="#192138"
         android:orientation="vertical"
-        android:paddingTop="30dp"
+        android:paddingTop="16dp"
         android:paddingBottom="15dp">
 
         <LinearLayout
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -26,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:text="@string/lishijiaoyi"
                 android:textColor="#90ffffff"
                 android:textSize="12sp" />
@@ -64,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_vertical"
                 android:text="000"
                 android:textColor="@color/color_home"
                 android:textSize="12sp" />
@@ -96,20 +93,48 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_choose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:background="@drawable/home_categray_bg"
-        android:drawableRight="@mipmap/arrow_bottom"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingTop="5dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="5dp"
-        android:text="@string/all"
-        android:textColor="@color/color_white" />
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_centerHorizontal="true"
+        android:clipChildren="false"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:id="@+id/tv_pos_his"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/title_bg_selector"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingTop="5dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="5dp"
+            android:text="@string/his_position"
+            android:textColor="@drawable/categy_title_selector" />
+
+        <RadioButton
+            android:id="@+id/tv_pos_now"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/title_bg_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingLeft="16dp"
+            android:paddingTop="5dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="5dp"
+            android:text="@string/now_position"
+            android:textColor="@drawable/categy_title_selector" />
+
+    </RadioGroup>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycleview"

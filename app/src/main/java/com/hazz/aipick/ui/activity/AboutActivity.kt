@@ -25,8 +25,6 @@ class AboutActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
-        StatusBarUtil.darkMode(this)
-        StatusBarUtil.setPaddingSmart(this, toolbar)
 
         tv_version_name.text ="v${AppUtils.getVerName(MyApplication.context)}"
         //返回

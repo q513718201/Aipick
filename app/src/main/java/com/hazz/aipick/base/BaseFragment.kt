@@ -29,13 +29,14 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
      * 视图是否加载完毕
      */
     private var isViewPrepare = false
+
     /**
      * 数据是否加载过了
      */
     private var hasLoadData = false
 
 
-     var mDialog: ProgressDialog? = null
+    var mDialog: ProgressDialog? = null
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         return inflater.inflate(getLayoutId(), null)
@@ -63,7 +64,10 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
         if (userVisibleHint && isViewPrepare && !hasLoadData) {
             lazyLoad()
             hasLoadData = true
-        }
+        } else
+            if (userVisibleHint && isViewPrepare) {
+                reload()
+            }
     }
 
     open val mRetryClickListener: View.OnClickListener = View.OnClickListener {
@@ -86,6 +90,8 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
      * 懒加载
      */
     abstract fun lazyLoad()
+
+    open fun reload() {}
 
     override fun onDestroy() {
         super.onDestroy()
@@ -147,7 +153,7 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
     }
 
     override fun login() {
-        activity!!.startActivity(Intent(activity,LoginActivity::class.java))
+        activity!!.startActivity(Intent(activity, LoginActivity::class.java))
         ActivityManager.getInstance().finishOthers(LoginActivity::class.java)
     }
 

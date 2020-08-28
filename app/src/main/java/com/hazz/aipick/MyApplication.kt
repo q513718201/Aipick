@@ -3,7 +3,6 @@ package com.hazz.aipick
 import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
 import com.hazz.aipick.socket.ForegroundCallbacks
@@ -12,14 +11,17 @@ import com.hazz.aipick.utils.*
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.scwang.smartrefresh.layout.api.*
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter
+import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
 import kotlin.properties.Delegates
 
 
-
-
-class MyApplication : Application(){
+class MyApplication : Application(), DefaultRefreshFooterCreater, DefaultRefreshHeaderCreater {
 
     private var refWatcher: RefWatcher? = null
 
@@ -48,6 +50,13 @@ class MyApplication : Application(){
         SPUtil.init(this)
         SToast.initToast(this)
         initAppStatusListener()
+        initRefresh()
+    }
+
+    private fun initRefresh() {
+        SmartRefreshLayout.setDefaultRefreshFooterCreater(this)
+        SmartRefreshLayout.setDefaultRefreshHeaderCreater(this)
+
     }
 
     private fun setupLeakCanary(): RefWatcher {
@@ -121,9 +130,22 @@ class MyApplication : Application(){
             }
 
             override fun onBecameBackground() {
-               // WsManager.getInstance().disconnect()
+                // WsManager.getInstance().disconnect()
             }
         })
+    }
+
+    override fun createRefreshFooter(context: Context?, layout: RefreshLayout?): RefreshFooter {
+        layout?.setPrimaryColorsId(R.color.color_translucent, android.R.color.white) //全局设置主题颜色
+        //指定为经典Footer，默认是 BallPulseFooter
+        var classicsFooter = ClassicsFooter(context)
+        return classicsFooter.setSpinnerStyle(SpinnerStyle.Translate) //指定为经典Header
+    }
+
+    override fun createRefreshHeader(context: Context?, layout: RefreshLayout?): RefreshHeader {
+        layout?.setPrimaryColorsId(R.color.color_translucent, android.R.color.white) //全局设置主题颜色
+        val classicsHeader = ClassicsHeader(context)
+        return classicsHeader.setSpinnerStyle(SpinnerStyle.Translate) //指定为经典Header
     }
 
 }

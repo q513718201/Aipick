@@ -80,6 +80,12 @@
     <color name="divider">#ff2a365a</color>
     <color name="color_boarder">#27426b</color>
     <color name="color_pink_money">#FFFF7C95</color>
+    <color name="color_home_rate">#FF94A4D6</color>
+
+
+
+
+
     <!--alert view 文字颜色-->
     <color name="textColor_alert_button_others">#27426b</color>
     <color name="textColor_alert_button_destructive">#27426b</color>

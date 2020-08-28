@@ -2,23 +2,16 @@ package com.hazz.aipick.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
 import com.hazz.aipick.R;
-import com.hazz.aipick.events.KineType;
-import com.hazz.aipick.events.RxBus;
-import com.hazz.aipick.socket.Index;
-import com.hazz.aipick.ui.adapter.PhotoAdapter;
-
-import io.reactivex.disposables.Disposable;
+import com.hazz.aipick.widget.kline.OptionRadioButton;
+import com.vinsonguo.klinelib.model.Index;
 
 public class ChartView extends RelativeLayout {
 
@@ -30,7 +23,7 @@ public class ChartView extends RelativeLayout {
 
     private String mSymbol;
 
-    private TimeOptionPopupWindow mTimeOptionPopupWindow;
+    private TimeOptionPopup mTimeOptionPopupWindow;
 
     private IndexOptionPopupWindow mIndexOptionPopupWindow;
 
@@ -144,8 +137,8 @@ public class ChartView extends RelativeLayout {
 
     private void showOptionPop() {
         if (mTimeOptionPopupWindow == null) {
-            mTimeOptionPopupWindow = new TimeOptionPopupWindow(getContext());
-            mTimeOptionPopupWindow.setOnMyClick(new TimeOptionPopupWindow.onMyClick() {
+            mTimeOptionPopupWindow = new TimeOptionPopup(getContext());
+            mTimeOptionPopupWindow.setOnMyClick(new TimeOptionPopup.onMyClick() {
                 @Override
                 public void onClick(String type) {
                     switch (type) {
@@ -181,12 +174,12 @@ public class ChartView extends RelativeLayout {
                 }
             });
             mTimeOptionPopupWindow.setOnDismissListener(() -> {
-                TimeOptionPopupWindow.Option option = mTimeOptionPopupWindow.getOption();
+                TimeOptionPopup.Option option = mTimeOptionPopupWindow.getOption();
                 if (option == null) {
                     checkLastRadioButton();
                 } else {
-                    if (mMore.getOption() != option) {
-                        mMore.setSelectedOption(option);
+                    if (mMore.getOption().equals(option)) {
+//                        mMore.setSelectedOption(option);
                     }
                     mRadioGroup.clearCheck();
                 }

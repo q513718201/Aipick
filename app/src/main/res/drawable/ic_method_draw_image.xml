@@ -1,0 +1,16 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="277dp"
+    android:viewportWidth="577"
+    android:viewportHeight="400">
+
+    <path
+        android:fillColor="@color/dilaog_btn_color"
+        android:pathData="M-0.5,153.5h578v93h-578z" />
+    <path
+        android:fillColor="@color/dilaog_btn_color"
+        android:pathData="M187.5,200a101,101 0,1 0,202 0a101,101 0,1 0,-202 0z"
+        android:strokeWidth="10"
+        android:strokeAlpha="0.5"
+        android:strokeColor="@color/bg_dark_90" />
+</vector>

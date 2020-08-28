@@ -1,5 +1,7 @@
 package com.hazz.aipick.socket;
 
+import android.text.TextUtils;
+
 import java.util.List;
 
 public class KLineBean {
@@ -14,7 +16,12 @@ public class KLineBean {
     public String id;
     public String rep;
     public String status;
+    public long ts;
     public List<DataBean> data;
+
+    public boolean isEmpty() {
+        return TextUtils.isEmpty(id) || "error".equalsIgnoreCase(status);
+    }
 
     public static class DataBean {
         /**
@@ -35,7 +42,7 @@ public class KLineBean {
         public int id;
         public int count;
         public double low;
-        public double vol;
+        public float vol;
     }
 
     @Override

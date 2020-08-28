@@ -174,6 +174,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         xAxisPrice.setDrawLabels(false);
         xAxisPrice.setDrawAxisLine(false);
         xAxisPrice.setDrawGridLines(true);
+        xAxisPrice.setGranularity(1f);
         xAxisPrice.setAxisMinimum(-0.5f);
         xAxisPrice.setGridColor(getResources().getColor(R.color.grid_line_color));
         xAxisPrice.setGridLineWidth(getResources().getDimension(R.dimen.grid_line_width));

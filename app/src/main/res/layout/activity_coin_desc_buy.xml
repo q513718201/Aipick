@@ -28,7 +28,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="8dp"
-                android:onClick="onBack"
                 android:padding="8dp"
                 android:src="@mipmap/back_white" />
 
@@ -68,38 +67,13 @@
             <com.hazz.aipick.widget.MarketInfoView
                 android:id="@+id/market_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true">
+                android:layout_height="wrap_content"/>
 
-            </com.hazz.aipick.widget.MarketInfoView>
-
-            <com.hazz.aipick.widget.ChartView
+            <com.hazz.aipick.widget.kline.KLineChartView
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"/>
 
-            </com.hazz.aipick.widget.ChartView>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="330dp">
-
-                <FrameLayout
-                    android:id="@+id/mFrameLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-
-                    ></FrameLayout>
-
-                <ProgressBar
-                    android:id="@+id/mProgressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:visibility="gone" />
-
-            </RelativeLayout>
 
             <net.lucode.hackware.magicindicator.MagicIndicator
                 android:id="@+id/tab_layout"
@@ -108,7 +82,6 @@
                 android:layout_gravity="center"
                 android:background="@color/bg_light"
                 android:textSize="14sp">
-
             </net.lucode.hackware.magicindicator.MagicIndicator>
 
 

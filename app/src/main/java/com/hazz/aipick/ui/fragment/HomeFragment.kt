@@ -8,6 +8,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import com.bigkoo.alertview.AlertView
+import com.bigkoo.alertview.OnItemClickListener
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
 import com.hazz.aipick.mvp.contract.HomeContract
@@ -23,10 +25,8 @@ import com.hazz.aipick.ui.adapter.ShaiXuanAdapter3
 import com.hazz.aipick.ui.pop.HomePop
 import com.hazz.aipick.utils.DpUtils
 import com.hazz.aipick.utils.SPUtil
-import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
 import com.scwang.smartrefresh.header.MaterialHeader
-import kotlinx.android.synthetic.main.dialog_choose.view.*
 import kotlinx.android.synthetic.main.dialog_shaixuan.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
@@ -53,7 +53,7 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
 
     private fun setHead() {
         homeBean?.let {
-            tv_coin_name?.text = if (it.coin_name == null) getString(R.string.app_name) else it.coin_name
+            tv_coin_name?.text = if (it.coin_name.isEmpty()) getString(R.string.app_name) else it.coin_name
 
             tv_raise?.text = "${it.rate}"
             tv_pullback?.text = "${getString(R.string.ten_rate, it.pullback)}%"
@@ -139,17 +139,13 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
                     if (firstVisibleItem + childCount == itemCount) {
                         if (!loadingMore) {
                             loadingMore = true
-//                             mPresenter.loadMoreData()
                         }
                     }
                 }
-
             }
         })
-//
-//        iv_search.setOnClickListener { openSearchActivity() }
 
-
+        // TODO: 2020/8/28
         val pointList = ArrayList<Point>()
         pointList.add(Point(-1, 50))
         pointList.add(Point(210, 200))
@@ -163,35 +159,30 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
         mBezierView.visibility = View.VISIBLE
 
         rl_choose.setOnClickListener {
-            bottomSheet = BottomSheetDialog(activity!!)
-            val view = layoutInflater.inflate(R.layout.dialog_choose, null)
-            bottomSheet!!.setContentView(view)
+            val arrayOf = arrayOf(getString(R.string.robot_caty), getString(R.string.robot_trader))
+            AlertView.Builder().setContext(context)
+                    .setStyle(AlertView.Style.ActionSheet)
+                    .setCancelText(getString(R.string.cancel))
+                    .setDestructive(*arrayOf)
+                    .setOnItemClickListener(OnItemClickListener { any: Any, pos: Int ->
+                        when (pos) {
+                            0 -> {
+                                subeeType = "bot"
+                                role.text = getString(R.string.robot_caty)
+                                homeBean = null
+                                getData()
+                            }
+                            else -> {
+                                subeeType = "broker"
+                                role.text = getString(R.string.robot_trader)
+                                homeBean = null
+                                getData()
+                            }
+                        }
+                    }).build()
+                    .show()
 
-            view.tv_cancle.setOnClickListener {
-                bottomSheet!!.dismiss()
-            }
-
-            view.tv_rebot.setOnClickListener {
-                bottomSheet!!.dismiss()
-                subeeType = "bot"
-                role.text = getString(R.string.robot_caty)
-                homeBean = null
-                getData()
-            }
-
-            view.tv_trader.setOnClickListener {
-                bottomSheet!!.dismiss()
-                subeeType = "broker"
-                role.text = getString(R.string.robot_trader)
-                homeBean = null
-                getData()
-            }
-            val viewById = bottomSheet!!.delegate.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
-            //设置布局背景透明
-            viewById?.setBackgroundColor(resources.getColor(android.R.color.transparent))
-            bottomSheet!!.show()
-
-
+            tv_coin_name?.text = getString(R.string.app_name)
         }
 
         iv_shaixuan.setOnClickListener {
@@ -262,7 +253,7 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
     //弹窗点击之后的事件
     override fun onClick(v: View) {
         RebotCategryActivity.start(context!!, "-1", "bot", "")
-        ToastUtils.showToast(activity, "ni xiang gansha!")
+//        ToastUtils.showToast(activity, "ni xiang gansha!")
     }
 
     override fun lazyLoad() {

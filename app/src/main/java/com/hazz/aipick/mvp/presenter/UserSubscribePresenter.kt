@@ -17,7 +17,7 @@ class UserSubscribePresenter(view: CollectionContract.userSubscribeView) : BaseP
      *  "pageSize": "10",  // 页大小
      *  "isDemo": "0",  // 是否获取模拟账户的数据, 1 是 0 否
      */
-    fun userFollows(id: String, pageNumber: Int, pageSize: Int, isDemo: Int) {
+    fun userFollows(id: String, pageNumber: Int, pageSize: Int, isDemo: String) {
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objUserId", id),
                 Pair.create<Any, Any>("pageNumber", pageNumber),
@@ -40,7 +40,7 @@ class UserSubscribePresenter(view: CollectionContract.userSubscribeView) : BaseP
     }
 
     /**
-     *首页用户订阅
+     *机器人订阅
      */
     fun fakeFollows() {
 

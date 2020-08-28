@@ -54,7 +54,7 @@ class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter
 
         doRequest(login, object : Callback<SubscribeDesc>(view) {
             override fun failed(tBaseResult: BaseResult<SubscribeDesc>): Boolean {
-
+                view.mySubscribeDesc(SubscribeDesc())
                 return false
             }
 

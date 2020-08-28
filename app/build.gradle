@@ -21,7 +21,7 @@ android {
 
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     defaultConfig {
-        applicationId "com.hazz.aipick"
+        applicationId rootProject.ext.android.applicationId
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
@@ -41,7 +41,6 @@ android {
         renderscriptSupportModeEnabled true    // Enable RS support
 
         ndk {
-
             //APP的build.gradle设置支持的SO库架构
             abiFilters 'armeabi', 'armeabi-v7a', 'x86'
         }
@@ -99,15 +98,8 @@ repositories {
 dependencies {
     api project(path: ':update')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    // 支付宝 SDK AAR 包所需的配置
 
-    implementation(name: 'alipaySdk-15.6.8-20191021122514', ext: 'aar')
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:3.0.1') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+
     // Support库
     implementation rootProject.ext.supportLibs
     // 网络请求库
@@ -115,6 +107,7 @@ dependencies {
     // RxJava2
     implementation rootProject.ext.rxJavaLibs
     implementation rootProject.ext.otherLibs
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     // APT dependencies(Kotlin内置的注解处理器)
     kapt rootProject.ext.annotationProcessorLibs
 
@@ -160,6 +153,17 @@ dependencies {
 
     implementation 'com.neovisionaries:nv-websocket-client:2.2'
     implementation('com.github.razerdp:BasePopup:2.2.1')
+
+    implementation 'com.blankj:utilcode:1.29.0'
+
     implementation project(path: ':klinelib')
     implementation project(path: ':magicindicator')
+
+    // 支付宝 SDK AAR 包所需的配置
+    // implementation(name: 'alipaySdk-15.6.8-20191021122514', ext: 'aar')
+
+    implementation project(path: ':lib_guide')
+    api project(path: ':pay_wx')
+    api project(path: ':pay_ali')
+    api project(':pay_core')
 }

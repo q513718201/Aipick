@@ -255,8 +255,7 @@
             android:paddingBottom="12dp"
             android:text="@string/wechat"
             android:textColor="@color/color_home"
-            android:textSize="16sp"
-            android:visibility="gone" />
+            android:textSize="16sp" />
 
 
     </LinearLayout>

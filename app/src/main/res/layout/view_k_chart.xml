@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="380dp">
+
+
+    <ImageButton
+        android:id="@+id/full_screen"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_weight="1"
+        android:background="@color/bg_light"
+        android:gravity="center"
+        android:src="@mipmap/h_enlarge"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radio_group"
+        android:layout_width="0dp"
+        android:layout_height="35dp"
+        android:background="@color/bg_light"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toStartOf="@id/full_screen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.hazz.aipick.widget.kline.BottomLineRadioButton
+            android:id="@+id/time"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/fenshi"
+            android:textColor="@color/text_highlight_selector"
+            android:textSize="12sp" />
+
+        <com.hazz.aipick.widget.kline.BottomLineRadioButton
+            android:id="@+id/fifteen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/fifteen"
+            android:textColor="@color/text_highlight_selector"
+            android:textSize="12sp" />
+
+
+        <com.hazz.aipick.widget.kline.BottomLineRadioButton
+            android:id="@+id/hour"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/four_hour"
+            android:textColor="@color/text_highlight_selector"
+            android:textSize="12sp" />
+
+
+        <com.hazz.aipick.widget.kline.BottomLineRadioButton
+            android:id="@+id/k_day"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/one_day"
+            android:textColor="@color/text_highlight_selector"
+            android:textSize="12sp" />
+
+
+        <com.hazz.aipick.widget.kline.OptionRadioButton
+            android:id="@+id/more"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_option_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/more"
+            android:textColor="@color/text_color_hint"
+            android:textSize="12sp" />
+
+        <com.hazz.aipick.widget.kline.OptionRadioButton
+            android:id="@+id/index"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_option_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:text="@string/index"
+            android:textColor="@color/text_color_hint"
+            android:textSize="12sp" />
+
+    </RadioGroup>
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/bg_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/radio_group" />
+
+</android.support.constraint.ConstraintLayout>

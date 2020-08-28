@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 
 public class AssetsUtil {
     public static byte[] getAssertsFileInBytes(Context context, String assetsFileName) {
@@ -31,6 +32,10 @@ public class AssetsUtil {
         }
 
         return null;
+    }
+
+    public static String getAssertsFileString(Context context, String assetsFileName) {
+        return new String(getAssertsFileInBytes(context, assetsFileName), Charset.defaultCharset());
     }
 
     /**

@@ -2,31 +2,33 @@ package com.hazz.aipick.managers;
 
 import android.support.annotation.NonNull;
 
-import com.hazz.aipick.socket.KBody;
+import com.blankj.utilcode.util.LogUtils;
+import com.hazz.aipick.socket.KLineBean;
 import com.hazz.aipick.socket.KResponse;
-import com.hazz.aipick.socket.WebSocket;
+import com.hazz.aipick.socket.WsManager;
+import com.hazz.aipick.utils.GsonUtil;
+import com.hazz.aipick.utils.RxBus;
 import com.vinsonguo.klinelib.model.HisData;
 import com.vinsonguo.klinelib.util.DataUtils;
-import com.vinsonguo.klinelib.util.DateUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
+import io.reactivex.functions.Consumer;
+
 public class KManager {
 
-    public static final String PERIOD_ONE_MINUTE = "1m";
-    public static final String PERIOD_FIVE_MINUTE = "5m";
-    public static final String PERIOD_FIFTEEN_MINUTE = "15m";
-    public static final String PERIOD_THIRTY_MINUTE = "30m";
-    public static final String PERIOD_ONE_HOUR = "60m";
-    public static final String PERIOD_ONE_DAY = "1d";
-    public static final String PERIOD_ONE_WEEK = "1w";
+    public static final String PERIOD_ONE_MINUTE = "kline.1min";
+    public static final String PERIOD_FIVE_MINUTE = "kline.5min";
+    public static final String PERIOD_FIFTEEN_MINUTE = "kline.15min";
+    public static final String PERIOD_THIRTY_MINUTE = "kline.30min";
+    public static final String PERIOD_ONE_HOUR = "kline.60min";
+    public static final String PERIOD_ONE_DAY = "kline.1day";
+    public static final String PERIOD_ONE_WEEK = "kline.1week";
 
     private String mPeriod = PERIOD_ONE_MINUTE;
 
@@ -40,9 +42,11 @@ public class KManager {
     private KManager() {
     }
 
+
     private static class Holder {
         private static final KManager instance = new KManager();
     }
+
 
     public void handleKResponse(KResponse response) {
         List<HisData> data = new ArrayList<>(response.getData().size());
@@ -50,47 +54,7 @@ public class KManager {
             HisData hisData = createHisData(pair);
             data.add(hisData);
         }
-        if (mPeriod.equals(PERIOD_ONE_DAY) || mPeriod.equals(PERIOD_ONE_WEEK)) {
-            HisData hisData = data.get(0);
-            long date = hisData.getDate();
-            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("gmt"));
-            calendar.setTimeInMillis(date);
-            String to = DateUtils.formatDayTime(calendar.getTime().getTime());
-            calendar.add(Calendar.DAY_OF_YEAR, -365);
-            String from = DateUtils.formatDayTime(calendar.getTime().getTime());
-            KBody kBody = new KBody();
-            kBody.setSymbol(response.symbol);
-            kBody.setFrom(from);
-            kBody.setTo(to);
-            kBody.setPeriod(mPeriod);
-            kBody.setTopic("k");
-//            Singleton.get().dataSource
-//                    .api().getTokenHisk(kBody)
-//                    .compose(RxResultHelper.handleResult())
-//                    .compose(ScheduleCompat.apply())
-//                    .subscribe(new ByexSubscriber<HiskResponse>() {
-//                        @Override
-//                        protected void success(HiskResponse hiskResponse) {
-//                            ArrayList<HisData> merge = new ArrayList<>(data.size() + hiskResponse.getData().size());
-//                            ArrayList<HisData> oldData = new ArrayList<>(hiskResponse.getData().size());
-//                            for (Map.Entry<String, String> pair : hiskResponse.getData().entrySet()) {
-//                                HisData hisData = createHisData(pair);
-//                                oldData.add(hisData);
-//                            }
-//                            merge.addAll(oldData);
-//                            merge.addAll(data);
-//                            notifyK(DataUtils.calculateHisData(merge));
-//                        }
-//
-//                        @Override
-//                        protected void failure(HLError error) {
-//                            Logger.d(error.getMessage());
-//                        }
-//                    });
 
-        } else {
-            notifyK(DataUtils.calculateHisData(data));
-        }
 
     }
 
@@ -140,75 +104,59 @@ public class KManager {
 
     public void requestOneMinuteK(String symbol) {
         mPeriod = PERIOD_ONE_MINUTE;
-        Date date = new Date();
-        String to = DateUtils.formatPeriodTime(date.getTime());
-        long time = date.getTime() - 8 * 60 * 60 * 1000;
-        Date eight = new Date(time);
-        String from = DateUtils.formatPeriodTime(eight.getTime());
-        WebSocket.getInstance().requestK(symbol, PERIOD_ONE_MINUTE, from, to);
+        requestK(symbol + mPeriod);
     }
 
     public void requestFifteenMinuteK(String symbol) {
         mPeriod = PERIOD_FIFTEEN_MINUTE;
-        Date date = new Date();
-        String to = DateUtils.formatPeriodTime(date.getTime());
-        long time = date.getTime() - 120 * 60 * 60 * 1000;
-        Date four = new Date(time);
-        String from = DateUtils.formatPeriodTime(four.getTime());
-        WebSocket.getInstance().requestK(symbol, PERIOD_FIFTEEN_MINUTE, from, to);
+        requestK(symbol + mPeriod);
     }
 
     public void requestOneHourK(String symbol) {
         mPeriod = PERIOD_ONE_HOUR;
-        Date date = new Date();
-        String to = DateUtils.formatPeriodTime(date.getTime());
-        long time = date.getTime() - 480 * 60 * 60 * 1000;
-        Date twenty = new Date(time);
-        String from = DateUtils.formatPeriodTime(twenty.getTime());
-        WebSocket.getInstance().requestK(symbol, PERIOD_ONE_HOUR, from, to);
+        requestK(symbol + mPeriod);
     }
 
     public void requestOneDayK(String symbol) {
         mPeriod = PERIOD_ONE_DAY;
-        Date date = new Date();
-        String to = DateUtils.formatDayTime(date.getTime());
-        Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.DAY_OF_YEAR, -360);
-        String from = DateUtils.formatDayTime(instance.getTime().getTime());
-        WebSocket.getInstance().requestK(symbol, PERIOD_ONE_DAY, from, to);
+        requestK(symbol + mPeriod);
     }
 
     public void requestWeekK(String symbol) {
         mPeriod = PERIOD_ONE_WEEK;
-        Date date = new Date();
-        String to = DateUtils.formatDayTime(date.getTime());
-        Calendar instance = Calendar.getInstance();
-        instance.add(Calendar.DAY_OF_YEAR, -360);
-        String from = DateUtils.formatDayTime(instance.getTime().getTime());
-        WebSocket.getInstance().requestK(symbol, PERIOD_ONE_WEEK, from, to);
+        requestK(symbol + mPeriod);
     }
 
 
     public void requestFiveMinuteK(String symbol) {
         mPeriod = PERIOD_FIVE_MINUTE;
-        Date date = new Date();
-        String to = DateUtils.formatPeriodTime(date.getTime());
-        long time = date.getTime() - 40 * 60 * 60 * 1000;
-        Date four = new Date(time);
-        String from = DateUtils.formatPeriodTime(four.getTime());
-        WebSocket.getInstance().requestK(symbol, PERIOD_FIVE_MINUTE, from, to);
+        requestK(symbol + mPeriod);
     }
 
 
     public void requestThirtyMinuteK(String symbol) {
         mPeriod = PERIOD_THIRTY_MINUTE;
-        Date date = new Date();
-        String to = DateUtils.formatPeriodTime(date.getTime());
-        long time = date.getTime() - 240 * 60 * 60 * 1000;
-        Date four = new Date(time);
-        String from = DateUtils.formatPeriodTime(four.getTime());
-        WebSocket.getInstance().requestK(symbol, PERIOD_THIRTY_MINUTE, from, to);
+        requestK(symbol + mPeriod);
     }
 
+    private String requestK = "";
+
+    private void requestK(String period) {
+        requestK = period;
+        WsManager.getInstance().requestK(period);
+        RxBus.get().observerOnMain(this, KLineBean.class, new Consumer<KLineBean>() {
+            @Override
+            public void accept(KLineBean bean) throws Exception {
+                if (bean == null || bean.data == null || !bean.rep.equalsIgnoreCase(requestK))
+                    return;
+                List<HisData> dataList = new ArrayList<>(bean.data.size());
+                for (KLineBean.DataBean a : bean.data) {
+                    HisData data = new HisData(a.open, a.close, a.high, a.low, a.vol, bean.ts);
+                    dataList.add(data);
+                }
+                notifyK(DataUtils.calculateHisData(dataList));
+            }
+        });
+    }
 
 }

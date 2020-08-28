@@ -5,12 +5,13 @@ import android.util.Pair
 import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.model.bean.Collection
 import com.hazz.aipick.net.*
+import com.hazz.aipick.utils.GsonUtil
 
 
 class CollectionPresenter(view: CollectionContract.collectionView) : BasePresenter<CollectionContract.collectionView>(view) {
 
 
-    fun getCollection(objType:String,pageNumber:Int,pageSize:Int) {
+    fun getCollection(objType: String, pageNumber: Int, pageSize: Int) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objType", objType),
@@ -36,7 +37,7 @@ class CollectionPresenter(view: CollectionContract.collectionView) : BasePresent
 
     }
 
-    fun addCollection(objType:String,objId:String,baseCoin:String,quoteCoin:String) {
+    fun addCollection(objType: String, objId: String, baseCoin: String, quoteCoin: String) {
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objType", objType),
@@ -61,5 +62,29 @@ class CollectionPresenter(view: CollectionContract.collectionView) : BasePresent
 
         }, true)
 
+    }
+
+
+    fun deleteSelected(ids: ArrayList<Int>, objType: String, delType: String) {
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("objType", objType),
+                Pair.create<Any, Any>("delType", delType),
+                Pair.create<Any, Any>("ids", GsonUtil.toJson(ids))
+
+
+        )
+
+        val login = RetrofitManager.service.deleteCollection(body)
+
+        doRequest(login, object : Callback<Any>(view) {
+            override fun failed(tBaseResult: BaseResult<Any>): Boolean {
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<Any>) {
+                view.addCollectionSucceed(tBaseResult.msg)
+            }
+
+        }, true)
     }
 }

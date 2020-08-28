@@ -11,10 +11,9 @@ class OrderPresenter(view: WaletContract.orderView) : BasePresenter<WaletContrac
 
 
     fun getOrder(id: String, action: String, pageNumber: Int, pageSize: Int, isDemo: String) {
-
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objUserId", id),
-                Pair.create<Any, Any>("action", action),
+                Pair.create<Any, Any>("type", action),
                 Pair.create<Any, Any>("pageNumber", pageNumber),
                 Pair.create<Any, Any>("pageSize", pageSize),
                 Pair.create<Any, Any>("isDemo", isDemo)
@@ -37,7 +36,7 @@ class OrderPresenter(view: WaletContract.orderView) : BasePresenter<WaletContrac
 
     fun getFakeOrder(action: String, pageNumber: Int, pageSize: Int) {
         val body = RequestUtils.getBody(
-                Pair.create<Any, Any>("action", action),
+                Pair.create<Any, Any>("type", action),
                 Pair.create<Any, Any>("pageNumber", pageNumber),
                 Pair.create<Any, Any>("pageSize", pageSize)
         )

@@ -410,6 +410,10 @@
         <item>日</item>
         <item>月</item>
     </string-array>
-
+    <string-array name="card_type">
+        <item>身份证</item>
+        <item>护照</item>
+        <item>驾驶证</item>
+    </string-array>
 
 </resources>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/bg_round_black"
+        android:padding="2dp"
+        android:src="@mipmap/ic_btc"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_coin_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="BTC/USDT"
+        android:textColor="@color/color_home"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_time"
+        app:layout_constraintStart_toEndOf="@+id/iv"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginBottom="@dimen/dp_16"
+        android:text="@string/text_sell_out"
+        android:textColor="@color/color_home"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_coin_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_coin_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_coin_name" />
+
+    <TextView
+        android:id="@+id/tv_market"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/home_categray_bg"
+        android:paddingStart="@dimen/dp_10"
+        android:paddingTop="2dp"
+        android:paddingEnd="@dimen/dp_10"
+        android:paddingBottom="2dp"
+        android:text="Huobi"
+        android:textColor="@color/color_home"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_coin_name"
+        app:layout_constraintLeft_toRightOf="@+id/tv_coin_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_buy_or_sell"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="买"
+        android:textColor="@color/redF4"
+        android:textSize="12sp"
+        android:visibility="gone"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_market"
+        app:layout_constraintLeft_toRightOf="@+id/tv_market"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_gain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:text="$000"
+        android:textColor="@color/color_home"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_coin_name"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_coin_name" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:text="收益"
+        android:textColor="@color/home_text"
+        android:textSize="11sp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_time"
+        app:layout_constraintEnd_toEndOf="@+id/tv_gain"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_gain" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent" />
+</android.support.constraint.ConstraintLayout>

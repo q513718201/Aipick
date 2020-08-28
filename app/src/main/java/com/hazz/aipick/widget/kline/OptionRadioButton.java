@@ -1,4 +1,4 @@
-package com.hazz.aipick.widget;
+package com.hazz.aipick.widget.kline;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -45,7 +45,7 @@ public class OptionRadioButton extends AppCompatRadioButton {
 
     public void setSelectedOption(TimeOptionPopupWindow.Option selectedOption) {
         mOption = selectedOption;
-        setTextColor(getResources().getColor(R.color.text_blue));
+        setTextColor(getResources().getColor(R.color.text_color_highlight));
         switch (selectedOption) {
             case WEEK:
                 setText(getResources().getString(R.string.aweek));
@@ -55,15 +55,12 @@ public class OptionRadioButton extends AppCompatRadioButton {
                 break;
             case FIVE_MINUTE:
                 setText(getResources().getString(R.string.five_min));
-
                 break;
             case THIRTY_MINUTE:
                 setText(getResources().getString(R.string.thirty_min));
-
                 break;
         }
     }
-
 
     public void resetOption() {
         setTextColor(getResources().getColor(R.color.text_hint));

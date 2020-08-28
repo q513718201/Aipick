@@ -2,7 +2,6 @@ package com.hazz.aipick.utils;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -20,9 +19,6 @@ import com.github.mikephil.charting.utils.MPPointD;
 import com.hazz.aipick.mvp.model.InComing;
 import com.hazz.aipick.widget.XYMarkerView;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,15 +27,12 @@ public class DynamicLineChartManager {
     private YAxis leftAxis;
     private YAxis rightAxis;
     private XAxis xAxis;
-    private LineData lineData;
-    private LineDataSet lineDataSet;
     private List<ILineDataSet> lineDataSets = new ArrayList<>();
-    private SimpleDateFormat df = new SimpleDateFormat("MM-dd");//设置日期格式  
     private List<String> timeList = new ArrayList<>(); //存储x轴的时间
     private LineDataSet mDataSetB;
     private LineDataSet mDataSetA;
     private Context mContext;
-    List<InComing> list;
+    List<InComing> list = new ArrayList<>();
 
     //多条曲线
     public DynamicLineChartManager(Context context, LineChart mLineChart) {
@@ -75,7 +68,6 @@ public class DynamicLineChartManager {
         legend.setWordWrapEnabled(true);
         legend.setForm(Legend.LegendForm.NONE);
 
-        leftAxis.setLabelCount(6, false);
         leftAxis.setDrawGridLines(false);
         leftAxis.setGridColor(Color.parseColor("#E4EEF9"));
         leftAxis.setAxisLineColor(Color.parseColor("#293559"));
@@ -103,15 +95,10 @@ public class DynamicLineChartManager {
             public void onValueSelected(Entry e, Highlight h) {
                 // 获取Entry
                 int iEntry = (int) e.getX();
-                float valEntry = e.getY();
-
                 // 获取选中value的坐标
                 MPPointD p = lineChart.getPixelForValues(e.getX(), e.getY(), YAxis.AxisDependency.LEFT);
-                double xValuePos = p.x;
-                double yValuePos = p.y;
 
                 XYMarkerView mv = new XYMarkerView(mContext, lineChart, iEntry, list);
-                mv.setChartView(lineChart);
                 lineChart.setMarker(mv);
 
             }
@@ -161,7 +148,8 @@ public class DynamicLineChartManager {
      * 动态添加数据（多条折线图）
      */
     public void setXValue(List<String> xValue) {
-        timeList = xValue;
+        timeList.clear();
+        timeList.addAll(xValue);
         xAxis.setLabelCount(timeList.size(), false);
         xAxis.setAxisMinimum(-0.5f);
         xAxis.setAxisMaximum((float) (timeList.size() - 0.5));
@@ -170,8 +158,8 @@ public class DynamicLineChartManager {
 
 
     public void setDoubleLineData(List<Integer> colour, List<InComing> list) {
-
-        this.list = list;
+        this.list.clear();
+        this.list.addAll(list);
 
         //设置折线图横跨距离
         ArrayList<Entry> yValue1 = new ArrayList<>();
@@ -207,7 +195,7 @@ public class DynamicLineChartManager {
         //设置折线图横跨距离
         ArrayList<Entry> yValue2 = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-             yValue2.add(new Entry(i, Float.valueOf(list.get(i).sell)));
+            yValue2.add(new Entry(i, Float.valueOf(list.get(i).sell)));
         }
 
         mDataSetB = new LineDataSet(yValue2, "");

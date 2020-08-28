@@ -79,19 +79,18 @@ class CategryDescActivity : BaseActivity(), WaletContract.CoinView {
             "-1" -> {
                 tv_price_name.visibility = View.GONE
                 ll_agree.visibility = View.GONE
-                llFans.visibility = View.INVISIBLE
+                llFans?.visibility = View.INVISIBLE
                 tv_price.text = getString(R.string.text_price_free)
-                iv_follow_status.visibility = View.GONE
+                iv_follow_status?.visibility = View.GONE
             }
             else -> {
                 tv_price_name.visibility = View.VISIBLE
                 ll_agree.visibility = View.VISIBLE
-                llFans.visibility = View.VISIBLE
-                iv_follow_status.visibility = View.VISIBLE
+                llFans?.visibility = View.VISIBLE
+                iv_follow_status?.visibility = View.VISIBLE
                 tv_price.text = "$$price"
             }
         }
-
     }
 
     override fun start() {

@@ -7,13 +7,17 @@ import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.View
+import com.blankj.utilcode.util.GsonUtils
+import com.hazz.aipick.BuildConfig
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.CollectionContract
+import com.hazz.aipick.mvp.model.bean.Collection
 import com.hazz.aipick.mvp.model.bean.MySubscribe
 import com.hazz.aipick.mvp.model.bean.SubscribeDesc
 import com.hazz.aipick.mvp.presenter.SubscribePresenter
 import com.hazz.aipick.ui.adapter.SubscribeAdapter
+import com.hazz.aipick.utils.AssetsUtil
 import com.hazz.aipick.utils.ToolBarCustom
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener
@@ -61,25 +65,44 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
     }
 
     override fun onLoadmore(refreshlayout: RefreshLayout?) {
+        loadType = 1
         page++
         requestData()
     }
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
-
+        loadType = 0
         page = 1
         refreshLayout.resetNoMoreData()
         requestData()
     }
 
     override fun mySubscribe(msg: List<MySubscribe>) {
-        refreshLayout.finishRefresh()
-        refreshLayout.finishLoadmore()
+        if (BuildConfig.DEBUG) {// TODO: 2020/8/28 test data  need delete
+            val assertsFileString = AssetsUtil.getAssertsFileString(this, "subsribe.json")
+            val data: List<MySubscribe> = GsonUtils.fromJson<Array<MySubscribe>>(assertsFileString, Array<MySubscribe>::class.java).toMutableList()
+            mOrderAdapter?.setNewData(data)
+            return
+        }
+
+
+        refreshLayout.isEnableLoadmore = msg.size == 10
         mOrderAdapter!!.setRole(currentCategry)
         mOrderAdapter!!.setType(if (currentDirect == "out") 0 else 1)
-        mOrderAdapter!!.setNewData(msg)
+        when (loadType) {
+            0 -> {
+                mOrderAdapter?.setNewData(msg)
+                refreshLayout.finishRefresh()
+            }
+            else -> {
+                mOrderAdapter?.addData(msg)
+                refreshLayout.finishLoadmore()
+            }
+        }
+
     }
 
+    private var loadType = 0;
 
     override fun layoutId(): Int = R.layout.activity_mine_subscriber
 
@@ -133,6 +156,7 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
     override fun start() {
         refreshLayout.setOnRefreshListener(this)
         refreshLayout.setOnLoadmoreListener(this)
+        refreshLayout.isEnableLoadmore = false
         tabLayout.addOnTabSelectedListener(this)
     }
 
@@ -201,7 +225,7 @@ class MineSubscribeActivity : BaseActivity(), CollectionContract.subscribeView, 
         }
 
 
-        val viewById = bottomSheet!!.delegate.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
+        val viewById = bottomSheet.delegate.findViewById<View>(android.support.design.R.id.design_bottom_sheet)
         //设置布局背景透明
         viewById?.setBackgroundColor(resources.getColor(android.R.color.transparent))
         bottomSheet.show()

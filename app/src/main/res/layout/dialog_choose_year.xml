@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_16">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -19,28 +21,29 @@
 
             <TextView
                 android:id="@+id/tv_one_year"
-                android:textSize="17sp"
-                android:padding="16dp"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_bottom"
+                android:gravity="center"
+                android:padding="16dp"
                 android:text="@string/jin_seven_day"
-                />
+                android:textColor="@color/color_bottom"
+                android:textSize="17sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/color_gray" />
+
             <TextView
                 android:id="@+id/tv_one_month"
-                android:textSize="17sp"
-                android:padding="16dp"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_bottom"
+                android:gravity="center"
+                android:padding="16dp"
                 android:text="@string/jinyiyue"
-                />
+                android:textColor="@color/color_bottom"
+                android:textSize="17sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
@@ -49,54 +52,51 @@
 
             <TextView
                 android:id="@+id/tv_three_month"
-                android:textSize="17sp"
-                android:padding="16dp"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_bottom"
+                android:gravity="center"
+                android:padding="16dp"
                 android:text="@string/jin_sanyue"
-                />
+                android:textColor="@color/color_bottom"
+                android:textSize="17sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:background="@color/color_gray" />
 
 
-
-
             <TextView
                 android:id="@+id/tv_all"
-                android:textSize="17sp"
-                android:padding="16dp"
-                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_bottom"
+                android:gravity="center"
+                android:padding="16dp"
                 android:text="@string/all"
-                />
+                android:textColor="@color/color_bottom"
+                android:textSize="17sp" />
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
 
 
     <android.support.v7.widget.CardView
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/color_white"
         app:cardCornerRadius="5dp">
+
         <TextView
             android:id="@+id/tv_cancle"
-            android:textSize="17sp"
-            android:padding="16dp"
-            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_bottom"
+            android:gravity="center"
+            android:padding="16dp"
             android:text="@string/cancel"
-            />
+            android:textColor="@color/color_bottom"
+            android:textSize="17sp" />
 
     </android.support.v7.widget.CardView>
 

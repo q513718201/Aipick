@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_common"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="25dp">
 
 
         <android.support.v7.widget.Toolbar
@@ -389,7 +390,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="57dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="205dp"
+            android:layout_marginTop="188dp"
             android:background="@drawable/mine_guide_regist_bg"
             android:gravity="center"
             android:padding="8dp"
@@ -403,7 +404,7 @@
             android:layout_below="@+id/tv_step"
             android:layout_marginStart="90dp"
             android:layout_marginTop="5dp"
-            android:src="@mipmap/sming_01"
+            android:src="@mipmap/guide_mine"
 
             />
 

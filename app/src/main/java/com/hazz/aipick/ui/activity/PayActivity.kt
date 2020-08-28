@@ -8,17 +8,17 @@ import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
-import com.alipay.sdk.app.PayTask
 import com.google.gson.Gson
-//import com.alipay.sdk.app.PayTask
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.HomeContract
 import com.hazz.aipick.mvp.model.bean.*
 import com.hazz.aipick.mvp.presenter.PayPresenter
+import com.hazz.aipick.utils.PayUtil
 import com.hazz.aipick.utils.SToast
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
+import com.xgr.easypay.callback.IPayCallback
 import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -28,7 +28,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class PayActivity : BaseActivity(), HomeContract.payView {
+class PayActivity : BaseActivity(), HomeContract.payView, IPayCallback {
 
     override fun paySucceed(msg: PaySucceed) {
         tv_succeed.visibility = View.VISIBLE
@@ -57,7 +57,6 @@ class PayActivity : BaseActivity(), HomeContract.payView {
 
     override fun payCancle(msg: String) {
         ToastUtils.showToast(this, msg)
-
     }
 
     override fun createId(msg: CreateId) {
@@ -105,22 +104,11 @@ class PayActivity : BaseActivity(), HomeContract.payView {
 
 
     override fun payResult(msg: PayResultMine) {
-
-        val payRunnable = Runnable {
-
-            val alipay = PayTask(this)
-            val result = alipay.payV2(msg.alipay.order_string, true)
-            Log.i("msp", result.toString())
-
-            val msg = Message()
-            msg.what = SDK_PAY_FLAG
-            msg.obj = result
-            mHandler.sendMessage(msg)
+        if (msg.alipay != null)
+            PayUtil.aliPay(this, msg.alipay.order_string, this)
+        else {
+            PayUtil.wxPay(this, msg.wxpay, this)
         }
-
-        // 必须异步调用
-        val payThread = Thread(payRunnable)
-        payThread.start()
     }
 
 
@@ -147,7 +135,7 @@ class PayActivity : BaseActivity(), HomeContract.payView {
                 .setTitle(getString(R.string.pay))
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
-                .setOnLeftIconClickListener { view -> finish() }
+                .setOnLeftIconClickListener { finish() }
 
     }
 
@@ -162,7 +150,7 @@ class PayActivity : BaseActivity(), HomeContract.payView {
 
         tv_suscribe.setOnClickListener {
 
-            mPayPresenter.pay(id, if(payType==0)"alipay" else "wechat")
+            mPayPresenter.pay(id, if (payType == 0) "alipay" else "wechat")
         }
         tv_alipay.setOnClickListener {
             tv_alipay.isSelected = true
@@ -216,6 +204,18 @@ class PayActivity : BaseActivity(), HomeContract.payView {
             mPayPresenter.orderCancle(id)
         }
 
+    }
+
+    override fun failed(code: Int, message: String?) {
+        TODO("Not yet implemented")
+    }
+
+    override fun cancel() {
+        TODO("Not yet implemented")
+    }
+
+    override fun success() {
+        TODO("Not yet implemented")
     }
 
 }

@@ -3,6 +3,7 @@ package com.hazz.aipick.base
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
@@ -12,10 +13,10 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
+import com.blankj.utilcode.util.BarUtils
 import com.hazz.aipick.MyApplication
 import com.hazz.aipick.net.BaseView
 import com.hazz.aipick.net.ExceptionHandle
-import com.hazz.aipick.utils.StatusBarUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.ProgressDialog
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -33,7 +34,9 @@ abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCal
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
-        StatusBarUtil.darkMode(this)
+//        StatusBarUtil.darkMode(this)
+        BarUtils.setStatusBarLightMode(this, false)
+        BarUtils.setStatusBarColor(this, Color.argb(0, 0, 0, 0))
         mDialog = ProgressDialog(this)
         initView()
         start()

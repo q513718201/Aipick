@@ -1,3 +1,7 @@
+include ':pay_ali'
+include ':pay_wx'
+include ':pay_core'
+include ':lib_guide'
 include ':update_core'
 include ':update'
 include ':app', ':klinelib', ':magicindicator'

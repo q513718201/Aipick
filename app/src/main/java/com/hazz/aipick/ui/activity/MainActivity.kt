@@ -9,11 +9,12 @@ import com.flyco.tablayout.listener.OnTabSelectListener
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.events.ChangeIndex
-import com.hazz.aipick.events.RxBus
 import com.hazz.aipick.mvp.model.bean.TabEntity
 import com.hazz.aipick.showToast
-import com.hazz.aipick.socket.WsManager
-import com.hazz.aipick.ui.fragment.*
+import com.hazz.aipick.ui.fragment.CoinFragment
+import com.hazz.aipick.ui.fragment.HomeFragment
+import com.hazz.aipick.ui.fragment.MineFragment
+import com.hazz.aipick.utils.RxBus
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -32,6 +33,7 @@ class MainActivity : BaseActivity() {
 
     // 未被选中的图标
     private val mIconUnSelectIds = intArrayOf(R.mipmap.home1, R.mipmap.home2, R.mipmap.home3, R.mipmap.home4)
+
     // 被选中的图标
     private val mIconSelectIds = intArrayOf(R.mipmap.home_check1, R.mipmap.home_check2, R.mipmap.home_check3, R.mipmap.home_check4)
 
@@ -42,6 +44,7 @@ class MainActivity : BaseActivity() {
     private var mMineFragment: MineFragment? = null
 
     private var mCoinFragment: CoinFragment? = null
+
     //默认为0
     private var mIndex = 0
 
@@ -105,19 +108,22 @@ class MainActivity : BaseActivity() {
                 transaction.show(it)
             } ?: CoinFragment.getInstance(mTitles[position]).let {
                 mCoinFragment = it
-                transaction.add(R.id.fl_container, it, "discovery") }
+                transaction.add(R.id.fl_container, it, "discovery")
+            }
             2  //热门
             -> mCoinFragment?.let {
                 transaction.show(it)
             } ?: CoinFragment.getInstance(mTitles[position]).let {
                 mCoinFragment = it
-                transaction.add(R.id.fl_container, it, "hot") }
+                transaction.add(R.id.fl_container, it, "hot")
+            }
             3 //我的
             -> mMineFragment?.let {
                 transaction.show(it)
             } ?: MineFragment.getInstance(mTitles[position]).let {
                 mMineFragment = it
-                transaction.add(R.id.fl_container, it, "mine") }
+                transaction.add(R.id.fl_container, it, "mine")
+            }
 
             else -> {
 

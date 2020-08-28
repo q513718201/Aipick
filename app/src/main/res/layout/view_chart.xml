@@ -75,7 +75,7 @@
             android:button="@null"/>
 
 
-        <com.hazz.aipick.widget.OptionRadioButton
+        <com.hazz.aipick.widget.kline.OptionRadioButton
             android:id="@+id/more"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -87,7 +87,7 @@
             android:background="@drawable/bg_option_selector"
             android:button="@null"/>
 
-        <com.hazz.aipick.widget.OptionRadioButton
+        <com.hazz.aipick.widget.kline.OptionRadioButton
             android:id="@+id/index"
             android:layout_width="0dp"
             android:layout_height="match_parent"

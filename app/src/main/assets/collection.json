@@ -1,0 +1,50 @@
+[
+  {
+    "collect_type": "bot",
+    "name": "",
+    "id": "1",
+    "create_at": "2019-01-02 12:00:00",
+    "base_coin": "BTC",
+    "quote_coin": "ETH"
+  },
+  {
+    "collect_type": "bot",
+    "name": "",
+    "id": "2",
+    "create_at": "2019-01-02 12:00:00",
+    "base_coin": "BTC",
+    "quote_coin": "ETH"
+  },
+  {
+    "collect_type": "bot",
+    "name": "",
+    "id": "3",
+    "create_at": "2019-01-02 12:00:00",
+    "base_coin": "BTC",
+    "quote_coin": "ETH"
+  },
+  {
+    "collect_type": "bot",
+    "name": "",
+    "id": "4",
+    "create_at": "2019-01-02 12:00:00",
+    "base_coin": "BTC",
+    "quote_coin": "ETH"
+  },
+  {
+    "collect_type": "bot",
+    "name": "",
+    "id": "5",
+    "create_at": "2019-01-02 12:00:00",
+    "base_coin": "BTC",
+    "quote_coin": "ETH"
+  },
+  {
+    "collect_type": "bot",
+    "name": "",
+    "id": "6",
+    "create_at": "2019-01-02 12:00:00",
+    "base_coin": "BTC",
+    "quote_coin": "ETH"
+  }
+]

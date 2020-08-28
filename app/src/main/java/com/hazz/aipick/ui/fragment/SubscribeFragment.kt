@@ -32,8 +32,11 @@ class SubscribeFragment : BaseFragment(), CollectionContract.userSubscribeView {
             return fragment
         }
     }
-
-
+    var isDemo = "0"
+    fun setIsDemo(demo: String) {
+        isDemo = demo
+        getData()
+    }
     override fun getLayoutId(): Int = R.layout.fragment_subscribe
 
 
@@ -72,7 +75,7 @@ class SubscribeFragment : BaseFragment(), CollectionContract.userSubscribeView {
         if (id == "-1") {
             mSubscribePresenter.fakeFollows()
         } else {
-            mSubscribePresenter.userFollows(id!!, page, 10, 0)
+            mSubscribePresenter.userFollows(id!!, page, 10, isDemo)
         }
 
     }

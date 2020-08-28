@@ -27,7 +27,9 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ui.activity.SubscribeSuccessActivity"></activity>
+        <activity android:name=".ui.activity.InvitePicActivity"></activity>
+        <activity android:name=".ui.activity.InfoDetailActivity" />
+        <activity android:name=".ui.activity.SubscribeSuccessActivity" />
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"

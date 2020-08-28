@@ -1,15 +1,13 @@
 package com.hazz.aipick.ui.activity
 
-import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.view.View
 import android.widget.RadioGroup
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.socket.WsManager
 import com.hazz.aipick.ui.fragment.CoinFragment
 import com.hazz.aipick.ui.fragment.HomeFragment
+import com.hazz.aipick.ui.fragment.InfoFragment
 import com.hazz.aipick.ui.fragment.MineFragment
 import com.tencent.bugly.Bugly
 import kotlinx.android.synthetic.main.activity_main_new.*
@@ -41,7 +39,7 @@ class MainActivityNew : BaseActivity(), RadioGroup.OnCheckedChangeListener {
     private fun initFragment() {
         mFragments = ArrayList()
         mFragments.add(HomeFragment())
-        mFragments.add(Fragment())
+        mFragments.add(InfoFragment())
         mFragments.add(CoinFragment())
         mFragments.add(MineFragment())
         supportFragmentManager.beginTransaction()

@@ -9,8 +9,10 @@ import android.os.CountDownTimer
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
 import android.view.View
+import com.bigkoo.alertview.AlertView
 import com.bumptech.glide.Glide
 import com.hazz.aipick.R
+import com.hazz.aipick.R.array.card_type
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.model.bean.LoginBean
@@ -49,20 +51,20 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
 
     override fun getUserInfo(msg: UserInfo) {
         val security = msg.security
-        if(!TextUtils.isEmpty(security.email)&&!TextUtils.isEmpty(security.phone)){
+        if (!TextUtils.isEmpty(security.email) && !TextUtils.isEmpty(security.phone)) {
             et_email.setText(security.email)
             edit_phone.setText(security.phone)
-            rl_getcode.visibility= View.GONE
+            rl_getcode.visibility = View.GONE
         }
 
-        if(TextUtils.isEmpty(security.phone)&&!TextUtils.isEmpty(security.email)){//有邮箱无手机
+        if (TextUtils.isEmpty(security.phone) && !TextUtils.isEmpty(security.email)) {//有邮箱无手机
             et_email.setText(security.email)
-            currentCode=0
+            currentCode = 0
         }
 
-        if(!TextUtils.isEmpty(security.phone)&&TextUtils.isEmpty(security.email)){//有手机无邮箱
+        if (!TextUtils.isEmpty(security.phone) && TextUtils.isEmpty(security.email)) {//有手机无邮箱
             edit_phone.setText(security.phone)
-            currentCode=1
+            currentCode = 1
         }
     }
 
@@ -82,9 +84,10 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
     }
 
     override fun onSendMesSuccess(msg: String) {
-        ToastUtils.showToast(this,  getString(R.string.mine_send_success))
+        ToastUtils.showToast(this, getString(R.string.mine_send_success))
         showCountDownView()
     }
+
     /**
      * 展示获取验证码倒计时
      */
@@ -99,12 +102,11 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                tv_get_code.setText("${millisUntilFinished / 1000}s")
+                tv_get_code.text = "${millisUntilFinished / 1000}s"
             }
         }.start()
 
     }
-
 
 
     override fun layoutId(): Int = R.layout.activity_apply_trader
@@ -122,7 +124,7 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
     private var mTraderAuthPresenter: TraderAuthPresenter = TraderAuthPresenter(this)
     private var mLoginPresenter: LoginPresenter = LoginPresenter(this)
     private val REQUEST_AREACODE_CODE = 10005
-    private var currentCode=0
+    private var currentCode = 0
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
@@ -133,30 +135,50 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
                 .setToolBarBg(Color.parseColor("#1E2742"))
                 .setOnLeftIconClickListener { view -> finish() }
         tv_get_code.setOnClickListener {
-            if(currentCode==0){
-                mRegistPresenter.sendCodeLogin("phone",tv_quhao.text.toString(),edit_phone.text.toString(),
+            if (currentCode == 0) {
+                mRegistPresenter.sendCodeLogin("phone", tv_quhao.text.toString(), edit_phone.text.toString(),
                         "bind_phone"
                 )
-            }else{
-                mRegistPresenter.sendCodeLogin("email","",et_email.text.toString(),
+            } else {
+                mRegistPresenter.sendCodeLogin("email", "", et_email.text.toString(),
                         "bind_email"
                 )
             }
         }
 
         bt_login.setOnClickListener {
-          val setTrade = SetTrade(tv_quhao.text.toString(), tv_getCode.text.toString(), et_email.text.toString(),
-                  edit_phone.text.toString(), et_card.text.toString(), et_name.text.toString(), "idcard", iv1_base64!!, iv2_base64!!)
-            startActivity(Intent(this,ApplyTraderActivity::class.java).putExtra("setTrade",setTrade))
+
+
+
+
+
+            val setTrade = SetTrade(tv_quhao.text.toString(), tv_getCode.text.toString(), et_email.text.toString(),
+                    edit_phone.text.toString(), et_card.text.toString(), et_name.text.toString(), "idcard", iv1_base64!!, iv2_base64!!)
+
+
+
+            startActivity(Intent(this, ApplyTraderActivity::class.java).putExtra("setTrade", setTrade))
 //            mTraderAuthPresenter.traderAuth(tv_quhao.text.toString(),tv_getCode.text.toString(),et_email.text.toString(),
 //                    edit_phone.text.toString(),et_card.text.toString(),et_name.text.toString(),"idcard",iv1_base64!!,iv2_base64!!,"")
-    }
+        }
 
 
         tv_quhao.setOnClickListener {
             startActivityForResult(Intent(this, CountryActivity::class.java), REQUEST_AREACODE_CODE)
         }
-
+        tv_chose_auth_type.setOnClickListener {
+            val card_type = resources.getStringArray(card_type)
+            AlertView.Builder()
+                    .setContext(this)
+                    .setStyle(AlertView.Style.ActionSheet)
+                    .setCancelText(getString(R.string.cancel))
+                    .setDestructive(*card_type)
+                    .setOnItemClickListener { _: Any, i: Int ->
+                        tv_chose_auth_type.text = card_type[i]
+                    }
+                    .build()
+                    .show()
+        }
     }
 
     override fun start() {

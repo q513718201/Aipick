@@ -2,6 +2,7 @@
 
 <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,7 +31,6 @@
                 android:layout_height="300dp">
 
 
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -43,9 +43,10 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="40dp"
-                        android:text="Ethereum"
+                        android:text="@string/app_name"
                         android:textColor="@color/color_white"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        tools:text="@sample/sample.json/coin_name" />
 
 
                     <TextView
@@ -54,18 +55,18 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="20dp"
-                        android:text="--%"
                         android:textColor="@color/color_white"
-                        android:textSize="30sp" />
+                        android:textSize="30sp"
+                        tools:text="@sample/sample.json/rate" />
 
                     <TextView
                         android:id="@+id/price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
-                        android:text="-0.00/月"
                         android:textColor="@color/color_white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:text="@sample/sample.json/price" />
 
                     <TextView
                         android:id="@+id/tv_pullback"
@@ -73,9 +74,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_marginTop="20dp"
-                        android:text="@string/text_ten_month_rollback"
                         android:textColor="@color/color_white"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        tools:text="@sample/sample.json/pullback" />
 
                     <com.hazz.aipick.widget.BezierView
                         android:id="@+id/mBezierView"
@@ -94,6 +95,7 @@
                     android:layout_marginRight="20dp"
                     android:padding="5dp"
                     android:src="@mipmap/shaixuan" />
+
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

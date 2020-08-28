@@ -9,6 +9,8 @@ import com.hazz.aipick.mvp.model.bean.Home
 import com.hazz.aipick.ui.activity.MyAccountActivity
 import com.hazz.aipick.ui.activity.RebotCategryActivity
 import com.hazz.aipick.utils.CoinManager
+import com.hazz.aipick.view.BezierCurveChart
+import kotlin.random.Random
 
 
 class HomeAdapter(layoutResId: Int, data: List<Home>?) : BaseQuickAdapter<Home, BaseViewHolder>(layoutResId, data) {
@@ -37,6 +39,18 @@ class HomeAdapter(layoutResId: Int, data: List<Home>?) : BaseQuickAdapter<Home, 
                 }
             }
         }
+        val view = helper.getView<BezierCurveChart>(R.id.rate_chart)
+        var points = ArrayList<BezierCurveChart.Point>()
+        points.add(BezierCurveChart.Point(1f, 10f));
+        points.add(BezierCurveChart.Point(2f, 55f));
+        points.add(BezierCurveChart.Point(3f, 7f));
+        points.add(BezierCurveChart.Point(4f, 16f));
+        points.add(BezierCurveChart.Point(5f, 6f));
+        points.add(BezierCurveChart.Point(6f, 26f));
+        points.add(BezierCurveChart.Point(7f, 66f));
+        points.add(BezierCurveChart.Point(8f, 76f));
+        var title = arrayOf<String>("0:00", "6:00", "12:00", "18:00", "24:00")
+        view.init(points, title, "tipText");
     }
 
     fun setRole(role: String) {

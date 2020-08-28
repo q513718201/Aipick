@@ -12,6 +12,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
+import com.hazz.aipick.managers.GuideManager
 import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.*
 import com.hazz.aipick.mvp.presenter.AccountPresenter
@@ -23,6 +24,7 @@ import com.hazz.aipick.ui.fragment.TransactionAnalysisFragment
 import com.hazz.aipick.utils.*
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
 import com.vinsonguo.klinelib.util.DateUtils
+import easily.tech.guideview.lib.GuideViewBundle.Direction.TOP
 import kotlinx.android.synthetic.main.activity_my_account.iv_back
 import kotlinx.android.synthetic.main.activity_my_account.rg
 import kotlinx.android.synthetic.main.activity_my_account.tv_fans
@@ -91,7 +93,7 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
             when (checkedId) {
                 R.id.rb1 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fl, TransactionAnalysisFragment()).commitAllowingStateLoss()
+                    transaction.replace(R.id.fl, TransactionAnalysisFragment.getInstance(id, role)).commitAllowingStateLoss()
                 }
                 R.id.rb2 -> {
                     val transaction = supportFragmentManager.beginTransaction()
@@ -251,7 +253,7 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
     }
 
     override fun start() {
-
+        GuideManager.showGuide(supportFragmentManager, tv_suscribe, R.mipmap.guide_subscribe, TOP, "guide_subscribe")
     }
 
     override fun myaccount(msg: MyAccount) {

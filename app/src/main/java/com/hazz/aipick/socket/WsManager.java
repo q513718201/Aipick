@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hazz.aipick.MyApplication;
+import com.hazz.aipick.managers.KManager;
 import com.hazz.aipick.mvp.model.bean.BorSell;
 import com.hazz.aipick.mvp.model.bean.BuyOrSell;
 import com.hazz.aipick.mvp.model.bean.Ping;
@@ -156,7 +157,11 @@ public class WsManager {
         public void onBinaryMessage(WebSocket websocket, byte[] binary) throws Exception {
             super.onBinaryMessage(websocket, binary);
             String s = GZipUtil.uncompressToString(binary);
-            Log.d("daidai", s);
+            if (s.contains("error")) {
+                Log.e("daidai", s);
+            } else {
+                Log.d("daidai", s);
+            }
             CoinDetail klineBean = gson.fromJson(s, CoinDetail.class);
 
             if (klineBean.tick != null) {
@@ -170,7 +175,7 @@ public class WsManager {
             }
 
             KLineBean KLineBean1 = gson.fromJson(s, KLineBean.class);
-            if (KLineBean1 != null) {
+            if (!KLineBean1.isEmpty()) {
                 RxBus.get().send(KLineBean1);
             }
 
@@ -292,6 +297,7 @@ public class WsManager {
             }
         }
     }
+
     public void requestTrade(String sub) {
         Gson mGson = new Gson();
         KLineBodyDetail kBody = new KLineBodyDetail();

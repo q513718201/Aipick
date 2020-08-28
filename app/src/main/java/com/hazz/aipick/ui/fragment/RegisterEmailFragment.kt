@@ -109,7 +109,7 @@ class RegisterEmailFragment : BaseFragment(), LoginContract.RegistView {
                 return@setOnClickListener
             }
             if (!RegexUtils.isEmail(edit_text.text)) {
-                ToastUtils.showToast(activity, getString(R.string.hint_register_empty_email))
+                ToastUtils.showToast(activity, getString(R.string.hint_register_invalid_email))
                 return@setOnClickListener
             }
             if (mTitle != null) {

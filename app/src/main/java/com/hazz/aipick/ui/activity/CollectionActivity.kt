@@ -1,34 +1,53 @@
 package com.hazz.aipick.ui.activity
 
+
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
-import android.support.design.widget.BottomSheetDialog
 import android.support.design.widget.TabLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
+import android.view.View
+import android.widget.TextView
+import com.blankj.utilcode.util.GsonUtils
+import com.hazz.aipick.BuildConfig
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.model.bean.Collection
 import com.hazz.aipick.mvp.presenter.CollectionPresenter
 import com.hazz.aipick.ui.adapter.CollectionAdapter
-import com.hazz.aipick.ui.adapter.OrderAdapter
+import com.hazz.aipick.utils.AssetsUtil
 import com.hazz.aipick.utils.ToolBarCustom
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener
 import kotlinx.android.synthetic.main.activity_mine_collection.*
 
 
-import java.util.ArrayList
-
-
-class CollectionActivity : BaseActivity(), TabLayout.OnTabSelectedListener, CollectionContract.collectionView {
+class CollectionActivity : BaseActivity(), TabLayout.OnTabSelectedListener, CollectionContract.collectionView, OnRefreshLoadmoreListener {
     override fun addCollectionSucceed(msg: String) {
 
     }
 
     override fun getCollection(msg: List<Collection>) {
+        if (BuildConfig.DEBUG) {// TODO: 2020/8/28 test data  need delete
+            val assertsFileString = AssetsUtil.getAssertsFileString(this, "collection.json")
+            val data: List<Collection> = GsonUtils.fromJson<Array<Collection>>(assertsFileString, Array<Collection>::class.java).toMutableList()
+            mOrderAdapter?.setNewData(data)
+            return
+        }
 
-        mOrderAdapter?.setNewData(msg)
+        refreshLayout.isEnableLoadmore = msg.size == 10
+        when (loadType) {
+            0 -> {
+                refreshLayout.finishRefresh()
+                mOrderAdapter?.setNewData(msg)
+            }
+            else -> {
+                refreshLayout.finishLoadmore()
+                mOrderAdapter?.addData(msg)
+            }
+        }
+
     }
 
     override fun onTabReselected(p0: TabLayout.Tab?) {
@@ -39,34 +58,32 @@ class CollectionActivity : BaseActivity(), TabLayout.OnTabSelectedListener, Coll
     }
 
     override fun onTabSelected(p0: TabLayout.Tab?) {
-        val position = p0?.position
-        when(position){
-            0->{
-                currentType="bot"
-                mCollectionPresenter.getCollection(currentType,page,10)
+        when (p0?.position) {
+            0 -> {
+                currentType = "bot"
+                mCollectionPresenter.getCollection(currentType, page, 10)
             }
-            1->{
-                currentType="sentiment"
-                mCollectionPresenter.getCollection(currentType,page,10)
+            1 -> {
+                currentType = "sentiment"
+                mCollectionPresenter.getCollection(currentType, page, 10)
             }
         }
     }
 
 
-
-
     override fun layoutId(): Int = R.layout.activity_mine_collection
 
     override fun initData() {
-        mCollectionPresenter.getCollection(currentType,page,10)
+        mCollectionPresenter.getCollection(currentType, page, 10)
     }
 
     private var mOrderAdapter: CollectionAdapter? = null
     private val titleList = ArrayList<String>()
-    private  var bottomSheet:BottomSheetDialog?=null
     private var mCollectionPresenter: CollectionPresenter = CollectionPresenter(this)
-    private var currentType="bot"
-    private var page=1
+    private var currentType = "bot"
+    private var page = 1
+    private var editable = false
+
     @SuppressLint("SetTextI18n")
     override fun initView() {
         ToolBarCustom.newBuilder(toolbar as Toolbar)
@@ -79,30 +96,52 @@ class CollectionActivity : BaseActivity(), TabLayout.OnTabSelectedListener, Coll
                 .setRightText(getString(R.string.edit))
                 .setRightTextColor(resources.getColor(R.color.dilaog_btn_color))
                 .setOnRightClickListener {
+                    editable = !editable
+                    mOrderAdapter?.setEditable(editable)
+                    rl_action.visibility = if (editable) View.VISIBLE else View.GONE
+                    (it as TextView).text = if (editable) getString(R.string.text_finish) else getString(R.string.edit)
 
                 }
 
-
+        refreshLayout.setOnRefreshLoadmoreListener(this)
+        refreshLayout.isEnableLoadmore = false
         titleList.add("机器人策略")
         titleList.add("市场情绪")
         for (i in titleList.indices) {
             tabLayout!!.addTab(tabLayout!!.newTab().setText(titleList[i]))
         }
         recycleview.layoutManager = LinearLayoutManager(this)
-        mOrderAdapter= CollectionAdapter(R.layout.item_collection,null)
+        mOrderAdapter = CollectionAdapter(null)
 
         recycleview.adapter = mOrderAdapter
         mOrderAdapter!!.bindToRecyclerView(recycleview)
         mOrderAdapter!!.setEmptyView(R.layout.empty_view)
         tabLayout.addOnTabSelectedListener(this)
-
+        tv_remove_all.setOnClickListener {
+            mCollectionPresenter.deleteSelected(ArrayList(), currentType, "all")
+        }
+        tv_del.setOnClickListener {
+            mOrderAdapter?.getSelectIds()?.let { mCollectionPresenter.deleteSelected(it, currentType, if (it.size > 1) "many" else "one") }
+        }
     }
 
     override fun start() {
 
     }
 
+    private var loadType = 0
 
+    override fun onLoadmore(refreshlayout: RefreshLayout?) {
+        loadType = 1
+        page++
+        initData()
+    }
+
+    override fun onRefresh(refreshlayout: RefreshLayout?) {
+        loadType = 0
+        page = 1
+        initData()
+    }
 
 
 }

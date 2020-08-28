@@ -52,6 +52,7 @@ class CoinFragment : BaseFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_coin
 
 
+
     override fun lazyLoad() {
         WsManager.getInstance().reconnect()
         for (coin in mCoinList) {
@@ -146,7 +147,6 @@ class CoinFragment : BaseFragment() {
             }
 
         })
-
     }
 
     @Synchronized
@@ -166,7 +166,6 @@ class CoinFragment : BaseFragment() {
         mViewPagerAdapter!!.updateList(recyclerViewList)
         viewPager.offscreenPageLimit = recyclerViewList.size
         viewPager.currentItem = 1
-
     }
 
 }

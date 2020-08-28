@@ -188,19 +188,19 @@
     <string name="set_trade_pwd">设置交易密码</string>
     <string name="please_input_trade_pwd">请设置交易密码（6位数的数字密码）</string>
     <string name="apply_trader">申请交易员</string>
-    <string name="apply_trader_tips">为了您的账户安全，请谨慎填写以下内容，资料提交后不可修改。</string>
+    <string name="apply_trader_tips">为了您的账户安全,请谨慎填写以下内容,资料提交后不可修改。</string>
     <string name="please_input_email">请输入邮箱地址</string>
     <string name="real_name">真实姓名</string>
     <string name="please_input_real_name">请输入真实姓名</string>
     <string name="please_input_id_card">请输入身份证号</string>
     <string name="card_type">证件类型</string>
-    <string name="card_msg">身份证信息</string>
+    <string name="card_msg">证件信息</string>
     <string name="card_youxiaoqi">证件必须在有效期内</string>
     <string name="trader_set">交易员设置</string>
     <string name="input_amount">请输入金额</string>
     <string name="trader_apply">申请交易员</string>
-    <string name="apply_trader_desc">设置交易承诺“历史最大回撤率”，你的自律会赢得社区用户更多的 信任；请谨慎填写，一经确认将不可修改，建议≤30%</string>
-    <string name="input_apply_msg">请输入1- 99正整数</string>
+    <string name="apply_trader_desc">设置交易承诺“历史最大回撤率”，你的自律会赢得社区用户更多的信任；请谨慎填写，一经确认将不可修改，建议≤30%</string>
+    <string name="input_apply_msg">请输入1-99正整数</string>
     <string name="net_work_error">检查网络是否连接</string>
     <string name="connect_server_timeout">无法连接到服务器</string>
     <string name="parse_data_error">解析数据出现错误</string>
@@ -395,6 +395,9 @@
     <string name="no_found_funds">未获取到余额</string>
     <string name="not_sufficient_fund">余额不足</string>
 
+    <string name="his_position">历史持仓</string>
+    <string name="now_position">现在持仓</string>
+
     <string name="limit_order_buy">限价单买入</string>
     <string name="trade_fee">交易手续费</string>
     <string name="do_not_tip">下次不再提示</string>
@@ -405,4 +408,18 @@
     <string name="sell_amounts">卖出数量</string>
     <string name="please_input_price">请输入价格</string>
     <string name="please_input_amount">请输入数量</string>
+
+
+    <string name="text_buy_price">成交均价</string>
+    <string name="text_buy_fee">手续费</string>
+    <string name="text_target_profit">止盈</string>
+    <string name="text_trade_coin">交易品种</string>
+    <string name="text_trade_no">订单号</string>
+
+    <string name="text_sell_price">成交均价</string>
+    <string name="text_sell_fee">手续费</string>
+    <string name="text_sell_loss">止损</string>
+    <string name="text_trade_amount">交易数量</string>
+    <string name="text_save_qr">生成海报</string>
+    <string name="text_copy_invite_link">复制邀请链接</string>
 </resources>

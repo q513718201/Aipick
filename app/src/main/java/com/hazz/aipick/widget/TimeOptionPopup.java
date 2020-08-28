@@ -12,7 +12,7 @@ import android.widget.RadioGroup;
 import com.hazz.aipick.R;
 
 
-public class TimeOptionPopupWindow extends PopupWindow {
+public class TimeOptionPopup extends PopupWindow {
 
 
     public enum Option {
@@ -25,7 +25,7 @@ public class TimeOptionPopupWindow extends PopupWindow {
     private Option mOption;
     private final RadioGroup mRadioGroup;
 
-    public TimeOptionPopupWindow(Context context) {
+    public TimeOptionPopup(Context context) {
         super(context);
         setWidth(WindowManager.LayoutParams.MATCH_PARENT);
         int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,

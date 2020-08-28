@@ -12,7 +12,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.hazz.aipick.R;
-import com.hazz.aipick.socket.Index;
+import com.vinsonguo.klinelib.model.Index;
 
 
 public class IndexOptionPopupWindow extends PopupWindow implements RadioGroup.OnCheckedChangeListener{

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.hazz.aipick.R;
 import com.hazz.aipick.socket.CoinDetail;
+import com.hazz.aipick.socket.WsManager;
 import com.hazz.aipick.utils.BigDecimalUtil;
 import com.hazz.aipick.utils.SPUtil;
 
@@ -51,10 +52,11 @@ public class MarketInfoView extends RelativeLayout {
     }
 
 
-    public void bindView(CoinDetail coinDetail) {
-
-        post(() -> updateView(coinDetail));
-
+    public void bindView(String coinName) {
+        WsManager.getInstance().setOnPing(coinDetails -> post(() -> {
+            if (coinDetails.ch.equalsIgnoreCase(coinName))
+                updateView(coinDetails);
+        }));
     }
 
     private void updateView(CoinDetail coinDetail) {
@@ -87,11 +89,6 @@ public class MarketInfoView extends RelativeLayout {
         mHighest.setText(market.high);
         mLowest.setText(market.low);
         String volume = market.vol;
-//            String volumeString = volume + " " + market.tradeA;
-//            if (!TextUtils.isEmpty(volume) && !volume.equals("--")) {
-//                String s = new BigDecimal(volume).setScale(0, RoundingMode.HALF_UP).toPlainString();
-//                volumeString = s + " " + market.tradeA;
-//            }
         mVolume.setText(BigDecimalUtil.formatRaise(volume));
         String rate = SPUtil.INSTANCE.getRate();
         String currency = String.format(getResources().getString(R.string.market_yuan), BigDecimalUtil.mul(market.close, rate, 2));

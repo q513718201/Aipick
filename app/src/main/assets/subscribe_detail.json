@@ -1,0 +1,39 @@
+{
+  "subee_name": "被订阅者",  
+  "start": "2019-02-02 12:00:00",  
+  "end": "2019-03-02 12:00:00",  
+  "pay_method": "wechat",  
+  "price": "12.00",  
+  "is_valid": true,  
+  "switch": "on",  
+  "gains": [
+    {
+      "amount": "10.00",
+      "create_at": "2019-01-02 12:00:00",  
+      "exchange_code": "huobi",  
+      "base_coin": "BTC",  
+      "quote_coin": "ETH"
+    },
+    {
+      "amount": "112.00",
+      "create_at": "2019-01-02 12:00:00",
+      "exchange_code": "huobi",
+      "base_coin": "BTC",
+      "quote_coin": "ETH"
+    },    {
+      "amount": "1211.00",
+      "create_at": "2019-01-02 12:00:00",
+      "exchange_code": "huobi",
+      "base_coin": "BTC",
+      "quote_coin": "ETH"
+    },
+    {
+      "amount": "9012.00",
+      "create_at": "2019-06-02 12:00:00",
+      "exchange_code": "huobi",
+      "base_coin": "LTC",
+      "quote_coin": "ETH"
+    }
+
+  ]
+}

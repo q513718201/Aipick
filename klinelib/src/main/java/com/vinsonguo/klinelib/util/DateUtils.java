@@ -1,8 +1,10 @@
 package com.vinsonguo.klinelib.util;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -12,6 +14,17 @@ public class DateUtils {
         DateFormat dateFormat2 = new SimpleDateFormat(format, Locale.getDefault());
         String formatDate = dateFormat2.format(time);
         return formatDate;
+    }
+
+    public static long date2Long(String date, String form) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(form, Locale.getDefault());
+        try {
+            Date parse = simpleDateFormat.parse(date);
+            return parse.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return 0l;
     }
 
 

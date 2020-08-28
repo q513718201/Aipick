@@ -10,7 +10,9 @@ interface HomeContract {
     interface homeView : BaseView {
         fun getHomeMsg(msg: List<Home>)
         fun setRate(bean: RateBean)
-
+    }
+    interface InfoView:BaseView{
+        fun setInfoList(data:List<InfoBean>)
     }
 
     interface payView : BaseView {

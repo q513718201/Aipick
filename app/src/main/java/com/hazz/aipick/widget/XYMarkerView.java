@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
@@ -12,6 +13,7 @@ import com.github.mikephil.charting.utils.MPPointF;
 import com.hazz.aipick.R;
 import com.hazz.aipick.mvp.model.InComing;
 import com.scwang.smartrefresh.layout.util.DensityUtil;
+
 import java.util.List;
 
 
@@ -23,13 +25,13 @@ public class XYMarkerView extends MarkerView {
     private TextView tv3;
     private int iEntry;
     private LineChart lineChart;
-   private List<InComing> list;
+    private List<InComing> list;
 
-    public XYMarkerView(Context context, LineChart lineChart, int iEntry, List<InComing> list) {
+    public XYMarkerView(Context context, Chart<?> lineChart, int iEntry, List<InComing> list) {
         super(context, R.layout.custom_marker_view);
         this.list = list;
         this.iEntry = iEntry;
-        this.lineChart = lineChart;
+        setChartView(lineChart);
         tvData = (TextView) findViewById(R.id.tv_data);
         tv1 = (TextView) findViewById(R.id.tv1);
         tv2 = (TextView) findViewById(R.id.tv2);
@@ -42,9 +44,9 @@ public class XYMarkerView extends MarkerView {
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
         tvData.setText(list.get(iEntry).day_label);
-        tv1.setText("买入"+list.get(iEntry).buy);
-        tv2.setText("卖出"+list.get(iEntry).sell);
-        tv3.setText("盈亏"+list.get(iEntry).gain);
+        tv1.setText("买入" + list.get(iEntry).buy);
+        tv2.setText("卖出" + list.get(iEntry).sell);
+        tv3.setText("盈亏" + list.get(iEntry).gain);
         super.refreshContent(e, highlight);
     }
 

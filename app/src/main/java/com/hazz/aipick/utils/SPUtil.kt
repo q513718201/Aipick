@@ -55,9 +55,13 @@ object SPUtil {
     }
 
     fun getString(key: String): String {
+        return getString(key, "")
+    }
+
+    fun getString(key: String, def: String): String {
         var s = map[key]
         if (s == null) {
-            s = sharedPreferences.getString(key, "")
+            s = sharedPreferences.getString(key, def)
             if (s != null) {
                 map[key] = s
             }
@@ -73,9 +77,13 @@ object SPUtil {
     }
 
     fun getInt(key: String): Int {
+        return getInt(key, 0)
+    }
+
+    fun getInt(key: String, def: Int): Int {
         var result = map[key]
         if (result == null) {
-            result = sharedPreferences.getInt(key, 0)
+            result = sharedPreferences.getInt(key, def)
             map[key] = result
         }
         return result as Int
@@ -89,9 +97,13 @@ object SPUtil {
     }
 
     fun getBoolean(key: String): Boolean {
+        return getBoolean(key, false)
+    }
+
+    fun getBoolean(key: String, def: Boolean): Boolean {
         var result = map[key]
         if (result == null) {
-            result = sharedPreferences.getBoolean(key, false)
+            result = sharedPreferences.getBoolean(key, def)
             map[key] = result
         }
         return result as Boolean
@@ -133,19 +145,15 @@ object SPUtil {
     }
 
     fun saveLanguage(context: Context, language: LanguageType) {
-        val sharedPreferences = context.getSharedPreferences(APP_CONFIG, Context.MODE_PRIVATE)
-        sharedPreferences.edit().putString("lang", language.value).commit()
+        putString("lang", language.value)
     }
 
     /**
      * 获取语言，默认中文
-     *
-     * @param context
      * @return
      */
-    fun getLanguage(context: Context): String? {
-        val sharedPreferences = context.getSharedPreferences(APP_CONFIG, Context.MODE_PRIVATE)
-        return sharedPreferences.getString("lang", LanguageType.LG_SIMPLIFIED_CHINESE.value)
+    fun getLanguage(): String? {
+        return getString("lang", LanguageType.LG_SIMPLIFIED_CHINESE.value)
     }
 
     fun getUser(): UserInfo {

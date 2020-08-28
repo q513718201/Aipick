@@ -1,5 +1,7 @@
 package com.hazz.aipick.mvp.model.bean;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 public class SetTrade implements Serializable {
@@ -23,5 +25,14 @@ public class SetTrade implements Serializable {
         this.cardType = cardType;
         this.front = front;
         this.back = back;
+    }
+
+    public boolean unCheck(){
+        return TextUtils.isEmpty(email)||
+                TextUtils.isEmpty(code)||
+                TextUtils.isEmpty(name)||
+                TextUtils.isEmpty(cardNumber)||
+                TextUtils.isEmpty(front)||
+                TextUtils.isEmpty(back);
     }
 }

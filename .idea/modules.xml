@@ -9,7 +9,11 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/aipick.iml" filepath="$PROJECT_DIR$/.idea/aipick.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/klinelib/klinelib.iml" filepath="$PROJECT_DIR$/klinelib/klinelib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib_guide/lib_guide.iml" filepath="$PROJECT_DIR$/.idea/modules/lib_guide/lib_guide.iml" group="Aipick/lib_guide" />
       <module fileurl="file://$PROJECT_DIR$/magicindicator/magicindicator.iml" filepath="$PROJECT_DIR$/magicindicator/magicindicator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/alipay/pay_ali.iml" filepath="$PROJECT_DIR$/.idea/modules/alipay/pay_ali.iml" group="Aipick/pay_ali" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/easypay/pay_core.iml" filepath="$PROJECT_DIR$/.idea/modules/easypay/pay_core.iml" group="Aipick/pay_core" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/wxpay/pay_wx.iml" filepath="$PROJECT_DIR$/.idea/modules/wxpay/pay_wx.iml" group="Aipick/pay_wx" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/update/update.iml" filepath="$PROJECT_DIR$/.idea/modules/update/update.iml" group="Aipick/update" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/update_core/update_core.iml" filepath="$PROJECT_DIR$/.idea/modules/update_core/update_core.iml" group="Aipick/update_core" />
     </modules>

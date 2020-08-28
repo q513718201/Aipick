@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
+import com.hazz.aipick.managers.GuideManager
 import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.model.bean.Fans
 import com.hazz.aipick.mvp.model.bean.LoginBean
@@ -26,6 +27,7 @@ import com.hazz.aipick.utils.ToastUtils
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener
+import easily.tech.guideview.lib.GuideViewBundle.Direction.BOTTOM
 import kotlinx.android.synthetic.main.dialog_fans.view.*
 import kotlinx.android.synthetic.main.fragment_mine.*
 
@@ -108,9 +110,6 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
 
     override fun initView() {
         //状态栏透明和间距处理
-        activity?.let { StatusBarUtil.darkMode(it) }
-        activity?.let { StatusBarUtil.setPaddingSmart(it, toolbar) }
-
         tv_moni.setOnClickListener(this)
         iv_set.setOnClickListener(this)
         tv_caopan.setOnClickListener(this)
@@ -127,15 +126,16 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
         coin_house_order.setOnClickListener(this)
         fans.setOnClickListener(this)
         tv_guanzhu.setOnClickListener(this)
-        isfirstMine = SPUtil.getBoolean("isfirstMine")
-        if (!isfirstMine) {
-            cl_guide.visibility = View.VISIBLE
 
-        }
-        cl_guide.setOnClickListener {
-            SPUtil.putBoolean("isfirstMine", true)
-            cl_guide.visibility = View.GONE
-        }
+//        if (isfirstMine) {
+////            cl_guide.visibility = View.VISIBLE
+//
+//
+//        }
+////        cl_guide.setOnClickListener {
+////            SPUtil.putBoolean("isfirstMine", true)
+//////            cl_guide.visibility = View.GONE
+////        }
         // var user=SPUtil.getObj("userinfo",UserInfo::class.java)
 
         RxBus.get().observerOnMain(this, Fans.ListBean::class.java) {
@@ -147,6 +147,8 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
                 }
             }
         }
+
+        GuideManager.showGuide(childFragmentManager, tv_moni, R.mipmap.guide_mine, BOTTOM, "guide_mine")//showGuide
     }
 
     override fun lazyLoad() {
@@ -175,9 +177,9 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
             v?.id == R.id.invite_friend -> startActivity(Intent(activity, InviteFriendsActivity::class.java))
             v?.id == R.id.mine_trader -> {
                 when (currentType) {
-                    "none" -> startActivity(Intent(activity, SetTraderActivity::class.java))
                     "wait" -> ToastUtils.showToast(activity, getString(R.string.wait))
                     "pass" -> startActivity(Intent(activity, TraderSetActivity::class.java))
+                    "none" -> startActivity(Intent(activity, SetTraderActivity::class.java))
                     "fail" -> startActivity(Intent(activity, SetTraderActivity::class.java))
 
                 }

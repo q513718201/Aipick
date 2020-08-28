@@ -9,11 +9,13 @@ import android.widget.RadioGroup
 import com.google.gson.Gson
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
+import com.hazz.aipick.managers.GuideManager
 import com.hazz.aipick.mvp.model.bean.BindCoinHouse
 import com.hazz.aipick.utils.BigDecimalUtil
 import com.hazz.aipick.utils.GsonUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
+import easily.tech.guideview.lib.GuideViewBundle
 import kotlinx.android.synthetic.main.activity_setting_follow.*
 
 
@@ -57,7 +59,7 @@ class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListen
     private var beanSymbl: BindCoinHouse.SymbolsBean? = null
     private var currentNmae = ""
     private var currentSwitch = "on"
-    private var followType = "amount"
+    private var followType = "rate"
     private var role = ""
     private var default_str = "0.01"
 
@@ -69,9 +71,7 @@ class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListen
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
                 .setOnLeftIconClickListener { view -> finish() }
-    }
 
-    override fun start() {
         id = intent.getStringExtra("id")
         price = intent.getStringExtra("price")
         bean = GsonUtil.toBean(intent.getStringExtra("bean"), BindCoinHouse.ExchangesBean::class.java)
@@ -91,7 +91,6 @@ class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListen
                     .putExtra("role", role))
 
             finish()
-
         }
         rg.setOnCheckedChangeListener(this)
         setIntroduce(default_str)
@@ -117,6 +116,11 @@ class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListen
                 "off"
             }
         }
+        switchButton.isChecked = true
+    }
+
+    override fun start() {
+        GuideManager.showGuide(supportFragmentManager, guide_target, R.mipmap.guide_setting, GuideViewBundle.Direction.BOTTOM, "guide_setting")
     }
 
 

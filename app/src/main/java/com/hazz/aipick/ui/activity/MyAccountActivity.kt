@@ -16,6 +16,7 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
+import com.hazz.aipick.base.BaseFragment
 import com.hazz.aipick.events.ChangeEvent
 import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.contract.WaletContract
@@ -138,10 +139,12 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
             "home" -> {
                 rl.visibility = View.VISIBLE
                 tv_guanzhu.visibility = View.VISIBLE
+                tv_stage.visibility = View.GONE
             }
             else -> {
                 rl.visibility = View.GONE
                 tv_guanzhu.visibility = View.GONE
+                tv_stage.visibility = View.VISIBLE
             }
         }
 
@@ -163,27 +166,38 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
     private var current: BindCoinHouse.ExchangesBean? = null
     private var baseCoin: BindCoinHouse.SymbolsBean? = null
 
+    private fun getFragment(index: Int): BaseFragment {
+        return when (index) {
+            0 -> TransactionAnalysisFragment.getInstance(id, role)
+            1 -> OrderFragment.getInstance(id)
+            else -> SubscribeFragment.getInstance(id)
+        }
+    }
+
+    private var pos = 0
+
     @SuppressLint("SetTextI18n")
     override fun initView() {
 
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fl, TransactionAnalysisFragment()).commitAllowingStateLoss()
-        rg.setOnCheckedChangeListener { group, checkedId ->
+        rg.setOnCheckedChangeListener { _, checkedId ->
 
             when (checkedId) {
                 R.id.rb1 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fl, TransactionAnalysisFragment.getInstance(id, role)).commitAllowingStateLoss()
+                    transaction.replace(R.id.fl, getFragment(0)).commitAllowingStateLoss()
+                    pos = 0
                 }
                 R.id.rb2 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fl, OrderFragment.getInstance(id)).commitAllowingStateLoss()
-
-
+                    transaction.replace(R.id.fl, getFragment(1)).commitAllowingStateLoss()
+                    pos = 1
                 }
                 R.id.rb3 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fl, SubscribeFragment.getInstance(id)).commitAllowingStateLoss()
+                    transaction.replace(R.id.fl, getFragment(2)).commitAllowingStateLoss()
+                    pos = 2
                 }
             }
 
@@ -284,7 +298,7 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
                 startActivity(Intent(this, SettingFollowedActivity::class.java)
                         .putExtra("id", id)
                         .putExtra("price", price)
-                        .putExtra("bean", GsonUtil.toJson(mBindCoinHouse))
+                        .putExtra("bean", GsonUtil.toJson(current))
                         .putExtra("name", currentName)
                         .putExtra("SymbolsBean", GsonUtil.toJson(baseCoin))
                         .putExtra("role", role)
@@ -308,14 +322,17 @@ class MyAccountActivity : BaseActivity(), WaletContract.myaccountView, Collectio
             1 -> {
                 isDemo = 0
                 tv_stage.text = "$currentName(跟随者)"
-                RxBus.get().send(ChangeEvent(isDemo))
             }
             0 -> {
                 isDemo = 1
                 tv_stage.text = "模拟账户(跟随者)"
-                RxBus.get().send(ChangeEvent(isDemo))
             }
         }
+        RxBus.get().send(ChangeEvent(isDemo))
+        getFragment(pos).lazyLoad()
+//        transactionAnalysisFragment.setIsDemo(isDemo.toString())
+//        orderFragment.setIsDemo(isDemo.toString())
+//        subscribeFragment.setIsDemo(isDemo.toString())
     }
 
     var isDemo = 0
