@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.CountDownTimer
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.View
 import com.hazz.aipick.R
@@ -22,7 +21,7 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
 
 
     override fun updateSuccess(msg: String) {
-        ToastUtils.showToast(this,  msg)
+        ToastUtils.showToast(this, msg)
         finish()
     }
 
@@ -31,7 +30,7 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
     }
 
     override fun onSendMesSuccess(msg: String) {
-        ToastUtils.showToast(this,  getString(R.string.mine_send_success))
+        ToastUtils.showToast(this, getString(R.string.mine_send_success))
         showCountDownView()
     }
 
@@ -41,16 +40,16 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
 
     override fun initData() {
         tv_login_type.setOnClickListener {
-            if(currentType==0){
-                currentType=1
-                tv_quhao.visibility= View.GONE
-                tv_email.visibility= View.VISIBLE
-                edit_phone.hint=getString(R.string.please_input_email)
-            }else{
-                currentType=0
-                tv_quhao.visibility= View.VISIBLE
-                tv_email.visibility= View.GONE
-                edit_phone.hint=getString(R.string.please_input_phone)
+            if (currentType == 0) {
+                currentType = 1
+                tv_quhao.visibility = View.GONE
+                tv_email.visibility = View.VISIBLE
+                edit_phone.hint = getString(R.string.please_input_email)
+            } else {
+                currentType = 0
+                tv_quhao.visibility = View.VISIBLE
+                tv_email.visibility = View.GONE
+                edit_phone.hint = getString(R.string.please_input_phone)
             }
         }
     }
@@ -77,9 +76,9 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
 
     private var countDownTimer: CountDownTimer? = null
     private var mRegistPresenter: RegistPresenter = RegistPresenter(this)
-    private var mUserInfoPresenter: UserInfoPresenter =UserInfoPresenter(this)
+    private var mUserInfoPresenter: UserInfoPresenter = UserInfoPresenter(this)
 
-    private var currentType=0
+    private var currentType = 0
     private val REQUEST_AREACODE_CODE = 10005
 
     @SuppressLint("SetTextI18n")
@@ -100,27 +99,35 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
         }
 
         tv_getCode.setOnClickListener {
-            mRegistPresenter.sendCodeLogin("phone",tv_quhao.text.toString(),edit_phone.text.toString(),
-                    "modify_trade_password"
-                    )
+            mRegistPresenter.sendCodeLogin("phone", tv_quhao.text.toString(), edit_phone.text.toString(), "modify_trade_password"
+            )
         }
 
-        bt_login.setOnClickListener {
-            if(currentType==0){
-                mUserInfoPresenter.update("add_trade","",tv_verfycode.text.toString(),""
-                        ,"",tv_quhao.text.toString(),edit_phone.text.toString(),"phone","",
-                        "",et_trade_pwd_again.text.toString(),"")
-            }else{
-
-            mUserInfoPresenter.update("add_trade","",tv_verfycode.text.toString(),""
-                    ,"","",edit_phone.text.toString(),"email","",
-                    "",et_trade_pwd_again.text.toString(),"")
-
+        bt_confirm.setOnClickListener {
+            var pwd = et_trade_pwd.text.toString().trim()
+            if (pwd.length != 6) {
+                ToastUtils.showToast(this, getString(R.string.hint_pay_pwd))
+                return@setOnClickListener
+            }
+            var pwdConfirm = et_trade_pwd_again.text.toString().trim()
+            if (pwd != pwdConfirm) {
+                ToastUtils.showToast(this, getString(R.string.hint_pay_pwd_again))
+                return@setOnClickListener
+            }
+            if (currentType == 0) {
+                mUserInfoPresenter.update("add_trade", "", tv_verfycode.text.toString(), ""
+                        , "", tv_quhao.text.toString(), edit_phone.text.toString(), "phone", "",
+                        "", et_trade_pwd_again.text.toString(), "")
+            } else {
+                mUserInfoPresenter.update("add_trade", "", tv_verfycode.text.toString(), ""
+                        , "", "", edit_phone.text.toString(), "email", "",
+                        "", et_trade_pwd_again.text.toString(), "")
             }
         }
 
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_AREACODE_CODE) {

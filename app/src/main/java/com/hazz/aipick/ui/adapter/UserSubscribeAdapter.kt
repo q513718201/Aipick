@@ -14,7 +14,7 @@ class UserSubscribeAdapter(layoutResId: Int, data: List<UserSubscribeBean>?) : B
 
         helper.setText(R.id.tv_name, item.suber_name)
         val view = helper.getView<ImageView>(R.id.civ_head)
-        GlideUtil.loadAsHead(view, item.subee_avatar)
+        GlideUtil.showRound(item.subee_avatar, view, R.mipmap.ic_user)
 
         helper.setText(R.id.tv_time, item.follow_at)
 

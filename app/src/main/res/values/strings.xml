@@ -45,7 +45,7 @@
     <string name="base_ai">基于AI大数据的策略系统</string>
     <string name="please_input_phone">请输入手机号</string>
     <string name="pwd">密码</string>
-    <string name="login">登陆</string>
+    <string name="login">登录</string>
     <string name="regist">立即注册</string>
     <string name="mail_login">邮箱登录</string>
     <string name="forget_pwd">忘记密码</string>
@@ -176,7 +176,7 @@
     <string name="my_safe_center">安全中心</string>
     <string name="phone_num">手机号码</string>
     <string name="email">邮箱</string>
-    <string name="login_pwd">登陆密码</string>
+    <string name="login_pwd">登录密码</string>
     <string name="trade_pwd">交易密码</string>
     <string name="bind_phone">绑定手机号</string>
     <string name="please_input_verfycode">请输入验证码</string>
@@ -186,6 +186,7 @@
     <string name="please_input_pwd_again">请输入再次确认</string>
     <string name="bank_card">银行卡</string>
     <string name="set_trade_pwd">设置交易密码</string>
+    <string name="set_nick_name">设置用户名</string>
     <string name="please_input_trade_pwd">请设置交易密码（6位数的数字密码）</string>
     <string name="apply_trader">申请交易员</string>
     <string name="apply_trader_tips">为了您的账户安全,请谨慎填写以下内容,资料提交后不可修改。</string>
@@ -267,6 +268,7 @@
     <string name="one_month">1个月</string>
     <string name="three_month">3个月</string>
     <string name="six_month">6个月</string>
+    <string name="twelve_month">12个月</string>
     <string name="time1">点击”支付”表示您已同意</string>
     <string name="time2">《AiPick付费用户服务协议》</string>
     <string name="choose_time">选择时间</string>
@@ -362,6 +364,10 @@
     <string name="hint_register_no_checkcode">请获取验证码</string>
     <string name="hint_withdraw_input">请输入提现金额</string>
 
+    <string name="hint_pay_pwd">交易密码只能是六位数</string>
+    <string name="hint_pay_pwd_again">两次输入不一致，请重新输入</string>
+    <string name="hint_pwd_again">两次输入不一致，请重新输入</string>
+
     <string name="hint_coin_no_market_bind">请选择投放策略平台</string>
     <string name="text_buy_in">买入</string>
     <string name="text_sell_out">卖出</string>
@@ -422,4 +428,5 @@
     <string name="text_trade_amount">交易数量</string>
     <string name="text_save_qr">生成海报</string>
     <string name="text_copy_invite_link">复制邀请链接</string>
+
 </resources>

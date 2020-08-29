@@ -60,7 +60,7 @@ class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
                     mFeedBackresenter.feedBack(et.text.toString(), et_phone.text.toString(), iv1!!, iv2!!, iv3!!, iv4!!)
                 }
 
-
+        tv_img_head.text = getString(R.string.text_img_head, 0)
         photoAdapter = PhotoAdapter(this, selectedPhotos)
         recyclerView.layoutManager = StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL)
         recyclerView.adapter = photoAdapter

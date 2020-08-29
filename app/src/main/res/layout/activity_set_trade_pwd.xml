@@ -1,31 +1,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="#1E2742"
     android:orientation="vertical"
     android:paddingTop="20dp">
 
     <include
-
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
     <EditText
         android:id="@+id/et_trade_pwd"
-        android:layout_marginTop="30dp"
-        android:paddingLeft="30dp"
-        android:inputType="textPassword"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textColorHint="@color/text_color_edit_hint"
-        android:singleLine="true"
-        android:maxLines="1"
+        android:layout_marginTop="30dp"
+        android:background="@null"
         android:hint="@string/please_input_trade_pwd"
-        android:background="@null"/>
+        android:inputType="textPassword"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:paddingLeft="30dp"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/text_color_edit_hint"
+        android:textSize="14sp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
@@ -33,95 +34,101 @@
 
     <EditText
         android:id="@+id/et_trade_pwd_again"
-        android:paddingLeft="30dp"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
-        android:textColorHint="@color/text_color_edit_hint"
-        android:singleLine="true"
-        android:maxLines="1"
-        android:inputType="textPassword"
+        android:background="@null"
         android:hint="@string/please_input_pwd_again"
-        android:background="@null"/>
+        android:inputType="textPassword"
+        android:maxLength="6"
+        android:maxLines="1"
+        android:paddingLeft="30dp"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
+        android:textColorHint="@color/text_color_edit_hint"
+        android:textSize="14sp" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
         android:background="@color/color_white" />
+
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/cl_phone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:id="@+id/cl_phone"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="50dp">
+        app:layout_constraintTop_toTopOf="parent">
+
         <LinearLayout
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints">
+
             <TextView
                 android:id="@+id/tv_quhao"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@mipmap/arrow_bottom"
-                android:textSize="14sp"
-                android:paddingEnd="8dp"
                 android:drawablePadding="8dp"
+                android:paddingEnd="8dp"
+                android:text="+86"
                 android:textColor="@color/text_color_edit_hint"
-                android:text="+86">
-            </TextView>
+                android:textSize="14sp"></TextView>
+
             <TextView
-                android:visibility="gone"
                 android:id="@+id/tv_email"
                 android:layout_width="60dp"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:text="@string/email"
                 android:textColor="@color/text_color_edit_hint"
-                android:text="@string/email">
-            </TextView>
+                android:textSize="14sp"
+                android:visibility="gone"></TextView>
 
             <EditText
-                android:paddingLeft="10dp"
                 android:id="@+id/edit_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:textColorHint="@color/text_color_edit_hint"
-                android:singleLine="true"
-                android:maxLines="1"
+                android:background="@null"
                 android:hint="@string/please_input_phone"
-                android:background="@null"/>
+                android:maxLines="1"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textColor="@android:color/white"
+                android:textColorHint="@color/text_color_edit_hint"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
 
 
     </android.support.constraint.ConstraintLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
         android:background="@color/color_white" />
+
     <RelativeLayout
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
         <EditText
-            android:textColor="@android:color/white"
             android:id="@+id/tv_verfycode"
-            android:textColorHint="@color/text_color_edit_hint"
-            android:hint="@string/please_input_verfycode"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:textSize="14sp"
-            android:background="@null" />
+            android:background="@null"
+            android:hint="@string/please_input_verfycode"
+            android:textColor="@android:color/white"
+            android:textColorHint="@color/text_color_edit_hint"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tv_getCode"
@@ -136,34 +143,34 @@
 
             />
     </RelativeLayout>
+
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
         android:background="@color/color_white" />
 
     <TextView
-        android:layout_margin="30dp"
         android:id="@+id/tv_login_type"
-        android:padding="5dp"
-        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:padding="5dp"
         android:text="@string/mail_auth"
         android:textColor="@color/color_white"
         android:textSize="12sp" />
 
     <Button
 
-        android:id="@+id/bt_login"
+        android:id="@+id/bt_confirm"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
         android:background="@mipmap/login_bg"
         android:text="@string/confirm"
         android:textColor="@color/color_white"
-        android:textSize="17sp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        />
+        android:textSize="17sp" />
 
 </LinearLayout>

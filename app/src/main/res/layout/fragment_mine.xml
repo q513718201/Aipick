@@ -27,7 +27,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/ic_customer" />
+                    android:src="@mipmap/ic_customer"
+                    android:visibility="gone" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="wrap_content"

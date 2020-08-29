@@ -1,6 +1,8 @@
 package com.hazz.aipick.ui.activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
 import android.os.Message
@@ -29,6 +31,17 @@ import java.util.concurrent.TimeUnit
 
 
 class PayActivity : BaseActivity(), HomeContract.payView, IPayCallback {
+    companion object {
+        fun start(context: Activity, id: String, role: String, price: String, createId: String, timer: String) {
+            context.startActivity(Intent(context, PayActivity::class.java)
+                    .putExtra("id", id)
+                    .putExtra("role", role)
+                    .putExtra("price", price)
+                    .putExtra("createId", createId)
+                    .putExtra("timer", timer)
+            )
+        }
+    }
 
     override fun paySucceed(msg: PaySucceed) {
         tv_succeed.visibility = View.VISIBLE
@@ -60,7 +73,7 @@ class PayActivity : BaseActivity(), HomeContract.payView, IPayCallback {
     }
 
     override fun createId(msg: CreateId) {
-        id = msg.sub_id
+        subId = msg.sub_id
         start(msg.timer.toLong())
     }
 
@@ -82,7 +95,7 @@ class PayActivity : BaseActivity(), HomeContract.payView, IPayCallback {
                         val gson = Gson()
                         val fromJson = gson.fromJson(resultInfo, ResultInfo::class.java)
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
-                        mPayPresenter.payCheck(id, resultInfo, fromJson.sign, fromJson.sign_type,
+                        mPayPresenter.payCheck(subId, resultInfo, fromJson.sign, fromJson.sign_type,
                                 "9000"
                         )
                         // SToast.showText("支付成功")
@@ -118,11 +131,11 @@ class PayActivity : BaseActivity(), HomeContract.payView, IPayCallback {
 
     }
 
-    private var id = ""
     private var price = ""
     private var mPayPresenter: PayPresenter = PayPresenter(this)
     private var role = ""
-    private var createBean: CreateId? = null
+    private var subId = ""
+    private var timer = ""
     private var subscribe: Disposable? = null//保存订阅者
     private val SDK_PAY_FLAG = 1
     private val SDK_AUTH_FLAG = 2
@@ -142,15 +155,15 @@ class PayActivity : BaseActivity(), HomeContract.payView, IPayCallback {
 
     @SuppressLint("SetTextI18n")
     override fun start() {
-        id = intent.getStringExtra("id")
         price = intent.getStringExtra("price")
-        createBean = intent.getSerializableExtra("payBean") as CreateId
         role = intent.getStringExtra("role")
-        tv_price.text = "$$price"
+        subId = intent.getStringExtra("createId")
+        timer = intent.getStringExtra("timer")
+        tv_price.text = "$price"
+        start(timer.toLong())
 
         tv_suscribe.setOnClickListener {
-
-            mPayPresenter.pay(id, if (payType == 0) "alipay" else "wechat")
+            mPayPresenter.pay(subId, if (payType == 0) "alipay" else "wechat")
         }
         tv_alipay.setOnClickListener {
             tv_alipay.isSelected = true
@@ -174,8 +187,7 @@ class PayActivity : BaseActivity(), HomeContract.payView, IPayCallback {
         calendar.timeInMillis = second * 1000//转换为毫秒
         var date = calendar.time
         var format = SimpleDateFormat(patten)
-        var dateString = format.format(date)
-        return dateString
+        return format.format(date)
     }
 
     fun start(count: Long) {
@@ -201,21 +213,26 @@ class PayActivity : BaseActivity(), HomeContract.payView, IPayCallback {
             subscribe!!.dispose()
         }
         if (!isPay) {
-            mPayPresenter.orderCancle(id)
+            mPayPresenter.orderCancle(subId)
         }
 
     }
 
     override fun failed(code: Int, message: String?) {
-        TODO("Not yet implemented")
+        com.blankj.utilcode.util.ToastUtils.showShort(message)
     }
 
     override fun cancel() {
-        TODO("Not yet implemented")
+        com.blankj.utilcode.util.ToastUtils.showShort("支付取消了")
     }
 
-    override fun success() {
-        TODO("Not yet implemented")
+    override fun success(msg: String) {
+        if (payType == 0) {
+            val gson = Gson()
+            val fromJson = gson.fromJson(msg, ResultInfo::class.java)
+            mPayPresenter.payCheck(subId, msg, fromJson.sign, fromJson.sign_type, "9000")
+        }
+        com.blankj.utilcode.util.ToastUtils.showShort("支付成功了")
     }
 
 }

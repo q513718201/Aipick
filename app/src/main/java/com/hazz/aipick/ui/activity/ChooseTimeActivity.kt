@@ -1,9 +1,9 @@
 package com.hazz.aipick.ui.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.graphics.Color
 import android.support.v7.widget.Toolbar
+import android.view.View
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.HomeContract
@@ -37,35 +37,42 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeCont
         tv1.text = "$ ${msg.days30}"
         tv2.text = "$ ${msg.days90}"
         tv3.text = "$ ${msg.days180}"
+        tv4.text = "$ ${msg.days365}"
     }
 
     private var mPayPresenter: PayPresenter = PayPresenter(this)
 
     override fun layoutId(): Int = R.layout.activity_time_choose
-
+    private val rls by lazy { arrayOf(rl1, rl2, rl3, rl4) }
     override fun initData() {
-        rl1.isSelected = true
+        chose(rl1)
         rl1.setOnClickListener {
             currentDays = "30days"
-            rl1.isSelected = true
-            rl2.isSelected = false
-            rl3.isSelected = false
+            chose(it)
             tv_price.text = tv1.text
         }
         rl2.setOnClickListener {
             currentDays = "90days"
-            rl2.isSelected = true
-            rl1.isSelected = false
-            rl3.isSelected = false
+            chose(it)
             tv_price.text = tv2.text
         }
         rl3.setOnClickListener {
             currentDays = "180days"
-            rl3.isSelected = true
-            rl2.isSelected = false
-            rl1.isSelected = false
+            chose(it)
             tv_price.text = tv3.text
         }
+        rl4.setOnClickListener {
+            currentDays = "365days"
+            chose(it)
+            tv_price.text = tv4.text
+        }
+    }
+
+    private fun chose(v: View) {
+        for (rl in rls) {
+            rl.isSelected = false
+        }
+        v.isSelected = true;
     }
 
     private var id = ""
@@ -113,7 +120,7 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeCont
         }
 
         tv_agreement.setOnClickListener {
-            TiaokuanActivity.start(this)
+            TiaokuanActivity.start(this, 0)
         }
     }
 
@@ -122,9 +129,7 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeCont
 
     override fun createId(msg: CreateId) {
         msg?.let {
-            startActivity(Intent(this, PayActivity::class.java).putExtra("CreateIdBean", msg)
-                    .putExtra("id", id).putExtra("role", role).putExtra("price", price))
-
+            PayActivity.start(this, id, role, tv_price.text.toString(), msg.sub_id, msg.timer)
             finish()
         }
 

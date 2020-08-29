@@ -6,9 +6,6 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.text.TextUtils
 import android.view.View
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
 import com.hazz.aipick.managers.GuideManager
@@ -20,9 +17,9 @@ import com.hazz.aipick.mvp.presenter.FansPresenter
 import com.hazz.aipick.mvp.presenter.LoginPresenter
 import com.hazz.aipick.ui.activity.*
 import com.hazz.aipick.ui.adapter.FansAdapter
+import com.hazz.aipick.utils.GlideUtil
 import com.hazz.aipick.utils.RxBus
 import com.hazz.aipick.utils.SPUtil
-import com.hazz.aipick.utils.StatusBarUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -61,9 +58,8 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
 
         uid = msg.uid
         if (!TextUtils.isEmpty(msg.avatar)) {
-            Glide.with(activity!!).load(msg.avatar)
-                    .apply(RequestOptions.bitmapTransform(CircleCrop()))
-                    .into(iv_avatar)
+            GlideUtil.showRound(msg.avatar, iv_avatar,R.mipmap.ic_user)
+
         }
 
         tv_name?.text = msg.nickname

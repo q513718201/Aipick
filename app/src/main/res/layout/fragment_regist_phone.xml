@@ -56,7 +56,6 @@
                     android:id="@+id/tv_quhao"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@mipmap/arrow_bottom"
                     android:inputType="phone"
                     android:text="+86"
                     android:textColor="@color/white"
@@ -74,6 +73,7 @@
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/text_color_edit_hint"
+                    android:textCursorDrawable="@drawable/edit_cursor"
                     android:textSize="14sp" />
 
 
@@ -107,8 +107,6 @@
                 android:id="@+id/verify_code_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/verfyCode"
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/hint_register_empty_checkcode"
@@ -118,6 +116,7 @@
                 android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/text_color_edit_hint"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:textSize="14sp" />
 
             <View
@@ -173,9 +172,11 @@
                 android:maxLines="1"
                 android:padding="5dp"
                 android:paddingStart="@dimen/dp_10"
+
                 android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/text_color_edit_hint"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -219,14 +220,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:buttonTint="@color/white"
-            android:checked="true" />
+            android:checked="false" />
 
         <TextView
             android:id="@+id/service_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="我已阅读并同意《服务条款》"
+            android:text="我已阅读并同意《注册协议》"
             android:textColor="@color/color_white" />
 
     </LinearLayout>

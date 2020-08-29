@@ -87,7 +87,7 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
 
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fl, TransactionAnalysisFragment.getInstance(id)).commitAllowingStateLoss()
+        transaction.replace(R.id.fl, TransactionAnalysisFragment.getInstance(role)).commitAllowingStateLoss()
         rg.setOnCheckedChangeListener { group, checkedId ->
 
             when (checkedId) {
@@ -133,7 +133,7 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
             }
         }
         ll_agree.setOnClickListener {
-            TiaokuanActivity.start(this)
+            TiaokuanActivity.start(this, 0)
         }
 
         iv_follow_status.setOnClickListener {

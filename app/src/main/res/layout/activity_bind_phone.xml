@@ -129,7 +129,7 @@
 
     <Button
 
-        android:id="@+id/bt_login"
+        android:id="@+id/bt_confirm"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginTop="50dp"

@@ -27,7 +27,8 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".ui.activity.InvitePicActivity"></activity>
+        <activity android:name=".ui.activity.SettingUserNickNameActivity" />
+        <activity android:name=".ui.activity.InvitePicActivity" />
         <activity android:name=".ui.activity.InfoDetailActivity" />
         <activity android:name=".ui.activity.SubscribeSuccessActivity" />
         <activity
@@ -82,7 +83,9 @@
         <activity android:name=".ui.activity.PhoneModifyActivity" />
         <activity android:name=".ui.activity.SetTradePwdActivity" />
         <activity android:name=".ui.activity.PwdModifyActivity" />
-        <activity android:name=".ui.activity.BindBankActivity" />
+        <activity
+            android:name=".ui.activity.BindBankActivity"
+            android:windowSoftInputMode="adjustUnspecified" />
         <activity android:name=".ui.activity.SetTraderActivity" />
         <activity android:name=".ui.activity.MyAccountActivity" />
         <activity android:name=".ui.activity.GorgetPwdActivity" />
@@ -99,11 +102,6 @@
         <activity android:name=".ui.activity.CoinDescBuyOrSellActivity" />
         <activity android:name=".ui.activity.TraderSetActivity" />
         <activity android:name=".ui.activity.CoinBuyAndSellActivity" />
-        <activity
-            android:name="com.alipay.sdk.app.H5PayActivity"
-            android:configChanges="orientation|keyboardHidden|navigation"
-            android:exported="false"
-            android:screenOrientation="behind" />
     </application>
 
 </manifest>

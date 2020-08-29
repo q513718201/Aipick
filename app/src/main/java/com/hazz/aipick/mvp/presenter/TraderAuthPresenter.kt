@@ -5,6 +5,7 @@ import android.util.Pair
 import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.model.bean.TraderSet
 import com.hazz.aipick.net.*
+import com.hazz.aipick.utils.RsaUtils
 
 
 class TraderAuthPresenter(view: LoginContract.tradeView) : BasePresenter<LoginContract.tradeView>(view) {
@@ -18,8 +19,8 @@ class TraderAuthPresenter(view: LoginContract.tradeView) : BasePresenter<LoginCo
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("countryCode", countryCode),
                 Pair.create<Any, Any>("code", code),
-                Pair.create<Any, Any>("email", email),
-                Pair.create<Any, Any>("phone", phone),
+                Pair.create<Any, Any>("email", RsaUtils.jiami(email)),
+                Pair.create<Any, Any>("phone", RsaUtils.jiami(phone)),
                 Pair.create<Any, Any>("cardNumber", cardNumber),
                 Pair.create<Any, Any>("name", name),
                 Pair.create<Any, Any>("cardType", cardType),

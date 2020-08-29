@@ -3,7 +3,7 @@ package com.hazz.aipick.net
 import io.reactivex.disposables.Disposable
 
 /**
- * 感觉增加一个showLogin方法会不会好点，因为很多地方需要登陆，如果Token失效的话
+ * 感觉增加一个showLogin方法会不会好点，因为很多地方需要登录，如果Token失效的话
  */
 interface BaseView : IBaseView {
     fun addSubscription(d: Disposable)
@@ -14,6 +14,6 @@ interface BaseView : IBaseView {
 
     fun Loading()
 
-    fun fail(msg:String)
+    fun fail(msg: String)
 
 }

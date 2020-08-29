@@ -39,7 +39,7 @@ interface AiPickService {
     fun resetPwd(@Body request: RequestBody): Observable<BaseResult<Any>>
 
     /**
-     * 登陆
+     * 登录
      */
     @POST("user/login ")
     fun login(@Body request: RequestBody): Observable<BaseResult<LoginBean>>
@@ -206,7 +206,6 @@ interface AiPickService {
     /**
      * 我的账户
      */
-    @FormUrlEncoded
     @POST("user/profile")
     fun myAccount(@Body request: RequestBody): Observable<BaseResult<MyAccount>>
 
@@ -328,23 +327,23 @@ interface AiPickService {
     /**
      * 获取汇率
      */
-    @GET(" /base/data")
+    @GET("base/data")
     fun getRate(): Observable<BaseResult<RateBean>>
 
     /**
      * 模拟操盘资产概览
      */
-    @GET(" /simulate/summary")
+    @GET("simulate/summary")
     fun getSimulateSummary(): Observable<BaseResult<SimulateSummaryBean>>
 
     //<editor-fold desc="新增接口">
     /**
      * 资讯列表接口
      */
-    @POST(" /simulate/summary")// TODO: 2020/8/24
+    @POST("simulate/summary")// TODO: 2020/8/24
     fun getInfoList(@Body request: RequestBody): Observable<BaseResult<List<InfoBean>>>
     //</editor-fold>
 
-    @GET("/user/invite")
+    @GET("user/invite")
     fun getInviteInfo(): Observable<BaseResult<InviteInfoBean>>
 }

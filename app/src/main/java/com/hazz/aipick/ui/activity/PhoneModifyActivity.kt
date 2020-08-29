@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.CountDownTimer
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.View
@@ -135,7 +134,7 @@ class PhoneModifyActivity : BaseActivity(), LoginContract.RegistView, LoginContr
             }
         }
 
-        bt_login.setOnClickListener {
+        bt_confirm.setOnClickListener {
 
             if(type == "phone"){
                 mUserInfoPresenter.update("phone","",et_verfycode.text.toString(),"","",tv_quhao.text.toString(),edit_text.text.toString(),"phone","","","","")

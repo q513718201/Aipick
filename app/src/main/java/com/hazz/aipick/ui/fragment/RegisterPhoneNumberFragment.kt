@@ -87,7 +87,7 @@ class RegisterPhoneNumberFragment : BaseFragment(), LoginContract.RegistView {
             llPwd.visibility = View.GONE
         }
 
-        tv_nation.setOnClickListener {
+        tv_guoji.setOnClickListener {
             startActivityForResult(Intent(activity, CountryActivity::class.java), REQUEST_AREACODE_CODE)
         }
         tv_bt.setOnClickListener {
@@ -97,11 +97,7 @@ class RegisterPhoneNumberFragment : BaseFragment(), LoginContract.RegistView {
                 ToastUtils.showToast(activity, getString(R.string.hint_register_empty_phone))
                 return@setOnClickListener
             }
-            // TODO: 2020/8/18 取消手机号码校验
-//            if (!RegexUtils.isMobileSimple(phone)) {
-//                ToastUtils.showToast(activity, getString(R.string.hint_register_invalid_phone))
-//                return@setOnClickListener
-//            }
+
             //如果没有获取验证码，无法校验 可用的时候说明没有获取验证码
             if (tv_getCode.isEnabled) {
                 ToastUtils.showToast(activity, getString(R.string.hint_register_no_checkcode))
@@ -144,7 +140,7 @@ class RegisterPhoneNumberFragment : BaseFragment(), LoginContract.RegistView {
             }
         }
         service_rule.setOnClickListener {
-            startActivity(Intent(activity, TiaokuanActivity::class.java))
+            context?.let { TiaokuanActivity.start(it, 1) }
         }
         tv_getCode.setOnClickListener {
             if (edit_text.text.toString().isEmpty()) {

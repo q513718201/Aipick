@@ -55,7 +55,7 @@ class SubscribeDescActivity : BaseActivity(), CollectionContract.subscribeView, 
             }
             else -> {
                 refreshLayout.finishLoadmore()
-                mOrderAdapter.addData(msg.gains)
+                mOrderAdapter?.addData(msg.gains)
             }
         }
     }

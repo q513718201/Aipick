@@ -350,23 +350,23 @@ object RsaUtils {
         if (TextUtils.isEmpty(path)) {
             return null
         }
-        var `is`: InputStream? = null
+        var input: InputStream? = null
         var data: ByteArray? = null
         var result: String? = null
         try {
-            `is` = FileInputStream(path)
+            input = FileInputStream(path)
             //创建一个字符流大小的数组。
-            data = ByteArray(`is`.available())
+            data = ByteArray(input.available())
             //写入数组
-            `is`.read(data)
+            input.read(data)
             //用默认的编码格式进行编码
             result = Base64.encodeToString(data, Base64.DEFAULT)
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
-            if (null != `is`) {
+            if (null != input) {
                 try {
-                    `is`.close()
+                    input.close()
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }

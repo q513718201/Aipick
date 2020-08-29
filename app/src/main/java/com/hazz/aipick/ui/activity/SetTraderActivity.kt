@@ -22,7 +22,7 @@ import com.hazz.aipick.mvp.model.bean.UserInfo
 import com.hazz.aipick.mvp.presenter.LoginPresenter
 import com.hazz.aipick.mvp.presenter.RegistPresenter
 import com.hazz.aipick.mvp.presenter.TraderAuthPresenter
-import com.hazz.aipick.utils.RsaUtils
+import com.hazz.aipick.utils.GsonUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
 import com.werb.pickphotoview.PickPhotoView
@@ -116,8 +116,8 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
         mLoginPresenter.userInfo()
     }
 
-    private var iv1_base64: String? = ""
-    private var iv2_base64: String? = ""
+    private var iv1_path: String? = ""
+    private var iv2_path: String? = ""
     private var currentType = 1
     private var countDownTimer: CountDownTimer? = null
     private var mRegistPresenter: RegistPresenter = RegistPresenter(this)
@@ -133,7 +133,7 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
                 .setTitle(getString(R.string.apply_trader))
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
-                .setOnLeftIconClickListener { view -> finish() }
+                .setOnLeftIconClickListener { finish() }
         tv_get_code.setOnClickListener {
             if (currentCode == 0) {
                 mRegistPresenter.sendCodeLogin("phone", tv_quhao.text.toString(), edit_phone.text.toString(),
@@ -146,20 +146,23 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
             }
         }
 
-        bt_login.setOnClickListener {
-
-
-
-
+        bt_confirm.setOnClickListener {
 
             val setTrade = SetTrade(tv_quhao.text.toString(), tv_getCode.text.toString(), et_email.text.toString(),
-                    edit_phone.text.toString(), et_card.text.toString(), et_name.text.toString(), "idcard", iv1_base64!!, iv2_base64!!)
+                    edit_phone.text.toString(), et_card.text.toString(), et_name.text.toString(), "idcard", iv1_path!!, iv2_path!!)
+            val unCheck = setTrade.unCheck()
+            if (unCheck != null) {
+                ToastUtils.showToast(this, unCheck)
+                return@setOnClickListener
+            }
+            if (tv_get_code.isEnabled) {
+                ToastUtils.showToast(this, "请点击按钮获取验证码")
+                return@setOnClickListener
+            }
 
 
-
-            startActivity(Intent(this, ApplyTraderActivity::class.java).putExtra("setTrade", setTrade))
-//            mTraderAuthPresenter.traderAuth(tv_quhao.text.toString(),tv_getCode.text.toString(),et_email.text.toString(),
-//                    edit_phone.text.toString(),et_card.text.toString(),et_name.text.toString(),"idcard",iv1_base64!!,iv2_base64!!,"")
+            ApplyTraderActivity.start(this, GsonUtil.toJson(setTrade))
+//            startActivity(Intent(this, ApplyTraderActivity::class.java).putExtra("setTrade", GsonUtil.toJson(setTrade)))
         }
 
 
@@ -240,10 +243,13 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK && requestCode == 1) {
+            finish()
+            return
+        }
         if (data == null) {
             return
         }
-
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_AREACODE_CODE) {
             val areaCode = data?.getStringExtra("countryNumber") ?: "+86"
             tv_quhao.text = areaCode
@@ -257,14 +263,15 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
                             .load(paths[0])
                             .thumbnail(0.1f)
                             .into(iv1)
-                    iv1_base64 = RsaUtils.imageToBase64(paths[0])
+                    iv1_path = paths[0]
                 }
                 2 -> {
                     Glide.with(this)
                             .load(paths[0])
                             .thumbnail(0.1f)
                             .into(iv2)
-                    iv2_base64 = RsaUtils.imageToBase64(paths[0])
+                    iv2_path = paths[0]
+//                    iv2_base64 = RsaUtils.imageToBase64(paths[0])
                 }
             }
 

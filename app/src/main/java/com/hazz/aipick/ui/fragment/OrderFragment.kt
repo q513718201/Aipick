@@ -11,14 +11,27 @@ import com.hazz.aipick.mvp.presenter.OrderPresenter
 import com.hazz.aipick.ui.adapter.OrderAdapter
 import com.hazz.aipick.utils.BigDecimalUtil
 import com.hazz.aipick.utils.RxBus
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener
 import kotlinx.android.synthetic.main.fragment_order.*
+import kotlinx.android.synthetic.main.refresh_layout.*
 
 
 @Suppress("DEPRECATION")
-class OrderFragment : BaseFragment(), WaletContract.orderView {
+class OrderFragment : BaseFragment(), WaletContract.orderView, OnRefreshLoadmoreListener {
 
     override fun getOrder(msg: Order) {
-        mOrderAdapter!!.setNewData(msg.list)
+        when (loadType) {
+            0 -> {
+                mOrderAdapter?.setNewData(msg.list)
+                refreshLayout.finishRefresh()
+            }
+            else -> {
+                mOrderAdapter?.addData(msg.list)
+                refreshLayout.finishLoadmore()
+            }
+        }
+
         tv1.text = BigDecimalUtil.format(msg.total_amount, 2)
         tv2.text = BigDecimalUtil.format(msg.total_times, 0)
         tv3.text = BigDecimalUtil.format(msg.total_gain, 2)
@@ -58,16 +71,19 @@ class OrderFragment : BaseFragment(), WaletContract.orderView {
                 R.id.tv_pos_now -> "now"
                 else -> "history"
             }
-            getDataSource(currentType)
+            getDataSource()
         }
 
         RxBus.get().observerOnMain(activity, ChangeEvent::class.java) {
             mOrderPresenter.getOrder(id!!, currentType, page, 10, it.isDemo)
         }
+        refreshLayout.isEnableLoadmore = false
+        refreshLayout.setOnRefreshLoadmoreListener(this)
+
     }
 
     private var isDemo = "0"
-    private fun getDataSource(dateType: String) {
+    private fun getDataSource() {
         if (id == "-1") {
             mOrderPresenter.getFakeOrder(currentType, page, 10)
         } else {
@@ -76,7 +92,21 @@ class OrderFragment : BaseFragment(), WaletContract.orderView {
     }
 
     override fun lazyLoad() {
-        getDataSource(currentType)
+        getDataSource()
+    }
+
+    private var loadType = 0;
+
+    override fun onLoadmore(refreshlayout: RefreshLayout?) {
+        loadType = 1
+        page++
+        getDataSource()
+    }
+
+    override fun onRefresh(refreshlayout: RefreshLayout?) {
+        loadType = 0
+        page = 1
+        getDataSource()
     }
 
 

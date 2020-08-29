@@ -49,7 +49,7 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView {
             startActivity(Intent(this, RegistActivity::class.java))
 
         }
-        bt_login.setOnClickListener {
+        bt_confirm.setOnClickListener {
 
             when(currentType){
                 0->  mLoginPresenter.login("phone",mTvAreaCode.text.toString(),et_phone.text.toString(),et_pwd.text.toString())

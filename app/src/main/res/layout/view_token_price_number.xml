@@ -5,33 +5,33 @@
         android:id="@+id/minus"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:background="@drawable/boarder"
         android:gravity="center"
         android:padding="10dp"
-        android:src="@mipmap/t_less"
-        android:background="@drawable/boarder"/>
+        android:src="@mipmap/t_less" />
 
     <EditText
-        android:textCursorDrawable="@null"
         android:id="@+id/edit_text"
         android:layout_width="0dp"
         android:layout_height="35dp"
         android:layout_weight="1"
-        android:textColor="@android:color/white"
-        android:textSize="14sp"
+        android:background="@drawable/bg_edit_selector"
         android:gravity="center"
-        android:singleLine="true"
-        android:inputType="numberDecimal"
         android:imeOptions="actionDone"
+        android:inputType="numberDecimal"
+        android:singleLine="true"
+        android:textColor="@android:color/white"
         android:textColorHint="@color/text_color_hint"
-        android:background="@drawable/bg_edit_selector" />
+        android:textCursorDrawable="@drawable/edit_cursor"
+        android:textSize="14sp" />
 
     <ImageView
         android:id="@+id/add"
         android:layout_width="35dp"
         android:layout_height="35dp"
+        android:background="@drawable/boarder"
         android:gravity="center"
         android:padding="10dp"
-        android:src="@mipmap/t_plus"
-        android:background="@drawable/boarder"/>
+        android:src="@mipmap/t_plus" />
 
 </merge>

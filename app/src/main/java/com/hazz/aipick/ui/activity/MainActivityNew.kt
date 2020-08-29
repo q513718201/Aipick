@@ -1,5 +1,7 @@
 package com.hazz.aipick.ui.activity
 
+import android.content.Context
+import android.content.Intent
 import android.support.v4.app.Fragment
 import android.widget.RadioGroup
 import com.hazz.aipick.R
@@ -104,5 +106,12 @@ class MainActivityNew : BaseActivity(), RadioGroup.OnCheckedChangeListener {
         }
     }
 
+    companion object {
+        @JvmStatic
+        fun start(context: Context) {
+            val starter = Intent(context, MainActivityNew::class.java)
+            context.startActivity(starter)
+        }
+    }
 
 }

@@ -171,7 +171,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/real_name"
                 android:textColor="@color/text_color_edit_hint"
-                android:textSize="14sp"></TextView>
+                android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/et_name"
@@ -268,9 +268,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="仅支持jpg/png/bmp格式，不超过2M"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
+                android:text="仅支持jpg/png/bmp格式，不超过2M"
                 android:textColor="@color/text_color_edit_hint"
                 android:textSize="14sp" />
 
@@ -307,7 +307,7 @@
             </TextView>
 
             <Button
-                android:id="@+id/bt_login"
+                android:id="@+id/bt_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:layout_marginLeft="20dp"

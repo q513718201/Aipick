@@ -14,7 +14,7 @@ class FollowBenefitAdapter(data: List<SubscribeDesc.GainsBean>?) : BaseQuickAdap
 
     override fun convert(helper: BaseViewHolder, item: SubscribeDesc.GainsBean) {
         val coinIcon = helper.getView<ImageView>(R.id.iv)
-        GlideUtil.load(coinIcon, CoinManager.getCoinIcon(item.base_coin))
+        GlideUtil.showImage(CoinManager.getCoinIcon(item.base_coin),coinIcon)
         helper.setText(R.id.tv_coin_name, item.base_coin)
         helper.setText(R.id.tv_market, "/${item.exchange_code}")
         if (item.amount != null && item.amount[0]?.isDigit()) {

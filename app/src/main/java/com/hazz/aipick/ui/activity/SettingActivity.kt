@@ -1,21 +1,15 @@
 package com.hazz.aipick.ui.activity
 
+
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.support.design.widget.BottomSheetDialog
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
-import android.widget.TextView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
-import com.bumptech.glide.request.RequestOptions
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.LoginContract
@@ -23,16 +17,13 @@ import com.hazz.aipick.mvp.model.bean.LoginBean
 import com.hazz.aipick.mvp.model.bean.UserInfo
 import com.hazz.aipick.mvp.presenter.LoginPresenter
 import com.hazz.aipick.mvp.presenter.UserInfoPresenter
-import com.hazz.aipick.ui.adapter.OrderAdapter
 import com.hazz.aipick.utils.*
 import com.hazz.aipick.widget.TipsDialog
 import com.werb.pickphotoview.PickPhotoView
 import com.werb.pickphotoview.util.PickConfig
 import kotlinx.android.synthetic.main.activity_mine_set.*
 import kotlinx.android.synthetic.main.head_dialog.view.*
-
-
-import java.util.ArrayList
+import java.util.*
 import java.util.ResourceBundle.clearCache
 
 
@@ -40,7 +31,7 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
 
 
     override fun updateSuccess(msg: String) {
-      SToast.showText(msg)
+        SToast.showText(msg)
     }
 
     override fun loginSuccess(msg: LoginBean) {
@@ -48,14 +39,12 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
     }
 
     override fun getUserInfo(msg: UserInfo) {
-        if(!TextUtils.isEmpty(msg.avatar)){
-            Glide.with(this).load(msg.avatar)
-                    .apply(RequestOptions.bitmapTransform(CircleCrop()))
-                    .into(iv_avatar)
+        if (!TextUtils.isEmpty(msg.avatar)) {
+            GlideUtil.showRound(msg.avatar, iv_avatar, R.mipmap.ic_user)
         }
 
-        tv_name.text=msg.nickname
-        tv_location.text=msg.location
+        tv_name.text = msg.nickname
+        tv_location.text = msg.location
 
     }
 
@@ -63,17 +52,13 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
     override fun layoutId(): Int = R.layout.activity_mine_set
 
     override fun initData() {
-        mLoginPresenter.userInfo()
     }
 
-    private var mOrderAdapter: OrderAdapter? = null
-    private val titleList = ArrayList<String>()
     private var dialog: BottomSheetDialog? = null
     private var mClearTipsDialog: TipsDialog? = null
     private var mLoginPresenter: LoginPresenter = LoginPresenter(this)
     private var mUserInfoPresenter: UserInfoPresenter = UserInfoPresenter(this)
     private val REQUEST_AREACODE_CODE = 10005
-    private var  imageToBase64=""
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
@@ -82,7 +67,7 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
                 .setTitle(getString(R.string.setting))
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
-                .setOnLeftIconClickListener { view -> finish() }
+                .setOnLeftIconClickListener { finish() }
 
 
     }
@@ -91,17 +76,20 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
         rl1.setOnClickListener {//头像
             showDialog()
         }
+        rl2.setOnClickListener {
+            SettingUserNickNameActivity.start(this, tv_name.text.toString())
+        }
 
         rl3.setOnClickListener {//所在地
             startActivityForResult(Intent(this, CountryActivity::class.java), REQUEST_AREACODE_CODE)
         }
         rl4.setOnClickListener {//安全中心
-            startActivity(Intent(this,SafeCenterActivity::class.java))
+            startActivity(Intent(this, SafeCenterActivity::class.java))
         }
 
 
         rl5.setOnClickListener {//关于
-            startActivity(Intent(this,AboutActivity::class.java))
+            startActivity(Intent(this, AboutActivity::class.java))
         }
 
         rl6.setOnClickListener {//清除缓存
@@ -110,11 +98,11 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
 
         rl7.setOnClickListener {//退出登录
             val tipsDialog = TipsDialog(this)
-            tipsDialog.setContent(resources.getString(R.string.is_logot) )
+            tipsDialog.setContent(resources.getString(R.string.is_logot))
                     .setCancleListener { }
                     .setConfirmListener {
-                      SPUtil.putString("token","")
-                        startActivity(Intent(this,LoginActivity::class.java))
+                        SPUtil.putString("token", "")
+                        startActivity(Intent(this, LoginActivity::class.java))
                         finish()
                     }
                     .show()
@@ -136,6 +124,7 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
         mClearTipsDialog!!.show()
 
     }
+
     private fun showDialog() {
         dialog = BottomSheetDialog(this)
         val commentView = LayoutInflater.from(this).inflate(R.layout.head_dialog, null)
@@ -145,7 +134,7 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
             ).subscribe { permission ->
                 if (permission) {
                     PickPhotoView.Builder(this)
-                            .setPickPhotoSize(2)
+                            .setPickPhotoSize(1)
                             .setClickSelectable(true)
                             .setShowCamera(true)
                             .setSpanCount(3)
@@ -164,7 +153,7 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
         }
 
 
-        commentView.cancle.setOnClickListener({ v -> dialog!!.dismiss() })
+        commentView.cancle.setOnClickListener { dialog!!.dismiss() }
         dialog!!.show()
     }
 
@@ -181,22 +170,23 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
         if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_AREACODE_CODE) {
             val areaCode = data?.getStringExtra("countryName") ?: "中国大陆"
             tv_location.text = areaCode
-            mUserInfoPresenter.update("location",areaCode,"","","","","","","","","","")
+            mUserInfoPresenter.update("location", areaCode, "", "", "", "", "", "", "", "", "", "")
         }
 
         if (requestCode == PickConfig.PICK_PHOTO_DATA) {
             val paths = data.getSerializableExtra(PickConfig.INTENT_IMG_LIST_SELECT) as ArrayList<String>
-         //   mUserInfoPresenter.update("avatar","","",RsaUtils.imageToBase64(PicUtil.compressImage(paths[0], ".png"))!!,"","","","","","","","")
 
-            Glide.with(this).load(paths[0])
-                    .apply(RequestOptions.bitmapTransform(CircleCrop()))
-                    .into(iv_avatar)
-
-
-
+            var image = RsaUtils.imageToBase64(paths[0])
+            if (image != null) {
+                mUserInfoPresenter.update("avatar", "", "", image, "", "", "", "", "", "", "", "")
+            }
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        mLoginPresenter.userInfo()
+    }
 
 
 }

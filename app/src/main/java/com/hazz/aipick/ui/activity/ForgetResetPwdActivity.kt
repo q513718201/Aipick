@@ -9,7 +9,6 @@ import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.presenter.ResetPwdPresenter
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
-import kotlinx.android.synthetic.main.activity_bind_phone.bt_login
 import kotlinx.android.synthetic.main.activity_bind_phone.toolbar
 import kotlinx.android.synthetic.main.activity_bind_phone.tv1
 import kotlinx.android.synthetic.main.activity_forget_reset_phone.*
@@ -59,7 +58,7 @@ class ForgetResetPwdActivity : BaseActivity(), LoginContract.updateView {
             "phone" -> tv1.text = getString(R.string.current_bind, getString(R.string.phone_num), account)
             "email" -> tv1.text = getString(R.string.current_bind, getString(R.string.email), account)
         }
-        bt_login.setOnClickListener {
+        bt_confirm.setOnClickListener {
             mResetPwdPresenter.reset(type, countryCode, account, et_new_pwd.text.toString(), code)
         }
     }

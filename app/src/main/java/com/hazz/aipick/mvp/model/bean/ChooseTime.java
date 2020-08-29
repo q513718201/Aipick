@@ -12,5 +12,6 @@ public class ChooseTime {
         public String days30;
         public String days90;
         public String days180;
+        public String days365;
 
 }

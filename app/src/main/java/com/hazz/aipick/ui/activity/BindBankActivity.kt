@@ -37,6 +37,7 @@ class BindBankActivity : BaseActivity(), LoginContract.bindCarView {
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
+
         ToolBarCustom.newBuilder(toolbar as Toolbar)
                 .setLeftIcon(R.mipmap.back_white)
                 .setTitle(getString(R.string.bind_card))
@@ -49,7 +50,7 @@ class BindBankActivity : BaseActivity(), LoginContract.bindCarView {
     override fun start() {
         tv_save.setOnClickListener {
             if(TextUtils.isEmpty(edit_name.text)){
-                ToastUtils.showToast(this,"请输入真实姓名")
+                ToastUtils.showToast(this,"请输入持卡人姓名")
                 return@setOnClickListener
             }
             if(TextUtils.isEmpty(edit_bank.text)){

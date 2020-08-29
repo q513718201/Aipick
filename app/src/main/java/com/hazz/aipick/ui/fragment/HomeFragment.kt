@@ -6,7 +6,6 @@ import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.bigkoo.alertview.AlertView
 import com.bigkoo.alertview.OnItemClickListener
@@ -27,6 +26,8 @@ import com.hazz.aipick.utils.DpUtils
 import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
 import com.scwang.smartrefresh.header.MaterialHeader
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener
 import kotlinx.android.synthetic.main.dialog_shaixuan.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
@@ -34,22 +35,30 @@ import kotlin.collections.HashMap
 
 
 @Suppress("DEPRECATION")
-class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListener {
+class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListener, OnRefreshLoadmoreListener {
 
 
     private var homeBean: Home? = null
     override fun getHomeMsg(msg: List<Home>) {
-        if (msg.isEmpty()) return
-
-        mHomeAdapter?.setNewData(msg)
         mHomeAdapter?.setRole(subeeType)
-        if (homeBean == null) {
+        if (homeBean == null && msg.isNotEmpty()) {
             homeBean = msg[0]
             setHead()
         }
-        if (isRefresh)
-            mRefreshLayout.finishRefresh()
+        mRefreshLayout?.isEnableLoadmore = msg.size == 10
+        when (loadType) {
+            0 -> {
+                mRefreshLayout?.finishRefresh()
+                mHomeAdapter?.setNewData(msg)
+            }
+            else -> {
+                mHomeAdapter?.addData(msg)
+                mRefreshLayout.finishLoadmore()
+            }
+        }
     }
+
+    private var loadType = 0;
 
     private fun setHead() {
         homeBean?.let {
@@ -86,10 +95,10 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
     private var page = 1
 
     private var rateStart = "0"
-    private var rateEnd = "100"
+    private var rateEnd = "100000"
 
     private var timesStart = "0"
-    private var timesEnd = "100"
+    private var timesEnd = "100000"
 
     private var pullbackStart = "0"
     private var pullbackEnd = "100"
@@ -115,37 +124,17 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
      * 初始化 ViewI
      */
     override fun initView() {
-
+        mHomePresenter.getRate()//获取汇率
         //内容跟随偏移
         mRefreshLayout.setEnableHeaderTranslationContent(true)
-        mRefreshLayout.setOnRefreshListener {
-            isRefresh = true
-            getData()
-        }
+        mRefreshLayout.setOnRefreshLoadmoreListener(this)
+
         mMaterialHeader = mRefreshLayout.refreshHeader as MaterialHeader?
         //打开下拉刷新区域块背景:
         mMaterialHeader?.setShowBezierWave(true)
         //设置下拉刷新主题颜色
         mRefreshLayout.setPrimaryColorsId(R.color.color_light_black, R.color.color_title_bg)
 
-        mRefreshLayout.autoLoadmore()
-        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    val childCount = mRecyclerView.childCount
-                    val itemCount = mRecyclerView.layoutManager!!.itemCount
-                    val firstVisibleItem = (mRecyclerView.layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
-                    if (firstVisibleItem + childCount == itemCount) {
-                        if (!loadingMore) {
-                            loadingMore = true
-                        }
-                    }
-                }
-            }
-        })
-
-        // TODO: 2020/8/28
         val pointList = ArrayList<Point>()
         pointList.add(Point(-1, 50))
         pointList.add(Point(210, 200))
@@ -284,8 +273,19 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
     }
 
     private fun getData() {
-        mHomePresenter.getRate()//获取汇率
         mHomePresenter.getHomeMsg(subeeType, page, 10, rateStart, rateEnd, timesStart, timesEnd, pullbackStart, pullbackEnd)
+    }
+
+    override fun onLoadmore(refreshlayout: RefreshLayout?) {
+        loadType = 0
+        page = 1
+        getData()
+    }
+
+    override fun onRefresh(refreshlayout: RefreshLayout?) {
+        loadType = 1
+        page++
+        getData()
     }
 
 

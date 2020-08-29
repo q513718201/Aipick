@@ -2,6 +2,7 @@ package com.hazz.aipick.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 
 import com.github.mikephil.charting.charts.CombinedChart;
@@ -18,7 +19,6 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.renderer.XAxisRenderer;
 import com.github.mikephil.charting.utils.MPPointD;
@@ -69,18 +69,18 @@ public class CombinedChartManager {
         mCombinedChart.setDrawBorders(false);
         mCombinedChart.setScaleYEnabled(false);
         mCombinedChart.setAutoScaleMinMaxEnabled(false);
+        mCombinedChart.setMaxVisibleValueCount(3);
 
         //Y轴设置
 //        rightAxis.setDrawGridLines(false);
-//        rightAxis.setAxisMinimum(0f);
         rightAxis.setEnabled(false);
         // 不从y轴发出横向直线
         leftAxis.setDrawGridLines(false);
         leftAxis.setTextColor(Color.parseColor("#718BA9"));
+        leftAxis.setAxisLineColor(Color.parseColor("#718BA9"));
         leftAxis.setDrawZeroLine(true);
         xAxis.setDrawGridLines(false);
-//        xAxis.setLabelCount(6);
-        leftAxis.setAxisLineColor(Color.parseColor("#718BA9"));
+        xAxis.setLabelCount(3, false);
 
         Transformer trans = mCombinedChart.getTransformer(YAxis.AxisDependency.LEFT);
         mCombinedChart.setXAxisRenderer(new CustomXAxisRenderer(mCombinedChart.getViewPortHandler(),
@@ -209,30 +209,30 @@ public class CombinedChartManager {
      * @param lineColors  折线颜色
      * @return
      */
-    private LineData getLineData(List<List<Float>> lineChartYs, List<String> lineNames, List<Integer> lineColors) {
-        LineData lineData = new LineData();
-
-        for (int i = 0; i < lineChartYs.size(); i++) {
-            ArrayList<Entry> yValues = new ArrayList<>();
-            for (int j = 0; j < lineChartYs.get(i).size(); j++) {
-                yValues.add(new Entry(j, lineChartYs.get(i).get(j)));
-            }
-            LineDataSet dataSet = new LineDataSet(yValues, lineNames.get(i));
-            dataSet.setColor(lineColors.get(i));
-            dataSet.setCircleColor(lineColors.get(i));
-            dataSet.setValueTextColor(lineColors.get(i));
-
-            dataSet.setDrawValues(false);
-            dataSet.setValueTextSize(10f);
-            dataSet.setMode(LineDataSet.Mode.LINEAR);
-            dataSet.setCircleRadius(1f);
-            dataSet.setDrawCircles(true);
-            dataSet.setCircleColor(Color.parseColor("#F5D54D"));
-            dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-            lineData.addDataSet(dataSet);
-        }
-        return lineData;
-    }
+//    private LineData getLineData(List<List<Float>> lineChartYs, List<String> lineNames, List<Integer> lineColors) {
+//        LineData lineData = new LineData();
+//
+//        for (int i = 0; i < lineChartYs.size(); i++) {
+//            ArrayList<Entry> yValues = new ArrayList<>();
+//            for (int j = 0; j < lineChartYs.get(i).size(); j++) {
+//                yValues.add(new Entry(j, lineChartYs.get(i).get(j)));
+//            }
+//            LineDataSet dataSet = new LineDataSet(yValues, lineNames.get(i));
+//            dataSet.setColor(lineColors.get(i));
+//            dataSet.setCircleColor(lineColors.get(i));
+//            dataSet.setValueTextColor(lineColors.get(i));
+//
+//            dataSet.setDrawValues(false);
+//            dataSet.setValueTextSize(10f);
+//            dataSet.setMode(LineDataSet.Mode.LINEAR);
+//            dataSet.setCircleRadius(1f);
+//            dataSet.setDrawCircles(true);
+//            dataSet.setCircleColor(Color.parseColor("#F5D54D"));
+//            dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+//            lineData.addDataSet(dataSet);
+//        }
+//        return lineData;
+//    }
 
     /**
      * 得到柱状图
@@ -258,7 +258,6 @@ public class CombinedChartManager {
         }
 
         BarDataSet barDataSet = new BarDataSet(yValues, barName);
-        barDataSet.setColor(barColor);
         barDataSet.setValueTextSize(10f);
 
         barDataSet.setColors(colors);
@@ -266,51 +265,52 @@ public class CombinedChartManager {
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         barData.addDataSet(barDataSet);
 
+
         //以下是为了解决 柱状图 左右两边只显示了一半的问题 根据实际情况 而定
         xAxis.setAxisMinimum(-0.5f);
         xAxis.setAxisMaximum((float) (barChartY.size() - 0.5));
         return barData;
     }
-
-    /**
-     * 得到柱状图(多条)
-     *
-     * @param barChartYs Y轴值
-     * @param barNames   柱状图名字
-     * @param barColors  柱状图颜色
-     * @return
-     */
-
-    private BarData getBarData(List<List<Float>> barChartYs, List<String> barNames, List<Integer> barColors) {
-        List<IBarDataSet> lists = new ArrayList<>();
-        for (int i = 0; i < barChartYs.size(); i++) {
-            ArrayList<BarEntry> entries = new ArrayList<>();
-
-            for (int j = 0; j < barChartYs.get(i).size(); j++) {
-                entries.add(new BarEntry(j, barChartYs.get(i).get(j)));
-            }
-            BarDataSet barDataSet = new BarDataSet(entries, barNames.get(i));
-
-            barDataSet.setColor(barColors.get(i));
-            barDataSet.setValueTextColor(barColors.get(i));
-            barDataSet.setValueTextSize(10f);
-            barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-            lists.add(barDataSet);
-        }
-        BarData barData = new BarData(lists);
-
-        int amount = barChartYs.size(); //需要显示柱状图的类别 数量
-        float groupSpace = 0.12f; //柱状图组之间的间距
-        float barSpace = (float) ((1 - 0.12) / amount / 10); // x4 DataSet
-        float barWidth = (float) ((1 - 0.12) / amount / 10 * 9); // x4 DataSet
-
-        // (0.2 + 0.02) * 4 + 0.12 = 1.00 即100% 按照百分百布局
-        //柱状图宽度
-        barData.setBarWidth(barWidth);
-        //(起始点、柱状图组间距、柱状图之间间距)
-        barData.groupBars(0, groupSpace, barSpace);
-        return barData;
-    }
+//
+//    /**
+//     * 得到柱状图(多条)
+//     *
+//     * @param barChartYs Y轴值
+//     * @param barNames   柱状图名字
+//     * @param barColors  柱状图颜色
+//     * @return
+//     */
+//
+//    private BarData getBarData(List<List<Float>> barChartYs, List<String> barNames, List<Integer> barColors) {
+//        List<IBarDataSet> lists = new ArrayList<>();
+//        for (int i = 0; i < barChartYs.size(); i++) {
+//            ArrayList<BarEntry> entries = new ArrayList<>();
+//
+//            for (int j = 0; j < barChartYs.get(i).size(); j++) {
+//                entries.add(new BarEntry(j, barChartYs.get(i).get(j)));
+//            }
+//            BarDataSet barDataSet = new BarDataSet(entries, barNames.get(i));
+//
+//            barDataSet.setColor(barColors.get(i));
+//            barDataSet.setValueTextColor(barColors.get(i));
+//            barDataSet.setValueTextSize(10f);
+//            barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+//            lists.add(barDataSet);
+//        }
+//        BarData barData = new BarData(lists);
+//
+//        int amount = barChartYs.size(); //需要显示柱状图的类别 数量
+//        float groupSpace = 0.12f; //柱状图组之间的间距
+//        float barSpace = 20f; // x4 DataSet
+//        float barWidth = 40f; // x4 DataSet
+//
+//        // (0.2 + 0.02) * 4 + 0.12 = 1.00 即100% 按照百分百布局
+//        //柱状图宽度
+//        barData.setBarWidth(barWidth);
+//        //(起始点、柱状图组间距、柱状图之间间距)
+//        barData.groupBars(0, groupSpace, barSpace);
+//        return barData;
+//    }
 
     /**
      * 显示混合图(柱状图+折线图)
@@ -354,34 +354,46 @@ public class CombinedChartManager {
             }
         });
         mCombinedChart.invalidate();
-    }
-
-    /**
-     * 显示混合图(柱状图+折线图)
-     *
-     * @param xAxisValues X轴坐标
-     * @param barChartYs  柱状图Y轴值
-     * @param lineChartYs 折线图Y轴值
-     * @param barNames    柱状图名字
-     * @param lineNames   折线图名字
-     * @param barColors   柱状图颜色
-     * @param lineColors  折线图颜色
-     */
-
-    public void showCombinedChart(
-            List<String> xAxisValues, List<List<Float>> barChartYs, List<List<Float>> lineChartYs,
-            List<String> barNames, List<String> lineNames, List<Integer> barColors, List<Integer> lineColors) {
-        initChart();
-        setXAxis(xAxisValues);
-
-        CombinedData combinedData = new CombinedData();
-
-        combinedData.setData(getBarData(barChartYs, barNames, barColors));
-        combinedData.setData(getLineData(lineChartYs, lineNames, lineColors));
-
-        mCombinedChart.setData(combinedData);
-        mCombinedChart.invalidate();
+        Matrix m = new Matrix();
+        m.postScale(scaleNum(xAxisValues.size()), 1f);//两个参数分别是x,y轴的缩放比例。例如：将x轴的数据放大为之前的1倍
+        mCombinedChart.getViewPortHandler().refresh(m, mCombinedChart, false);
 
     }
+
+
+    //30个横坐标时，缩放4f是正好的。
+    private float scalePercent = 4f / 30f;
+
+    private float scaleNum(int xCount) {
+        return xCount * scalePercent;
+    }
+
+//    /**
+//     * 显示混合图(柱状图+折线图)
+//     *
+//     * @param xAxisValues X轴坐标
+//     * @param barChartYs  柱状图Y轴值
+//     * @param lineChartYs 折线图Y轴值
+//     * @param barNames    柱状图名字
+//     * @param lineNames   折线图名字
+//     * @param barColors   柱状图颜色
+//     * @param lineColors  折线图颜色
+//     */
+//
+//    public void showCombinedChart(
+//             List<String> xAxisValues,List<List<Float>> barChartYs, List<List<Float>> lineChartYs,
+//            List<String> barNames, List<String> lineNames, List<Integer> barColors, List<Integer> lineColors) {
+//        initChart();
+//        setXAxis(xAxisValues);
+//
+//        CombinedData combinedData = new CombinedData();
+//
+//        combinedData.setData(getBarData(barChartYs, barNames, barColors));
+//        combinedData.setData(getLineData(lineChartYs, lineNames, lineColors));
+//
+//        mCombinedChart.setData(combinedData);
+//        mCombinedChart.invalidate();
+//
+//    }
 
 }

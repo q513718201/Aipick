@@ -9,6 +9,7 @@ import com.hazz.aipick.base.BaseFragment
 import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.presenter.RegistPresenter
 import com.hazz.aipick.ui.activity.ForgetResetPwdActivity
+import com.hazz.aipick.ui.activity.TiaokuanActivity
 import com.hazz.aipick.utils.RegexUtils
 import com.hazz.aipick.utils.ToastUtils
 import kotlinx.android.synthetic.main.fragment_regist_email.*
@@ -72,7 +73,9 @@ class RegisterEmailFragment : BaseFragment(), LoginContract.RegistView {
             ll_xieyi.visibility = View.GONE
             llPwd.visibility = View.GONE
         }
-
+        service_rule.setOnClickListener {
+            context?.let { TiaokuanActivity.start(it, 1) }
+        }
 
         tv_bt.setOnClickListener {
             if (edit_text.text.toString().isEmpty()) {

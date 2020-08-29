@@ -48,6 +48,7 @@
                     android:singleLine="true"
                     android:textColor="@android:color/white"
                     android:textColorHint="@color/text_color_edit_hint"
+                    android:textCursorDrawable="@drawable/edit_cursor"
                     android:textSize="14sp" />
 
 
@@ -92,6 +93,7 @@
                 android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/text_color_edit_hint"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:textSize="14sp" />
 
             <View
@@ -150,6 +152,7 @@
                 android:singleLine="true"
                 android:textColor="@android:color/white"
                 android:textColorHint="@color/text_color_edit_hint"
+                android:textCursorDrawable="@drawable/edit_cursor"
                 android:textSize="14sp" />
         </LinearLayout>
 

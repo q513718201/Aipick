@@ -13,7 +13,7 @@ ext {
     dependVersion = [
             androidSupportSdkVersion: "27.1.1",
             retrofitSdkVersion      : "2.3.0",
-            glideSdkVersion         : "4.9.0",
+            glideSdkVersion         : "4.7.1",
             rxJava                  : "2.1.5",
             rxAndroid               : "2.0.1",
             mpchartVersion          : "v3.0.3"

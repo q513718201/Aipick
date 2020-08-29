@@ -13,7 +13,7 @@ class OrderAdapter(data: List<Order.ListBean>?) : BaseQuickAdapter<Order.ListBea
 
     override fun convert(helper: BaseViewHolder, item: Order.ListBean) {
         val coinIcon = helper.getView<ImageView>(R.id.iv)
-        GlideUtil.load(coinIcon, CoinManager.getCoinIcon(item.base_coin))
+        GlideUtil.showImage(CoinManager.getCoinIcon(item.base_coin), coinIcon)
         helper.setText(R.id.tv_coin_name, "${item.base_coin}/${item.quote_coin}")
         if (item.gain_loss != null && item.gain_loss[0]?.isDigit()) {
             helper.setTextColor(R.id.tv_gain, mContext.resources.getColor(R.color.main_color_green))

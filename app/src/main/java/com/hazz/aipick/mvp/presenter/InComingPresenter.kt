@@ -2,9 +2,13 @@ package com.hazz.aipick.mvp.presenter
 
 
 import android.util.Pair
+import com.google.gson.Gson
+import com.hazz.aipick.BuildConfig
 import com.hazz.aipick.mvp.contract.InComingContract
 import com.hazz.aipick.mvp.model.InComing
 import com.hazz.aipick.net.*
+import com.hazz.aipick.utils.AssetsUtil
+import java.nio.charset.Charset
 
 
 class InComingPresenter(view: InComingContract.incomingView) : BasePresenter<InComingContract.incomingView>(view) {
@@ -22,7 +26,14 @@ class InComingPresenter(view: InComingContract.incomingView) : BasePresenter<InC
             }
 
             override fun success(tBaseResult: BaseResult<List<InComing>>) {
-                view.getTradeIncoming(tBaseResult.data!!)
+
+                if (BuildConfig.DEBUG) {// TODO: 2020/8/29 test data
+                    var assertsFileInBytes = AssetsUtil.getAssertsFileInBytes(context?.applicationContext, "income.json")
+                    val json = String(assertsFileInBytes, Charset.defaultCharset())
+                    var msg: List<InComing> = Gson().fromJson<Array<InComing>>(json, Array<InComing>::class.java).toMutableList()
+                    view.getTradeIncoming(msg)
+                } else
+                    view.getTradeIncoming(tBaseResult.data!!)
             }
 
         }, true)
@@ -44,7 +55,13 @@ class InComingPresenter(view: InComingContract.incomingView) : BasePresenter<InC
             }
 
             override fun success(tBaseResult: BaseResult<List<InComing>>) {
-                view.getIncoming(tBaseResult.data!!)
+                if (BuildConfig.DEBUG) {// TODO: 2020/8/29 test data
+                    var assertsFileInBytes = AssetsUtil.getAssertsFileInBytes(context?.applicationContext, "income.json")
+                    val json = String(assertsFileInBytes, Charset.defaultCharset())
+                    var msg: List<InComing> = Gson().fromJson<Array<InComing>>(json, Array<InComing>::class.java).toMutableList()
+                    view.getIncoming(msg)
+                } else
+                    view.getIncoming(tBaseResult.data!!)
             }
 
         }, true)
@@ -69,7 +86,13 @@ class InComingPresenter(view: InComingContract.incomingView) : BasePresenter<InC
             }
 
             override fun success(tBaseResult: BaseResult<List<InComing>>) {
-                view.getTradeIncoming(tBaseResult.data!!)
+                if (BuildConfig.DEBUG) {// TODO: 2020/8/29 test data
+                    var assertsFileInBytes = AssetsUtil.getAssertsFileInBytes(context?.applicationContext, "income.json")
+                    val json = String(assertsFileInBytes, Charset.defaultCharset())
+                    var msg: List<InComing> = Gson().fromJson<Array<InComing>>(json, Array<InComing>::class.java).toMutableList()
+                    view.getTradeIncoming(msg)
+                } else
+                    view.getTradeIncoming(tBaseResult.data!!)
             }
 
         }, true)
@@ -94,7 +117,13 @@ class InComingPresenter(view: InComingContract.incomingView) : BasePresenter<InC
             }
 
             override fun success(tBaseResult: BaseResult<List<InComing>>) {
-                view.getIncoming(tBaseResult.data!!)
+                if (BuildConfig.DEBUG) {// TODO: 2020/8/29 test data
+                    var assertsFileInBytes = AssetsUtil.getAssertsFileInBytes(context?.applicationContext, "income.json")
+                    val json = String(assertsFileInBytes, Charset.defaultCharset())
+                    var msg: List<InComing> = Gson().fromJson<Array<InComing>>(json, Array<InComing>::class.java).toMutableList()
+                    view.getIncoming(msg)
+                } else
+                    view.getIncoming(tBaseResult.data!!)
             }
 
         }, true)

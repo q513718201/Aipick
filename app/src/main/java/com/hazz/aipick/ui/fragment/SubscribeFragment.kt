@@ -9,7 +9,6 @@ import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.model.bean.UserSubscribeBean
 import com.hazz.aipick.mvp.presenter.UserSubscribePresenter
 import com.hazz.aipick.ui.adapter.UserSubscribeAdapter
-import kotlinx.android.synthetic.main.fragment_order.recycleview
 import kotlinx.android.synthetic.main.fragment_subscribe.*
 
 
@@ -33,10 +32,6 @@ class SubscribeFragment : BaseFragment(), CollectionContract.userSubscribeView {
         }
     }
     var isDemo = "0"
-    fun setIsDemo(demo: String) {
-        isDemo = demo
-        getData()
-    }
     override fun getLayoutId(): Int = R.layout.fragment_subscribe
 
 

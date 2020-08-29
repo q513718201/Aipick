@@ -19,7 +19,7 @@ class InfoAdapter(layoutResId: Int, data: List<InfoBean>?) : BaseQuickAdapter<In
 
     override fun convert(helper: BaseViewHolder, item: InfoBean) {
         item?.let {
-            GlideUtil.load(helper.getView<ImageView>(R.id.iv), it.head)
+            GlideUtil.showImage(it.head, helper.getView<ImageView>(R.id.iv))
             helper.setText(R.id.tv_name, it.name)
             helper.setText(R.id.tv_time, "${it.total_view}浏览 | ${it.time}")
             helper.setText(R.id.tv_content, it.content)
