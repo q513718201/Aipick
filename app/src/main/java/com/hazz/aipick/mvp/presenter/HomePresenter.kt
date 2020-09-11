@@ -40,7 +40,7 @@ class HomePresenter(view: HomeContract.homeView) : BasePresenter<HomeContract.ho
             }
 
             override fun success(tBaseResult: BaseResult<List<Home>>) {
-                view.getHomeMsg(tBaseResult.data!!)
+                tBaseResult.data?.let { view.getHomeMsg(it) }
             }
 
         }, true)
@@ -59,7 +59,6 @@ class HomePresenter(view: HomeContract.homeView) : BasePresenter<HomeContract.ho
             override fun success(tBaseResult: BaseResult<RateBean>) {
                 tBaseResult.data?.let { view.setRate(it) }
             }
-
         }, false)
 
     }

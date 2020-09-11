@@ -28,19 +28,19 @@ class TiaokuanActivity : BaseActivity() {
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
-        val type = intent.getIntExtra("type", 0)
+        val type = intent.getIntExtra("type", -1)
         content.text = when (type) {
             0 -> Agree.service_for_pay
             1 -> Agree.user_agree
             2 -> Agree.wind_control
             else->
-                getString(R.string.tiaokuan)
+                Agree.user_agree
         }
         var title = when (type) {
             0 -> "用户服务付费协议"
             1 -> "用户使用协议"
             2 -> "AI PICK风控协议"
-            else -> getString(R.string.tiaokuan)
+            else -> getString(R.string.fuwuxieyi)
         }
         ToolBarCustom.newBuilder(mToolbar as Toolbar)
                 .setLeftIcon(R.mipmap.back_white)

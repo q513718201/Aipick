@@ -7,7 +7,7 @@
     <CheckBox
         android:id="@+id/cb"
         android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:layout_marginLeft="@dimen/dp_16"
         android:button="@drawable/selector_checkbox"
         android:checked="false"
@@ -22,9 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dp_10"
-        android:background="@drawable/bg_round_black"
         android:padding="@dimen/dp_4"
-        android:src="@mipmap/ic_btc"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toRightOf="@+id/cb"
         app:layout_constraintTop_toTopOf="parent" />

@@ -6,7 +6,6 @@ import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
@@ -28,7 +27,6 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ICandleDataSet;
-import com.github.mikephil.charting.interfaces.datasets.IDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.vinsonguo.klinelib.BuildConfig;
 import com.vinsonguo.klinelib.R;
@@ -193,10 +191,9 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         axisRightPrice.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return DoubleUtil.getStringByDigits(value, mDigits);
+                return DoubleUtil.getStringByDigits(value, 4);
             }
         });
-
         //左侧
         YAxis axisLeft = mChartPrice.getAxisLeft();
         axisLeft.setDrawAxisLine(false);
@@ -224,7 +221,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
     public void initData(List<HisData> hisDatas) {
 
-         resetChart();
+        resetChart();
         mData.addAll(hisDatas);
 
         CombinedData combinedData;
@@ -280,6 +277,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
     }
 
     private void initChartPriceData(CombinedData combinedData) {
+        mChartPrice.getXAxis().setAxisMinimum(combinedData.getXMin() - 0.5f);
         mChartPrice.getXAxis().setAxisMaximum(combinedData.getXMax() + 0.5f);
         mChartPrice.setData(combinedData);
         mChartPrice.setVisibleXRange(MAX_COUNT, MIN_COUNT);
@@ -422,6 +420,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         barData.setBarWidth(0.75f);
         CombinedData combinedData = new CombinedData();
         combinedData.setData(barData);
+        mChartVolume.getXAxis().setAxisMinimum(combinedData.getXMin() - 0.5f);
         mChartVolume.getXAxis().setAxisMaximum(combinedData.getXMax() + 0.5f);
         mChartVolume.setData(combinedData);
         mChartVolume.setVisibleXRange(MAX_COUNT, MIN_COUNT);
@@ -458,6 +457,8 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         combinedData.setData(barData);
         LineData lineData = new LineData(setLine(DIF, difEntries), setLine(DEA, deaEntries));
         combinedData.setData(lineData);
+
+        mChartMacd.getXAxis().setAxisMinimum(combinedData.getXMin() - 0.5f);
         mChartMacd.getXAxis().setAxisMaximum(combinedData.getXMax() + 0.5f);
         mChartMacd.setData(combinedData);
         mChartMacd.setVisibleXRange(MAX_COUNT, MIN_COUNT);
@@ -491,6 +492,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
         CombinedData combinedData = new CombinedData();
         combinedData.setData(lineData);
+        mChartKdj.getXAxis().setAxisMinimum(combinedData.getXMin() - 0.5f);
         mChartKdj.getXAxis().setAxisMaximum(combinedData.getXMax() + 0.5f);
         mChartKdj.setData(combinedData);
         mChartKdj.setVisibleXRange(MAX_COUNT, MIN_COUNT);
@@ -601,7 +603,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
             ma30Set.addEntry(new Entry(klineCount, (float) hisData.getMa30()));
         }
 
-
+        mChartPrice.getXAxis().setAxisMinimum(combinedData.getXMin() - 0.5f);
         mChartPrice.getXAxis().setAxisMaximum(combinedData.getXMax() + 1.5f);
         mChartVolume.getXAxis().setAxisMaximum(mChartVolume.getData().getXMax() + 1.5f);
         mChartMacd.getXAxis().setAxisMaximum(mChartMacd.getData().getXMax() + 1.5f);
@@ -661,6 +663,8 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
         mChartPrice.setVisibleXRange(MAX_COUNT, MIN_COUNT);
         mChartVolume.setVisibleXRange(MAX_COUNT, MIN_COUNT);
 
+
+        mChartPrice.getXAxis().setAxisMinimum(combinedData.getXMin() - 1.5f);
         mChartPrice.getXAxis().setAxisMaximum(combinedData.getXMax() + 1.5f);
         mChartVolume.getXAxis().setAxisMaximum(mChartVolume.getData().getXMax() + 1.5f);
 
@@ -671,7 +675,7 @@ public class KLineView extends BaseView implements CoupleChartGestureListener.On
 
         updateDescription(hisData);
 
-       // setDescription(mChartVolume, "成交量 " + hisData.getVol());
+        // setDescription(mChartVolume, "成交量 " + hisData.getVol());
     }
 
 

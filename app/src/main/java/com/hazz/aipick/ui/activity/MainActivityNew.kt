@@ -7,10 +7,11 @@ import android.widget.RadioGroup
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.socket.WsManager
-import com.hazz.aipick.ui.fragment.CoinFragment
+import com.hazz.aipick.ui.fragment.CoinFragmentNew
 import com.hazz.aipick.ui.fragment.HomeFragment
 import com.hazz.aipick.ui.fragment.InfoFragment
 import com.hazz.aipick.ui.fragment.MineFragment
+import com.hazz.aipick.utils.ToastUtils
 import com.tencent.bugly.Bugly
 import kotlinx.android.synthetic.main.activity_main_new.*
 
@@ -42,7 +43,7 @@ class MainActivityNew : BaseActivity(), RadioGroup.OnCheckedChangeListener {
         mFragments = ArrayList()
         mFragments.add(HomeFragment())
         mFragments.add(InfoFragment())
-        mFragments.add(CoinFragment())
+        mFragments.add(CoinFragmentNew())
         mFragments.add(MineFragment())
         supportFragmentManager.beginTransaction()
                 .replace(R.id.mFrame, mFragments[0], mFragments[0]::class.java.simpleName)
@@ -61,7 +62,10 @@ class MainActivityNew : BaseActivity(), RadioGroup.OnCheckedChangeListener {
                 checkFragment(0)
             }
             R.id.mRbMining -> {
-                checkFragment(1)
+                ToastUtils.showToast(this, "正在开发，暂未开放")
+                // TODO: 2020/9/4 资讯
+//                checkFragment(1)
+                setSelectRb(mLastSelect)
             }
 
             R.id.mRbShopCar -> {

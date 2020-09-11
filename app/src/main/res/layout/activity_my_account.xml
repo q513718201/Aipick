@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:background="#1E2742">
 
     <RelativeLayout
-
         android:id="@+id/rl_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:paddingLeft="10dp"
-        android:paddingTop="40dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp">
+        android:paddingTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="@dimen/dp_10"
             android:src="@mipmap/back_white" />
 
         <TextView
@@ -29,17 +29,19 @@
             android:layout_alignParentRight="true"
             android:drawableRight="@mipmap/arrow_bottom"
             android:drawablePadding="@dimen/dp_4"
+            android:padding="@dimen/dp_10"
             android:text="跟随者"
-            android:textSize="@dimen/sp_14"
-            android:textColor="@color/text_color" />
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/sp_14" />
 
     </RelativeLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/rl"
-        android:layout_below="@+id/rl_head">
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guide_point"
+        app:layout_constraintTop_toBottomOf="@+id/rl_head">
 
 
         <RelativeLayout
@@ -101,62 +103,30 @@
                         android:textColor="@color/color_white"
                         android:textSize="17sp" />
 
-                    <TextView
-                        android:id="@+id/tv_yiguanzhu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/robot_bt_bg"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="20dp"
-                        android:paddingBottom="5dp"
-                        android:text="@string/yiguanzhu"
-                        android:textColor="@color/color_white"
-                        android:textSize="17sp"
-                        android:visibility="gone" />
-
-                    <TextView
-                        android:id="@+id/tv_guanzhu"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/robot_bt_bg"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="5dp"
-                        android:paddingRight="20dp"
-                        android:paddingBottom="5dp"
-                        android:text="@string/guanzhu"
-                        android:textColor="@color/color_white"
-                        android:textSize="17sp" />
-
                 </RelativeLayout>
-
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp">
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/ll_support_coins"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/rb_ic_btc" />
+                        android:orientation="horizontal">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/rb_ic_eth" />
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/tv_rest_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="剩余0天"
+                        android:text="@string/text_rest_service_time"
                         android:textColor="@color/dilaog_btn_color"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -168,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/fans"
-                        android:textColor="#90ffffff"
+                        android:textColor="@color/home_text"
                         android:textSize="12sp" />
 
                     <TextView
@@ -186,7 +156,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="@string/guanzhu"
-                        android:textColor="#90ffffff"
+                        android:textColor="@color/home_text"
                         android:textSize="12sp" />
 
                     <TextView
@@ -203,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="20dp"
                         android:text="@string/renqi"
-                        android:textColor="#90ffffff"
+                        android:textColor="@color/home_text"
                         android:textSize="12sp" />
 
                     <TextView
@@ -242,8 +212,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="@string/shouyilv"
-                        android:textColor="#90ffffff"
+                        android:text="@string/last_ten"
+                        android:textColor="@color/home_text"
                         android:textSize="12sp" />
 
                     <TextView
@@ -252,16 +222,17 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/follow_incoming"
-                        android:textColor="#90ffffff"
+                        android:textColor="@color/home_text"
                         android:textSize="12sp" />
 
                     <TextView
+                        android:id="@+id/data1_name"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/all_incoming1"
-                        android:textColor="#90ffffff"
+                        android:textColor="@color/home_text"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -292,13 +263,13 @@
                         android:textSize="12sp" />
 
                     <TextView
-                        android:id="@+id/tv_all_incoming"
+                        android:id="@+id/tv_total_benefit"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="000"
-                        android:textColor="#15F8D3"
+                        android:textColor="@color/home_text"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -318,8 +289,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:gravity="center_vertical"
-                            android:text="@string/last_ten"
-                            android:textColor="#90ffffff"
+                            android:text="@string/text_ten_month_rollback"
+                            android:textColor="@color/home_text"
                             android:textSize="10sp" />
 
                         <TextView
@@ -328,7 +299,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_vertical"
                             android:text="000"
-                            android:textColor="#90ffffff"
+                            android:textColor="@color/home_text"
                             android:textSize="10sp" />
 
 
@@ -342,19 +313,20 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/data2_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="15dp"
                             android:text="@string/zizhushouyi"
-                            android:textColor="#90ffffff"
+                            android:textColor="@color/home_text"
                             android:textSize="10sp" />
 
                         <TextView
-                            android:id="@+id/tv_shouyi"
+                            android:id="@+id/tv_self_benefit"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="000"
-                            android:textColor="#90ffffff"
+                            android:textColor="@color/home_text"
                             android:textSize="10sp" />
 
 
@@ -442,51 +414,11 @@
 
     </android.support.v4.widget.NestedScrollView>
 
-    <RelativeLayout
-        android:id="@+id/rl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#1E2742"
-        android:padding="10dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
 
-        <TextView
-            android:id="@+id/tv_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="$1"
-            android:textColor="#F0BC33"
-            android:textSize="19sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/tv_price"
-            android:text="/月"
-            android:textColor="#90ffffff"
-            android:textSize="12sp" />
-
-        <TextView
-
-            android:id="@+id/tv_suscribe"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/robot_bt_bg"
-            android:paddingLeft="25dp"
-            android:paddingTop="8dp"
-            android:paddingRight="25dp"
-            android:paddingBottom="8dp"
-            android:text="@string/subsciber"
-            android:textColor="@color/color_white"
-            android:textSize="15sp" />
-
-    </RelativeLayout>
-
-</RelativeLayout>
+    <View
+        android:id="@+id/guide_point"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</android.support.constraint.ConstraintLayout>

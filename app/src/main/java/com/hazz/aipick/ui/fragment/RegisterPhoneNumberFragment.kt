@@ -34,17 +34,17 @@ class RegisterPhoneNumberFragment : BaseFragment(), LoginContract.RegistView {
      * 展示获取验证码倒计时
      */
     private fun showCountDownView() {
-        tv_getCode.isEnabled = false
-        tv_getCode.isClickable = false
+        et_check_code.isEnabled = false
+        et_check_code.isClickable = false
         countDownTimer = object : CountDownTimer(60 * 1000, 1000) {
             override fun onFinish() {
-                tv_getCode.isEnabled = true
-                tv_getCode.isClickable = true
-                tv_getCode.text = getString(R.string.get_verfycode)
+                et_check_code.isEnabled = true
+                et_check_code.isClickable = true
+                et_check_code.text = getString(R.string.get_verfycode)
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                tv_getCode.text = "${millisUntilFinished / 1000}s"
+                et_check_code.text = "${millisUntilFinished / 1000}s"
             }
         }.start()
 
@@ -99,7 +99,7 @@ class RegisterPhoneNumberFragment : BaseFragment(), LoginContract.RegistView {
             }
 
             //如果没有获取验证码，无法校验 可用的时候说明没有获取验证码
-            if (tv_getCode.isEnabled) {
+            if (et_check_code.isEnabled) {
                 ToastUtils.showToast(activity, getString(R.string.hint_register_no_checkcode))
                 return@setOnClickListener
             }
@@ -142,7 +142,7 @@ class RegisterPhoneNumberFragment : BaseFragment(), LoginContract.RegistView {
         service_rule.setOnClickListener {
             context?.let { TiaokuanActivity.start(it, 1) }
         }
-        tv_getCode.setOnClickListener {
+        et_check_code.setOnClickListener {
             if (edit_text.text.toString().isEmpty()) {
                 ToastUtils.showToast(activity, getString(R.string.hint_register_empty_phone))
                 return@setOnClickListener

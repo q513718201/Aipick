@@ -18,7 +18,7 @@ public class SubscribeDesc {
      * gains : [{"amount":"10.00","create_at":"2019-01-02 12:00:00","exchange_code":"huobi","base_coin":"BTC","quote_coin":"ETH"},{"amount":"112.00","create_at":"2019-01-02 12:00:00","exchange_code":"huobi","base_coin":"BTC","quote_coin":"ETH"},{"amount":"1211.00","create_at":"2019-01-02 12:00:00","exchange_code":"huobi","base_coin":"BTC","quote_coin":"ETH"},{"amount":"9012.00","create_at":"2019-06-02 12:00:00","exchange_code":"huobi","base_coin":"LTC","quote_coin":"ETH"}]
      */
 
-    private String subee_name;
+    private String subee_nickname;
     private String start;
     private String end;
     private String pay_method;
@@ -28,12 +28,12 @@ public class SubscribeDesc {
     private String switchX;
     private List<GainsBean> gains;
 
-    public String getSubee_name() {
-        return subee_name;
+    public String getSubee_nickname() {
+        return subee_nickname;
     }
 
-    public void setSubee_name(String subee_name) {
-        this.subee_name = subee_name;
+    public void setSubee_nickname(String subee_nickname) {
+        this.subee_nickname = subee_nickname;
     }
 
     public String getStart() {

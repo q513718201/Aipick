@@ -2,11 +2,9 @@ package com.hazz.aipick.managers;
 
 import android.support.annotation.NonNull;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.hazz.aipick.socket.KLineBean;
 import com.hazz.aipick.socket.KResponse;
 import com.hazz.aipick.socket.WsManager;
-import com.hazz.aipick.utils.GsonUtil;
 import com.hazz.aipick.utils.RxBus;
 import com.vinsonguo.klinelib.model.HisData;
 import com.vinsonguo.klinelib.util.DataUtils;
@@ -27,8 +25,10 @@ public class KManager {
     public static final String PERIOD_FIFTEEN_MINUTE = "kline.15min";
     public static final String PERIOD_THIRTY_MINUTE = "kline.30min";
     public static final String PERIOD_ONE_HOUR = "kline.60min";
+    public static final String PERIOD_FOUR_HOUR = "kline.4hour";
     public static final String PERIOD_ONE_DAY = "kline.1day";
     public static final String PERIOD_ONE_WEEK = "kline.1week";
+    public static final String PERIOD_ONE_MONTH = "kline.1mon";
 
     private String mPeriod = PERIOD_ONE_MINUTE;
 
@@ -127,6 +127,15 @@ public class KManager {
         requestK(symbol + mPeriod);
     }
 
+    public void requestMonthK(String symbol) {
+        mPeriod = PERIOD_ONE_MONTH;
+        requestK(symbol + mPeriod);
+    }
+
+    public void requestFourHourK(String symbol) {
+        mPeriod = PERIOD_FOUR_HOUR;
+        requestK(symbol + mPeriod);
+    }
 
     public void requestFiveMinuteK(String symbol) {
         mPeriod = PERIOD_FIVE_MINUTE;
@@ -151,7 +160,8 @@ public class KManager {
                     return;
                 List<HisData> dataList = new ArrayList<>(bean.data.size());
                 for (KLineBean.DataBean a : bean.data) {
-                    HisData data = new HisData(a.open, a.close, a.high, a.low, a.vol, bean.ts);
+
+                    HisData data = new HisData(a.open, a.close, a.high, a.low, a.vol, a.id * 1000);
                     dataList.add(data);
                 }
                 notifyK(DataUtils.calculateHisData(dataList));

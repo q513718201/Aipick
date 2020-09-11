@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="25dp"
     android:background="@color/bg_common">
 
     <ImageView
@@ -11,81 +12,85 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_centerHorizontal="true"
+        android:src="@mipmap/aipick"
         android:layout_marginTop="100dp"
-        android:src="@mipmap/aipick" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <TextView
         android:id="@+id/tv_app_name"
         style="@style/AppTheme.Label"
         android:layout_below="@+id/iv_logo"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/padding_common_d"
+        android:layout_marginTop="60dp"
         android:text="@string/current_version"
-        android:textColor="@color/color_home"
-        android:textSize="@dimen/textSize_title" />
+        android:textColor="@color/color_home_rate"
+        android:textSize="@dimen/textSize_title"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/iv_logo"
+        app:layout_constraintStart_toStartOf="@+id/iv_logo"
+        app:layout_constraintTop_toBottomOf="@+id/iv_logo" />
+
 
     <TextView
         android:id="@+id/tv_version_name"
         style="@style/AppTheme.Label"
         android:layout_below="@+id/tv_app_name"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/padding_common_d"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/color_home_rate"
+        app:layout_constraintEnd_toEndOf="@+id/tv_app_name"
+        app:layout_constraintStart_toStartOf="@+id/tv_app_name"
+        app:layout_constraintTop_toBottomOf="@+id/tv_app_name"
         tools:text="v1.0.0" />
 
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/tiaokuan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:layout_marginTop="50dp"
+        android:drawableRight="@mipmap/arrow_right"
+        android:padding="@dimen/dp_16"
+        android:text="@string/fuwuxieyi"
+        android:textColor="@color/color_home"
+        app:layout_constraintTop_toBottomOf="@+id/tv_version_name"
+        tools:layout_editor_absoluteX="0dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:text="@string/copyright_2020"
+        android:textColor="#ff6472a0"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <RelativeLayout
-            android:id="@+id/rl_tiaokuan"
-            android:layout_width="match_parent"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_header_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="@dimen/padding_common_h"
-            android:paddingStart="@dimen/padding_common_h">
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text="@string/about"
+            android:textColor="@color/color_white"
+            android:textSize="18sp"
 
-            <TextView
-                style="@style/AppTheme.Label"
-                android:layout_centerVertical="true"
-                android:paddingBottom="@dimen/padding_common"
-                android:paddingTop="@dimen/padding_common"
-                android:text="@string/fuwuxieyi"
-                android:textColor="@color/color_home" />
+            />
+    </android.support.v7.widget.Toolbar>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/ic_action_more_black" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
-
-
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="?attr/homeAsUpIndicator"
-          >
-
-                <TextView
-                    android:id="@+id/tv_header_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    android:text="@string/about"
-                    android:textColor="@color/color_white"
-                    android:textSize="18sp"
-
-                    />
-        </android.support.v7.widget.Toolbar>
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

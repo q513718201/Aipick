@@ -10,6 +10,7 @@ import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.Message
 import com.hazz.aipick.mvp.presenter.MessagePresenter
 import com.hazz.aipick.ui.adapter.MessageAdapter
+import com.hazz.aipick.utils.RxBus
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -59,7 +60,7 @@ class MessageActivity : BaseActivity(), WaletContract.messageView, OnRefreshList
         mWaletPresenter.messageList(page, 10)
     }
 
-    private var mOrderAdapter: MessageAdapter? = null
+    private lateinit var mOrderAdapter: MessageAdapter
     private var mWaletPresenter: MessagePresenter = MessagePresenter(this)
     private var page = 1
     private var currentList: MutableList<Message>? = mutableListOf()
@@ -76,14 +77,17 @@ class MessageActivity : BaseActivity(), WaletContract.messageView, OnRefreshList
                 .setRightTextIsShow(true)
                 .setOnRightClickListener {
                     mWaletPresenter.readAll(0, "1")
-
                 }
 
         recycleview.layoutManager = LinearLayoutManager(this)
-        mOrderAdapter = MessageAdapter(R.layout.item_msg, null)
+        mOrderAdapter = MessageAdapter(null)
         recycleview.adapter = mOrderAdapter
-        mOrderAdapter!!.bindToRecyclerView(recycleview)
-        mOrderAdapter!!.setEmptyView(R.layout.empty_view)
+        mOrderAdapter.bindToRecyclerView(recycleview)
+        mOrderAdapter.setEmptyView(R.layout.empty_view)
+
+        RxBus.get().observerOnMain(this, Message::class.java) {
+            mWaletPresenter.readAll(it.message_id, "0")
+        }
 
     }
 

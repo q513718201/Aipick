@@ -20,8 +20,7 @@ public class RecyclerViewSpacesItemDecoration extends RecyclerView.ItemDecoratio
     }
 
     @Override
-    public void getItemOffsets(Rect outRect, View view,
-                               RecyclerView parent, RecyclerView.State state) {
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         if (mSpaceValueMap.get(TOP_DECORATION) != null)
             outRect.top = mSpaceValueMap.get(TOP_DECORATION);
         if (mSpaceValueMap.get(LEFT_DECORATION) != null)

@@ -32,13 +32,14 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
 
     override fun updateSuccess(msg: String) {
         SToast.showText(msg)
+        mLoginPresenter.userInfo()
     }
 
     override fun loginSuccess(msg: LoginBean) {
 
     }
 
-    override fun getUserInfo(msg: UserInfo) {
+    override fun setUserInfo(msg: UserInfo) {
         if (!TextUtils.isEmpty(msg.avatar)) {
             GlideUtil.showRound(msg.avatar, iv_avatar, R.mipmap.ic_user)
         }
@@ -52,6 +53,7 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
     override fun layoutId(): Int = R.layout.activity_mine_set
 
     override fun initData() {
+
     }
 
     private var dialog: BottomSheetDialog? = null
@@ -68,7 +70,6 @@ class SettingActivity : BaseActivity(), LoginContract.LoginView, LoginContract.u
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
                 .setOnLeftIconClickListener { finish() }
-
 
     }
 

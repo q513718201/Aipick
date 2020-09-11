@@ -2,6 +2,8 @@ package com.hazz.aipick.net;
 
 import android.util.Log;
 
+import com.blankj.utilcode.util.LogUtils;
+
 import java.io.IOException;
 import java.nio.charset.Charset;
 
@@ -47,7 +49,8 @@ public class Logger implements Interceptor {
             Log.d(TAG, "| RequestParams:{" + param + "}");
         }
         Log.d(TAG, "| Header:" + request.headers().toString());
-        Log.d(TAG, "| Response:" + content);
+        LogUtils.d(TAG, "| Response:");
+        System.out.println(content);
         Log.d(TAG, "----------End:" + duration + "毫秒----------");
         return response.newBuilder()
                 .body(okhttp3.ResponseBody.create(mediaType, content))
@@ -76,8 +79,8 @@ public class Logger implements Interceptor {
         if (null == src) {
             return null;
         }
-        src = src.replace("\\n", "").replaceAll(" ", "");
-//        System.out.println("src: " + src);
+
+        System.out.println("src: " + src);
         StringBuilder out = new StringBuilder();
         for (int i = 0; i < src.length(); ) {
             char c = src.charAt(i);

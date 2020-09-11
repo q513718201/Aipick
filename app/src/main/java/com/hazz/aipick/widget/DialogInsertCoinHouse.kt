@@ -2,8 +2,12 @@ package com.hazz.aipick.widget
 
 import android.app.Dialog
 import android.content.Context
-import android.view.*
+import android.view.Gravity
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import com.hazz.aipick.R
+import com.hazz.aipick.utils.ToastUtils
 import kotlinx.android.synthetic.main.mine_dialog_type_chose.view.*
 
 class DialogInsertCoinHouse(var context: Context) {
@@ -14,7 +18,7 @@ class DialogInsertCoinHouse(var context: Context) {
         onCreate()
     }
 
-    lateinit var onConfirm: (String,String,String) -> Unit
+    lateinit var onConfirm: (String, String, String) -> Unit
     private lateinit var mDialog: Dialog
     private fun onCreate() {
         mDialog = Dialog(context)
@@ -27,7 +31,18 @@ class DialogInsertCoinHouse(var context: Context) {
         view.mTvConfirm.setOnClickListener {
             dismiss()
             if (::onConfirm.isInitialized) {
-               onConfirm(view.et1.text.toString(),view.et2.text.toString(),view.et3.text.toString())
+                when {
+                    view.et1.text.isNullOrBlank() -> {
+                        ToastUtils.showToast(context, "请输入交易所名称")
+                    }
+                    view.et2.text.isNullOrBlank() -> {
+                        ToastUtils.showToast(context, "请输入交易所地址")
+                    }
+                    view.et3.text.isNullOrBlank() -> {
+                        ToastUtils.showToast(context, "请输入API地址")
+                    }
+                    else -> onConfirm(view.et1.text.toString(), view.et2.text.toString(), view.et3.text.toString())
+                }
             }
 
         }

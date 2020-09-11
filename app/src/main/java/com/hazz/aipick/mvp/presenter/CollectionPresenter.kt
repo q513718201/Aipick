@@ -57,7 +57,7 @@ class CollectionPresenter(view: CollectionContract.collectionView) : BasePresent
             }
 
             override fun success(tBaseResult: BaseResult<Any>) {
-                view.addCollectionSucceed(tBaseResult.msg)
+                view.optionResult(tBaseResult.msg)
             }
 
         }, true)
@@ -69,7 +69,7 @@ class CollectionPresenter(view: CollectionContract.collectionView) : BasePresent
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("objType", objType),
                 Pair.create<Any, Any>("delType", delType),
-                Pair.create<Any, Any>("ids", GsonUtil.toJson(ids))
+                Pair.create<Any, Any>("ids",ids)
 
 
         )
@@ -82,7 +82,31 @@ class CollectionPresenter(view: CollectionContract.collectionView) : BasePresent
             }
 
             override fun success(tBaseResult: BaseResult<Any>) {
-                view.addCollectionSucceed(tBaseResult.msg)
+                view.optionResult(tBaseResult.msg)
+            }
+
+        }, true)
+    }
+
+    fun cancelCollection(objType: String, objId: String, baseCoin: String, quoteCoin: String) {
+
+        val body = RequestUtils.getBody(
+                Pair.create<Any, Any>("objType", objType),
+                Pair.create<Any, Any>("objId", objId),
+                Pair.create<Any, Any>("baseCoin", baseCoin),
+                Pair.create<Any, Any>("quoteCoin", quoteCoin)
+
+
+        )
+        val login = RetrofitManager.service.cancelCollection(body)
+
+        doRequest(login, object : Callback<Any>(view) {
+            override fun failed(tBaseResult: BaseResult<Any>): Boolean {
+                return false
+            }
+
+            override fun success(tBaseResult: BaseResult<Any>) {
+                view.optionResult(tBaseResult.msg)
             }
 
         }, true)

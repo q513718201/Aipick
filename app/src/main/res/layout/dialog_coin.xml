@@ -52,6 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:padding="@dimen/dp_10"
         android:minHeight="150dp">
 
     </android.support.v7.widget.RecyclerView>

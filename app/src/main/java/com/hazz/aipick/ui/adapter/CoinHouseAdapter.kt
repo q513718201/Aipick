@@ -24,7 +24,9 @@ class CoinHouseAdapter(layoutResId: Int, data: List<CoinHouse>?) : BaseQuickAdap
 
         helper.itemView.setOnClickListener {
             if (item.bound) {
-                mContext.startActivity(Intent(mContext, CoinHouseDescActivity::class.java).putExtra("exchangeId", item.exchange_id))
+                mContext.startActivity(Intent(mContext, CoinHouseDescActivity::class.java)
+                        .putExtra("exchangeId", item.exchange_id)
+                        .putExtra("title", item.name))
             } else {
                 if (::onConfirm.isInitialized) {
                     onConfirm(it, item.exchange_id)

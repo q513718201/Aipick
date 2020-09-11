@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_common"
     android:orientation="vertical"
-    android:paddingTop="20dp"
-    >
+    android:paddingTop="20dp">
+
     <include
         android:id="@+id/mToolbar"
-        layout="@layout/toolbar"
-        />
+        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/tv_title"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="30dp"
         android:text="@string/coin_intro"
-        android:textSize="18sp"
         android:textColor="@color/color_home"
-        />
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/tv_time"
-        android:layout_marginTop="17dp"
-        android:layout_marginLeft="15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="17dp"
         android:text="@string/coin_fabu_time"
-        android:textSize="12sp"
         android:textColor="@color/color_home"
-        />
+        android:textSize="12sp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="23dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="23dp"
+            android:layout_marginRight="20dp">
 
             <TextView
                 android:id="@+id/tv_intro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tiaokuan"
-                android:textSize="14sp"
                 android:textColor="@color/color_home"
-                />
+                android:textSize="14sp" />
         </LinearLayout>
 
     </ScrollView>

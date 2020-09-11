@@ -6,8 +6,8 @@
     android:background="@color/bg_common"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:padding="@dimen/dp_16">
+    android:paddingTop="25dp"
+    android:orientation="vertical">
 
     <include
         android:id="@+id/mToolbar"
@@ -22,7 +22,8 @@
         android:background="@null"
         android:gravity="top"
         android:hint="@string/mine_help"
-        android:padding="5dp"
+
+        android:padding="@dimen/dp_16"
         android:textColor="@color/color_white"
         android:textColorHint="@color/color_home"
         android:textSize="14sp" />
@@ -31,6 +32,7 @@
         android:id="@+id/tv_img_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/dp_16"
         android:text="@string/text_img_head"
         android:textColor="#ff94a4d6"
         android:textSize="16sp" />
@@ -38,14 +40,15 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_16">
 
     </android.support.v7.widget.RecyclerView>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_16"
         android:text="@string/lianxifangshi"
         android:textColor="@color/color_home"
         android:textSize="16sp" />
@@ -59,7 +62,9 @@
         android:background="@null"
         android:gravity="top"
         android:hint="@string/mine_help_contact"
-        android:padding="5dp"
+        android:inputType="phone|number|textEmailAddress"
+        android:maxLines="1"
+        android:padding="@dimen/dp_16"
         android:textColor="@color/color_white"
         android:textColorHint="@color/color_home"
         android:textSize="14sp" />

@@ -17,7 +17,7 @@ interface CollectionContract {
     interface collectionView : BaseView {
 
         fun getCollection(msg: List<Collection>)
-        fun addCollectionSucceed(msg: String)
+        fun optionResult(msg: String)
     }
 
     interface subscribeView : BaseView {

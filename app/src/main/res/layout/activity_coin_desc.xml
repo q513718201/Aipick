@@ -26,7 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="USDT"
             android:textColor="@color/color_white"
             android:textSize="14sp" />
 
@@ -36,7 +35,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_title"
             android:layout_centerHorizontal="true"
-            android:text="huobi"
             android:textColor="@color/color_blue"
             android:textSize="10sp" />
 
@@ -73,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="USDT"
+                    android:text="10000"
                     android:textColor="#15F8D3"
                     android:textSize="35sp" />
 
@@ -81,9 +79,10 @@
                     android:id="@+id/iv_up"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/tv_name"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_name"
-                    android:padding="5dp"
+                    android:padding="@dimen/dp_10"
                     android:src="@mipmap/up" />
 
                 <LinearLayout
@@ -98,7 +97,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="00%"
                         android:textColor="#15F8D3"
                         android:textSize="12sp" />
 
@@ -107,7 +105,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:text="+00"
                         android:textColor="#15F8D3"
                         android:textSize="12sp" />
 
@@ -139,7 +136,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="000"
                     android:textColor="@color/color_home"
                     android:textSize="10sp" />
 
@@ -158,7 +154,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="000"
                     android:textColor="@color/color_home"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -186,7 +181,6 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:text="000"
                     android:textColor="@color/color_home"
                     android:textSize="10sp" />
 

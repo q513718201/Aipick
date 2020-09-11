@@ -124,12 +124,12 @@
                 android:layout_height="16dp"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="@dimen/dp_10"
-                android:layout_toStartOf="@+id/tv_getCode"
-                android:layout_toRightOf="@id/tv_getCode"
+                android:layout_toStartOf="@+id/et_check_code"
+                android:layout_toRightOf="@id/et_check_code"
                 android:background="@color/white" />
 
             <TextView
-                android:id="@+id/tv_getCode"
+                android:id="@+id/et_check_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"

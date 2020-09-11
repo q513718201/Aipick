@@ -81,7 +81,6 @@
         android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="$000"
         android:textColor="@color/color_home"
         android:textSize="10sp"
         app:layout_constraintBottom_toTopOf="@+id/textView4"

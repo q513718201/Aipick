@@ -23,10 +23,13 @@
         android:largeHeap="true"
         android:networkSecurityConfig="@xml/network_config"
         android:roundIcon="@mipmap/aipick"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
+        <activity android:name=".ui.activity.UpdateBankcardActivity" />
+        <activity android:name=".ui.activity.UpdateTradePwdActivity" />
         <activity android:name=".ui.activity.SettingUserNickNameActivity" />
         <activity android:name=".ui.activity.InvitePicActivity" />
         <activity android:name=".ui.activity.InfoDetailActivity" />
@@ -49,7 +52,8 @@
         </receiver> <!-- 主页面 -->
         <activity
             android:name=".ui.activity.MainActivityNew"
-            android:screenOrientation="portrait" /> <!-- 关于 -->
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- 关于 -->
         <activity
             android:name=".ui.activity.AboutActivity"
             android:screenOrientation="portrait" />
@@ -62,7 +66,7 @@
         <activity
             android:name=".ui.activity.CountryActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.RebotCategryActivity" />
+        <activity android:name=".ui.activity.FollowRobotDetailActivity" />
         <activity android:name=".ui.activity.PayActivity" />
         <activity android:name=".ui.activity.SettingFollowedActivity" />
         <activity android:name=".ui.activity.SearchHistoryActivity" />
@@ -73,7 +77,9 @@
         <activity android:name=".ui.activity.TixianRecordActivity" />
         <activity android:name=".ui.activity.MyIncomingActivity" />
         <activity android:name=".ui.activity.MessageActivity" />
-        <activity android:name=".ui.activity.HelpAndFeedActivity" />
+        <activity
+            android:name=".ui.activity.HelpAndFeedActivity"
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.activity.CoinHouseActivity" />
         <activity android:name=".ui.activity.CoinHouseDescActivity" />
         <activity android:name=".ui.activity.CollectionActivity" />
@@ -85,10 +91,10 @@
         <activity android:name=".ui.activity.PwdModifyActivity" />
         <activity
             android:name=".ui.activity.BindBankActivity"
-            android:windowSoftInputMode="adjustUnspecified" />
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ui.activity.SetTraderActivity" />
         <activity android:name=".ui.activity.MyAccountActivity" />
-        <activity android:name=".ui.activity.GorgetPwdActivity" />
+        <activity android:name=".ui.activity.ForgetPwdActivity" />
         <activity android:name=".ui.activity.ForgetResetPwdActivity" />
         <activity android:name=".ui.activity.ChooseTimeActivity" />
         <activity android:name=".ui.activity.InviteFriendsActivity" />
@@ -102,6 +108,7 @@
         <activity android:name=".ui.activity.CoinDescBuyOrSellActivity" />
         <activity android:name=".ui.activity.TraderSetActivity" />
         <activity android:name=".ui.activity.CoinBuyAndSellActivity" />
+        <activity android:name=".ui.activity.FollowTraderDetailActivity" />
     </application>
 
 </manifest>

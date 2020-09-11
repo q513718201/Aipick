@@ -50,7 +50,7 @@ class LoginPresenter(view: LoginContract.LoginView) : BasePresenter<LoginContrac
             }
 
             override fun success(tBaseResult: BaseResult<UserInfo>) {
-                view.getUserInfo(tBaseResult.data!!)
+                view.setUserInfo(tBaseResult.data!!)
             }
 
         }, false)

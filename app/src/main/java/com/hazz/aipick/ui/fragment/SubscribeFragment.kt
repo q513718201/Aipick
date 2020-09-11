@@ -5,10 +5,12 @@ import android.support.v7.widget.LinearLayoutManager
 import com.hazz.aipick.BuildConfig
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
+import com.hazz.aipick.events.ChangeEvent
 import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.model.bean.UserSubscribeBean
 import com.hazz.aipick.mvp.presenter.UserSubscribePresenter
 import com.hazz.aipick.ui.adapter.UserSubscribeAdapter
+import com.hazz.aipick.utils.RxBus
 import kotlinx.android.synthetic.main.fragment_subscribe.*
 
 
@@ -31,6 +33,7 @@ class SubscribeFragment : BaseFragment(), CollectionContract.userSubscribeView {
             return fragment
         }
     }
+
     var isDemo = "0"
     override fun getLayoutId(): Int = R.layout.fragment_subscribe
 
@@ -54,15 +57,18 @@ class SubscribeFragment : BaseFragment(), CollectionContract.userSubscribeView {
             getData()
         }
 
-        //设置下拉刷新主题颜色
-        mRefreshLayout.setPrimaryColorsId(R.color.color_light_black, R.color.color_title_bg)
         recycleview.layoutManager = LinearLayoutManager(activity)
         subscribeAdapter = UserSubscribeAdapter(R.layout.item_subscribe, null)
 
         recycleview.adapter = subscribeAdapter
         subscribeAdapter!!.bindToRecyclerView(recycleview)
         subscribeAdapter!!.setEmptyView(R.layout.empty_view)
+        RxBus.get().observerOnMain(this, ChangeEvent::class.java) {
+            isDemo = it.isDemo
+            if (isVisible)
+                getData()
 
+        }
     }
 
 

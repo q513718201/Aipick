@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="#000000"
         android:paddingLeft="10dp"
-        android:paddingTop="50dp"
+        android:paddingTop="25dp"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -21,11 +21,13 @@
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="centerInside"
             android:src="@mipmap/back_white" />
 
     </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/ll_top"
         android:layout_width="match_parent"
@@ -79,46 +81,11 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/tv_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dp_10"
                 android:text="@string/categry_tedian_desc"
-                android:textColor="@color/color_home"
-                android:textSize="14sp" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/categry_shouyi"
-                android:textColor="@color/color_home"
-                android:textSize="18sp" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="@string/categry_shouyi_desc"
-                android:textColor="@color/color_home"
-                android:textSize="14sp" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_16"
-                android:text="@string/categry_fengxian"
-                android:textColor="@color/color_home"
-                android:textSize="18sp" />
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dp_10"
-                android:text="@string/categry_fengxian_desc"
                 android:textColor="@color/color_home"
                 android:textSize="14sp" />
 
@@ -129,11 +96,10 @@
 
                 <TextView
                     android:id="@+id/tv_create_time"
-
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="创建时间：2019-08-13  "
+                    android:text="@string/text_create_time"
                     android:textColor="@color/color_home"
                     android:textSize="14sp" />
 
@@ -141,7 +107,7 @@
                     android:id="@+id/tv_modify_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="最后修改：2019-08-14"
+                    android:text="@string/text_last_modify"
                     android:textColor="@color/color_home"
                     android:textSize="14sp" />
             </LinearLayout>

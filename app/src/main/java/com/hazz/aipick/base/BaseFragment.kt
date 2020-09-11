@@ -93,8 +93,11 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
 
     open fun reload() {}
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDetach() {
+        super.onDetach()
+        mDialog?.let {
+            it.dismiss()
+        }
         activity?.let { MyApplication.getRefWatcher(it)?.watch(activity) }
     }
 
@@ -165,7 +168,9 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks, B
     }
 
     override fun fail(msg: String) {
-        ToastUtils.showToast(activity, msg)
+        activity?.let {
+            ToastUtils.showToast(activity, msg)
+        }
     }
 
     override fun onStartRequest() {

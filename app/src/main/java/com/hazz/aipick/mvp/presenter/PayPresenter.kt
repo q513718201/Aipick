@@ -3,7 +3,10 @@ package com.hazz.aipick.mvp.presenter
 
 import android.util.Pair
 import com.hazz.aipick.mvp.contract.HomeContract
-import com.hazz.aipick.mvp.model.bean.*
+import com.hazz.aipick.mvp.model.bean.CreateId
+import com.hazz.aipick.mvp.model.bean.PayBean
+import com.hazz.aipick.mvp.model.bean.PayResultMine
+import com.hazz.aipick.mvp.model.bean.PaySucceed
 import com.hazz.aipick.net.*
 
 
@@ -27,7 +30,7 @@ class PayPresenter(view: HomeContract.payView) : BasePresenter< HomeContract.pay
             }
 
             override fun success(tBaseResultMine: BaseResult<PayResultMine>) {
-                view.payResult(tBaseResultMine.data!!)
+                tBaseResultMine.data?.let { view.payResult(it) }
             }
 
         }, true)

@@ -5,10 +5,5 @@ package com.hazz.aipick.glide
  * desc:
  */
 object ImageLoaderUtils{
-    init {
-
-    }
-
-
 
 }

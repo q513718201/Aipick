@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_color_red">#ff3b30</color>
-    <color name="main_color_green">#4cd964</color>
+    <color name="main_color_red">#FFFF7C96</color>
+    <color name="main_color_green">#FF16F8D3</color>
 
-    <color name="transparent_red">#33ef295b</color>
-    <color name="transparent_green">#33159d62</color>
+    <color name="transparent_red">#33FF7C96</color>
+    <color name="transparent_green">#3316F8D3</color>
 
     <!--图表-->
 
@@ -37,4 +37,5 @@
     <color name="white">#fff</color>
     <color name="grid_line_color">#1e2b4e</color>
     <color name="bg_light">#0d233d</color>
+    <color name="home_line">#FF12B0EA</color>
 </resources>

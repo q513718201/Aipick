@@ -34,10 +34,10 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeCont
 
     @SuppressLint("SetTextI18n")
     override fun getPrice(msg: ChooseTime) {
-        tv1.text = "$ ${msg.days30}"
-        tv2.text = "$ ${msg.days90}"
-        tv3.text = "$ ${msg.days180}"
-        tv4.text = "$ ${msg.days365}"
+        tv1.text = getString(R.string.money_format, msg.days30)
+        tv2.text = getString(R.string.money_format, msg.days90)
+        tv3.text = getString(R.string.money_format, msg.days180)
+        tv4.text = getString(R.string.money_format, msg.days365)
     }
 
     private var mPayPresenter: PayPresenter = PayPresenter(this)
@@ -109,7 +109,7 @@ class ChooseTimeActivity : BaseActivity(), WaletContract.myaccountView, HomeCont
         followFactor = intent.getStringExtra("followFactor")
         role = intent.getStringExtra("role")
         beanSymbl = intent.getSerializableExtra("SymbolsBean") as BindCoinHouse.SymbolsBean
-        tv_price.text = "$$price"
+        tv_price.text = getString(R.string.money_format, price)
         tv_name.text = "${getString(R.string.subsciber)}/$currentNmae"
         mAccountPresenter.getPrice(id)
 

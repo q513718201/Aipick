@@ -11,10 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#000000"
-        android:paddingLeft="10dp"
-        android:paddingTop="50dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -23,24 +20,27 @@
             android:id="@+id/iv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:padding="5dp"
+            android:padding="10dp"
             android:src="@mipmap/back_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
             android:id="@+id/iv_follow_status"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:padding="@dimen/dp_10"
+            android:scaleType="centerInside"
             android:src="@mipmap/ic_collect"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintDimensionRatio="h,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_above="@+id/rl"
@@ -70,7 +70,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:text="@string/robot_title"
                     android:textColor="@color/color_white"
                     android:textSize="17sp" />
 
@@ -84,12 +83,27 @@
                     android:visibility="gone" />
 
                 <LinearLayout
-                    android:id="@+id/ll_support_coins"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="10dp">
 
+                    <LinearLayout
+                        android:id="@+id/ll_support_coins"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_rest_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:text="@string/text_rest_service_time"
+                        android:textColor="@color/dilaog_btn_color"
+                        android:textSize="12sp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -157,7 +171,7 @@
                         android:layout_marginLeft="20dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="@string/all_incoming"
+                        android:text="@string/last_ten"
                         android:textColor="#90ffffff"
                         android:textSize="12sp" />
 
@@ -228,7 +242,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="15dp"
-                    android:text="@string/last_ten"
+                    android:text="@string/text_ten_month_rollback"
                     android:textColor="#90ffffff"
                     android:textSize="10sp" />
 
@@ -243,6 +257,7 @@
 
 
             </LinearLayout>
+
 
             <RelativeLayout
                 android:id="@+id/rl_top3"
@@ -329,8 +344,15 @@
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
 
+
     <include
         android:id="@+id/include"
         layout="@layout/view_subscibe" />
 
+    <View
+        android:id="@+id/guide_point"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>

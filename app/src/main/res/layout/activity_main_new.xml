@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/bg_common">
 
 
     <RadioGroup
         android:id="@+id/mRG"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/color_white"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_home_nav"
         android:orientation="horizontal"
         android:weightSum="4"
         app:layout_constraintBottom_toBottomOf="parent">
@@ -21,8 +20,7 @@
             android:id="@+id/mRbMall"
             style="@style/rb_style"
             android:drawableTop="@drawable/tab_icon_main_select"
-            android:paddingBottom="3dp"
-            />
+            android:paddingBottom="3dp" />
 
         <RadioButton
             android:id="@+id/mRbMining"
@@ -32,32 +30,25 @@
 
 
         <RadioButton
-            android:paddingBottom="3dp"
             android:id="@+id/mRbShopCar"
             style="@style/rb_style"
-            android:drawableTop="@drawable/tab_icon_car_select" />
+            android:drawableTop="@drawable/tab_icon_car_select"
+            android:paddingBottom="3dp" />
 
         <RadioButton
-            android:paddingBottom="3dp"
             android:id="@+id/mRbOtc"
             style="@style/rb_style"
-            android:drawableTop="@drawable/tab_icon_order_select" />
+            android:drawableTop="@drawable/tab_icon_order_select"
+            android:paddingBottom="3dp" />
 
 
     </RadioGroup>
-
-    <View
-        android:id="@+id/mPart_line"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/part_line_color"
-        app:layout_constraintTop_toTopOf="@id/mRG" />
 
     <FrameLayout
         android:id="@+id/mFrame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="@id/mPart_line"
+        app:layout_constraintBottom_toTopOf="@id/mRG"
         app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,13 +1,9 @@
 package com.hazz.aipick.net;
 
-import android.content.Intent;
 import android.util.Log;
 
 import com.google.gson.JsonParseException;
 import com.google.gson.stream.MalformedJsonException;
-import com.hazz.aipick.MyApplication;
-import com.hazz.aipick.ui.activity.LoginActivity;
-import com.hazz.aipick.utils.SPUtil;
 
 import org.json.JSONException;
 
@@ -132,7 +128,7 @@ public class ExceptionHandle {
         /**
          * Token 过期
          */
-        public static final int TOKEN_EXPIRED_EXCEPTION = 1008;
+        public static final int TOKEN_EXPIRED_EXCEPTION = 401;
     }
 
     public static class ResponeThrowable extends Exception {

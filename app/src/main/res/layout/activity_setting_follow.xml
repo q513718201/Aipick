@@ -48,7 +48,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginEnd="16dp"
-                android:checked="false"
+                android:button="@color/redF4"
+                android:checked="true"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -135,7 +136,7 @@
 
         </RadioGroup>
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/rl_rate"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -157,18 +158,29 @@
                 android:paddingBottom="10dp"
                 android:text="一"
                 android:textColor="@color/color_home"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
+            <EditText
                 android:id="@+id/tv_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:layout_centerInParent="true"
+                android:background="@null"
+                android:gravity="center"
                 android:text="0.01"
-                android:textColor="@color/color_home"
                 android:textSize="14sp"
-
-                />
+                android:inputType="numberDecimal"
+                android:maxLines="1"
+                android:padding="@dimen/dp_10"
+                android:textColor="@color/white"
+                android:textColorHint="@color/home_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/tv_jia"
+                app:layout_constraintStart_toEndOf="@+id/tv_jian"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_jia"
@@ -183,8 +195,11 @@
                 android:paddingBottom="10dp"
                 android:text="十"
                 android:textColor="@color/color_home"
-                android:textSize="20sp" />
-        </RelativeLayout>
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_intro"

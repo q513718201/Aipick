@@ -32,6 +32,7 @@
 
     <!-- white -->
     <color name="color_white">#FFFFFF</color>
+    <color name="color_white_90">#E6FFFFFF</color>
 
     <color name="color_black">#000000</color>
 
@@ -59,7 +60,7 @@
     <color name="color_bottom">#6371A0</color>
     <color name="part_line_color">#293559</color>
     <color name="redF4">#FF6254</color>
-    <color name="dilaog_btn_color">#9A66FF</color>
+    <color name="dilaog_btn_color">#FFAA4AFF</color>
     <color name="blue">#00a7f4</color>
     <color name="bg_common">#1E2742</color>
     <color name="text_color_hint">#a5b1c8</color>
@@ -83,12 +84,14 @@
     <color name="color_home_rate">#FF94A4D6</color>
 
 
-
-
-
     <!--alert view 文字颜色-->
     <color name="textColor_alert_button_others">#27426b</color>
     <color name="textColor_alert_button_destructive">#27426b</color>
+
+    <color name="color_up">#FF14E4D9</color>
+    <color name="color_down">#FFF174A6</color>
+    <color name="color_up_shadow">#8814E4D9</color>
+    <color name="color_down_shadow">#88F174A6</color>
 
 
 </resources>

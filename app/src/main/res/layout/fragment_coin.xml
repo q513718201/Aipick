@@ -146,12 +146,11 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:tabIndicatorColor="#AA4AFF"
         app:tabMode="scrollable"
         app:tabSelectedTextColor="#AA4AFF"
-        app:tabTextColor="@color/color_white"
-
-        >
+        app:tabTextColor="@color/color_white">
 
     </android.support.design.widget.TabLayout>
 
@@ -197,11 +196,11 @@
             android:drawableRight="@mipmap/h_moren"
             android:drawablePadding="6dp"
             android:text="@string/current_price"
+            android:textColor="@color/color_home"
+            android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/guideline5"
-            app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/color_home"
-            android:textSize="12sp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <TextView
@@ -220,6 +219,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
     </android.support.constraint.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider"/>
 
     <FrameLayout
 

@@ -23,6 +23,10 @@ public class BigDecimalUtil {
         return format(rate, 2);
     }
 
+    public static String formatFloat(Float money){
+        return new BigDecimal(money).setScale(2,RoundingMode.HALF_DOWN).toString();
+    }
+
     /**
      * 提供精确的加法运算。
      *

@@ -18,7 +18,9 @@ public class TimeOptionPopupWindow extends PopupWindow {
         ONE_MINUTE,
         FIVE_MINUTE,
         THIRTY_MINUTE,
-        WEEK
+        ONE_HOUR,
+        WEEK,
+        ONE_MONTH
     }
 
     private Option mOption;
@@ -58,8 +60,14 @@ public class TimeOptionPopupWindow extends PopupWindow {
             case R.id.thirty_minute:
                 mOption = Option.THIRTY_MINUTE;
                 break;
+            case R.id.one_hour:
+                mOption = Option.ONE_HOUR;
+                break;
             case R.id.week:
                 mOption = Option.WEEK;
+                break;
+            case R.id.one_month:
+                mOption = Option.ONE_MONTH;
                 break;
         }
     }

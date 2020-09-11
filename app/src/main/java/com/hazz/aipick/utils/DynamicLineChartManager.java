@@ -1,9 +1,10 @@
 package com.hazz.aipick.utils;
 
-import android.content.Context;
 import android.graphics.Color;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -12,12 +13,14 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.MPPointD;
 import com.hazz.aipick.mvp.model.InComing;
 import com.hazz.aipick.widget.XYMarkerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +30,14 @@ public class DynamicLineChartManager {
     private YAxis leftAxis;
     private YAxis rightAxis;
     private XAxis xAxis;
-    private List<ILineDataSet> lineDataSets = new ArrayList<>();
     private List<String> timeList = new ArrayList<>(); //存储x轴的时间
     private LineDataSet mDataSetB;
     private LineDataSet mDataSetA;
-    private Context mContext;
     List<InComing> list = new ArrayList<>();
 
     //多条曲线
-    public DynamicLineChartManager(Context context, LineChart mLineChart) {
+    public DynamicLineChartManager(LineChart mLineChart) {
         this.lineChart = mLineChart;
-        this.mContext = context;
         leftAxis = lineChart.getAxisLeft();
         rightAxis = lineChart.getAxisRight();
         xAxis = lineChart.getXAxis();
@@ -54,28 +54,31 @@ public class DynamicLineChartManager {
         //显示边界
         lineChart.setDrawBorders(false);
         lineChart.setScaleYEnabled(false);
-        lineChart.setNoDataText("暂无收益记录");
+        lineChart.setNoDataText("暂无数据");
         lineChart.setAutoScaleMinMaxEnabled(true);
         setDescription("");
         //折线图例 标签 设置
         Legend legend = lineChart.getLegend();
-        legend.setTextSize(11f);
-        //显示位置
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setDrawInside(false);
-        legend.setWordWrapEnabled(true);
-        legend.setForm(Legend.LegendForm.NONE);
+        legend.setEnabled(false);
 
         leftAxis.setDrawGridLines(false);
         leftAxis.setGridColor(Color.parseColor("#E4EEF9"));
         leftAxis.setAxisLineColor(Color.parseColor("#293559"));
         leftAxis.setDrawZeroLine(true);
         leftAxis.setGranularity(1);
-        leftAxis.setAxisMinimum(0f);
         leftAxis.setTextColor(Color.parseColor("#6371A0"));
         rightAxis.setEnabled(false);
+        leftAxis.setValueFormatter((value, axis) -> {
+            LogUtils.e(value);
+            float temp = Math.abs(value);
+            if (temp < 10000) {
+                return String.format("$%.2f", value);
+            } else if (temp < 1000000) {
+                return String.format("$%.2fW", value / 10000);
+            } else {
+                return String.format("$%.2fM", value / 1000000);
+            }
+        });
 
         //X轴设置显示位置在底部
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -87,27 +90,7 @@ public class DynamicLineChartManager {
         xAxis.setTextColor(Color.parseColor("#6371A0"));
         xAxis.setValueFormatter((value, axis) -> timeList.get((int) value % timeList.size()));
 
-
         lineChart.setAutoScaleMinMaxEnabled(true);
-
-        lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
-            @Override
-            public void onValueSelected(Entry e, Highlight h) {
-                // 获取Entry
-                int iEntry = (int) e.getX();
-                // 获取选中value的坐标
-                MPPointD p = lineChart.getPixelForValues(e.getX(), e.getY(), YAxis.AxisDependency.LEFT);
-
-                XYMarkerView mv = new XYMarkerView(mContext, lineChart, iEntry, list);
-                lineChart.setMarker(mv);
-
-            }
-
-            @Override
-            public void onNothingSelected() {
-
-            }
-        });
 
 //        Matrix matrix = new Matrix();
 //        // 根据数据量来确定 x轴缩放大倍
@@ -128,21 +111,21 @@ public class DynamicLineChartManager {
      * @param min
      * @param labelCount
      */
-//    public void setYAxis(float max, float min, int labelCount) {
-//        if (max < min) {
-//            return;
-//        }
-//        leftAxis.setAxisMaximum(max);
-//        leftAxis.setAxisMinimum(min);
-//        leftAxis.setLabelCount(labelCount, false);
-//        leftAxis.setDrawGridLines(false);
-//        leftAxis.setGridColor(Color.parseColor("#E4EEF9"));
-//        leftAxis.setAxisLineColor(Color.parseColor("#AEB9CE"));
-//
-//        rightAxis.setEnabled(false);
-//
-//        lineChart.invalidate();
-//    }
+    public void setYAxis(float max, float min, int labelCount) {
+        if (max < min) {
+            return;
+        }
+        leftAxis.setAxisMaximum(max);
+        leftAxis.setAxisMinimum(min);
+        leftAxis.setLabelCount(labelCount, false);
+        leftAxis.setDrawGridLines(false);
+        leftAxis.setGridColor(Color.parseColor("#E4EEF9"));
+        leftAxis.setAxisLineColor(Color.parseColor("#AEB9CE"));
+
+        rightAxis.setEnabled(false);
+
+        lineChart.invalidate();
+    }
 
     /**
      * 动态添加数据（多条折线图）
@@ -153,6 +136,16 @@ public class DynamicLineChartManager {
         xAxis.setLabelCount(timeList.size(), false);
         xAxis.setAxisMinimum(-0.5f);
         xAxis.setAxisMaximum((float) (timeList.size() - 0.5));
+        xAxis.setValueFormatter(new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                if (xValue.size() == 0) return "";
+                int pos = (int) Math.abs(value % xValue.size());
+                String s = xValue.get(pos);
+                LogUtils.e(value, xValue, s);
+                return s;
+            }
+        });
         lineChart.invalidate();
     }
 
@@ -165,7 +158,7 @@ public class DynamicLineChartManager {
         ArrayList<Entry> yValue1 = new ArrayList<>();
 
         for (int i = 0; i < list.size(); i++) {
-            yValue1.add(new Entry(i, Float.valueOf(list.get(i).buy)));
+            yValue1.add(new Entry(i, Float.parseFloat(list.get(i).buy)));
         }
 
 
@@ -216,7 +209,7 @@ public class DynamicLineChartManager {
         mDataSetB.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         mDataSetB.setAxisDependency(YAxis.AxisDependency.LEFT);
         mDataSetB.setValueTextSize(10f);
-
+        List<ILineDataSet> lineDataSets = new ArrayList<>();
         lineDataSets.add(mDataSetA);
         lineDataSets.add(mDataSetB);
 
@@ -296,4 +289,66 @@ public class DynamicLineChartManager {
     }
 
 
+    public void setData(List<Integer> colour, @NotNull List<String> xValue, @NotNull List<Float> dealBuy, @NotNull List<Float> dealSell) {
+        if (xValue.size() == 0) {
+            lineChart.setData(new LineData(new ArrayList<>()));
+            return;
+        }
+        setXValue(xValue);
+        LineDataSet buy = createDateSet(dealBuy, "buy", colour.get(0));
+        LineDataSet sell = createDateSet(dealSell, "sell", colour.get(1));
+
+        List<ILineDataSet> lineDataSets = new ArrayList<>();
+        lineDataSets.add(buy);
+        lineDataSets.add(sell);
+
+        LineData data = new LineData(lineDataSets);
+        lineChart.setData(data);
+        lineChart.setVisibleXRange(0, 5);
+        lineChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+            @Override
+            public void onValueSelected(Entry e, Highlight h) {
+                // 获取Entry
+                int iEntry = (int) e.getX();
+                // 获取选中value的坐标
+
+                XYMarkerView mv = new XYMarkerView(lineChart.getContext(), lineChart, iEntry, dealBuy, dealSell);
+                lineChart.setMarker(mv);
+
+            }
+
+            @Override
+            public void onNothingSelected() {
+                lineChart.setMarker(null);
+            }
+        });
+
+    }
+
+    public LineDataSet createDateSet(List<Float> data, String label, int color) {
+        ArrayList<Entry> yValue = new ArrayList<>();
+        for (int i = 0; i < data.size(); i++) {
+            yValue.add(new Entry(i, data.get(i)));
+        }
+        LineDataSet dataSet = new LineDataSet(yValue, label);
+        dataSet.setLineWidth(1.5f);
+        if (data.size() == 1) {
+            dataSet.setDrawCircles(true);
+        } else {
+            dataSet.setDrawCircles(false);
+        }
+
+        dataSet.setDrawCircleHole(true);
+        dataSet.setCircleColor(color);
+        dataSet.setColor(color);
+        dataSet.setFillColor(color);
+        dataSet.setCircleColorHole(color);
+        dataSet.setDrawValues(false);
+//        dataSet.setHighLightColor(Color.parseColor("#AEB9CE"));
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
+        dataSet.setValueTextSize(10f);
+
+        return dataSet;
+    }
 }

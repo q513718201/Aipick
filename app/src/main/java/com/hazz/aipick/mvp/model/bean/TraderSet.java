@@ -11,6 +11,7 @@ public class TraderSet {
          * strategy : 无招胜有招
          */
 
+        public String days365;
         public String days180;
         public String days30;
         public String days90;

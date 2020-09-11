@@ -57,10 +57,32 @@ class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
                 .setRightText(getString(R.string.send))
                 .setRightTextColor(resources.getColor(R.color.dilaog_btn_color))
                 .setOnRightClickListener {
+
+                    val toString = et_phone.text.toString()
+                    if (toString.isNullOrBlank()) {
+                        ToastUtils.showToast(this, "请填写您的联系方式")
+                        return@setOnRightClickListener
+                    }
+                    if (selectedPhotos.size != 0) {
+                        for (i in selectedPhotos.indices) {
+                            if (i == 0) {
+                                iv1 = PicUtil.compressImage(selectedPhotos[0], "png")
+                            }
+                            if (i == 1) {
+                                iv2 = PicUtil.compressImage(selectedPhotos[1], "png")
+                            }
+                            if (i == 2) {
+                                iv3 = PicUtil.compressImage(selectedPhotos[2], "png")
+                            }
+                            if (i == 3) {
+                                iv3 = PicUtil.compressImage(selectedPhotos[2], "png")
+                            }
+                        }
+                    }
                     mFeedBackresenter.feedBack(et.text.toString(), et_phone.text.toString(), iv1!!, iv2!!, iv3!!, iv4!!)
                 }
 
-        tv_img_head.text = getString(R.string.text_img_head, 0)
+        tv_img_head.text = getString(R.string.text_img_head, "0")
         photoAdapter = PhotoAdapter(this, selectedPhotos)
         recyclerView.layoutManager = StaggeredGridLayoutManager(4, OrientationHelper.VERTICAL)
         recyclerView.adapter = photoAdapter
@@ -102,6 +124,7 @@ class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
     }
 
 
+    @SuppressLint("StringFormatMatches")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data == null) {
@@ -112,22 +135,7 @@ class HelpAndFeedActivity : BaseActivity(), WaletContract.feedAndHelp {
             selectedPhotos.addAll(paths)
             photoAdapter?.notifyDataSetChanged()
             tv_img_head.text = getString(R.string.text_img_head, "${paths.size}")
-            if (selectedPhotos.size != 0) {
-                for (i in selectedPhotos.indices) {
-                    if (i == 0) {
-                        iv1 = PicUtil.compressImage(selectedPhotos[0], "png")
-                    }
-                    if (i == 1) {
-                        iv2 = PicUtil.compressImage(selectedPhotos[1], "png")
-                    }
-                    if (i == 2) {
-                        iv3 = PicUtil.compressImage(selectedPhotos[2], "png")
-                    }
-                    if (i == 3) {
-                        iv3 = PicUtil.compressImage(selectedPhotos[2], "png")
-                    }
-                }
-            }
+
         }
     }
 

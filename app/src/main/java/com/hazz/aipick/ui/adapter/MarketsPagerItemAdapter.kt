@@ -11,16 +11,15 @@ import com.hazz.aipick.utils.CoinManager
 import com.hazz.aipick.utils.SPUtil
 import com.orhanobut.logger.Logger
 
-class MarketsPagerItemAdapter//    private String formatPercent;
-(layoutResId: Int, data: List<CoinDetail>?) : BaseQuickAdapter<CoinDetail, BaseViewHolder>(layoutResId, data) {
+class MarketsPagerItemAdapter(layoutResId: Int, data: List<CoinDetail>?) : BaseQuickAdapter<CoinDetail, BaseViewHolder>(layoutResId, data) {
 
     private var sortByPrice: Boolean = false
     private var sortByUp: Boolean = false
     fun sortByPrice() {
         if (sortByPrice) {
-            data.sortBy { BigDecimalUtil.mul(it.tick.close, "1").toDouble() }
+            data.sortBy { it -> it.tick?.let { BigDecimalUtil.mul(it.close, "1").toDouble() } }
         } else {
-            data.sortByDescending { BigDecimalUtil.mul(it.tick.close, "1").toDouble() }
+            data.sortByDescending { it -> it.tick?.let { BigDecimalUtil.mul(it.close, "1").toDouble() } }
         }
         sortByPrice = !sortByPrice
         notifyDataSetChanged()
@@ -33,20 +32,34 @@ class MarketsPagerItemAdapter//    private String formatPercent;
 
     fun sortByUp() {
         if (sortByUp) {
-            data.sortBy {
-                BigDecimalUtil.mulByDecimal(
-                        BigDecimalUtil.div(BigDecimalUtil.sub(it.tick.close, it.tick.open, 6), it.tick.open, 6),
-                        "1").toDouble()
+            data.sortBy { detail ->
+                detail.tick?.let {
+                    BigDecimalUtil.mulByDecimal(
+                            BigDecimalUtil.div(BigDecimalUtil.sub(it.close, it.open, 6), it.open, 6),
+                            "1").toDouble()
+                }
             }
         } else {
-            data.sortByDescending {
-                BigDecimalUtil.mulByDecimal(
-                        BigDecimalUtil.div(BigDecimalUtil.sub(it.tick.close, it.tick.open, 6), it.tick.open, 6),
-                        "1").toDouble()
+            data.sortByDescending { detail ->
+                detail.tick?.let {
+                    BigDecimalUtil.mulByDecimal(
+                            BigDecimalUtil.div(BigDecimalUtil.sub(it.close, it.open, 6), it.open, 6),
+                            "1").toDouble()
+                }
             }
         }
         sortByUp = !sortByUp
         notifyDataSetChanged()
+    }
+
+    fun update(item: CoinDetail) {
+        for (detail in data) {
+            if (detail.ch == item.ch) {
+                setData(data.indexOf(detail), item)
+                return
+            }
+        }
+        addData(item)
     }
 
 
@@ -78,7 +91,7 @@ class MarketsPagerItemAdapter//    private String formatPercent;
         val rate1 = SPUtil.getRate()
         val cny = BigDecimalUtil.mul(close, rate1, 4)
         helper
-                .setImageResource(R.id.ivIcon,CoinManager.getCoinIcon(coinName))
+                .setImageResource(R.id.ivIcon, CoinManager.getCoinIcon(coinName))
                 .setText(R.id.tv_trade_a, coinName.toUpperCase())
                 .setText(R.id.tv_price, if (cny == "0") "--" else cny)
                 .setText(R.id.tv_num_tip, market)

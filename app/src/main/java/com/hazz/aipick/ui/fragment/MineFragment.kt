@@ -17,6 +17,7 @@ import com.hazz.aipick.mvp.presenter.FansPresenter
 import com.hazz.aipick.mvp.presenter.LoginPresenter
 import com.hazz.aipick.ui.activity.*
 import com.hazz.aipick.ui.adapter.FansAdapter
+import com.hazz.aipick.ui.pop.AlertDialog
 import com.hazz.aipick.utils.GlideUtil
 import com.hazz.aipick.utils.RxBus
 import com.hazz.aipick.utils.SPUtil
@@ -32,7 +33,8 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginView, LoginContract.FansView, OnRefreshLoadmoreListener {
 
     override fun funsList(msg: Fans) {
-        mOrderAdapter!!.setNewData(msg.list)
+        mOrderAdapter.setNewData(msg.list)
+        mOrderAdapter.setType(type)
         //数据满的时候可以加载更多
         refreshLayout.isEnableLoadmore = msg.list.size == 10
         when (refreshType) {
@@ -53,12 +55,12 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
 
     }
 
-    override fun getUserInfo(msg: UserInfo) {
+    override fun setUserInfo(msg: UserInfo) {
         SPUtil.putObj("userinfo", msg)
 
         uid = msg.uid
         if (!TextUtils.isEmpty(msg.avatar)) {
-            GlideUtil.showRound(msg.avatar, iv_avatar,R.mipmap.ic_user)
+            GlideUtil.showRound(msg.avatar, iv_avatar, R.mipmap.ic_user)
 
         }
 
@@ -73,10 +75,11 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
         }
         currentType = msg.check_status
         when (msg.check_status) {
-            "none" -> tv_trader_state?.text = getString(R.string.weishenqing)
+
             "wait" -> tv_trader_state?.text = getString(R.string.wait)
             "pass" -> tv_trader_state?.text = getString(R.string.pass)
             "fail" -> tv_trader_state?.text = getString(R.string.fail)
+            else -> tv_trader_state?.text = getString(R.string.weishenqing)
 
         }
     }
@@ -87,9 +90,9 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
     private var mFansPresenter: FansPresenter = FansPresenter(this)
     private var isfirstMine: Boolean = false
     private var bottomSheet: BottomSheetDialog? = null
-    private var mOrderAdapter: FansAdapter? = null
+    private lateinit var mOrderAdapter: FansAdapter
     private var uid = ""
-    private var currentType = ""
+    private var currentType = "none"
 
     companion object {
         fun getInstance(title: String): MineFragment {
@@ -136,10 +139,13 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
 
         RxBus.get().observerOnMain(this, Fans.ListBean::class.java) {
             it?.let {
-                if (it.mutual) {// TODO: 2020/8/15 弹窗？
-                    mFansPresenter.attentionCancle(it.follower_id)
+                if (type == "fans") {
+                    if (it.mutual) {
+                        showTip("是否确定取消关注", it.follower_id)
+                    } else
+                        showTip("是否确定关注", it.follower_id)
                 } else {
-                    mFansPresenter.attention(it.follower_id)
+                    showTip("是否确定取消关注", it.followee_id)
                 }
             }
         }
@@ -166,18 +172,21 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
                 startActivity(Intent(activity, SettingActivity::class.java))
             }
             v?.id == R.id.coin_house_order -> startActivity(Intent(activity, ExchangeOrderActivity::class.java))
-            v?.id == R.id.tv_caopan -> startActivity(Intent(activity, MonicpActivity::class.java))
-            v?.id == R.id.tv_moni -> context?.let { RebotCategryActivity.start(it, "-1", "bot", "0") }
+            v?.id == R.id.tv_caopan -> {
+                ToastUtils.showToast(activity, "正在开发，暂未开放")
+                // TODO: 2020/9/4 模拟操盘
+//                startActivity(Intent(activity, MonicpActivity::class.java))
+            }
+            v?.id == R.id.tv_moni -> context?.let { FollowRobotDetailActivity.start(it, "-1", "bot", "0") }
             v?.id == R.id.tv_wallet -> startActivity(Intent(activity, WaletActivity::class.java))
-            v?.id == R.id.tv_account -> MyAccountActivity.start(context!!, uid, "bot", "0", "mine")
+            v?.id == R.id.tv_account -> MyAccountActivity.start(context!!, uid, "bot", "0")
             v?.id == R.id.invite_friend -> startActivity(Intent(activity, InviteFriendsActivity::class.java))
             v?.id == R.id.mine_trader -> {
                 when (currentType) {
                     "wait" -> ToastUtils.showToast(activity, getString(R.string.wait))
                     "pass" -> startActivity(Intent(activity, TraderSetActivity::class.java))
-                    "none" -> startActivity(Intent(activity, SetTraderActivity::class.java))
                     "fail" -> startActivity(Intent(activity, SetTraderActivity::class.java))
-
+                    else -> startActivity(Intent(activity, SetTraderActivity::class.java))
                 }
 
 
@@ -201,6 +210,21 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
         }
     }
 
+    lateinit var myDialog: AlertDialog
+    private fun showTip(msg: String, id: String) {
+        myDialog = AlertDialog(context).builder()
+        myDialog.setGone().setMsg(msg).setNegativeButton("取消", null).setPositiveButton("确定", View.OnClickListener {
+            when (type) {
+                "fans" -> {
+                    mFansPresenter.attention(id)
+                }
+                else -> {
+                    mFansPresenter.attentionCancle(id)
+                }
+            }
+        }).show()
+    }
+
     lateinit var refreshLayout: SmartRefreshLayout
     private fun initBottom() {
         getFanData()
@@ -212,10 +236,10 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
 
         view.recycleview.layoutManager = LinearLayoutManager(activity)
         mOrderAdapter = FansAdapter(R.layout.item_fans, null)
-        view.tv_title.text = if (type == "fan") "粉丝${tv_fans?.text}" else "关注${tv_guanzhu_num.text}"
+        view.tv_title.text = if (type == "fans") "粉丝 ${tv_fans?.text}" else "关注 ${tv_guanzhu_num.text}"
         view.recycleview.adapter = mOrderAdapter
-        mOrderAdapter!!.bindToRecyclerView(view.recycleview)
-        mOrderAdapter!!.setEmptyView(R.layout.empty_view)
+        mOrderAdapter.bindToRecyclerView(view.recycleview)
+        mOrderAdapter.setEmptyView(R.layout.empty_view)
         bottomSheet!!.show()
     }
 
@@ -224,7 +248,7 @@ class MineFragment : BaseFragment(), View.OnClickListener, LoginContract.LoginVi
     }
 
     var page = 1
-    var type = "fan"
+    var type = "fans"
     var refreshType = 0;
     override fun onLoadmore(refreshlayout: RefreshLayout?) {
         refreshType = 1

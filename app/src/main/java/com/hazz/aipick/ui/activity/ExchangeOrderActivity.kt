@@ -31,23 +31,6 @@ class ExchangeOrderActivity : BaseActivity(), OnRefreshListener, OnLoadmoreListe
     }
 
 
-//        refreshLayout.finishRefresh()
-//        refreshLayout.finishLoadmore()
-//        if(page==1){
-//            currentList?.clear()
-//            currentList?.addAll(msg)
-//            mOrderAdapter!!.setNewData(currentList)
-//        }else{
-//            currentList!!.addAll(msg)
-//            mOrderAdapter!!.notifyDataSetChanged()
-//        }
-//
-//        if(msg.size<10){
-//            refreshLayout.finishLoadmoreWithNoMoreData()
-//        }
-
-
-
     override fun layoutId(): Int = R.layout.activity_exchange_order
 
 
@@ -59,7 +42,6 @@ class ExchangeOrderActivity : BaseActivity(), OnRefreshListener, OnLoadmoreListe
     private val titleList = ArrayList<String>()
  //  private var mWaletPresenter: MessagePresenter = MessagePresenter(this)
     private var page=1
-    private var currentList:MutableList<Message>?= mutableListOf()
 
     @SuppressLint("SetTextI18n")
     override fun initView() {

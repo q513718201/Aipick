@@ -27,7 +27,7 @@ public class Fans {
              */
 
             public String followee_avatar;
-            public int followee_id;
+            public String followee_id;
             public String followee_nickname;
             public String follower_avatar;
             public String follower_id;

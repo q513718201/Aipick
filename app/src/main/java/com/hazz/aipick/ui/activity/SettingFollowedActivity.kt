@@ -26,12 +26,12 @@ class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListen
             "amount" -> {
                 followType = "rate"
                 var amount = tv_num.text.toString()
-                setIntroduce(amount)
+//                setIntroduce(amount)
             }
             "rate" -> {
                 followType = "amount"
                 var rate = tv_num.text.toString()
-                setIntroduce(rate)
+//                setIntroduce(rate)
             }
         }
     }
@@ -54,6 +54,7 @@ class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListen
     }
 
     private var id = ""
+    private var name = ""
     private var price = ""
     private var bean: BindCoinHouse.ExchangesBean? = null
     private var beanSymbl: BindCoinHouse.SymbolsBean? = null
@@ -73,6 +74,7 @@ class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListen
                 .setOnLeftIconClickListener { view -> finish() }
 
         id = intent.getStringExtra("id")
+        name = intent.getStringExtra("name")
         price = intent.getStringExtra("price")
         bean = GsonUtil.toBean(intent.getStringExtra("bean"), BindCoinHouse.ExchangesBean::class.java)
         beanSymbl = GsonUtil.toBean(intent.getStringExtra("SymbolsBean"), BindCoinHouse.SymbolsBean::class.java)
@@ -92,21 +94,23 @@ class SettingFollowedActivity : BaseActivity(), RadioGroup.OnCheckedChangeListen
 
             finish()
         }
+        tv_name.text = "${getString(R.string.subsciber)}/$name"
+
         rg.setOnCheckedChangeListener(this)
-        setIntroduce(default_str)
+        setIntroduce("0.05")
         tv_jian.setOnClickListener {
             if (tv_num.text.toString() == default_str) {
                 ToastUtils.showToast(this, getString(R.string.zuixiao))
                 return@setOnClickListener
             }
-            tv_num.text = BigDecimalUtil.sub(tv_num.text.toString(), default_str, 2)
-            setIntroduce(tv_num.text.toString())
+            tv_num.setText(BigDecimalUtil.sub(tv_num.text.toString(), default_str, 2))
+//            setIntroduce(tv_num.text.toString())
         }
 
 
         tv_jia.setOnClickListener {
-            tv_num.text = BigDecimalUtil.add(tv_num.text.toString(), default_str)
-            setIntroduce(tv_num.text.toString())
+            tv_num.setText(BigDecimalUtil.add(tv_num.text.toString(), default_str))
+//            setIntroduce(tv_num.text.toString())
         }
 
         switchButton.setOnCheckedChangeListener { _, isChecked ->

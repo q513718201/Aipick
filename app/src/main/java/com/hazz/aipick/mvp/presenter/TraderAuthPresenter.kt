@@ -68,11 +68,12 @@ class TraderAuthPresenter(view: LoginContract.tradeView) : BasePresenter<LoginCo
 
     }
 
-    fun traderSet(days30: String, days90: String, days180:String,strategy: String ) {
+    fun traderSet(days30: String, days90: String, days180:String,days365:String,strategy: String ) {
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("days30", days30),
                 Pair.create<Any, Any>("days90", days90),
                 Pair.create<Any, Any>("days180", days180),
+                Pair.create<Any, Any>("days365", days365),
                 Pair.create<Any, Any>("strategy", strategy)
         )
 

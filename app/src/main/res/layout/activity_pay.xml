@@ -246,6 +246,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="20dp"
+            android:visibility="gone"
             android:background="@drawable/pay_select_bg"
             android:drawableLeft="@mipmap/ic_wechat"
             android:drawablePadding="10dp"

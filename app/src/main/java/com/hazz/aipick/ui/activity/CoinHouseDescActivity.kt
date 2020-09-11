@@ -16,7 +16,6 @@ import com.hazz.aipick.utils.BigDecimalUtil
 import com.hazz.aipick.utils.ToolBarCustom
 import kotlinx.android.synthetic.main.activity_coin_house_desc.*
 import kotlinx.android.synthetic.main.activity_subscribe_desc.toolbar
-import java.util.*
 
 
 class CoinHouseDescActivity : BaseActivity(), WaletContract.coinHouseView {
@@ -29,9 +28,9 @@ class CoinHouseDescActivity : BaseActivity(), WaletContract.coinHouseView {
     }
 
     override fun coinHouseDesc(msg: CoinHouseDesc) {
-        tv_amount.text = msg.total_value
+        tv_amount.text = getString(R.string.money_format_us, msg.total_value)
         tv_week_rate.text = "${BigDecimalUtil.format(msg.week_rate, 2)}%"
-        tv_all_incoming.text = "$${BigDecimalUtil.format(msg.gain, 2)}"
+        tv_data1_value.text = getString(R.string.money_format_us, "${BigDecimalUtil.format(msg.gain, 2)}")
         tv_leiji.text = "${BigDecimalUtil.format(msg.rate, 2)}%"
 
         mOrderAdapter!!.setNewData(msg.recommends)
@@ -54,7 +53,7 @@ class CoinHouseDescActivity : BaseActivity(), WaletContract.coinHouseView {
     override fun initView() {
         ToolBarCustom.newBuilder(toolbar as Toolbar)
                 .setLeftIcon(R.mipmap.back_white)
-                .setTitle("Binance")
+                .setTitle(intent.getStringExtra("title"))
                 .setTitleColor(resources.getColor(R.color.color_white))
                 .setToolBarBg(Color.parseColor("#1E2742"))
                 .setOnLeftIconClickListener { view -> finish() }
@@ -71,9 +70,9 @@ class CoinHouseDescActivity : BaseActivity(), WaletContract.coinHouseView {
     }
 
     override fun start() {
-        mine_incoming.setOnClickListener {
-            startActivity(Intent(this, MyIncomingActivity::class.java))
-        }
+//        mine_incoming.setOnClickListener {
+//            startActivity(Intent(this, MyIncomingActivity::class.java))
+//        }
     }
 
 

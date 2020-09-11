@@ -2,7 +2,11 @@ package com.hazz.aipick.managers
 
 import android.support.v4.app.FragmentManager
 import android.view.View
+import android.view.ViewGroup
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import com.hazz.aipick.utils.SPUtil
 import easily.tech.guideview.lib.GuideViewBundle
 import easily.tech.guideview.lib.GuideViewBundle.TransparentOutline.TYPE_RECT
@@ -54,7 +58,9 @@ object GuideManager {
 
     fun showGuide(manager: FragmentManager, targetView: View, imageSource: Int, direction: Int, tag: String) {
         val imageView = ImageView(targetView.context)
+        imageView.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         imageView.setImageResource(imageSource)
+
 
         var guide = GuideViewFragment.Builder().addGuidViewBundle(GuideViewBundle.Builder()
                 .setTargetView(targetView)
@@ -68,11 +74,78 @@ object GuideManager {
                 .setHintViewDirection(direction)
                 .build()
         ).build()
+
         guide?.let {
             if (!SPUtil.getBoolean(tag))
                 it.show(manager, tag)
         }
+    }
 
+    fun showGuide(manager: FragmentManager, targetView: View, hintView: View, direction: Int, tag: String) {
+        val params: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        var guide = GuideViewFragment.Builder().addGuidViewBundle(GuideViewBundle.Builder()
+                .setTargetView(targetView)
+                .setHintView(hintView)
+                .setHintViewParams(params)
+                .setHintViewMargin(0, 0, 0, 0)
+                .setTransparentSpace(0, 0, 0, 0)
+                .setOutlineType(TYPE_RECT)
+                .setDismissOnClicked(true)
+                .setGuideViewHideListener { SPUtil.putBoolean(tag, true) }
+                .setHintViewDirection(direction)
+                .build()
+        ).build()
+        hintView.setOnClickListener {
+            guide?.let {
+                guide.dismissAllowingStateLoss()
+                SPUtil.putBoolean(tag, true)
+            }
+        }
+        guide?.let {
+            if (!SPUtil.getBoolean(tag))
+                it.show(manager, tag)
+        }
+    }
 
+    fun showGuide(manager: FragmentManager, targetView: View, hintView: View, hintView1: View, direction: Int, tag: String, tag1: String) {
+        val params: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT)
+        var guide = GuideViewFragment.Builder().addGuidViewBundle(GuideViewBundle.Builder()
+                .setTargetView(targetView)
+                .setHintView(hintView)
+                .setHintViewParams(params)
+                .setHintViewMargin(0, 0, 0, 0)
+                .setTransparentSpace(0, 0, 0, 0)
+                .setOutlineType(TYPE_RECT)
+                .setDismissOnClicked(true)
+                .setGuideViewHideListener { SPUtil.putBoolean(tag, true) }
+                .setHintViewDirection(direction)
+                .build()
+        ).addGuidViewBundle(
+                GuideViewBundle.Builder()
+                        .setTargetView(targetView)
+                        .setHintView(hintView1)
+                        .setHintViewParams(params)
+                        .setHintViewMargin(0, 0, 0, 0)
+                        .setTransparentSpace(0, 0, 0, 0)
+                        .setOutlineType(TYPE_RECT)
+                        .setDismissOnClicked(true)
+                        .setGuideViewHideListener { SPUtil.putBoolean(tag1, true) }
+                        .setHintViewDirection(direction)
+                        .build()
+        ).build()
+        hintView.setOnClickListener {
+            guide?.let {
+                guide.onNext()
+                SPUtil.putBoolean(tag, true)
+            }
+        }
+        hintView1.setOnClickListener {
+            guide.dismiss()
+            SPUtil.putBoolean(tag1, true)
+        }
+        guide?.let {
+            if (!SPUtil.getBoolean(tag))
+                it.show(manager, tag)
+        }
     }
 }

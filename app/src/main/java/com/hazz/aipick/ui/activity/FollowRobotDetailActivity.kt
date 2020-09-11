@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
-import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import android.widget.ImageView
@@ -13,9 +12,14 @@ import android.widget.LinearLayout
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.managers.GuideManager
+import com.hazz.aipick.mvp.contract.CollectionContract
+import com.hazz.aipick.mvp.contract.SimulateContract
 import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.*
+import com.hazz.aipick.mvp.model.bean.Collection
 import com.hazz.aipick.mvp.presenter.AccountPresenter
+import com.hazz.aipick.mvp.presenter.CollectionPresenter
+import com.hazz.aipick.mvp.presenter.RobotSubscribePresenter
 import com.hazz.aipick.ui.adapter.CoinAdapter
 import com.hazz.aipick.ui.adapter.CoinBiduiAdapter
 import com.hazz.aipick.ui.fragment.OrderFragment
@@ -23,20 +27,25 @@ import com.hazz.aipick.ui.fragment.SubscribeFragment
 import com.hazz.aipick.ui.fragment.TransactionAnalysisFragment
 import com.hazz.aipick.utils.*
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
-import com.vinsonguo.klinelib.util.DateUtils
+import com.werb.pickphotoview.adapter.SpaceItemDecoration
+import easily.tech.guideview.lib.GuideViewBundle.Direction.LEFT
 import easily.tech.guideview.lib.GuideViewBundle.Direction.TOP
 import kotlinx.android.synthetic.main.activity_my_account.iv_back
 import kotlinx.android.synthetic.main.activity_my_account.rg
 import kotlinx.android.synthetic.main.activity_my_account.tv_fans
 import kotlinx.android.synthetic.main.activity_my_account.tv_renqi
-import kotlinx.android.synthetic.main.activity_my_account.tv_suscribe
 import kotlinx.android.synthetic.main.activity_my_account.username
 import kotlinx.android.synthetic.main.activity_robot_categry.*
+import kotlinx.android.synthetic.main.activity_robot_categry.guide_point
+import kotlinx.android.synthetic.main.activity_robot_categry.ll_support_coins
+import kotlinx.android.synthetic.main.activity_robot_categry.tv_rest_time
 import kotlinx.android.synthetic.main.dialog_coin.view.*
 import kotlinx.android.synthetic.main.view_subscibe.*
 
-
-class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
+/**
+ * 订阅机器人
+ */
+class FollowRobotDetailActivity : BaseActivity(), WaletContract.myaccountView, SimulateContract.SubscribeView, CollectionContract.collectionView {
 
 
     override fun layoutId(): Int = R.layout.activity_robot_categry
@@ -55,18 +64,15 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
             bundle.putString("id", id)
             bundle.putString("role", role)
             bundle.putString("price", price)
-            activity.startActivity(Intent(activity, RebotCategryActivity::class.java).putExtra("data", bundle))
+            activity.startActivity(Intent(activity, FollowRobotDetailActivity::class.java).putExtra("data", bundle))
         }
     }
 
 
-    private var currentName: String? = null
+    private lateinit var currentName: String
     private lateinit var mMyAccount: MyAccount
     private var coin: String? = null
     private var baseCoin: BindCoinHouse.SymbolsBean? = null
-    private var mTransactionAnalysisFragment: TransactionAnalysisFragment? = null
-    private var mOrderFragment: OrderFragment? = null
-    private var mLastFragment: Fragment? = null
     private var id = ""
     private var role = ""
     private var price = ""
@@ -75,6 +81,8 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
     private var mCoinAdapter: CoinAdapter? = null
     private var mCoinBiduiAdapter: CoinBiduiAdapter? = null
     private var mAccountPresenter: AccountPresenter = AccountPresenter(this)
+    private var mRobotSubscribePresenter: RobotSubscribePresenter = RobotSubscribePresenter(this)
+    private var mCollectionPresenter: CollectionPresenter = CollectionPresenter(this)
 
     @SuppressLint("SetTextI18n")
     override fun initView() {
@@ -87,7 +95,7 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
 
 
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.fl, TransactionAnalysisFragment.getInstance(role)).commitAllowingStateLoss()
+        transaction.replace(R.id.fl, TransactionAnalysisFragment.getInstance(id, role)).commitAllowingStateLoss()
         rg.setOnCheckedChangeListener { group, checkedId ->
 
             when (checkedId) {
@@ -97,8 +105,11 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
                 }
                 R.id.rb2 -> {
                     val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.fl, OrderFragment.getInstance(id)).commitAllowingStateLoss()
-
+                    transaction.replace(R.id.fl, OrderFragment.getInstance(id, canSub)).commitAllowingStateLoss()
+                    GuideManager.showGuide(supportFragmentManager, guide_point,
+                            View.inflate(this, R.layout.guide_order, null),
+                            View.inflate(this, R.layout.guide_order_detail, null)
+                            , TOP, "guide_order", "guide_order_detail")
 
                 }
                 R.id.rb3 -> {
@@ -118,6 +129,7 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
             bundle.putString("id", id)
             bundle.putString("role", role)
             bundle.putString("price", price)
+            bundle.putBoolean("isSub", canSub)
             bundle.putString("title", username.text.toString())
             CategryDescActivity.start(this, bundle)
         }
@@ -125,8 +137,8 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
 
         tv_suscribe.setOnClickListener {
             if (id == "-1") {
-                val obj = SPUtil.getObj("userinfo", UserInfo::class.java)
-                SubscribeSuccessActivity.start(this, name, obj.nickname, DateUtils.getDay(30))
+                mRobotSubscribePresenter.subscribe()
+
             } else {
                 mAccountPresenter.coinList(id)
                 showFirst()
@@ -137,14 +149,15 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
         }
 
         iv_follow_status.setOnClickListener {
-            if (mMyAccount?.is_following) {
-                mAccountPresenter.attentionCancle(id)
+            if (!mMyAccount.in_collection) {//没有收藏 添加收藏，有收藏 删除收藏
+                mCollectionPresenter.addCollection(role, id, "", "")
             } else {
-                mAccountPresenter.attention(id)
+                mCollectionPresenter.cancelCollection(role, id, "", "")
             }
         }
     }
 
+    @SuppressLint("StringFormatInvalid")
     private fun initStage() {
         when (id) {
             "-1" -> {
@@ -159,7 +172,7 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
                 ll_agree.visibility = View.VISIBLE
                 llFans.visibility = View.VISIBLE
                 iv_follow_status.visibility = View.VISIBLE
-                tv_price.text = "$$price"
+                tv_price.text = getString(R.string.money_format, "$price")
             }
         }
 
@@ -176,11 +189,11 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
         view.iv_close.setOnClickListener {
             bottomSheetDialog.dismiss()
         }
-        mCoinAdapter = CoinAdapter(R.layout.item_text, null)
+        mCoinAdapter = CoinAdapter(null)
         view.recycleview1.adapter = mCoinAdapter
-        val stringIntegerHashMap: HashMap<String, Int>? = HashMap()
-        stringIntegerHashMap?.put(RecyclerViewSpacesItemDecoration.BOTTOM_DECORATION, 15)//右间距
-        view.recycleview1.addItemDecoration(RecyclerViewSpacesItemDecoration(stringIntegerHashMap))
+
+        view.recycleview1.addItemDecoration(SpaceItemDecoration(DpUtils.dip2px(this, 10f), 4))
+
         mCoinAdapter!!.bindToRecyclerView(view.recycleview1)
         mCoinAdapter!!.setEmptyView(R.layout.empty_view_coin)
         mCoinAdapter!!.emptyView.setOnClickListener {
@@ -219,6 +232,7 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
             bottomSheetDialog.dismiss()
         }
         view.recycleview1.layoutManager = GridLayoutManager(this, 4)
+        view.recycleview1.addItemDecoration(SpaceItemDecoration(DpUtils.dip2px(this, 10f), 4))
         view.tv_title.text = getString(R.string.choose_bidui)
         view.tv_sure.text = getString(R.string.confirm)
         mCoinBiduiAdapter = CoinBiduiAdapter(R.layout.item_text, mBindCoinHouse)
@@ -253,30 +267,47 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
     }
 
     override fun start() {
-        GuideManager.showGuide(supportFragmentManager, tv_suscribe, R.mipmap.guide_subscribe, TOP, "guide_subscribe")
+        GuideManager.showGuide(supportFragmentManager, tv_suscribe, R.mipmap.guide_subscribe, LEFT, "guide_subscribe")
     }
 
+    private var canSub = false
+
+    @SuppressLint("StringFormatMatches", "SetTextI18n")
     override fun myaccount(msg: MyAccount) {
         coin = msg.coins
         mMyAccount = msg
         createSupportCoins(msg.coins)
-        iv_follow_status.setImageResource(if (msg.is_following) R.drawable.ic_unfollow else R.drawable.ic_followed)
+        iv_follow_status.setImageResource(if (msg.in_collection) R.drawable.ic_followed else R.drawable.ic_unfollow)
         currentName = msg.nickname
         username.text = msg.nickname
         tv_fans.text = msg.fans.toString()
         tv_renqi.text = msg.pageview.toString()
+        tv_total_follows.text = "${msg.follow_times}"
+        tv_follow_benefit.text = getString(R.string.money_format_us, msg.follow)
+        tv_total_benefit.text = "${BigDecimalUtil.format(msg.total.toString(), 2)}%"
+        tv_max_roll_back.text = "${BigDecimalUtil.format(msg.pullback, 2)}%"
+        canSub = msg.is_sub == 0
+        tv_suscribe.isEnabled = canSub//是否订阅
+        tv_rest_time.visibility = if (msg.end_time.toDouble() > 0) View.VISIBLE else View.GONE
+        tv_rest_time.text = getString(R.string.text_rest_service_time, "${msg.end_time}")
+        iv_follow_status.visibility = if (msg.is_self) View.GONE else View.VISIBLE //自己不可以订阅自己
 
-        tv_follow_benefit.text = msg.follow.toString()
-        tv_total_benefit.text = msg.total.toString()
-        tv_max_roll_back.text = msg.pullback
     }
 
+    @SuppressLint("StringFormatMatches")
     override fun moniaccount(msg: MoniAccount) {
         currentName = msg.nickname
-        tv_follow_benefit.text = msg.follow_gain
-        tv_total_benefit.text = msg.gain_rate
-        tv_max_roll_back.text = msg.pullback
+        username.text = msg.nickname
         tv_total_follows.text = msg.total_subs
+
+        tv_follow_benefit.text = getString(R.string.money_format_us, msg.follow_gain)
+        tv_total_benefit.text = "${BigDecimalUtil.format(msg.gain_rate, 2)}%"
+        tv_max_roll_back.text = "${BigDecimalUtil.format(msg.pullback, 2)}%"
+
+        canSub = msg.is_sub == 0 && msg.end_time.toDouble() >= 0
+        tv_suscribe.isEnabled = canSub//1 已订阅 0 未订阅
+        tv_rest_time.visibility = if (msg.end_time.toDouble() > 0) View.VISIBLE else View.GONE
+        tv_rest_time.text = getString(R.string.text_rest_service_time, "${msg.end_time}")
     }
 
     private var imageView: ImageView? = null
@@ -311,5 +342,16 @@ class RebotCategryActivity : BaseActivity(), WaletContract.myaccountView {
         mAccountPresenter.myAccount(id)
     }
 
+    override fun subscribeSuccess(bean: SubscribeBean) {
+        SubscribeSuccessActivity.start(this, bean.nickname, SPUtil.getUser().nickname, bean.end_time)
+    }
 
+    override fun getCollection(msg: List<Collection>) {
+        TODO("Not yet implemented")
+    }
+
+    override fun optionResult(msg: String) {
+        ToastUtils.showToast(this, msg)
+        mAccountPresenter.myAccount(id)
+    }
 }

@@ -18,6 +18,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter
 import com.scwang.smartrefresh.layout.header.ClassicsHeader
 import com.squareup.leakcanary.LeakCanary
 import com.squareup.leakcanary.RefWatcher
+import com.tencent.bugly.crashreport.CrashReport
 import kotlin.properties.Delegates
 
 
@@ -42,7 +43,8 @@ class MyApplication : Application(), DefaultRefreshFooterCreater, DefaultRefresh
     override fun onCreate() {
         super.onCreate()
         context = applicationContext
-//        refWatcher = setupLeakCanary()
+        if (BuildConfig.DEBUG)
+//            refWatcher = setupLeakCanary()
         initConfig()
         DisplayManager.init(this)
         registerActivityLifecycleCallbacks(mActivityLifecycleCallbacks)
@@ -51,6 +53,7 @@ class MyApplication : Application(), DefaultRefreshFooterCreater, DefaultRefresh
         SToast.initToast(this)
         initAppStatusListener()
         initRefresh()
+        CrashReport.initCrashReport(this, Constants.BUGLY_APPID, false);
     }
 
     private fun initRefresh() {
@@ -137,7 +140,7 @@ class MyApplication : Application(), DefaultRefreshFooterCreater, DefaultRefresh
 
     override fun createRefreshFooter(context: Context?, layout: RefreshLayout?): RefreshFooter {
         layout?.setPrimaryColorsId(R.color.color_translucent, android.R.color.white) //全局设置主题颜色
-        //指定为经典Footer，默认是 BallPulseFooter
+        //指定为经典Footer
         var classicsFooter = ClassicsFooter(context)
         return classicsFooter.setSpinnerStyle(SpinnerStyle.Translate) //指定为经典Header
     }

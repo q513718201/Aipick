@@ -5,14 +5,17 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions' //扩展插件
 
 apply plugin: 'kotlin-kapt'  //kapt3插件
+static def getTime() {
+    return new Date().format("yyyyMMddHH", TimeZone.getDefault())
+}
 
 android {
     signingConfigs {
         config {
-            keyAlias 'aipick'
-            keyPassword '123456'
-            storeFile file('../pick.jks')
-            storePassword '123456'
+            keyAlias KEY_ALIAS
+            keyPassword KEY_PASSWORD
+            storeFile file(getRootDir().path + STORE_FILE)
+            storePassword STORE_PASSWORD
         }
     }
 
@@ -47,25 +50,42 @@ android {
     }
     buildTypes {
         debug {
+            applicationIdSuffix "debug"
+            buildConfigField("String", "URL_BASE", "${URL_BASE}")
+            buildConfigField("String", "COIN_BASE", "${COIN_BASE}")
+            resValue("string", "app_name", "AiPickDebug")
             minifyEnabled false
             debuggable true
             signingConfig signingConfigs.config
         }
         release {
+            buildConfigField("String", "URL_BASE", "${RELEASE_URL_BASE}")
+            buildConfigField("String", "COIN_BASE", "${RELEASE_COIN_BASE}")
+            resValue("string", "app_name", "AiPick")
+
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
-            signingConfig signingConfigs.config
             zipAlignEnabled true
             aaptOptions.cruncherEnabled = false
             aaptOptions.useNewCruncher = false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+        }
+        develop {
+            applicationIdSuffix "dev"
+            buildConfigField("String", "URL_BASE", "${URL_BASE}")
+            buildConfigField("String", "COIN_BASE", "${COIN_BASE}")
+            resValue("string", "app_name", "AiPickDev")
+            debuggable true
+            signingConfig signingConfigs.config
         }
 
     }
     // 自定义输出配置
     android.applicationVariants.all { variant ->
         variant.outputs.all {
-            outputFileName = "aipick_v${variant.versionName}_${variant.name}.apk"
+            outputFileName = "aipick_v${variant.versionName}_${variant.name}_${getTime()}.apk"
+
         }
     }
 
@@ -73,10 +93,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
-    productFlavors {
-
-    }
-
 
     dexOptions {
         jumboMode true
@@ -107,7 +123,13 @@ dependencies {
     // RxJava2
     implementation rootProject.ext.rxJavaLibs
     implementation rootProject.ext.otherLibs
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:28.0.0'
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
     // APT dependencies(Kotlin内置的注解处理器)
     kapt rootProject.ext.annotationProcessorLibs
 

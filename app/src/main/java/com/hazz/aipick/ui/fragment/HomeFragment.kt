@@ -1,6 +1,6 @@
 package com.hazz.aipick.ui.fragment
 
-import android.graphics.Point
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.design.widget.BottomSheetDialog
 import android.support.v7.widget.DefaultItemAnimator
@@ -9,14 +9,18 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.View
 import com.bigkoo.alertview.AlertView
 import com.bigkoo.alertview.OnItemClickListener
+import com.blankj.utilcode.util.LogUtils
+import com.github.mikephil.charting.data.Entry
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseFragment
+import com.hazz.aipick.managers.ChartManager
+import com.hazz.aipick.managers.GuideManager
 import com.hazz.aipick.mvp.contract.HomeContract
 import com.hazz.aipick.mvp.model.bean.Home
 import com.hazz.aipick.mvp.model.bean.RateBean
 import com.hazz.aipick.mvp.model.bean.ShaixuanBean
 import com.hazz.aipick.mvp.presenter.HomePresenter
-import com.hazz.aipick.ui.activity.RebotCategryActivity
+import com.hazz.aipick.ui.activity.FollowRobotDetailActivity
 import com.hazz.aipick.ui.adapter.HomeAdapter
 import com.hazz.aipick.ui.adapter.ShaiXuanAdapter
 import com.hazz.aipick.ui.adapter.ShaiXuanAdapter2
@@ -24,10 +28,12 @@ import com.hazz.aipick.ui.adapter.ShaiXuanAdapter3
 import com.hazz.aipick.ui.pop.HomePop
 import com.hazz.aipick.utils.DpUtils
 import com.hazz.aipick.utils.SPUtil
+import com.hazz.aipick.widget.BezierView
 import com.hazz.aipick.widget.RecyclerViewSpacesItemDecoration
 import com.scwang.smartrefresh.header.MaterialHeader
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener
+import easily.tech.guideview.lib.GuideViewBundle
 import kotlinx.android.synthetic.main.dialog_shaixuan.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import java.util.*
@@ -41,34 +47,89 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
     private var homeBean: Home? = null
     override fun getHomeMsg(msg: List<Home>) {
         mHomeAdapter?.setRole(subeeType)
-        if (homeBean == null && msg.isNotEmpty()) {
+        if (msg.isNotEmpty()) {
             homeBean = msg[0]
             setHead()
         }
         mRefreshLayout?.isEnableLoadmore = msg.size == 10
-        when (loadType) {
-            0 -> {
+        when (page) {
+            1 -> {
                 mRefreshLayout?.finishRefresh()
                 mHomeAdapter?.setNewData(msg)
             }
             else -> {
                 mHomeAdapter?.addData(msg)
-                mRefreshLayout.finishLoadmore()
+                mRefreshLayout?.finishLoadmore()
             }
         }
     }
 
-    private var loadType = 0;
-
+    @SuppressLint("ResourceAsColor")
     private fun setHead() {
-        homeBean?.let {
-            tv_coin_name?.text = if (it.coin_name.isEmpty()) getString(R.string.app_name) else it.coin_name
+        homeBean?.let { home ->
+            tv_coin_name?.text = if (home.coin_name.isEmpty()) getString(R.string.app_name) else home.coin_name
 
-            tv_raise?.text = "${it.rate}"
-            tv_pullback?.text = "${getString(R.string.ten_rate, it.pullback)}%"
-            price?.text = getString(R.string.home_price, it.price)
+            tv_raise?.text = if (home.all_rate.toFloat() >= 0) "+${home.all_rate}%" else "${home.all_rate}%"
+            tv_total_rate?.setText(home.all_rate, "%")
+
+
+            tv_pullback?.text = "${getString(R.string.ten_rate, home.rate)}%"
+            price?.text = getString(R.string.home_price, home.price)
+//            var pos = "90.00000000,66.00000000,-30.00000000,1100.00000000,-66.00000000,1110.00000000"
+//
+//            val split = /*home.gain_list*/pos.split(",")
+            val split = home.gain_list.split(",")
+            chart?.let {
+                val entries = ArrayList<Entry>()
+                var min = 0f
+                for ((index, value) in split.withIndex()) {
+                    min = min.coerceAtMost(value.toFloat())
+                    entries.add(Entry(index.toFloat(), value.toFloat()))
+                }
+
+                if (min < 0) {
+                    for (entry in entries) {
+                        entry.y = entry.y + (min * -1)
+                    }
+                }
+                context?.resources?.let {
+                    var lineColor = it.getColor(R.color.home_line)
+                    var fillDrawable = it.getDrawable(R.color.bg_common)
+                    ChartManager.showLineChart(chart, entries, lineColor, 5f, fillDrawable)
+                }
+            }
+
+            bezierView?.let {
+                val dp_15 = DpUtils.dip2px(context, 15f)
+
+                var entries = ArrayList<BezierView.Point>()
+                var min = -0.01f
+                var max = 0.01f
+                for (value in split) {
+                    min = min.coerceAtMost(value.toFloat())
+                    max = max.coerceAtLeast(value.toFloat())
+                }
+                var width = bezierView.measuredWidth
+                var height = bezierView.measuredHeight
+
+
+                for ((index, value) in split.withIndex()) {
+                    var x = width / (split.size - 1) * index.toFloat()
+                    var y = if (min < 0) value.toFloat() + (min * -1f) else value.toFloat()
+                    y = height - y * (bezierView.measuredHeight - dp_15 ) / (max - min)
+                    entries.add(BezierView.Point(x, y))
+                }
+
+                LogUtils.e(entries.toString(), it.measuredHeight)
+                it.setPointList(entries)
+            }
+
+            chart?.visibility = View.GONE
+            bezierView?.visibility = View.VISIBLE
+
         }
     }
+
 
     override fun setRate(bean: RateBean) {
         bean.us_rmb?.let { SPUtil.setRate(it) }
@@ -81,9 +142,6 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
     private var mShaiXuanAdapter: ShaiXuanAdapter? = null
     private var mShaiXuanAdapter2: ShaiXuanAdapter2? = null
     private var mShaiXuanAdapter3: ShaiXuanAdapter3? = null
-    private var loadingMore = false
-
-    private var isRefresh = false
     private var mMaterialHeader: MaterialHeader? = null
     private var bottomSheet: BottomSheetDialog? = null
     var list: MutableList<String>? = mutableListOf()
@@ -94,14 +152,14 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
     private var subeeType = "bot"
     private var page = 1
 
-    private var rateStart = "0"
-    private var rateEnd = "100000"
+    private var rateStart = "-1000000"
+    private var rateEnd = "1000000"
 
-    private var timesStart = "0"
-    private var timesEnd = "100000"
+    private var timesStart = "-1000000"
+    private var timesEnd = "1000000"
 
-    private var pullbackStart = "0"
-    private var pullbackEnd = "100"
+    private var pullbackStart = "-1000000"
+    private var pullbackEnd = "1000000"
 
     companion object {
         fun getInstance(title: String): HomeFragment {
@@ -135,17 +193,6 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
         //设置下拉刷新主题颜色
         mRefreshLayout.setPrimaryColorsId(R.color.color_light_black, R.color.color_title_bg)
 
-        val pointList = ArrayList<Point>()
-        pointList.add(Point(-1, 50))
-        pointList.add(Point(210, 200))
-        pointList.add(Point(410, 30))
-        pointList.add(Point(510, 250))
-        pointList.add(Point(610, 80))
-        pointList.add(Point(810, 250))
-        pointList.add(Point(DpUtils.getDeviceWidthAndHeight(activity)[0] - 150, 60))
-
-        mBezierView.setPointList(pointList)
-        mBezierView.visibility = View.VISIBLE
 
         rl_choose.setOnClickListener {
             val arrayOf = arrayOf(getString(R.string.robot_caty), getString(R.string.robot_trader))
@@ -226,22 +273,23 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
 
     override fun onResume() {
         super.onResume()
-        var isfirstMine = SPUtil.getBoolean("isfirstHome")
-        activity?.let {
-            if (isfirstMine) {
-                var pop = HomePop(it)
-                pop.setOutSideDismiss(false)
-                pop.setPopupWindowFullScreen(true)
-                pop.setBlurBackgroundEnable(true)
-                pop.mOnClickListener = this
-                pop.showPopupWindow()
-            }
-        }
+//        var isfirstMine = SPUtil.getBoolean("isfirstHome")
+//        activity?.let {
+//            if (isfirstMine) {
+//                var pop = HomePop(it)
+//                pop.setOutSideDismiss(false)
+//                pop.setPopupWindowFullScreen(true)
+//                pop.setBlurBackgroundEnable(true)
+//                pop.mOnClickListener = this
+//                pop.showPopupWindow()
+//            }
+//        }
+        GuideManager.showGuide(childFragmentManager, guide_point, View.inflate(context, R.layout.guide_home, null), GuideViewBundle.Direction.BOTTOM, "ic_guide_home")
     }
 
     //弹窗点击之后的事件
     override fun onClick(v: View) {
-        RebotCategryActivity.start(context!!, "-1", "bot", "")
+        FollowRobotDetailActivity.start(context!!, "-1", "bot", "")
 //        ToastUtils.showToast(activity, "ni xiang gansha!")
     }
 
@@ -261,7 +309,7 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
         list2?.add(ShaixuanBean("", 3))
 
 
-        mHomeAdapter = HomeAdapter(R.layout.item_home, null)
+        mHomeAdapter = HomeAdapter(null)
         mRecyclerView.adapter = mHomeAdapter
         mRecyclerView.layoutManager = linearLayoutManager
         mRecyclerView.itemAnimator = DefaultItemAnimator()
@@ -277,14 +325,12 @@ class HomeFragment : BaseFragment(), HomeContract.homeView, HomePop.OnClickListe
     }
 
     override fun onLoadmore(refreshlayout: RefreshLayout?) {
-        loadType = 0
-        page = 1
+        page++
         getData()
     }
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
-        loadType = 1
-        page++
+        page = 1
         getData()
     }
 

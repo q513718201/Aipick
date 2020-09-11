@@ -11,10 +11,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 
-import com.blankj.utilcode.util.LogUtils;
 import com.hazz.aipick.R;
 import com.hazz.aipick.managers.KManager;
-import com.hazz.aipick.utils.GsonUtil;
 import com.hazz.aipick.utils.SPUtil;
 import com.hazz.aipick.widget.IndexOptionPopupWindow;
 import com.vinsonguo.klinelib.ChartSettings;
@@ -207,6 +205,12 @@ public class KLineChartView extends RelativeLayout implements KManager.KListener
             case THIRTY_MINUTE:
                 KManager.shared().requestThirtyMinuteK(mSymbol);
                 break;
+            case ONE_HOUR:
+                KManager.shared().requestOneHourK(mSymbol);
+                break;
+            case ONE_MONTH:
+                KManager.shared().requestMonthK(mSymbol);
+                break;
         }
     }
 
@@ -250,7 +254,7 @@ public class KLineChartView extends RelativeLayout implements KManager.KListener
         kLineView.setId(CHART_HOUR);
         mKLineView.setVisibility(View.GONE);
         mFrameLayout.addView(kLineView);
-        KManager.shared().requestOneHourK(mSymbol);
+        KManager.shared().requestFourHourK(mSymbol);
     }
 
     private void switchToFifteenChart() {

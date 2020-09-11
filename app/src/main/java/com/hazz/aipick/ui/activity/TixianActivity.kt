@@ -11,6 +11,7 @@ import com.hazz.aipick.mvp.contract.WaletContract
 import com.hazz.aipick.mvp.model.bean.TixianRecord
 import com.hazz.aipick.mvp.model.bean.Walet
 import com.hazz.aipick.mvp.presenter.WaletPresenter
+import com.hazz.aipick.utils.BigDecimalUtil
 import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
@@ -25,19 +26,23 @@ class TixianActivity : BaseActivity(), WaletContract.waletView {
 
     }
 
+    @SuppressLint("SetTextI18n")
     override fun getWalet(msg: Walet) {
-        tv_msg.text = getString(R.string.tixian_title, msg.cond.max, "${msg.cond.fee_rate}%", msg.cond.start, msg.cond.end)
-        SPUtil.getUser()?.let {
-            if (it.security.bind_bankcard) {
-                tv_bank_card.text = "${msg.bankcard_list[0].bank}(${msg.bankcard_list[0].number})"
-            } else {
-                tv_bank_card.text = getString(R.string.not_bind_card)
-                tv_bank_card.setOnClickListener { }
-                startActivity(Intent(this, BindBankActivity::class.java))
+        tv_msg.text = getString(R.string.tixian_title, msg.cond.max, " ${BigDecimalUtil.mul(msg.cond.fee_rate, "100")}%", msg.cond.start, msg.cond.end)
+        if (msg.bankcard_list.size > 0) {
+            var bankcard = msg.bankcard_list[0]
+            bankcard?.let {
+                tv_bank_card.text = "${it.bank}(${it.number})"
+                cardId = it.id
             }
+
+        } else {
+            tv_bank_card.text = getString(R.string.not_bind_card)
+
         }
-        tv_fee.text = "手续费 ${msg.cond.fee_rate}%"
-        tv_can_withdraw.text = "可提现余额 $${msg.withdrawable}"
+
+        tv_fee.text = "手续费 ${BigDecimalUtil.mul(msg.cond.fee_rate, "100")}%"
+        tv_can_withdraw.text = getString(R.string.tixian_yue, msg.withdrawable)
 
     }
 
@@ -67,15 +72,31 @@ class TixianActivity : BaseActivity(), WaletContract.waletView {
                 .setToolBarBg(Color.parseColor("#1E2742"))
                 .setOnLeftIconClickListener { view -> finish() }
         tv_all.setOnClickListener {
-            val substring = tv_can_withdraw.text.toString().substring(tv_can_withdraw.text.indexOf("$") + 1, tv_can_withdraw.text.length)
+            val substring = tv_can_withdraw.text.toString().substring(tv_can_withdraw.text.indexOf(getString(R.string.money)) + 1, tv_can_withdraw.text.length)
             et_amount.setText(substring)
         }
-
+        tv_bank_card.setOnClickListener {
+            SPUtil.getUser()?.let {
+                if (it.security.bind_bankcard) {
+                    startActivity(Intent(this, BindBankActivity::class.java).putExtra("card_id", cardId))
+                } else {
+                    startActivity(Intent(this, BindBankActivity::class.java))
+                }
+            }
+        }
     }
 
+    private lateinit var cardId: String
     override fun start() {
         tv_confirm.setOnClickListener {
-            payDialog()
+            SPUtil.getUser()?.let {
+                if (it.security.bind_bankcard) {
+                    payDialog()
+                } else {
+                    ToastUtils.showToast(this, getString(R.string.hint_please_bind_bankcard))
+                }
+            }
+
         }
     }
 
@@ -90,8 +111,6 @@ class TixianActivity : BaseActivity(), WaletContract.waletView {
             override fun onPayClose() {
                 dialog.dismiss()
             }
-
-
         })
         dialog.show()
         tips = dialog.payTips

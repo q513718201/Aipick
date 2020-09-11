@@ -94,8 +94,8 @@ public class Order {
         private String order_id;
         private String order_num;
         private String quote_coin;
-        private String sell_fee;
-        private String sell_price;
+        private String sell_fee = "";
+        private String sell_price = "";
         private String sell_time;
         public boolean isShowDetail;
 

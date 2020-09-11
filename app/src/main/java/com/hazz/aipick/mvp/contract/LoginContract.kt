@@ -20,12 +20,13 @@ interface LoginContract {
 
     interface LoginView : BaseView {
         fun loginSuccess(msg: LoginBean)
-        fun getUserInfo(msg: UserInfo)
+        fun setUserInfo(msg: UserInfo)
     }
 
 
     interface bindCarView : BaseView {
         fun bindSuccess(msg: String)
+        fun bindCardDetail(bean:BankDesc)
 
     }
 
@@ -46,10 +47,4 @@ interface LoginContract {
         fun setFollow(msg: String)
 
     }
-
-    interface CoinView : BaseView {
-        fun coinList(msg: Coin)
-
-    }
-
 }

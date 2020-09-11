@@ -7,7 +7,6 @@ import com.hazz.aipick.net.BaseResult
 import io.reactivex.Observable
 import okhttp3.RequestBody
 import retrofit2.http.Body
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 
@@ -132,6 +131,12 @@ interface AiPickService {
     fun deleteCollection(@Body request: RequestBody): Observable<BaseResult<Any>>
 
     /**
+     * 取消收藏
+     */
+    @POST("collection/cancel")
+    fun cancelCollection(@Body request: RequestBody): Observable<BaseResult<Any>>
+
+    /**
      * 加入收藏
      */
     @POST("collection/add")
@@ -163,7 +168,7 @@ interface AiPickService {
 
     /**交易员设置查询
      */
-    @POST("broker/setting")
+    @GET("broker/setting")
     fun traderSetQuery(): Observable<BaseResult<TraderSet>>
 
     /**
@@ -342,8 +347,28 @@ interface AiPickService {
      */
     @POST("simulate/summary")// TODO: 2020/8/24
     fun getInfoList(@Body request: RequestBody): Observable<BaseResult<List<InfoBean>>>
-    //</editor-fold>
+
+    /**
+     * 机器人-策略详情
+     */
+    @POST("user/strategy/detail")
+    fun getStrategyDetail(@Body request: RequestBody): Observable<BaseResult<CategoryDetailBean>>
+
+    /**
+     * 我的钱包-收入记录
+     */
+    @POST("wallet/record/income")
+    fun getIncomeList(@Body request: RequestBody): Observable<BaseResult<List<IncomeBean>>>
+
+    /**
+     * 我的钱包-收入记录
+     */
+    @POST("/fake/sub")
+    fun robotSub(): Observable<BaseResult<SubscribeBean>>
+
 
     @GET("user/invite")
     fun getInviteInfo(): Observable<BaseResult<InviteInfoBean>>
+
+    //</editor-fold>
 }

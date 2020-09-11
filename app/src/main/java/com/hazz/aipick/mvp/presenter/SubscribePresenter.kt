@@ -44,7 +44,7 @@ class SubscribePresenter(view: CollectionContract.subscribeView) : BasePresenter
 
         val body = RequestUtils.getBody(
                 Pair.create<Any, Any>("subId", subId),
-                Pair.create<Any, Any>("subType", type),
+                Pair.create<Any, Any>("subType", type.toString()),
                 Pair.create<Any, Any>("pageNumber", pageNumber),
                 Pair.create<Any, Any>("pageSize", pageSize)
 

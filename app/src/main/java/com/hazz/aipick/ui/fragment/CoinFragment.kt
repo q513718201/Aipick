@@ -18,16 +18,12 @@ import com.orhanobut.logger.Logger
 import kotlinx.android.synthetic.main.fragment_coin.*
 
 
+
 class CoinFragment : BaseFragment() {
 
 
     private var mTitle: String? = null
     private var mTitles: Array<String>? = null
-
-    /**
-     * 存放 tab 标题
-     */
-    private val mTabTitleList = ArrayList<String>()
 
     private val mCoinList = arrayOf("market.btcusdt.detail", "market.ethusdt.detail",
             "market.htusdt.detail", "market.xrpusdt.detail", "market.ltcusdt.detail", "market.bchusdt.detail"
@@ -50,7 +46,6 @@ class CoinFragment : BaseFragment() {
 
 
     override fun getLayoutId(): Int = R.layout.fragment_coin
-
 
 
     override fun lazyLoad() {
@@ -93,17 +88,6 @@ class CoinFragment : BaseFragment() {
         }
 
     }
-
-//    override fun onHiddenChanged(hidden: Boolean) {
-//        super.onHiddenChanged(hidden)
-//        if (!hidden) {
-//            Log.d("junjun",hidden.toString())
-//            for (coin in mCoinList) {
-//                WsManager.getInstance().requestCoinDetail(coin, "detail")
-//            }
-//
-//        }
-//    }
 
     override fun initView() {
         initTab()
@@ -165,7 +149,7 @@ class CoinFragment : BaseFragment() {
         }
         mViewPagerAdapter!!.updateList(recyclerViewList)
         viewPager.offscreenPageLimit = recyclerViewList.size
-        viewPager.currentItem = 1
+        viewPager.currentItem = 0
     }
 
 }

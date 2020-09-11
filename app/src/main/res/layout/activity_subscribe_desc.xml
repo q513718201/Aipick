@@ -53,6 +53,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
                     android:checked="true"
+                    android:visibility="invisible"
                     app:offColor="@color/bg_common"
                     app:onColor="@color/dilaog_btn_color" />
 

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.hazz.aipick.R;
 
 
@@ -52,7 +53,11 @@ public class ProgressDialog {
         Activity activity= (Activity) context;
         if (activity!=null && !activity.isFinishing() && !activity.isDestroyed() &&
                 mDialog != null && !mDialog.isShowing()) {
-            mDialog.show();
+            try {
+                mDialog.show();
+            } catch (Exception e) {
+                LogUtils.e(e);
+            }
         }
     }
 

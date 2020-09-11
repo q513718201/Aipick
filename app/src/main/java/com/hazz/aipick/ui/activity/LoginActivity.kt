@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : BaseActivity(), LoginContract.LoginView {
 
-    override fun getUserInfo(msg: UserInfo) {
+    override fun setUserInfo(msg: UserInfo) {
 
     }
 
@@ -75,7 +75,7 @@ class LoginActivity : BaseActivity(), LoginContract.LoginView {
         }
 
         tv_forget.setOnClickListener {
-            startActivity(Intent(this, GorgetPwdActivity::class.java))
+            startActivity(Intent(this, ForgetPwdActivity::class.java))
         }
 
     }

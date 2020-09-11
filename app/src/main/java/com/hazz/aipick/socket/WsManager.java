@@ -9,7 +9,6 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.hazz.aipick.MyApplication;
-import com.hazz.aipick.managers.KManager;
 import com.hazz.aipick.mvp.model.bean.BorSell;
 import com.hazz.aipick.mvp.model.bean.BuyOrSell;
 import com.hazz.aipick.mvp.model.bean.Ping;
@@ -27,6 +26,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.hazz.aipick.socket.WsStatus.CONNECT_SUCCESS;
 
 
 public class WsManager {
@@ -132,6 +133,16 @@ public class WsManager {
         void onTradeBack(Trade trade);
     }
 
+    public interface OnDetail {
+        void onHold(CoinDetail bean);
+    }
+
+    public void setOnDetail(OnDetail mOnDetail) {
+        this.mOnDetail = mOnDetail;
+    }
+
+    private OnDetail mOnDetail;
+
     public onTrade mOnTrade;
 
     public void setOnTrade(onTrade mOnTrade) {
@@ -158,11 +169,14 @@ public class WsManager {
             super.onBinaryMessage(websocket, binary);
             String s = GZipUtil.uncompressToString(binary);
             if (s.contains("error")) {
-                Log.e("daidai", s);
+                Log.w("daidai", s);
             } else {
                 Log.d("daidai", s);
             }
             CoinDetail klineBean = gson.fromJson(s, CoinDetail.class);
+            if (mOnDetail != null) {
+                mOnDetail.onHold(klineBean);
+            }
 
             if (klineBean.tick != null) {
                 mCoinDetailList.put(klineBean.ch, klineBean);
@@ -237,7 +251,7 @@ public class WsManager {
 
 
             Logger.t(TAG).d("连接成功");
-            setStatus(WsStatus.CONNECT_SUCCESS);
+            setStatus(CONNECT_SUCCESS);
             cancelReconnect();//连接成功的时候取消重连,初始化连接次数
         }
 

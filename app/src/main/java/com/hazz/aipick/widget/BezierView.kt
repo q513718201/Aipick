@@ -6,20 +6,31 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import com.hazz.aipick.R
+import com.hazz.aipick.utils.DpUtils
 
 
 class BezierView : View {
-    private var lineSmoothness = 0.2f
+    private var lineSmoothness = 0.16f
     private var mPointList: List<Point>? = null
     private var mPath: Path? = null
     private var mAssistPath: Path? = null
     private var drawScale = 1f
     private var mPathMeasure: PathMeasure? = null
-    private val defYAxis = 500f
+    private var defYAxis = 500f
     private val defXAxis = 0f
-    private val lineWidth = 16f
+    private var lineWidth = 16f
+
+    class Point(x: Float, y: Float) {
+        var x: Float = x
+        var y: Float = y
+        override fun toString(): String {
+            return "Point(x=$x, y=$y)"
+        }
+
+    }
 
     constructor(context: Context) : super(context) {
+        lineWidth = DpUtils.dip2px(context, 16f) * 1f
     }
 
     private var line_color = 0
@@ -29,9 +40,15 @@ class BezierView : View {
 
     }
 
-    fun setPointList(pointList: List<Point>) {
+    fun setPointList(pointList: ArrayList<Point>) {
         mPointList = pointList
         measurePath()
+        invalidate()
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        defYAxis = measuredHeight * 1f
     }
 
     fun setLineSmoothness(lineSmoothness: Float) {
@@ -58,7 +75,6 @@ class BezierView : View {
             return
         //measurePath();
         val paint = Paint()
-        paint.color = Color.RED
         paint.style = Paint.Style.STROKE
         //绘制辅助线
         //  canvas.drawPath(mAssistPath,paint);
@@ -114,7 +130,7 @@ class BezierView : View {
 
     private fun drawShadowAreaUp(canvas: Canvas, path: Path, pos: FloatArray) {
         path.lineTo(0f, 0f)
-        path.lineTo(mPointList!![0].x.toFloat(), mPointList!![0].y.toFloat())
+        path.lineTo(mPointList!![0].x, mPointList!![0].y)
         path.close()
         val paint = Paint()
         paint.style = Paint.Style.FILL
@@ -132,13 +148,10 @@ class BezierView : View {
         redPaint.strokeCap = Paint.Cap.ROUND
         redPaint.color = line_color
         redPaint.style = Paint.Style.FILL
-//        for (point in mPointList!!) {
-//            if (point.x > pos[0]) {
-//                break
-//            }
-        canvas.drawCircle(mPointList!![mPointList!!.size - 1].x.toFloat(),
-                mPointList!![mPointList!!.size - 1].y.toFloat(), lineWidth * 3 / 4, redPaint)
-//        }
+        canvas.drawCircle(mPointList!![mPointList!!.size - 1].x - lineWidth * 3 / 4,
+                mPointList!![mPointList!!.size - 1].y - lineWidth / 2, lineWidth * 3 / 4, redPaint)
+
+
     }
 
     private fun getPathEffect(length: Float): PathEffect {
@@ -161,15 +174,15 @@ class BezierView : View {
         for (valueIndex in 0 until lineSize) {
             if (java.lang.Float.isNaN(currentPointX)) {
                 val point = mPointList!![valueIndex]
-                currentPointX = point.x.toFloat()
-                currentPointY = point.y.toFloat()
+                currentPointX = point.x
+                currentPointY = point.y
             }
             if (java.lang.Float.isNaN(previousPointX)) {
                 //是否是第一个点
                 if (valueIndex > 0) {
                     val point = mPointList!![valueIndex - 1]
-                    previousPointX = point.x.toFloat()
-                    previousPointY = point.y.toFloat()
+                    previousPointX = point.x
+                    previousPointY = point.y
                 } else {
                     //是的话就用当前点表示上一个点
                     previousPointX = currentPointX
@@ -181,8 +194,8 @@ class BezierView : View {
                 //是否是前两个点
                 if (valueIndex > 1) {
                     val point = mPointList!![valueIndex - 2]
-                    prePreviousPointX = point.x.toFloat()
-                    prePreviousPointY = point.y.toFloat()
+                    prePreviousPointX = point.x
+                    prePreviousPointY = point.y
                 } else {
                     //是的话就用当前点表示上上个点
                     prePreviousPointX = previousPointX
@@ -193,8 +206,8 @@ class BezierView : View {
             // 判断是不是最后一个点了
             if (valueIndex < lineSize - 1) {
                 val point = mPointList!![valueIndex + 1]
-                nextPointX = point.x.toFloat()
-                nextPointY = point.y.toFloat()
+                nextPointX = point.x
+                nextPointY = point.y
             } else {
                 //是的话就用当前点表示下一个点
                 nextPointX = currentPointX

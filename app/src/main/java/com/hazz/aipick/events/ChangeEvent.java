@@ -6,4 +6,11 @@ public class ChangeEvent {
     public ChangeEvent(int isDemo) {
         this.isDemo = isDemo + "";
     }
+
+    @Override
+    public String toString() {
+        return "ChangeEvent{" +
+                "isDemo='" + isDemo + '\'' +
+                '}';
+    }
 }

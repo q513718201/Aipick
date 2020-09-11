@@ -8,15 +8,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.Toolbar
 import android.view.View
 import android.widget.TextView
-import com.blankj.utilcode.util.GsonUtils
-import com.hazz.aipick.BuildConfig
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.CollectionContract
 import com.hazz.aipick.mvp.model.bean.Collection
 import com.hazz.aipick.mvp.presenter.CollectionPresenter
 import com.hazz.aipick.ui.adapter.CollectionAdapter
-import com.hazz.aipick.utils.AssetsUtil
+import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.utils.ToolBarCustom
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener
@@ -24,21 +22,15 @@ import kotlinx.android.synthetic.main.activity_mine_collection.*
 
 
 class CollectionActivity : BaseActivity(), TabLayout.OnTabSelectedListener, CollectionContract.collectionView, OnRefreshLoadmoreListener {
-    override fun addCollectionSucceed(msg: String) {
-
+    override fun optionResult(msg: String) {
+        ToastUtils.showToast(this, msg)
+        initData()
     }
 
     override fun getCollection(msg: List<Collection>) {
-        if (BuildConfig.DEBUG) {// TODO: 2020/8/28 test data  need delete
-            val assertsFileString = AssetsUtil.getAssertsFileString(this, "collection.json")
-            val data: List<Collection> = GsonUtils.fromJson<Array<Collection>>(assertsFileString, Array<Collection>::class.java).toMutableList()
-            mOrderAdapter?.setNewData(data)
-            return
-        }
-
         refreshLayout.isEnableLoadmore = msg.size == 10
-        when (loadType) {
-            0 -> {
+        when (page) {
+            1 -> {
                 refreshLayout.finishRefresh()
                 mOrderAdapter?.setNewData(msg)
             }
@@ -106,7 +98,8 @@ class CollectionActivity : BaseActivity(), TabLayout.OnTabSelectedListener, Coll
         refreshLayout.setOnRefreshLoadmoreListener(this)
         refreshLayout.isEnableLoadmore = false
         titleList.add("机器人策略")
-        titleList.add("市场情绪")
+        // TODO: 2020/9/8 市场情绪
+//        titleList.add("市场情绪")
         for (i in titleList.indices) {
             tabLayout!!.addTab(tabLayout!!.newTab().setText(titleList[i]))
         }
@@ -129,16 +122,13 @@ class CollectionActivity : BaseActivity(), TabLayout.OnTabSelectedListener, Coll
 
     }
 
-    private var loadType = 0
 
     override fun onLoadmore(refreshlayout: RefreshLayout?) {
-        loadType = 1
         page++
         initData()
     }
 
     override fun onRefresh(refreshlayout: RefreshLayout?) {
-        loadType = 0
         page = 1
         initData()
     }

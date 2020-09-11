@@ -8,27 +8,26 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp">
+        android:layout_height="40dp"
+        android:paddingLeft="15dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/shaixuan"
+            android:layout_centerInParent="true"
             android:textColor="@color/color_home"
-            android:textSize="17sp"
-
-            />
+            android:textSize="17sp" />
 
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="centerInside"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:scaleType="centerInside"
             android:src="@mipmap/bt_close" />
 
     </RelativeLayout>
@@ -45,7 +44,7 @@
         android:id="@+id/recycleview1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"></android.support.v7.widget.RecyclerView>
+        android:layout_marginTop="10dp" />
 
     <TextView
         android:layout_width="wrap_content"

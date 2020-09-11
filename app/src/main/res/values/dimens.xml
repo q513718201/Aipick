@@ -17,5 +17,6 @@
     <dimen name="division_line">0.5dp</dimen>
     <dimen name="tip_height">32dp</dimen>
     <dimen name="dp_16">16dp</dimen>
+    <dimen name="dialog_radius">16dp</dimen>
 
 </resources>

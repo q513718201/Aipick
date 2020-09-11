@@ -1,16 +1,11 @@
 package com.hazz.aipick.mvp.presenter
 
 
-import android.util.Base64
-import android.util.Log
 import android.util.Pair
-import com.hazz.aipick.mvp.contract.LoginContract
 import com.hazz.aipick.mvp.contract.WaletContract
-import com.hazz.aipick.mvp.model.bean.*
+import com.hazz.aipick.mvp.model.bean.BindCoinHouse
+import com.hazz.aipick.mvp.model.bean.CategoryDetailBean
 import com.hazz.aipick.net.*
-import com.hazz.aipick.utils.RsaUtils
-import io.reactivex.Observer
-import io.reactivex.disposables.Disposable
 
 
 class CoinPresenter(view:  WaletContract.CoinView) : BasePresenter< WaletContract.CoinView>(view) {
@@ -39,6 +34,8 @@ class CoinPresenter(view:  WaletContract.CoinView) : BasePresenter< WaletContrac
         }, false)
 
     }
+
+
 
 
 }

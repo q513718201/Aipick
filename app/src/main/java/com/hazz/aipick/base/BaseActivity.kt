@@ -17,6 +17,8 @@ import com.blankj.utilcode.util.BarUtils
 import com.hazz.aipick.MyApplication
 import com.hazz.aipick.net.BaseView
 import com.hazz.aipick.net.ExceptionHandle
+import com.hazz.aipick.ui.activity.LoginActivity
+import com.hazz.aipick.utils.SPUtil
 import com.hazz.aipick.utils.ToastUtils
 import com.hazz.aipick.widget.ProgressDialog
 import com.tbruyelle.rxpermissions2.RxPermissions
@@ -174,6 +176,8 @@ abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCal
     }
 
     override fun login() {
+        if (SPUtil.getToken().isEmpty())
+            startActivity(Intent(this, LoginActivity::class.java))
     }
 
     override fun hideLoading() {

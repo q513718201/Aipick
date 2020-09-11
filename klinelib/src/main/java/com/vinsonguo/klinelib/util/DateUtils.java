@@ -27,6 +27,20 @@ public class DateUtils {
         return 0l;
     }
 
+    public static long date2Long(String date) {
+        try {
+            if (date.length() == 10) {
+                return date2Long(date, "yyyy-MM-dd");
+            } else if (date.length() == 7) {
+                return date2Long(date, "yyyy-MM");
+            } else {
+                return date2Long(date, "yyyy-MM-dd HH:mm");
+            }
+        } catch (Exception e) {
+            return 0l;
+        }
+    }
+
 
     public static String formatDate(long time) {
         DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());

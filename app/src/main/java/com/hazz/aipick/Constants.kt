@@ -29,7 +29,7 @@ class Constants private constructor() {
         val BUNDLE_CATEGORY_DATA = "category_data"
 
         //腾讯 Bugly APP id
-        val BUGLY_APPID = "176aad0d9e"
+        const val BUGLY_APPID = "40f4e2e929"
 
 
         //sp 存储的文件名
@@ -47,10 +47,12 @@ enum class LanguageType(var value: String) {
      * 中文 简体
      */
     LG_SIMPLIFIED_CHINESE("zh_CN"),
+
     /**
      * 中文 繁体
      */
     LG_TRADITIONAL_CHINESE("zh_TW"),
+
     /**
      * 英语
      */

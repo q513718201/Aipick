@@ -7,6 +7,8 @@ import android.graphics.Color
 import android.os.CountDownTimer
 import android.support.v7.widget.Toolbar
 import android.view.View
+import com.bigkoo.alertview.AlertView
+import com.bigkoo.alertview.OnItemClickListener
 import com.hazz.aipick.R
 import com.hazz.aipick.base.BaseActivity
 import com.hazz.aipick.mvp.contract.LoginContract
@@ -40,17 +42,25 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
 
     override fun initData() {
         tv_login_type.setOnClickListener {
-            if (currentType == 0) {
-                currentType = 1
-                tv_quhao.visibility = View.GONE
-                tv_email.visibility = View.VISIBLE
-                edit_phone.hint = getString(R.string.please_input_email)
-            } else {
-                currentType = 0
-                tv_quhao.visibility = View.VISIBLE
-                tv_email.visibility = View.GONE
-                edit_phone.hint = getString(R.string.please_input_phone)
+            var view = AlertView(null, null, getString(R.string.cancel), arrayOf("手机", "邮箱"), null, this, AlertView.Style.ActionSheet, OnItemClickListener { o, position ->
+                currentType = position
+                chose()
+            })
+            if (!view.isShowing) {
+                view.show()
             }
+        }
+    }
+
+    private fun chose() {
+        if (currentType == 0) {
+            tv_quhao.visibility = View.VISIBLE
+            tv_email.visibility = View.GONE
+            edit_phone.hint = getString(R.string.please_input_phone)
+        } else {
+            tv_quhao.visibility = View.GONE
+            tv_email.visibility = View.VISIBLE
+            edit_phone.hint = getString(R.string.please_input_email)
         }
     }
 
@@ -58,17 +68,17 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
      * 展示获取验证码倒计时
      */
     private fun showCountDownView() {
-        tv_getCode.isEnabled = false
-        tv_getCode.isClickable = false
+        et_check_code.isEnabled = false
+        et_check_code.isClickable = false
         countDownTimer = object : CountDownTimer(60 * 1000, 1000) {
             override fun onFinish() {
-                tv_getCode.isEnabled = true
-                tv_getCode.isClickable = true
-                tv_getCode.text = getString(R.string.get_verfycode)
+                et_check_code.isEnabled = true
+                et_check_code.isClickable = true
+                et_check_code.text = getString(R.string.get_verfycode)
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                tv_getCode.text = "${millisUntilFinished / 1000}s"
+                et_check_code.text = "${millisUntilFinished / 1000}s"
             }
         }.start()
 
@@ -98,7 +108,7 @@ class SetTradePwdActivity : BaseActivity(), LoginContract.RegistView, LoginContr
 
         }
 
-        tv_getCode.setOnClickListener {
+        et_check_code.setOnClickListener {
             mRegistPresenter.sendCodeLogin("phone", tv_quhao.text.toString(), edit_phone.text.toString(), "modify_trade_password"
             )
         }

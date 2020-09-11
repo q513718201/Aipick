@@ -20,7 +20,7 @@ class CollectionAdapter(data: List<Collection>?) : BaseQuickAdapter<Collection, 
     override fun convert(helper: BaseViewHolder, item: Collection) {
         helper.setVisible(R.id.cb, editable)
         helper.setImageResource(R.id.iv, CoinManager.getCoinIcon(item.base_coin))
-        helper.setText(R.id.tv_coin_name, "${item.base_coin}/${item.quote_coin}")
+        helper.setText(R.id.tv_coin_name, item.name)
         helper.setText(R.id.tv_date, item.create_at)
         helper.setOnCheckedChangeListener(R.id.cb, CompoundButton.OnCheckedChangeListener { compoundButton: CompoundButton, checked: Boolean ->
             item.select = checked
@@ -32,6 +32,6 @@ class CollectionAdapter(data: List<Collection>?) : BaseQuickAdapter<Collection, 
         for (item in data) {
             if (item.select) ids.add(item.id)
         }
-        return ids;
+        return ids
     }
 }

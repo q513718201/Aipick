@@ -170,7 +170,7 @@
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:padding="15dp"
-                    android:text="$"
+                    android:text="@string/money"
                     android:textColor="@color/white"
                     android:textSize="16sp"
 

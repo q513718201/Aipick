@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AiPick</string>
+    <!--    <string name="app_name">AiPick</string>-->
 
     <string name="video_offline">缓存</string>
     <string name="video_attention">+ 关注</string>
@@ -17,6 +17,7 @@
 
 
     <string name="cancel">取消</string>
+    <string name="has_cancel">已取消</string>
 
     <string name="nickname">Xiho</string>
     <string name="view_homepage">查看个人主页 ></string>
@@ -70,7 +71,7 @@
     <string name="all_incoming">总收益率</string>
     <string name="follow_incoming">跟随者收益</string>
     <string name="subsciber_num">累计订阅次数</string>
-    <string name="last_ten">近10周最大回撤</string>
+    <string name="last_ten">近六个月收益率</string>
     <string name="jiaoyi_fenxi">交易分析</string>
     <string name="dingdan">订单</string>
     <string name="dingyuezhe">订阅者</string>
@@ -94,7 +95,7 @@
     <string name="subsciber_intro">开启按钮，即确认跟随该策略下单交易 关闭按钮，即停止跟随下单，仍跟随平仓</string>
     <string name="guding_num">固定数量</string>
     <string name="guding_rate">固定比例</string>
-    <string name="setting_follow_rate">例如您设置为%s倍比例跟随，交易员/机器人下单1手，你的手数为%s手</string>
+    <string name="setting_follow_rate">例如您设置为%s倍比例跟随，交易员/机器人下单1个，你的下单为%s个</string>
     <string name="setting_follow_amount">您设置固定数量%s标准手，不论交易员/机器人下单多少标准手，您手数均为%s标准手</string>
     <string name="setting_num">您今日修改次数已用完</string>
     <string name="setting_tips">跟随可能存在点差、交易品种及开/休市时间的差异</string>
@@ -119,9 +120,11 @@
     <string name="follow_record">跟随收益记录</string>
     <string name="guanzhu">关注</string>
     <string name="hasguanzhu">互相关注</string>
+    <string name="cancel_follow">取消关注</string>
     <string name="monigensui">模拟\n跟随器</string>
     <string name="monicaopan">模拟\n操盘器</string>
     <string name="my_walet">我的\n钱包</string>
+    <string name="my_walet_title">我的钱包</string>
     <string name="my_account">我的\n账户</string>
     <string name="invite_friend">邀请好友</string>
     <string name="mine_trader">交易员</string>
@@ -129,8 +132,7 @@
     <string name="mine_jiaoyisuo">交易所</string>
     <string name="mine_fade">消息反馈</string>
     <string name="tips_subscribe">恢复跟随下单，将第一时间为您\n同步下单信号</string>
-    <string name="tips_subscribe_close">您已关闭跟随下单，关闭后仍跟随平仓，不再跟随下单。
-                            </string>
+    <string name="tips_subscribe_close">您将关闭跟随下单，关闭后仍跟随平仓，不再跟随下单。</string>
     <string name="tips">提示</string>
     <string name="tixian_record">提现记录</string>
     <string name="avaiable_amount">可提取金额</string>
@@ -148,7 +150,7 @@
     <string name="input_coin_hourse">请输入交易所名称</string>
     <string name="input_coin_hourse_address">请输入交易所地址</string>
     <string name="input_api">请输入API文档地址</string>
-    <string name="amount_zichan">账户资产(BTC）</string>
+    <string name="amount_zichan">账户资产(USDT）</string>
     <string name="zhou_rate">周收益率</string>
     <string name="guzhi">估值(USDT)</string>
     <string name="zong_yingli_amount">总盈利金额</string>
@@ -162,7 +164,9 @@
     <string name="about_us">关于我们</string>
     <string name="clear_huancun">清除缓存</string>
     <string name="logout">退出登录</string>
-    <string name="tixian_title">每日限提$%s，每单收取%s手续费。\n 提现申请时间：工作日，%s~%s。</string>
+    <string name="tixian_title">每日限提 ¥ %s，每单收取%s手续费。\n 提现申请时间：工作日，%s~%s。</string>
+    <string name="tixian_yue">可提现余额 ¥ %s</string>
+    <string name="trade_set_hint">订阅费设置（每周限修改1次）</string>
     <string name="not_bind_card">未绑定银行卡</string>
     <string name="tixian_amount">提现金额</string>
     <string name="all_tixian">全部提现</string>
@@ -182,18 +186,21 @@
     <string name="please_input_verfycode">请输入验证码</string>
     <string name="modify_pwd">修改登录密码</string>
     <string name="please_input_old_pwd">请输入旧密码</string>
-    <string name="please_input_new_pwd">请输入新密码（6-18位字母数字组合）</string>
+    <string name="please_input_new_pwd">请输入新密码（6–18位字母数字组合）</string>
     <string name="please_input_pwd_again">请输入再次确认</string>
     <string name="bank_card">银行卡</string>
     <string name="set_trade_pwd">设置交易密码</string>
+    <string name="update_trade_pwd">修改交易密码</string>
     <string name="set_nick_name">设置用户名</string>
-    <string name="please_input_trade_pwd">请设置交易密码（6位数的数字密码）</string>
+    <string name="please_input_trade_pwd">请输入交易密码（6位数的数字密码）</string>
+    <string name="please_input_new_trade_pwd">请输入新交易密码（6位数的数字密码）</string>
+    <string name="please_input_old_trade_pwd">请输入旧交易密码</string>
     <string name="apply_trader">申请交易员</string>
     <string name="apply_trader_tips">为了您的账户安全,请谨慎填写以下内容,资料提交后不可修改。</string>
     <string name="please_input_email">请输入邮箱地址</string>
     <string name="real_name">真实姓名</string>
     <string name="please_input_real_name">请输入真实姓名</string>
-    <string name="please_input_id_card">请输入身份证号</string>
+    <string name="please_input_id_card">请输入证件号码</string>
     <string name="card_type">证件类型</string>
     <string name="card_msg">证件信息</string>
     <string name="card_youxiaoqi">证件必须在有效期内</string>
@@ -223,6 +230,7 @@
     <string name="has_bind">已绑定</string>
     <string name="has_set">已设置</string>
     <string name="bind_card">绑定银行卡</string>
+    <string name="update_card">修改银行卡</string>
     <string name="bind_card_intro">请绑定持卡人本人的银行卡</string>
     <string name="bind_miyao_desc">绑定 API 即可统计您在 Binance 使用策略的资产收益情况</string>
     <string name="input_apikey">请输入 ApiKey</string>
@@ -235,7 +243,7 @@
     <string name="jin_seven_day">近7日</string>
     <string name="subscribe_price">订阅费</string>
     <string name="youxiaoshijian">有效时间:%1$s</string>
-    <string name="pay_type">支付方式:%1$s</string>
+    <string name="pay_type">支付方式:%s</string>
     <string name="wechat_pay">微信支付</string>
     <string name="alipay_pay">支付宝</string>
     <string name="follower_incoming">跟随者收益</string>
@@ -248,20 +256,21 @@
     <string name="text_price">价格</string>
     <string name="text_amount">数量</string>
 
-    <string name="pwd_login">密码登录</string>
+    <string name="pwd_login">手机登录</string>
     <string name="choose_guoji">选择国际</string>
     <string name="chinese">中国</string>
     <string name="phone">手机</string>
     <string name="get_pwd">找回密码</string>
     <string name="next_step">下一步</string>
-    <string name="please_set_new_pwd">请设置新密码（6-20位数字英文字母组合）</string>
+    <string name="please_set_new_pwd">请设置新密码（6-18位数字英文字母组合）</string>
     <string name="current_bind">当前绑定%1$s:%2$s</string>
     <string name="set_new_pwd">设置新密码</string>
     <string name="shaixuan">筛选设置</string>
     <string name="follow_num">跟随次数</string>
     <string name="robot">机器人策略</string>
-    <string name="ten_rate">近十周最大回撤 %1$s</string>
-    <string name="home_price">$%1$s/月.价格</string>
+    <string name="ten_rate">近六月最大收益率 %1$s</string>
+    <string name="home_price">¥ %1$s/月 · 价格</string>
+    <string name="home_item_price">价格 ¥ %1$s/月</string>
     <string name="choose_cate">选择策略投放平台</string>
     <string name="no_coin">此策略只能在Bittrex平台交易</string>
     <string name="go_bind">去绑定</string>
@@ -281,14 +290,14 @@
     <string name="current_bind_phone">当前绑定手机号:%1$s</string>
     <string name="current_bind_email">当前绑定邮箱:%1$s</string>
     <string name="zhonghehangqing">综合行情</string>
-    <string name="weishenqing">未申请</string>
-    <string name="wait">待审核</string>
-    <string name="pass">审核通过</string>
-    <string name="fail">审核失败</string>
+    <string name="weishenqing">申请交易员</string>
+    <string name="wait">审核中</string>
+    <string name="pass">已是交易员</string>
+    <string name="fail">已驳回</string>
     <string name="mail_auth">邮箱验证</string>
     <string name="fuwuxieyi">服务协议和隐私条款</string>
     <string name="apply_desc">选择您常用的交易币对，绑定交易所越多，支持的币对越多</string>
-    <string name="please_huizhe">请输入回折率</string>
+    <string name="please_huizhe">请输入回撤率</string>
     <string name="please_choose_coin">请选择币对</string>
     <string name="jiaoyisuo_order">交易所买卖单</string>
     <string name="exchange_order">交易所买卖单</string>
@@ -300,6 +309,8 @@
     <string name="one_min">1分</string>
     <string name="five_min">5分</string>
     <string name="thirty_min">30分</string>
+    <string name="one_hour">1小时</string>
+    <string name="amonth">1个月</string>
     <string name="week_line">周线</string>
     <string name="aweek">1周</string>
     <string name="more">更多</string>
@@ -327,7 +338,7 @@
     <string name="categry_fengxian_desc">持基础货币风险，需要持有一定量的基础货币。持山寨币风险，由于挂单模式，会持有一段时间，但山寨币有涨有跌，最近山寨币指数一个多月从420多点反弹到500多点。山寨币指数实盘公开地址：https://www.fmz.com/robot/74076，行情剧烈波动风险，可能会被动接盘，可控制具体山寨币的总持有量。山寨币下架风险。</string>
     <string name="unpaid">未支付</string>
     <string name="paid">已支付</string>
-    <string name="trader_sesc">请描述您的策略方案。 例如，EA/只做欧美/每周盈利/历史无亏损。</string>
+    <string name="trader_sesc">请描述您的策略方案。 \n例如，EA/只做欧美/每周盈利/历史无亏损。</string>
     <string name="choose_bidui">请选择交易币对</string>
     <string name="lishijiaoyi">历史交易数量</string>
     <string name="lishibishu">历史交易笔数</string>
@@ -349,7 +360,7 @@
     <string name="text_publish">发行总量：%s</string>
     <string name="text_office_web">官方网站：%s</string>
     <string name="text_web_view">区块链网站：%s</string>
-    <string name="text_ten_month_rollback">近十周最大回撤 %s%</string>
+    <string name="text_ten_month_rollback">近十周最大回撤率</string>
 
     <!--提示信息-->
     <string name="hint_register_checkbox">请阅读并同意《服务条款》</string>
@@ -371,7 +382,7 @@
     <string name="hint_coin_no_market_bind">请选择投放策略平台</string>
     <string name="text_buy_in">买入</string>
     <string name="text_sell_out">卖出</string>
-    <string name="text_img_head">添加图片（%d/4）</string>
+    <string name="text_img_head">添加图片（%s/4）</string>
     <string name="text_price_free">免费</string>
     <string name="text_finish">完成</string>
 
@@ -428,5 +439,18 @@
     <string name="text_trade_amount">交易数量</string>
     <string name="text_save_qr">生成海报</string>
     <string name="text_copy_invite_link">复制邀请链接</string>
+    <string name="money">¥</string>
+    <string name="money_format">¥ %s</string>
+    <string name="money_format_us">$ %s</string>
+    <string name="text_last_modify">最后修改：%s</string>
+    <string name="text_create_time">创建时间：%s</string>
+    <string name="text_income_title">%s/订阅 %s</string>
+    <string name="text_month_total">月收益：$%s</string>
+    <string name="text_day_total">日收益：$%s</string>
+    <string name="text_total_benefit">总收益：$%s</string>
+    <string name="copyright_2020">Copyright©2020 牛一Newone.com 版权所有</string>
+    <string name="text_rest_service_time">剩余%s天</string>
+    <string name="text_trade_weeks">交易周数</string>
+    <string name="hint_please_bind_bankcard">请先绑定银行卡</string>
 
 </resources>

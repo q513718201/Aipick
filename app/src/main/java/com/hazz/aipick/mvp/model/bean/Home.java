@@ -22,5 +22,13 @@ public class Home {
     public String pullback;
     //币种名称
     public String coin_name;
+    //总收益率
+    public String all_rate;
 
+    /**
+     * gain_list : ["2880.59668602","3848.46899991","4335.43200067","0.00000000","2795.00099993","-774771.15413394"]
+     * id : 70
+     */
+
+    public String gain_list;
 }

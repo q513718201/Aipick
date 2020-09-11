@@ -31,6 +31,7 @@ public class BindCoinHouse implements Serializable {
 
                         public String exchange_id;
                         public String exchange_code;
+
                 }
 
 }

@@ -31,9 +31,6 @@ public class SetTrade implements Serializable {
         if (TextUtils.isEmpty(email)) {
             return "请输入邮箱";
         }
-        if (TextUtils.isEmpty(code)) {
-            return "请输入验证码";
-        }
         if (TextUtils.isEmpty(name)) {
             return "请输入持卡人姓名";
         }

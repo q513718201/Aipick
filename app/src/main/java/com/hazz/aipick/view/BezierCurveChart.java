@@ -138,7 +138,7 @@ public class BezierCurveChart extends View {
         super(context, attrs);
     }
 
-    private void adjustPoints(int chartWidth, int chartHeight) {
+    private void adjustPoints() {
         maxY = 0;
         // find max y coodinate
         for (Point p : originalList) {
@@ -148,7 +148,7 @@ public class BezierCurveChart extends View {
         }
 
         //Y coodinate sacle
-        scaleY = chartHeight / maxY;
+        scaleY = measureHeight / maxY;
 
         float axesSpan = originalList.get(originalList.size() - 1).x - originalList.get(0).x;
         float startX = originalList.get(0).x;
@@ -157,10 +157,10 @@ public class BezierCurveChart extends View {
             Point p = originalList.get(i);
 
             Point newPoint = new Point();
-            newPoint.x = (p.x - startX) * chartWidth / axesSpan + chartRect.left;
+            newPoint.x = (p.x - startX) * measureWidth / axesSpan + chartRect.left;
 
             newPoint.y = p.y * scaleY;
-            newPoint.y = chartHeight - newPoint.y;
+            newPoint.y = measureHeight - newPoint.y;
 
             adjustedPoints[i] = newPoint;
         }
@@ -186,9 +186,7 @@ public class BezierCurveChart extends View {
                 adjustedPoints[pointSize - 1].y);
     }
 
-    private void drawCurve(Canvas canvas, float width, float height) {
-        buildPath(curvePath);
-        buildPath(fillPath);
+    private void drawCurve(Canvas canvas) {
 
         fillPath.lineTo(chartRect.right, chartRect.bottom);
         fillPath.lineTo(chartRect.left, chartRect.bottom);
@@ -196,17 +194,17 @@ public class BezierCurveChart extends View {
         fillPath.close();
         LinearGradient mLinearGradient = new LinearGradient(
                 0f
-                , height
-                , width
-                , height
+                , measureHeight
+                , measureWidth
+                , measureHeight
                 , new int[]{getContext().getResources().getColor(R.color.colorPrimaryDarkTrans), getContext().getResources().getColor(R.color.colorPrimaryDark)}
                 , null
                 , Shader.TileMode.CLAMP
         );
         RadialGradient radialGradient = new RadialGradient(
-                width,
+                measureWidth,
                 0,
-                height,
+                measureHeight,
                 new int[]{getContext().getResources().getColor(R.color.colorPrimaryDark), getContext().getResources().getColor(R.color.colorPrimaryDarkTrans)},
                 null,
                 Shader.TileMode.CLAMP
@@ -214,6 +212,7 @@ public class BezierCurveChart extends View {
         );
 
         fillPaint.setShader(radialGradient);
+        curvePaint.setShader(mLinearGradient);
         canvas.drawPath(fillPath, fillPaint);
         canvas.drawPath(curvePath, curvePaint);
     }
@@ -349,14 +348,41 @@ public class BezierCurveChart extends View {
         return tipTextPaint;
     }
 
+    private float min = Float.MAX_VALUE;
+    private float max = Float.MIN_VALUE;
+
     public void init(List<Point> originalList, String[] labels, String tipText) {
         this.originalList = originalList;
+
         this.labels = labels;
         this.tipText = tipText;
-        adjustedPoints = new Point[originalList.size()];
+        getMinMax();
+
         // order by x coodinate ascending
         Collections.sort(originalList, Point.X_COMPARATOR);
+        adjustedPoints = new Point[originalList.size()];
+        adjustPoints();
+        buildPath(curvePath);
+        buildPath(fillPath);
         super.invalidate();
+    }
+
+    private void getMinMax() {
+
+        for (Point point : originalList) {
+            min = Math.min(min, point.y);
+            max = Math.max(max, point.y);
+        }
+    }
+
+    private int measureWidth;
+    private int measureHeight;
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        measureWidth = getMeasuredWidth();
+        measureHeight = getMeasuredHeight();
     }
 
     @Override
@@ -369,13 +395,9 @@ public class BezierCurveChart extends View {
             // mockPoints(width, height);
 //			drawLabels(canvas);
 
-            int chartHeight = chartRect.bottom - chartRect.top;
-            int chartWidth = chartRect.right - chartRect.left;
-
-            adjustPoints(chartWidth, chartHeight);
 
 //			drawGrid(canvas, chartWidth);
-            drawCurve(canvas, chartWidth, chartHeight);
+            drawCurve(canvas);
 
 //            if (tipText != null) {
 //                drawTip(canvas, chartWidth, chartHeight);

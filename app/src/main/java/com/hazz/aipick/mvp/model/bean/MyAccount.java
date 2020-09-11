@@ -1,5 +1,7 @@
 package com.hazz.aipick.mvp.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MyAccount {
 
         /**
@@ -32,4 +34,19 @@ public class MyAccount {
         public String gain_rate;
         public String pullback;
 
+        /**
+         * end_time : 0
+         * follow_times : 11
+         * in_collection : false
+         * is_sub : 0
+         * pageview : 1000
+         * trade_weeks : 1
+         */
+
+        public String end_time;
+        public int follow_times;
+        public boolean in_collection;
+        public int is_sub;
+
+        public int trade_weeks;
 }

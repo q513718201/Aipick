@@ -51,7 +51,7 @@ class InfoFragment : BaseFragment(), HomeContract.InfoView, OnRefreshLoadmoreLis
 
     fun getData() {
         //数据满的时候可以加载更多
-        mPresenter.getInfoData(page, 10)
+//        mPresenter.getInfoData(page, 10)
     }
 
     var mPresenter = InfoPresenter(this)

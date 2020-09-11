@@ -64,7 +64,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:padding="15dp"
-                    android:text="$"
+                    android:text="%"
                     android:textColor="@color/color_white"
                     android:textSize="14sp"
 

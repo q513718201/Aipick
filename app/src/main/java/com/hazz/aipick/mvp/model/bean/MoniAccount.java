@@ -1,5 +1,7 @@
 package com.hazz.aipick.mvp.model.bean;
 
+import com.google.gson.annotations.SerializedName;
+
 public class MoniAccount {
 
 
@@ -18,5 +20,13 @@ public class MoniAccount {
     public String gain_rate;
     public String pullback;
     public String follow_gain;
+    public int is_sub;
 
+
+    /**
+     * end_time : 0
+     * total_subs : 1000
+     */
+
+    public String end_time;
 }

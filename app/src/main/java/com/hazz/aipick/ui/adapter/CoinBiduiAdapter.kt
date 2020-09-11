@@ -1,6 +1,7 @@
 package com.hazz.aipick.ui.adapter
 
 
+import android.view.View
 import android.widget.RelativeLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -19,6 +20,7 @@ class CoinBiduiAdapter(layoutResId: Int, data: List<BindCoinHouse.SymbolsBean>?)
         //  helper.setText(R.id.tv_name, "")
 
         helper.setText(R.id.tv_name, """${item.base_coin}/${item.quote_coin}""")
+        helper.getView<View>(R.id.tv_name).isSelected = curr == helper.adapterPosition
 
         if (curr == helper.adapterPosition) {
             currentTitle = item

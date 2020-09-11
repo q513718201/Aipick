@@ -2,91 +2,86 @@
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:orientation="horizontal"
     android:padding="10dp"
     app:cardCornerRadius="16dp">
 
-    <LinearLayout
-
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#2F3865"
-        android:gravity="center_vertical">
+        android:layout_height="match_parent"
+        android:background="#455184">
 
         <ImageView
             android:id="@+id/coinIcon"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:src="@mipmap/ic_btc" />
+            android:layout_height="0dp"
+            android:background="#2F3865"
+            android:padding="10dp"
+            android:src="@mipmap/ic_btc"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="2"
-            android:background="#455184"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="15dp">
 
-            <TextView
-                android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/color_home"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tv_rate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/ten_rate"
-                android:textColor="#94A3D5"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/home_price"
-                android:textColor="@color/color_yellow"
-                android:textSize="12sp" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_name"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#455184"
-            android:gravity="right"
-            android:orientation="vertical"
-            android:paddingLeft="10dp"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp">
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:text="BTC/UDTD"
+            android:textColor="@color/color_home"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_rate"
+            app:layout_constraintStart_toEndOf="@+id/coinIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
 
-            <com.hazz.aipick.view.BezierCurveChart
-                android:id="@+id/rate_chart"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_weight="1" />
+        <TextView
+            android:id="@+id/tv_rate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ten_rate"
+            android:textColor="#94A3D5"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/tv_price"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name" />
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_price"
+            android:textColor="@color/color_yellow"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_name"
+            app:layout_constraintTop_toBottomOf="@+id/tv_rate" />
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/rate_chart"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dp_10"
+            app:layout_constraintBottom_toTopOf="@+id/totalRate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
-            <com.hazz.aipick.widget.ColorTextView
-                android:id="@+id/totalRate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingRight="16dp"
-                android:textColor="@color/color_home_rate"
-                android:textSize="@dimen/sp_14" />
-        </LinearLayout>
+        <com.hazz.aipick.widget.ColorTextView
+            android:id="@+id/totalRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:paddingRight="16dp"
+            android:textColor="@color/color_home_rate"
+            android:textSize="@dimen/sp_14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-    </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
 
 
 </android.support.v7.widget.CardView>

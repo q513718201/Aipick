@@ -39,7 +39,7 @@ public class KLineBean {
         public double open;
         public double close;
         public double high;
-        public int id;
+        public long id;
         public int count;
         public double low;
         public float vol;

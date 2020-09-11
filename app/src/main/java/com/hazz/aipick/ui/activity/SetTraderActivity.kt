@@ -49,7 +49,7 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
 
     }
 
-    override fun getUserInfo(msg: UserInfo) {
+    override fun setUserInfo(msg: UserInfo) {
         val security = msg.security
         if (!TextUtils.isEmpty(security.email) && !TextUtils.isEmpty(security.phone)) {
             et_email.setText(security.email)
@@ -148,16 +148,22 @@ class SetTraderActivity : BaseActivity(), LoginContract.RegistView, LoginContrac
 
         bt_confirm.setOnClickListener {
 
-            val setTrade = SetTrade(tv_quhao.text.toString(), tv_getCode.text.toString(), et_email.text.toString(),
+            val setTrade = SetTrade(tv_quhao.text.toString(), et_check_code.text.toString(), et_email.text.toString(),
                     edit_phone.text.toString(), et_card.text.toString(), et_name.text.toString(), "idcard", iv1_path!!, iv2_path!!)
             val unCheck = setTrade.unCheck()
             if (unCheck != null) {
                 ToastUtils.showToast(this, unCheck)
                 return@setOnClickListener
             }
-            if (tv_get_code.isEnabled) {
-                ToastUtils.showToast(this, "请点击按钮获取验证码")
-                return@setOnClickListener
+            if (rl_getcode.isShown) {
+                if (et_check_code.text.isNullOrBlank()) {
+                    ToastUtils.showToast(this, "请输入验证码")
+                    return@setOnClickListener
+                }
+                if (tv_get_code.isEnabled) {
+                    ToastUtils.showToast(this, "请点击按钮获取验证码")
+                    return@setOnClickListener
+                }
             }
 
 

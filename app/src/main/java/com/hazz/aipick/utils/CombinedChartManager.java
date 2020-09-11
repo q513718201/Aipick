@@ -2,9 +2,9 @@ package com.hazz.aipick.utils;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.github.mikephil.charting.charts.CombinedChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Legend;
@@ -21,11 +21,12 @@ import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.renderer.XAxisRenderer;
-import com.github.mikephil.charting.utils.MPPointD;
 import com.github.mikephil.charting.utils.MPPointF;
 import com.github.mikephil.charting.utils.Transformer;
 import com.github.mikephil.charting.utils.Utils;
 import com.github.mikephil.charting.utils.ViewPortHandler;
+import com.hazz.aipick.BuildConfig;
+import com.hazz.aipick.R;
 import com.hazz.aipick.widget.InfoMarkView;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class CombinedChartManager {
     public CombinedChartManager(CombinedChart combinedChart) {
         if (combinedChart == null) return;
         this.mCombinedChart = combinedChart;
+        mCombinedChart.setLogEnabled(BuildConfig.DEBUG);
         leftAxis = mCombinedChart.getAxisLeft();
         rightAxis = mCombinedChart.getAxisRight();
         xAxis = mCombinedChart.getXAxis();
@@ -52,6 +54,7 @@ public class CombinedChartManager {
      * 初始化Chart
      */
     public void initChart() {
+        if (mCombinedChart == null) return;
         //不显示描述内容
         mCombinedChart.getDescription().setEnabled(false);
 
@@ -68,8 +71,7 @@ public class CombinedChartManager {
         //显示边界
         mCombinedChart.setDrawBorders(false);
         mCombinedChart.setScaleYEnabled(false);
-        mCombinedChart.setAutoScaleMinMaxEnabled(false);
-        mCombinedChart.setMaxVisibleValueCount(3);
+        mCombinedChart.setAutoScaleMinMaxEnabled(true);
 
         //Y轴设置
 //        rightAxis.setDrawGridLines(false);
@@ -77,24 +79,28 @@ public class CombinedChartManager {
         // 不从y轴发出横向直线
         leftAxis.setDrawGridLines(false);
         leftAxis.setTextColor(Color.parseColor("#718BA9"));
-        leftAxis.setAxisLineColor(Color.parseColor("#718BA9"));
-        leftAxis.setDrawZeroLine(true);
-        xAxis.setDrawGridLines(false);
-        xAxis.setLabelCount(3, false);
+        leftAxis.setAxisLineColor(mCombinedChart.getContext().getResources().getColor(R.color.dilaog_btn_color));
+        leftAxis.setDrawZeroLine(false);
+        leftAxis.setValueFormatter((value, axis) -> {
+            LogUtils.e(value);
+            float temp = Math.abs(value);
+            if (temp < 10000) {
+                return String.format("$%.2f", value);
+            } else if (temp < 1000000) {
+                return String.format("$%.2fW", value / 10000);
+            } else {
+                return String.format("$%.2fM", value / 1000000);
+            }
+        });
+
 
         Transformer trans = mCombinedChart.getTransformer(YAxis.AxisDependency.LEFT);
         mCombinedChart.setXAxisRenderer(new CustomXAxisRenderer(mCombinedChart.getViewPortHandler(),
                 mCombinedChart.getXAxis(), trans));
 
-
         //隐藏图例说明
         Legend legend = mCombinedChart.getLegend();
-        legend.setWordWrapEnabled(false);
-        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
-        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        legend.setDrawInside(false);
-        legend.setForm(Legend.LegendForm.NONE);
+        legend.setEnabled(false);
 
 ////
 //        Matrix matrix = new Matrix();
@@ -118,16 +124,20 @@ public class CombinedChartManager {
         //设置X轴在底部
         XAxis xAxis = mCombinedChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-
-        xAxis.setGranularity(1f);
-//        xAxis.setLabelCount(xAxisValues.size() - 1, false);
+        xAxis.setGranularity(0.01f);
+        xAxis.setAvoidFirstLastClipping(false);
+        xAxis.setLabelCount(7);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return xAxisValues.get((int) value % xAxisValues.size());
+                if (xAxisValues.size() == 0) return "";
+                if ((int) Math.abs(value) > xAxisValues.size()) return "";
+                int pos = (int) Math.abs(value % xAxisValues.size());
+                String s = xAxisValues.get(pos);
+                LogUtils.e(value, xAxisValues, s);
+                return s;
             }
         });
-
 
         mCombinedChart.invalidate();
     }
@@ -139,9 +149,11 @@ public class CombinedChartManager {
 
         @Override
         protected void drawLabel(Canvas c, String formattedLabel, float x, float y, MPPointF anchor, float angleDegrees) {
+
             float labelHeight = mXAxis.getTextSize();
             float labelInterval = 2f;
             String[] labels = formattedLabel.split(" ");
+            LogUtils.e(x, y, labels);
 
             Paint mFirstLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
             mFirstLinePaint.setColor(Color.parseColor("#718BA9"));
@@ -202,39 +214,6 @@ public class CombinedChartManager {
     }
 
     /**
-     * 得到折线图(多条)
-     *
-     * @param lineChartYs 折线Y轴值
-     * @param lineNames   折线图名字
-     * @param lineColors  折线颜色
-     * @return
-     */
-//    private LineData getLineData(List<List<Float>> lineChartYs, List<String> lineNames, List<Integer> lineColors) {
-//        LineData lineData = new LineData();
-//
-//        for (int i = 0; i < lineChartYs.size(); i++) {
-//            ArrayList<Entry> yValues = new ArrayList<>();
-//            for (int j = 0; j < lineChartYs.get(i).size(); j++) {
-//                yValues.add(new Entry(j, lineChartYs.get(i).get(j)));
-//            }
-//            LineDataSet dataSet = new LineDataSet(yValues, lineNames.get(i));
-//            dataSet.setColor(lineColors.get(i));
-//            dataSet.setCircleColor(lineColors.get(i));
-//            dataSet.setValueTextColor(lineColors.get(i));
-//
-//            dataSet.setDrawValues(false);
-//            dataSet.setValueTextSize(10f);
-//            dataSet.setMode(LineDataSet.Mode.LINEAR);
-//            dataSet.setCircleRadius(1f);
-//            dataSet.setDrawCircles(true);
-//            dataSet.setCircleColor(Color.parseColor("#F5D54D"));
-//            dataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
-//            lineData.addDataSet(dataSet);
-//        }
-//        return lineData;
-//    }
-
-    /**
      * 得到柱状图
      *
      * @param barChartY Y轴值
@@ -258,19 +237,22 @@ public class CombinedChartManager {
         }
 
         BarDataSet barDataSet = new BarDataSet(yValues, barName);
+        barDataSet.setDrawValues(false);
         barDataSet.setValueTextSize(10f);
 
         barDataSet.setColors(colors);
         barDataSet.setValueTextColors(colors);
         barDataSet.setAxisDependency(YAxis.AxisDependency.LEFT);
         barData.addDataSet(barDataSet);
-
-
         //以下是为了解决 柱状图 左右两边只显示了一半的问题 根据实际情况 而定
+        xAxis.setDrawGridLines(false);
         xAxis.setAxisMinimum(-0.5f);
-        xAxis.setAxisMaximum((float) (barChartY.size() - 0.5));
+        xAxis.setAxisMaximum(barChartY.size() - 0.5f);
+
+
         return barData;
     }
+
 //
 //    /**
 //     * 得到柱状图(多条)
@@ -320,31 +302,41 @@ public class CombinedChartManager {
      * @param lineChartY  折线图Y轴值
      * @param barName     柱状图名字
      * @param lineName    折线图名字
-     * @param barColor    柱状图颜色
+     * @param type        类型
      * @param lineColor   折线图颜色
      */
 
     public void showCombinedChart(
             List<String> xAxisValues, List<Float> barChartY, List<Float> lineChartY
-            , String barName, String lineName, int barColor, int lineColor) {
+            , String barName, String lineName, String type, int lineColor) {
+
+        int max;
+        if (type.equals("month")) {
+            max = 12;
+        } else {
+            max = 31;
+        }
         initChart();
-        setXAxis(xAxisValues);
+        LogUtils.e(barChartY, lineChartY);
+        if (xAxisValues.size() == 0) return;
 
         CombinedData combinedData = new CombinedData();
 
-        combinedData.setData(getBarData(barChartY, barName, barColor));
+        combinedData.setData(getBarData(barChartY, barName, max));
         combinedData.setData(getLineData(lineChartY, lineName, lineColor));
+
+        setXAxis(xAxisValues);
+
+        mCombinedChart.setVisibleXRange(0, 7);
+//        mCombinedChart.setMaxVisibleValueCount(xAxisValues.size());
         mCombinedChart.setData(combinedData);
         mCombinedChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 // 获取Entry
                 int iEntry = (int) e.getX();
-                float valEntry = e.getY();
-
                 // 获取选中value的坐标
-                MPPointD p = mCombinedChart.getPixelForValues(e.getX(), e.getY(), YAxis.AxisDependency.LEFT);
-                InfoMarkView maker = new InfoMarkView(mCombinedChart, iEntry, combinedData);
+                InfoMarkView maker = new InfoMarkView(mCombinedChart, iEntry, combinedData, type.equals("month") ? 0 : 1);
                 mCombinedChart.setMarker(maker);
             }
 
@@ -354,46 +346,12 @@ public class CombinedChartManager {
             }
         });
         mCombinedChart.invalidate();
-        Matrix m = new Matrix();
-        m.postScale(scaleNum(xAxisValues.size()), 1f);//两个参数分别是x,y轴的缩放比例。例如：将x轴的数据放大为之前的1倍
-        mCombinedChart.getViewPortHandler().refresh(m, mCombinedChart, false);
-
     }
 
-
-    //30个横坐标时，缩放4f是正好的。
-    private float scalePercent = 4f / 30f;
-
-    private float scaleNum(int xCount) {
-        return xCount * scalePercent;
+    private void setYAxis(float max, float min, int showCount) {
+        leftAxis.setAxisMaximum(max);
+        leftAxis.setAxisMinimum(min);
+        leftAxis.setLabelCount(showCount);
     }
-
-//    /**
-//     * 显示混合图(柱状图+折线图)
-//     *
-//     * @param xAxisValues X轴坐标
-//     * @param barChartYs  柱状图Y轴值
-//     * @param lineChartYs 折线图Y轴值
-//     * @param barNames    柱状图名字
-//     * @param lineNames   折线图名字
-//     * @param barColors   柱状图颜色
-//     * @param lineColors  折线图颜色
-//     */
-//
-//    public void showCombinedChart(
-//             List<String> xAxisValues,List<List<Float>> barChartYs, List<List<Float>> lineChartYs,
-//            List<String> barNames, List<String> lineNames, List<Integer> barColors, List<Integer> lineColors) {
-//        initChart();
-//        setXAxis(xAxisValues);
-//
-//        CombinedData combinedData = new CombinedData();
-//
-//        combinedData.setData(getBarData(barChartYs, barNames, barColors));
-//        combinedData.setData(getLineData(lineChartYs, lineNames, lineColors));
-//
-//        mCombinedChart.setData(combinedData);
-//        mCombinedChart.invalidate();
-//
-//    }
 
 }

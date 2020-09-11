@@ -48,5 +48,9 @@ class SettingUserNickNameActivity : BaseActivity(), LoginContract.updateView {
 
     override fun updateSuccess(msg: String) {
         ToastUtils.showToast(this, msg)
+        et_nick_name.postDelayed({
+            finish()
+        }, 1500)
+
     }
 }
